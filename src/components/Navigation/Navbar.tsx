@@ -4,7 +4,7 @@ import NavbarTitle from "./NavbarTitle";
 import Profile from "./Profile";
 
 export function Navbar() {
-  const isLogin = false;
+  const isLogin = true;
   const User = isLogin ? userDetail : null;
 
   return (

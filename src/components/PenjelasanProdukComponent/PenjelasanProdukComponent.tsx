@@ -12,8 +12,8 @@ const PenjelasanProdukComponent = ({ icon, title, description }: AlertBoxProps) 
     <Alert className="flex items-center gap-3">
       <div>{icon}</div>
       <div>
-        <AlertTitle className="text-[#ad0a1f] text-base sm:text-lg md:text-xl font-semibold">{title}</AlertTitle>
-        <AlertDescription className="text-sm sm:text-base">{description}</AlertDescription>
+        <AlertTitle className="text-[#ad0a1f] text-base md:text-lg font-semibold">{title}</AlertTitle>
+        <AlertDescription className="text-sm md:text-base">{description}</AlertDescription>
       </div>
     </Alert>
   );

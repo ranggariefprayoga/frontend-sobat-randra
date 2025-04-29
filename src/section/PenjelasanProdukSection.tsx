@@ -33,7 +33,7 @@ export default function PenjelasanProdukSection() {
 
   return (
     <LayoutBackgroundWhite>
-      <TitleComponent title="Pilihan Paket Belajar" subTitle="Kami menyediakan 4 paket belajar untuk kamu!" textAlign="start" />
+      <TitleComponent title="Layanan Kami" subTitle="Tersedia 4 paket belajar untuk kamu!" textAlign="start" />
 
       <div ref={ref} className="w-full px-8 md:px-28 mt-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

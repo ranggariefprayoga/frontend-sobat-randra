@@ -124,7 +124,7 @@ export default function Hamburger({ userDetail }: { userDetail: userDetailInterf
                 <CommandList>
                   <CommandGroup heading="Menu Utama">
                     <CommandItem>
-                      <Button variant="ghost" className="w-full flex justify-start" onClick={() => navigateTo("/")}>
+                      <Button variant="ghost" className="w-full flex justify-start " onClick={() => navigateTo("/")}>
                         <Home size={18} />
                         <span>Beranda</span>
                       </Button>
