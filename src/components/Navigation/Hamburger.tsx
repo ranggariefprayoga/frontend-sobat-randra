@@ -1,11 +1,20 @@
-import { Button } from "@/components/ui/button";
+"use client";
 
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Command, CommandGroup, CommandItem, CommandList, CommandSeparator } from "../ui/command";
 import { BookOpen, ClipboardList, HelpCircle, Home, LogOut, Menu, MessageSquare, Package, TrendingUp, User } from "lucide-react";
 import { Avatar, AvatarFallback } from "../ui/avatar";
+import { userDetailInterface } from "@/model/user.model";
 
-export default function Hamburger() {
+export default function Hamburger({ userDetail }: { userDetail: userDetailInterface | null }) {
+  const router = useRouter();
+
+  const navigateTo = (url: string) => {
+    router.push(url);
+  };
+
   return (
     <>
       <Sheet key={"left"}>
@@ -17,7 +26,7 @@ export default function Hamburger() {
         <SheetContent side={"left"}>
           <SheetHeader>
             <div className="flex items-center gap-2">
-              <img src="/logo/logo.png" alt="Sobat Randra Logo" className="w-10 h-10 object-contain" />
+              <img src="/logo/logo.png" alt="Sobat Randra Logo" className="w-14 h-14 object-contain" />
               <div>
                 <SheetTitle className="text-[#ad0a1f] font-semibold text-xl">Sobat Randra</SheetTitle>
                 <SheetDescription className="text-sm text-gray-600">All in one Platform belajar SKD CPNS, BUMN, dan Polri</SheetDescription>
@@ -25,74 +34,89 @@ export default function Hamburger() {
             </div>
           </SheetHeader>
 
-          <>
-            <Command>
-              <CommandList>
-                <CommandGroup heading="Menu Utama">
-                  <CommandItem>
-                    <Home />
-                    <span>Beranda</span>
-                  </CommandItem>
-                  <CommandItem>
-                    <Package />
-                    <span>Pilihan Paket Belajar</span>
-                  </CommandItem>
-                  <CommandItem>
-                    <BookOpen />
-                    <span>Mulai Belajar</span>
-                  </CommandItem>
-                  <CommandItem>
-                    <ClipboardList />
-                    <span>History Nilai Saya</span>
-                  </CommandItem>
-                  <CommandItem>
-                    <TrendingUp />
-                    <span>Rangking Nasional TO</span>
-                  </CommandItem>
-                </CommandGroup>
+          <Command>
+            <CommandList>
+              <CommandGroup heading="Menu Utama">
+                <CommandItem onClick={() => navigateTo("/")}>
+                  <Home size={18} />
+                  <span>Beranda</span>
+                </CommandItem>
+                <CommandItem onClick={() => navigateTo("/pilihan-paket")}>
+                  <Package size={18} />
+                  <span>Pilihan Paket Belajar</span>
+                </CommandItem>
+                <CommandItem onClick={() => navigateTo("/mulai-belajar")}>
+                  <BookOpen size={18} />
+                  <span>Mulai Belajar</span>
+                </CommandItem>
+                <CommandItem onClick={() => navigateTo("/history-nilai")}>
+                  <ClipboardList size={18} />
+                  <span>History Nilai Saya</span>
+                </CommandItem>
+                <CommandItem onClick={() => navigateTo("/rangking-nasional")}>
+                  <TrendingUp size={18} />
+                  <span>Rangking Nasional TO</span>
+                </CommandItem>
+              </CommandGroup>
 
-                <CommandSeparator />
+              <CommandSeparator />
 
-                <CommandGroup heading="Akun Saya">
-                  <CommandItem>
-                    <User />
-                    <span>Profile Saya</span>
-                  </CommandItem>
-                </CommandGroup>
+              <CommandGroup heading="Akun Saya">
+                <CommandItem onClick={() => navigateTo("/profile")}>
+                  <User size={18} />
+                  <span>Profile Saya</span>
+                </CommandItem>
+              </CommandGroup>
 
-                <CommandSeparator />
+              <CommandSeparator />
 
-                <CommandGroup heading="Lainnya">
-                  <CommandItem>
-                    <MessageSquare />
-                    <span>Kritik & Saran</span>
-                  </CommandItem>
-                  <CommandItem>
-                    <HelpCircle />
-                    <span>Bantuan</span>
-                  </CommandItem>
-                </CommandGroup>
-              </CommandList>
-            </Command>
-          </>
+              <CommandGroup heading="Lainnya">
+                <CommandItem onClick={() => navigateTo("/kritik-saran")}>
+                  <MessageSquare size={18} />
+                  <span>Kritik & Saran</span>
+                </CommandItem>
+                <CommandItem onClick={() => (window.location.href = "https://wa.me/6287747867857")}>
+                  <HelpCircle size={18} />
+                  <span>Bantuan</span>
+                </CommandItem>
+              </CommandGroup>
+            </CommandList>
+          </Command>
+
           <SheetFooter>
-            <div className="bg-[#ad0a1f] text-white rounded-lg px-6 py-4 flex flex-col items-center gap-4">
-              <div className="flex gap-4 items-center">
-                <Avatar className="text-gray-700">
-                  <AvatarFallback>CN</AvatarFallback>
-                </Avatar>
-                <div>
-                  <div className="font-semibold text-lg">Rangga Arief Prayoga</div>
-                  <div className="text-sm opacity-80">ranggaariefprayogaa@gmail.com</div>
+            {userDetail ? (
+              <div className="bg-[#ad0a1f] text-white rounded-lg p-2 flex flex-col gap-4">
+                <div className="flex gap-2 items-center">
+                  <Avatar className="text-gray-700">
+                    <AvatarFallback>{userDetail.name.charAt(0)}</AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <div className="font-semibold text-base">{userDetail.name}</div>
+                    <div className="text-sm opacity-80">{userDetail.email}</div>
+                  </div>
                 </div>
+                <SheetClose asChild>
+                  <Button variant="outline" type="submit" className="flex items-center gap-2 text-black">
+                    <LogOut size={18} />
+                    Log Out
+                  </Button>
+                </SheetClose>
               </div>
-              <SheetClose asChild>
-                <Button type="submit" className="flex items-center gap-2">
-                  <LogOut size={18} />
-                  Log Out
-                </Button>
-              </SheetClose>
-            </div>
+            ) : (
+              <>
+                <div className="bg-[#ad0a1f] text-white rounded-lg p-2 flex items-center gap-2">
+                  <img src="/logo/logo-bg.jpg" alt="logo" className="w-14 h-14 object-contain rounded-lg" />
+                  <div className="flex flex-col gap-2 sm:flex-row">
+                    <Button variant="ghost" className="rounded-full bg-[#D94B6B] text-white hover:bg-[#C75C71]" onClick={() => navigateTo("/auth/register")}>
+                      Daftar
+                    </Button>
+                    <Button variant="ghost" className="rounded-full bg-[#FFA500] text-black hover:bg-[#FF8C00]" onClick={() => navigateTo("/auth/login")}>
+                      Masuk
+                    </Button>
+                  </div>
+                </div>
+              </>
+            )}
           </SheetFooter>
         </SheetContent>
       </Sheet>
