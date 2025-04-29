@@ -3,5 +3,5 @@ export const userDetail = {
   name: "M Fadhly Pohan",
   email: "vK3vX@example.com",
   token: "token",
-  role: "Customer",
+  role: "Admin",
 };
