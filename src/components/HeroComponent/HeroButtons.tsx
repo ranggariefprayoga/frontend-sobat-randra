@@ -19,10 +19,10 @@ export default function HeroButtons() {
 
   return (
     <div className="flex flex-col sm:flex-row gap-2 justify-center lg:justify-start">
-      <Button variant="ghost" onClick={handleProductClick} className="rounded-full bg-[#FFA500] text-black hover:bg-[#FF8C00]">
+      <Button size="lg" variant="ghost" onClick={handleProductClick} className="rounded-full text-white  bg-[#FF8C00]">
         Lihat semua produk
       </Button>
-      <Button variant="ghost" onClick={handleWhatsAppClick} className="bg-green-500 text-white  rounded-full">
+      <Button size="lg" variant="ghost" onClick={handleWhatsAppClick} className="bg-green-500 text-white  rounded-full">
         Hubungi Kami
       </Button>
     </div>
