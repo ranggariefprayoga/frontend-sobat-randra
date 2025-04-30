@@ -7,10 +7,10 @@ interface NullComponentProps {
 
 const NullComponent = ({ message, color = "text-gray-500" }: NullComponentProps) => {
   return (
-    <div className={`flex items-center justify-center text-center ${color} mt-8 font-bold`}>
+    <div className={`px-8 md:px-24 flex items-center justify-center text-center ${color} mt-8 font-bold gap-2`}>
       {/* Ikon */}
-      <Frown className={`h-12 w-12 ${color}  mr-4`} />
-      <span className="text-lg sm:text-xl">{message}</span>
+      <Frown className={`h-8 w-8 ${color} `} />
+      <span className="text-base">{message}</span>
     </div>
   );
 };

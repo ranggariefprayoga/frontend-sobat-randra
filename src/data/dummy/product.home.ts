@@ -3,7 +3,7 @@ import { BimbelProductlModel, TryOutProductModel } from "@/model/product.model";
 export const dummyProductTryOut: TryOutProductModel[] = [
   {
     id: 1,
-    name: "Try Out CPNS 2023",
+    name: "TRYOUT SKD KEDINASAN PART 1 2025",
 
     is_active: true,
     banner_image: "/background/1.png",
@@ -17,7 +17,7 @@ export const dummyProductTryOut: TryOutProductModel[] = [
   },
   {
     id: 2,
-    name: "Try Out BUMN 2023",
+    name: "TRYOUT SKD KEDINASAN PART 2 2025",
 
     is_active: true,
     banner_image: "https://example.com/banner/bumn2023.jpg",
@@ -31,7 +31,7 @@ export const dummyProductTryOut: TryOutProductModel[] = [
   },
   {
     id: 3,
-    name: "Try Out Polri 2023",
+    name: "TRYOUT SKD KEDINASAN PART 3 2025",
 
     is_active: true,
     banner_image: "https://example.com/banner/polri2023.jpg",
