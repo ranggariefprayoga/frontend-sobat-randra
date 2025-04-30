@@ -1,15 +1,15 @@
 "use client";
 
-import { TryOutProductModel } from "@/model/product.model";
+import { BimbelProductlModel } from "@/model/product.model";
 import { useRouter } from "next/navigation";
 
-interface ProductCardProps {
-  product: TryOutProductModel;
+interface ProductCardBimbelProps {
+  product: BimbelProductlModel;
   customLink: string;
   buttonText?: string;
 }
 
-export default function CardTryOut({ product, customLink, buttonText = "Lihat Detail" }: ProductCardProps) {
+export default function CardBimbel({ product, customLink, buttonText = "Lihat Detail" }: ProductCardBimbelProps) {
   const router = useRouter();
 
   return (
@@ -27,8 +27,8 @@ export default function CardTryOut({ product, customLink, buttonText = "Lihat De
       <div className="p-4">
         {/* Badge Kategori */}
         <div className="flex items-center gap-2 text-sm mb-2">
-          <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs flex items-center gap-1">📘 Gratis</span>
-          <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs flex items-center gap-1">📘 Premium</span>
+          <span className={`bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs flex items-center gap-1 ${product.category === "Kelas Belajar Bareng (KBB)" ? "block" : "hidden"}`}>📘 Kelas belajar bareng</span>
+          <span className={`bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs flex items-center gap-1 ${product.category === "Private Bareng Minsob" ? "block" : "hidden"}`}>📘 Private</span>
         </div>
 
         {/* Judul Produk */}
@@ -44,15 +44,8 @@ export default function CardTryOut({ product, customLink, buttonText = "Lihat De
 
         {/* Harga Produk & Diskon */}
         <div className="flex items-center justify-between mt-3">
-          <p className="text-lg font-bold text-[#ad0a1f]">{`Rp ${product.price.toLocaleString("id-ID")}`}</p>
-          <p className="text-lg font-bold text-[#ad0a1f]">GRATIS</p>
-
-          {/* <div className="flex items-center gap-2">
-            {discountPercentage !== null && <span className="bg-green-600 text-white text-[10px] font-bold px-2 py-1 rounded-md">{discountPercentage}%</span>}
-            {!isFree && (product.old_price ?? 0) > 0 ? <p className="text-xs line-through">Rp {product.old_price?.toLocaleString("id-ID") ?? ""}</p> : null}
-          </div> */}
-
-          {/* Harga Baru / GRATIS */}
+          <p className="text-lg font-bold text-[#ad0a1f]">{product.price === 0 ? "GRATIS" : `Rp ${product.price.toLocaleString("id-ID")}`}</p>
+          {product.old_price && product.price !== product.old_price && <p className="text-xs line-through text-gray-500">Rp {product.old_price?.toLocaleString("id-ID")}</p>}
         </div>
 
         {/* Tombol Navigasi */}
