@@ -29,6 +29,7 @@ export default function CardBimbel({ product, customLink, buttonText = "Lihat De
         <div className="flex items-center gap-2 text-sm mb-2">
           <span className={`bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs flex items-center gap-1 ${product.category === "Kelas Belajar Bareng (KBB)" ? "block" : "hidden"}`}>📘 Kelas belajar bareng</span>
           <span className={`bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs flex items-center gap-1 ${product.category === "Private Bareng Minsob" ? "block" : "hidden"}`}>📘 Private</span>
+          <span className={`bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs flex items-center gap-1 `}>📘 {product.capacity} seat</span>
         </div>
 
         {/* Judul Produk */}
