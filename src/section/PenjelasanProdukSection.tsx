@@ -35,7 +35,7 @@ export default function PenjelasanProdukSection() {
     <LayoutBackgroundWhite>
       <TitleComponent title="Layanan Kami" subTitle="Tersedia 4 paket belajar untuk kamu!" textAlign="start" />
 
-      <div ref={ref} className="w-full px-8 md:px-28 mt-8">
+      <div ref={ref} className="w-full px-8 md:px-24 mt-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {produkData.map((item, index) => (
             <motion.div key={index} custom={index} initial="hidden" animate={hasAnimated ? "visible" : "hidden"} variants={itemVariants}>

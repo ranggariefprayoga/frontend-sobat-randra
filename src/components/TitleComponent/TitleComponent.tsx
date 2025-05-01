@@ -30,7 +30,7 @@ const TitleComponent = ({ subTitle, title, textAlign = "start", subTitleColor = 
   const alignmentClass = textAlign === "center" ? "text-center items-center" : "text-start items-start";
 
   return (
-    <div ref={ref} className={`w-full px-8 md:px-28 text-black flex flex-col gap-4 ${alignmentClass}`}>
+    <div ref={ref} className={`w-full px-8 md:px-24 text-black flex flex-col gap-2 ${alignmentClass}`}>
       <motion.h3 variants={titleVariants} initial="hidden" animate={hasAnimated ? "visible" : "hidden"} transition={{ duration: 0.5, ease: "easeInOut", delay: 0.2 }} className={`text-2xl md:text-5xl font-bold  ${titleColor}`}>
         {title}
       </motion.h3>
