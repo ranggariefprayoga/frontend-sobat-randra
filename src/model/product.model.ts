@@ -8,6 +8,7 @@ export interface TryOutProductModel {
   marketing_text?: string;
   old_price?: number;
   price: number;
+  is_free_available?: boolean;
   link_to_form?: string;
   created_at: string;
   updated_at: string;

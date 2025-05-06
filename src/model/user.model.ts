@@ -4,4 +4,6 @@ export interface userDetailInterface {
   email: string;
   token: string | null;
   role: string;
+  created_at: string;
+  updated_at: string;
 }

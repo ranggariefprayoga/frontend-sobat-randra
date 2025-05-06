@@ -4,42 +4,45 @@ export const dummyProductTryOut: TryOutProductModel[] = [
   {
     id: 1,
     name: "TRYOUT SKD KEDINASAN PART 1 2025",
-
     is_active: true,
+    password: "1",
     banner_image: "/background/1.png",
     description: "Persiapkan dirimu untuk CPNS 2023 dengan try out terbaru!",
     marketing_text: "Dapatkan pengalaman Try Out CPNS yang lebih realistis.",
     old_price: 200000,
     price: 150000,
-
+    is_free_available: true,
+    link_to_form: "https://example.com/tryout-cpns",
     created_at: "2023-05-01T10:00:00Z",
     updated_at: "2023-05-01T10:00:00Z",
   },
   {
     id: 2,
     name: "TRYOUT SKD KEDINASAN PART 2 2025",
-
     is_active: true,
+    password: "2",
     banner_image: "/background/1.png",
     description: "Persiapkan diri untuk ujian seleksi BUMN dengan try out kami.",
     marketing_text: "Try Out BUMN 2023, pilihan terbaik untuk memulai karirmu.",
     old_price: 250000,
     price: 200000,
-
+    is_free_available: true,
+    link_to_form: "https://example.com/tryout-cpns",
     created_at: "2023-06-01T10:00:00Z",
     updated_at: "2023-06-01T10:00:00Z",
   },
   {
     id: 3,
     name: "TRYOUT SKD KEDINASAN PART 3 2025",
-
     is_active: true,
+    password: "3",
     banner_image: "/background/1.png",
     description: "Uji kemampuanmu dengan Try Out Polri terbaru, persiapkan dirimu!",
     marketing_text: "Try Out Polri 2023, ujian yang menantang bagi calon polisi.",
     old_price: 220000,
     price: 180000,
-
+    is_free_available: true,
+    link_to_form: "https://example.com/tryout-cpns",
     created_at: "2023-07-01T10:00:00Z",
     updated_at: "2023-07-01T10:00:00Z",
   },
