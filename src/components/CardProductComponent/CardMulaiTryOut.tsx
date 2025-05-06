@@ -14,7 +14,9 @@ interface ProductCardProps {
 export default function CardMulaiTryOut({ product, userEmail, userId }: ProductCardProps) {
   // backend-api cari data quiz session dengan user_id dengan for_product_free = true
   const isFreeAvailable =
-    QuizSessionDataDummy === null || QuizSessionDataDummy?.length === 0
+    product.is_free_available === false
+      ? false
+      : QuizSessionDataDummy === null || QuizSessionDataDummy?.length === 0
       ? true
       : QuizSessionDataDummy.some((session: QuizSessionModel) => {
           const hasValidSession = session.product_id === product.id && session.user_id === userId && session.for_product_free === true;

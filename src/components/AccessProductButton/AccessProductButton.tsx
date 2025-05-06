@@ -67,7 +67,7 @@ export default function AccessButtonWithModal({ isPremiumAvailable, product, isF
         onClick={openGratisDialog}
         disabled={!haveAccessGratis}
       >
-        {haveAccessGratis ? "Mulai Try Out Gratis" : "Akses Gratis Anda Sudah Habis"}
+        {haveAccessGratis ? "Mulai Try Out Gratis" : "Akses Gratis Tidak Ada Lagi"}
       </button>
 
       {/* Tombol Akses Premium */}
