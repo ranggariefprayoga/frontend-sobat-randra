@@ -7,9 +7,14 @@ import { useRouter } from "next/navigation";
 interface ButtonWithIconProps {
   icon: LucideIcon;
   label: string;
+  color?: string; // Jadikan optional
 }
 
-const ButtonWithIcon = ({ icon: Icon, label }: ButtonWithIconProps) => {
+const ButtonWithIcon = ({
+  icon: Icon,
+  label,
+  color = "text-[#ad0a1f]", // Nilai default
+}: ButtonWithIconProps) => {
   const router = useRouter();
 
   const handleToHome = () => {
@@ -17,9 +22,9 @@ const ButtonWithIcon = ({ icon: Icon, label }: ButtonWithIconProps) => {
   };
 
   return (
-    <div className={`w-1/4 px-8 md:px-24 mb-4`}>
-      <Button variant="ghost" className="bg-[#ad0a1f] text-white hover:bg-[#ad0a1f] hover:text-white" onClick={handleToHome}>
-        <Icon className="h-4 w-4" />
+    <div className="w-1/4 px-8 md:px-24 mb-4">
+      <Button variant="ghost" className={`${color}`} onClick={handleToHome}>
+        <Icon className="h-4 w-4 mr-2" />
         {label}
       </Button>
     </div>

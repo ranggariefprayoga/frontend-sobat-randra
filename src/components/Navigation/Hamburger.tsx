@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { BarChart2, Edit, Key, LogOut, Menu, Users } from "lucide-react";
+import { Edit, Key, LogOut, Menu } from "lucide-react";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { userDetailInterface } from "@/model/user.model";
 import NoAuthNavbarComponent from "./NoAuthNavbar";
@@ -42,25 +42,25 @@ export default function Hamburger({ userDetail }: { userDetail: userDetailInterf
                 <CommandList>
                   <CommandGroup heading="Layanan">
                     <CommandItem>
-                      <Button variant="ghost" className="w-full flex justify-start" onClick={() => navigateTo("admin/layanan/tryout")}>
+                      <Button variant="ghost" className="w-full flex justify-start" onClick={() => navigateTo("/admin/layanan/tryout")}>
                         <BookOpen size={18} />
                         <span>Buat & Update Try Out</span>
                       </Button>
                     </CommandItem>
                     <CommandItem>
-                      <Button variant="ghost" className="w-full flex justify-start" onClick={() => navigateTo("admin/layanan/bimbel")}>
+                      <Button variant="ghost" className="w-full flex justify-start" onClick={() => navigateTo("/admin/layanan/bimbel")}>
                         <ClipboardList size={18} />
                         <span>Buat & Update Bimbel</span>
                       </Button>
                     </CommandItem>
                     <CommandItem>
-                      <Button variant="ghost" className="w-full flex justify-start" onClick={() => navigateTo("admin/layanan/smartbook")}>
+                      <Button variant="ghost" className="w-full flex justify-start" onClick={() => navigateTo("/admin/layanan/smartbook")}>
                         <Package size={18} />
                         <span>Buat & Update SmartBook</span>
                       </Button>
                     </CommandItem>
                     <CommandItem>
-                      <Button variant="ghost" className="w-full flex justify-start" onClick={() => navigateTo("admin/layanan/video")}>
+                      <Button variant="ghost" className="w-full flex justify-start" onClick={() => navigateTo("/admin/layanan/video")}>
                         <TrendingUp size={18} />
                         <span>Buat & Update Video Belajar</span>
                       </Button>
@@ -71,13 +71,13 @@ export default function Hamburger({ userDetail }: { userDetail: userDetailInterf
 
                   <CommandGroup heading="Try Out">
                     <CommandItem>
-                      <Button variant="ghost" className="w-full flex justify-start" onClick={() => navigateTo("admin/tryout/buat-soal")}>
+                      <Button variant="ghost" className="w-full flex justify-start" onClick={() => navigateTo("/admin/tryout/buat-soal")}>
                         <Edit size={18} />
                         <span>Buat Soal Try Out</span>
                       </Button>
                     </CommandItem>
                     <CommandItem>
-                      <Button variant="ghost" className="w-full flex justify-start" onClick={() => navigateTo("admin/tryout/akses")}>
+                      <Button variant="ghost" className="w-full flex justify-start" onClick={() => navigateTo("/admin/tryout/akses")}>
                         <Key size={18} />
                         <span>Tambahkan Akses Try Out</span>
                       </Button>
@@ -86,34 +86,45 @@ export default function Hamburger({ userDetail }: { userDetail: userDetailInterf
 
                   <CommandSeparator />
 
-                  <CommandGroup heading="Pelanggan">
+                  <CommandGroup heading="Bimbel">
                     <CommandItem>
-                      <Button variant="ghost" className="w-full flex justify-start" onClick={() => navigateTo("admin/pelanggan/user")}>
-                        <User size={18} />
-                        <span>Daftar User</span>
+                      <Button variant="ghost" className="w-full flex justify-start" onClick={() => navigateTo("/admin/bimbel/bareng")}>
+                        <Key size={18} />
+                        <span>Tambahkan Akses Bimbel Bareng</span>
                       </Button>
                     </CommandItem>
                     <CommandItem>
-                      <Button variant="ghost" className="w-full flex justify-start" onClick={() => navigateTo("admin/pelanggan/kritik-saran")}>
-                        <MessageSquare size={18} />
-                        <span>Daftar Kritik dan Saran</span>
+                      <Button variant="ghost" className="w-full flex justify-start" onClick={() => navigateTo("/admin/bimbel/private")}>
+                        <Key size={18} />
+                        <span>Tambahkan Akses Bimbel Private</span>
                       </Button>
                     </CommandItem>
                   </CommandGroup>
 
                   <CommandSeparator />
 
-                  <CommandGroup heading="Pendapatan">
+                  <CommandGroup heading="Smartbook & Video Belajar">
                     <CommandItem>
-                      <Button variant="ghost" className="w-full flex justify-start" onClick={() => navigateTo("admin/pendapatan/pendaftar")}>
-                        <Users size={18} />
-                        <span>Jumlah Pendaftar Per Layanan</span>
+                      <Button variant="ghost" className="w-full flex justify-start" onClick={() => navigateTo("/admin/mayar")}>
+                        <Edit size={18} />
+                        <span>Push Layanan Smartbook & Video Belajar</span>
+                      </Button>
+                    </CommandItem>
+                  </CommandGroup>
+
+                  <CommandSeparator />
+
+                  <CommandGroup heading="Pelanggan">
+                    <CommandItem>
+                      <Button variant="ghost" className="w-full flex justify-start" onClick={() => navigateTo("/admin/pelanggan/user")}>
+                        <User size={18} />
+                        <span>Daftar User</span>
                       </Button>
                     </CommandItem>
                     <CommandItem>
-                      <Button variant="ghost" className="w-full flex justify-start" onClick={() => navigateTo("admin/pendapatan/estimasi")}>
-                        <BarChart2 size={18} />
-                        <span>Estimasi Pendapatan</span>
+                      <Button variant="ghost" className="w-full flex justify-start" onClick={() => navigateTo("/admin/pelanggan/kritik-saran")}>
+                        <MessageSquare size={18} />
+                        <span>Daftar Kritik dan Saran</span>
                       </Button>
                     </CommandItem>
                   </CommandGroup>

@@ -3,8 +3,14 @@
 import LayoutBackgroundRed from "@/layout/LayoutBackgroundRed";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { usePathname } from "next/navigation";
 
 export default function Footer() {
+  const pathname = usePathname();
+
+  if (pathname.startsWith("/auth")) {
+    return null;
+  }
   const products = ["Try Out Gratis & Premium", "Bimbel Private & Barengan", "Smart Book", "Video Belajar"];
 
   const fadeInUp = {
@@ -17,7 +23,7 @@ export default function Footer() {
   };
   return (
     <LayoutBackgroundRed>
-      <footer className="w-full px-8 md:px-28">
+      <footer className="w-full px-8 md:px-28 pt-12">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 max-w-[1280px] mx-auto">
           {/* Logo & Deskripsi */}
           <div className="flex flex-col gap-4">

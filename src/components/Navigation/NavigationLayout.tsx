@@ -1,9 +1,9 @@
-import { Navbar } from "./Navbar";
+import NavbarSection from "./NavbarSection";
 
 export default function Navigation() {
   return (
     <>
-      <Navbar />
+      <NavbarSection />
     </>
   );
 }

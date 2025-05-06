@@ -21,7 +21,6 @@ const AccessButtonWithModal = ({ haveAccessGratis, haveAccessPremium, product }:
     if (password === correctPassword) {
       setIsPasswordCorrect(true); // Jika password benar, set status true
       toast.success(`Password benar, silakan klik "Mulai Kerjakan!" untuk mulai belajar.`);
-      setPassword(""); // Reset password field
     } else {
       toast.error("Password yang Anda masukkan salah! Coba lagi.");
       setPassword(""); // Reset password field
@@ -80,7 +79,7 @@ const AccessButtonWithModal = ({ haveAccessGratis, haveAccessPremium, product }:
             <Button variant="outline" onClick={() => setIsGratisDialogOpen(false)}>
               Tutup
             </Button>
-            <Button variant="default" onClick={handlePasswordSubmit} disabled={isPasswordCorrect}>
+            <Button variant="default" className="bg-[#ad0a1f] hover:bg-[#d7263d]" onClick={handlePasswordSubmit} disabled={isPasswordCorrect}>
               Cek Password
             </Button>
 
@@ -107,7 +106,7 @@ const AccessButtonWithModal = ({ haveAccessGratis, haveAccessPremium, product }:
                 Tutup
               </Button>
             </DialogClose>
-            <Button variant="default" onClick={() => toast.success("Akses Premium Diterima")}>
+            <Button variant="default" className="bg-[#ad0a1f] hover:bg-[#d7263d]" onClick={() => toast.success("Akses Premium Diterima")}>
               Mulai Belajar
             </Button>
           </DialogFooter>
