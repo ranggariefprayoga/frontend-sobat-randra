@@ -15,7 +15,6 @@ export const historyNilaiDataDummy: HistoryNilaiModel[] = [
         correct_answers: 22,
         wrong_answers: 8,
         score: 110,
-        ambang_batas: 100,
       },
       {
         category: "Tes Intelegensi Umum",
@@ -23,7 +22,6 @@ export const historyNilaiDataDummy: HistoryNilaiModel[] = [
         correct_answers: 28,
         wrong_answers: 7,
         score: 140,
-        ambang_batas: 100,
       },
       {
         category: "Tes Karakteristik Pribadi",
@@ -31,7 +29,6 @@ export const historyNilaiDataDummy: HistoryNilaiModel[] = [
         correct_answers: 32,
         wrong_answers: 13,
         score: 200,
-        ambang_batas: 100,
       },
     ],
   },
@@ -49,7 +46,6 @@ export const historyNilaiDataDummy: HistoryNilaiModel[] = [
         correct_answers: 18,
         wrong_answers: 12,
         score: 90,
-        ambang_batas: 100,
       },
       {
         category: "Tes Intelegensi Umum",
@@ -57,7 +53,6 @@ export const historyNilaiDataDummy: HistoryNilaiModel[] = [
         correct_answers: 25,
         wrong_answers: 10,
         score: 120,
-        ambang_batas: 100,
       },
       {
         category: "Tes Karakteristik Pribadi",
@@ -65,7 +60,6 @@ export const historyNilaiDataDummy: HistoryNilaiModel[] = [
         correct_answers: 28,
         wrong_answers: 17,
         score: 170,
-        ambang_batas: 100,
       },
     ],
   },
@@ -83,7 +77,6 @@ export const historyNilaiDataDummy: HistoryNilaiModel[] = [
         correct_answers: 25,
         wrong_answers: 5,
         score: 120,
-        ambang_batas: 100,
       },
       {
         category: "Tes Intelegensi Umum",
@@ -91,7 +84,6 @@ export const historyNilaiDataDummy: HistoryNilaiModel[] = [
         correct_answers: 30,
         wrong_answers: 5,
         score: 150,
-        ambang_batas: 100,
       },
       {
         category: "Tes Karakteristik Pribadi",
@@ -99,7 +91,6 @@ export const historyNilaiDataDummy: HistoryNilaiModel[] = [
         correct_answers: 40,
         wrong_answers: 5,
         score: 230,
-        ambang_batas: 100,
       },
     ],
   },

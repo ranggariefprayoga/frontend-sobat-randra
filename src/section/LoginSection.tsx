@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
+import { useLogin } from "@/lib/api/user.api";
 
 const correctEmail = "user@example.com";
 const correctPassword = "12345";
@@ -15,6 +16,7 @@ export default function LoginComponent() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const login = useLogin();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,20 +28,14 @@ export default function LoginComponent() {
         return;
       }
 
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      await login.mutateAsync({ email, password });
 
-      if (email === correctEmail && password === correctPassword) {
-        toast.success("Login berhasil! Selamat datang 👋");
-        router.push("/");
-        setEmail("");
-        setPassword("");
-      } else {
-        toast.error("Email atau password salah.");
-        setEmail("");
-        setPassword("");
-      }
+      toast.success("Login berhasil! Selamat datang 👋");
+      router.push("/");
+      setEmail("");
+      setPassword("");
     } catch (err) {
-      toast.error("Terjadi kesalahan. Coba lagi.");
+      toast.error("Email atau password salah.");
       setEmail("");
       setPassword("");
     } finally {

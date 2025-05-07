@@ -11,6 +11,5 @@ export interface HistoryNilaiModel {
     correct_answers: number;
     wrong_answers: number;
     score: number;
-    ambang_batas: number;
   }[];
 }

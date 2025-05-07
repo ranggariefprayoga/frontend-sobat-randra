@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useRouter } from "next/navigation";
@@ -5,13 +7,29 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Edit, Key, LogOut, Menu } from "lucide-react";
 import { Avatar, AvatarFallback } from "../ui/avatar";
-import { userDetailInterface } from "@/model/user.model";
 import NoAuthNavbarComponent from "./NoAuthNavbar";
 import { Command, CommandGroup, CommandItem, CommandList, CommandSeparator } from "../ui/command";
 import { BookOpen, ClipboardList, HelpCircle, Home, MessageSquare, Package, TrendingUp, User } from "lucide-react";
+import { UserDetailInterface } from "@/model/user.model";
+import { useLogout } from "@/lib/api/user.api";
+import { toast } from "sonner";
 
-export default function Hamburger({ userDetail }: { userDetail: userDetailInterface | null }) {
+export default function Hamburger({ userDetail }: { userDetail: UserDetailInterface }) {
   const router = useRouter();
+  const logoutMutation = useLogout();
+  const idUser = userDetail?.id;
+
+  const handleLogout = async () => {
+    try {
+      if (idUser) {
+        await logoutMutation.mutateAsync(String(idUser));
+      }
+      toast.success("Logout berhasil! Dadahh 👋");
+      router.push("/auth/login");
+    } catch (err) {
+      toast.error("Logout gagal! Coba lagi.");
+    }
+  };
 
   const navigateTo = (url: string) => {
     router.push(url);
@@ -28,10 +46,10 @@ export default function Hamburger({ userDetail }: { userDetail: userDetailInterf
         <SheetContent side={"left"}>
           <SheetHeader>
             <div className="flex items-center gap-2">
-              <img src="/logo/logo.png" alt="Sobat Randra Logo" className="w-14 h-14 object-contain" />
+              <img src="/logo/logo.png" alt="Sobat Randra Logo" className="w-8 h-8 md:w-14 md:h-14 object-contain" />
               <div>
-                <SheetTitle className="text-[#ad0a1f] font-semibold text-xl">Sobat Randra</SheetTitle>
-                <SheetDescription className="text-sm text-gray-600">All in one Platform belajar SKD CPNS, BUMN, dan Polri</SheetDescription>
+                <SheetTitle className="text-[#ad0a1f] font-semibold text-lg md:text-xl">Sobat Randra</SheetTitle>
+                <SheetDescription className="text-xs md:text-sm text-gray-600">All in one Platform belajar SKD CPNS, BUMN, dan Polri</SheetDescription>
               </div>
             </div>
           </SheetHeader>
@@ -207,12 +225,12 @@ export default function Hamburger({ userDetail }: { userDetail: userDetailInterf
                     <AvatarFallback>{userDetail.name.charAt(0)}</AvatarFallback>
                   </Avatar>
                   <div>
-                    <div className="font-semibold text-base">{userDetail.name}</div>
-                    <div className="text-sm opacity-80">{userDetail.email}</div>
+                    <div className="font-semibold text-sm md:text-base">{userDetail.name}</div>
+                    <div className="text-xs md:text-sm opacity-80">{userDetail.email}</div>
                   </div>
                 </div>
                 <SheetClose asChild>
-                  <Button variant="outline" onClick={() => navigateTo("/pilihan-paket")} className="flex items-center gap-2 text-black">
+                  <Button variant="outline" onClick={handleLogout} className="flex items-center gap-2 text-black">
                     <LogOut size={18} />
                     Log Out
                   </Button>

@@ -1,10 +1,35 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+"use client";
+
 import { getFirstName } from "@/utils/getFirstName";
 import { Button } from "../ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { LogOut, User } from "lucide-react";
-import { userDetailInterface } from "@/model/user.model";
+import { UserDetailInterface } from "@/model/user.model";
+import { useRouter } from "next/navigation";
+import { useLogout } from "@/lib/api/user.api";
+import { toast } from "sonner";
 
-export default function ProfileComponent({ userDetail }: { userDetail: userDetailInterface | null }) {
+export default function ProfileComponent({ userDetail }: { userDetail: UserDetailInterface | null }) {
+  const router = useRouter();
+  const logoutMutation = useLogout();
+  const idUser = userDetail?.id;
+  const navigateTo = (url: string) => {
+    router.push(url);
+  };
+
+  const handleLogout = async () => {
+    try {
+      if (idUser) {
+        await logoutMutation.mutateAsync(String(idUser));
+      }
+      toast.success("Logout berhasil! Dadahh 👋");
+      router.push("/auth/login");
+    } catch (err) {
+      toast.error("Logout gagal! Coba lagi.");
+    }
+  };
+
   return (
     <>
       <DropdownMenu>
@@ -16,18 +41,22 @@ export default function ProfileComponent({ userDetail }: { userDetail: userDetai
             </Button>
           )}
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-56">
+        <DropdownMenuContent>
           <DropdownMenuLabel>Akun Saya</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
-            <DropdownMenuItem>
-              <User size={18} />
-              <span>Profile Saya</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <LogOut size={18} />
-              <span>Log Out</span>
-            </DropdownMenuItem>
+            <Button variant="ghost" className="w-full flex justify-start" onClick={() => navigateTo("/profile")}>
+              <DropdownMenuItem>
+                <User size={18} />
+                <span>Profile Saya</span>
+              </DropdownMenuItem>
+            </Button>
+            <Button variant="ghost" className="w-full flex justify-start" onClick={handleLogout}>
+              <DropdownMenuItem>
+                <LogOut size={18} />
+                <span>Log Out</span>
+              </DropdownMenuItem>
+            </Button>
           </DropdownMenuGroup>
         </DropdownMenuContent>
       </DropdownMenu>

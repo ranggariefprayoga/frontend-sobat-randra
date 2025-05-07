@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { Eye, EyeOff } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useRegister } from "@/lib/api/user.api";
 
 export default function RegisterComponent() {
   const [name, setName] = useState("");
@@ -14,6 +15,7 @@ export default function RegisterComponent() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const register = useRegister();
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,8 +27,7 @@ export default function RegisterComponent() {
         return;
       }
 
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-
+      await register.mutateAsync({ name, email, password });
       toast.success("Registrasi berhasil! Silakan login.");
       router.push("/auth/login");
       setName("");
