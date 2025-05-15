@@ -7,11 +7,15 @@ import Profile from "./Profile";
 import { useUser } from "@/lib/api/user.api";
 
 export function Navbar() {
-  const { data, isLoading } = useUser();
+  const { data, isLoading, error } = useUser();
 
   if (isLoading) {
-    <LoadingComponent />;
+    return <LoadingComponent />;
   }
+
+  console.log(error);
+
+  // console.log(data);
 
   return (
     <div className="bg-[#ad0a1f]">

@@ -1,87 +1,83 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
+// Helper function to decode JWT
+const decodeJWT = (token: string) => {
+  const parts = token.split(".");
+  if (parts.length !== 3) {
+    throw new Error("Invalid JWT format");
+  }
+  const payloadBase64 = parts[1];
+  const payloadJson = JSON.parse(decodeURIComponent(atob(payloadBase64)));
+  return payloadJson;
+};
+
 export function middleware(req: NextRequest) {
-  const accessToken = req.cookies.get("token_user")?.value;
+  const accessToken = req.cookies.get("user_token")?.value;
+
   const quizToken = req.cookies.get("quiz_token")?.value;
   const url = req.nextUrl;
 
+  console.log(accessToken);
+
+  // 1. Redirect to login if no accessToken and not accessing /auth routes
   if (!accessToken && !url.pathname.startsWith("/auth")) {
     return NextResponse.redirect(new URL("/auth/login", req.url));
   }
 
+  // 2. Redirect to belajar if no quizToken or accessToken, and trying to access quiz routes
   if (!quizToken || !accessToken) {
     if (url.pathname.includes("/quiz")) {
       return NextResponse.redirect(new URL("/mulai-belajar", req.url));
     }
   }
 
+  // 3. Handle both quizToken and accessToken, ensuring they belong to the same user
   if (quizToken && accessToken) {
     if (url.pathname.includes("/quiz")) {
       try {
-        // ✅ Pastikan JWT memiliki format yang benar
-        const jwtParts = accessToken.split(".");
-        if (jwtParts.length !== 3) {
-          throw new Error("Invalid JWT format");
-        }
+        const accessPayload = decodeJWT(accessToken);
+        const quizPayload = decodeJWT(quizToken);
 
-        const payloadBase64 = jwtParts[1];
-        const payloadJson = JSON.parse(decodeURIComponent(atob(payloadBase64)));
-        const userEmail = payloadJson.email;
+        const userEmail = accessPayload.email;
+        const quizEmail = quizPayload.email;
 
-        const jwtPartsQuiz = quizToken.split(".");
-        if (jwtPartsQuiz.length !== 3) {
-          throw new Error("Invalid JWT format");
-        }
-
-        const payloadBase64Quiz = jwtPartsQuiz[1]; // ✅ Perbaiki disini (gunakan jwtPartsQuiz, bukan jwtParts)
-        const payloadJsonQuiz = JSON.parse(decodeURIComponent(atob(payloadBase64Quiz)));
-        const quizEmail = payloadJsonQuiz.email;
-
+        // If emails do not match, redirect to belajar
         if (userEmail !== quizEmail) {
           return NextResponse.redirect(new URL("/mulai-belajar", req.url));
         }
 
         const response = NextResponse.next();
-        response.headers.set("X-Quiz-Started-At", payloadJsonQuiz.started_at);
-        response.headers.set("X-Quiz-Expired-At", payloadJsonQuiz.expired_at || new Date(Date.now() + 60 * 60 * 1000).toISOString()); // Default 1 jam
-
         return response;
       } catch (error) {
         console.error("JWT Decode Failed:", error);
-        return NextResponse.redirect(new URL("/", req.url));
+        return NextResponse.redirect(new URL("/", req.url)); // Error decoding JWT
       }
     }
   }
-  // Jika user sudah login dan mencoba akses halaman auth, redirect ke dashboard
+
+  // 4. Redirect authenticated users trying to access /auth to the dashboard
   if (accessToken && url.pathname.startsWith("/auth")) {
     return NextResponse.redirect(new URL("/", req.url));
   }
 
-  // ✅ Cek Role di Cookie (hanya bisa membaca, tidak bisa verifikasi)
+  // 5. Check user role if accessing admin pages
   if (accessToken && url.pathname.startsWith("/admin")) {
     try {
-      // ✅ Pastikan JWT memiliki format yang benar
-      const jwtParts = accessToken.split(".");
-      if (jwtParts.length !== 3) {
-        throw new Error("Invalid JWT format");
-      }
+      const accessPayload = decodeJWT(accessToken);
+      const userRole = accessPayload.role;
 
-      const payloadBase64 = jwtParts[1]; // Ambil payload dari JWT
-      const payloadJson = JSON.parse(decodeURIComponent(atob(payloadBase64))); // Decode payload dengan aman
-      const userRole = payloadJson.role; // Ambil role user
-
-      // Jika bukan Admin, redirect ke mulai-belajar
+      // If not Admin, redirect to home
       if (userRole !== "Admin") {
         return NextResponse.redirect(new URL("/", req.url));
       }
     } catch (error) {
-      console.error("JWT Decode Failed:", error);
-      return NextResponse.redirect(new URL("/auth/login", req.url));
+      return NextResponse.redirect(new URL("/auth/login", req.url)); // Error in JWT decoding or role check
     }
   }
 
-  return NextResponse.next();
+  return NextResponse.next(); // Continue processing for other routes
 }
 
 export const config = {
