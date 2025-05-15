@@ -57,7 +57,7 @@ export default function CardTryOut({ product, customLink, buttonText = "Lihat De
           }}
           disabled={!product.is_active}
         >
-          {product.is_active ? buttonText : "Try Out Tidak Tersedia"}
+          {product.is_active ? buttonText : "Try Out Belum Tersedia"}
         </Button>
       </div>
     </div>

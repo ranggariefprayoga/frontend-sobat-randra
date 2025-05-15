@@ -6,16 +6,27 @@ import CardBimbel from "@/components/CardProductComponent/CardBimbel"; // Impor 
 import NullComponent from "@/components/NullComponent/NullComponent";
 import TitleComponent from "@/components/TitleComponent/TitleComponent";
 import { Button } from "@/components/ui/button";
-import { dummyProductBimbel, dummyProductTryOut } from "@/data/dummy/product.home";
+import { dummyProductBimbel } from "@/data/dummy/product.home";
 import { LayoutBackgroundImage } from "@/layout/LayoutBackgroundImage";
 import { BimbelProductlModel, TryOutProductModel } from "@/model/product.model";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useGetTryOutProductsForHome } from "@/lib/api/productTryOut.api";
+import LoadingComponent from "@/components/LoadingComponent/LoadingComponent";
 
 export default function HomeProdukSection() {
   const router = useRouter();
 
   const [selectedCategory, setSelectedCategory] = useState<string>("try-out");
+  const { data: productTryOutForHomePage, isLoading } = useGetTryOutProductsForHome();
+
+  if (isLoading) {
+    return (
+      <div className="px-8 md:px-24 flex justify-center w-full">
+        <LoadingComponent />
+      </div>
+    );
+  }
 
   const handleCategoryClick = (category: string) => {
     setSelectedCategory(category);
@@ -23,7 +34,7 @@ export default function HomeProdukSection() {
 
   let filteredProducts: any = [];
   if (selectedCategory === "try-out") {
-    filteredProducts = dummyProductTryOut;
+    filteredProducts = productTryOutForHomePage?.data || [];
   } else if (selectedCategory === "bimbel") {
     filteredProducts = dummyProductBimbel;
   } else if (selectedCategory === "smart-book") {
@@ -74,7 +85,7 @@ export default function HomeProdukSection() {
         {filteredProducts && filteredProducts.length > 0 ? (
           <>
             <div className="w-full px-8 md:px-24 grid grid-cols-1  lg:grid-cols-2 xl:grid-cols-3 gap-6 mt-8">
-              {selectedCategory === "try-out" && filteredProducts.map((product: TryOutProductModel) => <CardTryOut key={product.id} product={product} customLink="/pilihan-paket" />)}
+              {selectedCategory === "try-out" && filteredProducts.map((product: TryOutProductModel) => <CardTryOut key={product.id} product={product} customLink={`/pilihan-paket/tryout/${product.id}`} />)}
               {selectedCategory === "bimbel" && filteredProducts.map((product: BimbelProductlModel) => <CardBimbel key={product.id} product={product} customLink="/pilihan-paket" />)}
               {/* Tambahkan komponen lain seperti SmartBook atau VideoBelajar jika datanya ada */}
             </div>
