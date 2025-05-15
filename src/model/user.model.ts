@@ -29,3 +29,33 @@ export interface RegisterUserRequest {
   password: string;
   role?: string;
 }
+
+export interface UpdateUserRequest {
+  name?: string;
+  password?: string;
+}
+
+export interface WebPaginatedResponse<T> {
+  data: T;
+  meta: {
+    total: number;
+    totalPages: number;
+    page: number;
+    limit: number;
+  };
+}
+
+export interface GetUsersParams {
+  page?: number;
+  limit?: number;
+  search?: string;
+}
+
+export interface UserResponse {
+  id: number;
+  name: string;
+  email: string;
+  role: string;
+  created_at: Date;
+  updated_at: Date;
+}

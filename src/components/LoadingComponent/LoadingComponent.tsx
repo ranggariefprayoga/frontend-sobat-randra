@@ -1,9 +1,9 @@
 import { LoaderCircle } from "lucide-react";
 
-export default function LoadingComponent() {
-  return (
-    <>
-      <LoaderCircle color="#ffffff" className="animate-spin" strokeWidth={3} />
-    </>
-  );
+type LoadingComponentProps = {
+  color?: string;
+};
+
+export default function LoadingComponent({ color = "#ffffff" }: LoadingComponentProps) {
+  return <LoaderCircle color={color} className="animate-spin" strokeWidth={3} />;
 }

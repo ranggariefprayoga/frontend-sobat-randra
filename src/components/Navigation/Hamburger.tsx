@@ -15,8 +15,6 @@ import { useLogout } from "@/lib/api/user.api";
 import { toast } from "sonner";
 
 export default function Hamburger({ userDetail }: { userDetail: UserDetailInterface }) {
-  console.log(userDetail);
-
   const router = useRouter();
   const logoutMutation = useLogout();
   const idUser = userDetail?.id;

@@ -19,8 +19,6 @@ export function middleware(req: NextRequest) {
   const quizToken = req.cookies.get("quiz_token")?.value;
   const url = req.nextUrl;
 
-  console.log(accessToken);
-
   // 1. Redirect to login if no accessToken and not accessing /auth routes
   if (!accessToken && !url.pathname.startsWith("/auth")) {
     return NextResponse.redirect(new URL("/auth/login", req.url));

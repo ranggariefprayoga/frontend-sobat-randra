@@ -52,7 +52,6 @@ export default function AccessButtonWithModal({ isPremiumAvailable, product, isF
   };
 
   const handleGratisSubmit = () => {
-    console.log(password);
     toast.success(`Try Out dimulai gratis, tunggu sebentar...`);
     setIsGratisDialogOpen(false);
     setPassword("");

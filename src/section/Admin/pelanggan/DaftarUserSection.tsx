@@ -3,6 +3,7 @@
 import TitleComponent from "@/components/TitleComponent/TitleComponent";
 import ButtonWithIcon from "@/components/TombolBack/TombolBack";
 import LayoutBackgroundWhite from "@/layout/LayoutBackgroundWhite";
+import DaftarUser from "@/pages/Admin/PelangganComponent";
 import { ArrowLeft } from "lucide-react";
 
 export default function DaftarUserSection() {
@@ -10,6 +11,7 @@ export default function DaftarUserSection() {
     <LayoutBackgroundWhite>
       <ButtonWithIcon icon={ArrowLeft} label="Kembali" />
       <TitleComponent title="Daftar User" />
+      <DaftarUser />
     </LayoutBackgroundWhite>
   );
 }
