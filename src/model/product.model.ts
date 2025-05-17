@@ -10,8 +10,8 @@ export interface TryOutProductModel {
   price: number;
   is_free_available?: boolean;
   link_to_form?: string;
-  created_at: string;
-  updated_at: string;
+  created_at: Date;
+  updated_at: Date;
 }
 
 export interface BimbelProductlModel {
@@ -27,8 +27,8 @@ export interface BimbelProductlModel {
   old_price?: number;
   link_to_meeting?: string;
   link_to_whatsApp?: string;
-  created_at: string;
-  updated_at: string;
+  created_at: Date;
+  updated_at: Date;
 }
 
 export interface createTryOutResponse {

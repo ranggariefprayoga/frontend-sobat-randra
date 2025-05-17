@@ -7,7 +7,7 @@ import { createTryOutResponse, updateTryOutRequest, updateTryOutResponse } from 
 type UpdateProductPayload = {
   productId: number | string;
   data: updateTryOutRequest;
-  file?: File | null; // untuk update dengan file, sesuaikan kebutuhan
+  file?: File | null;
 };
 
 // Get all tryout products (protected)
@@ -48,15 +48,15 @@ export const useGetTryOutProductById = (productId?: string | number | null) => {
   });
 };
 
-// Create new tryout product with file upload (protected)
-export const useCreateTryOutProduct = (): UseMutationResult<WebResponse<createTryOutResponse>, Error, { data: string; file: File }> => {
+// Create new tryout product
+export const useCreateTryOutProduct = (): UseMutationResult<WebResponse<createTryOutResponse>, Error, { data: string; banner_image: File }> => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ data, file }) => {
+    mutationFn: async ({ data, banner_image }) => {
       const formData = new FormData();
       formData.append("data", data);
-      formData.append("banner_image", file);
+      formData.append("banner_image", banner_image);
 
       const res = await axios.post(`${API_BASE_URL}/api/products/tryout`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
@@ -65,12 +65,13 @@ export const useCreateTryOutProduct = (): UseMutationResult<WebResponse<createTr
       return res.data;
     },
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["products", "tryout"] });
       queryClient.invalidateQueries({ queryKey: ["products", "tryout", "home"] });
     },
   });
 };
 
-// Update tryout product by ID with optional file (protected)
+// Update tryout product
 export const useUpdateTryOutProduct = (): UseMutationResult<WebResponse<updateTryOutResponse>, Error, UpdateProductPayload> => {
   const queryClient = useQueryClient();
 
@@ -87,13 +88,14 @@ export const useUpdateTryOutProduct = (): UseMutationResult<WebResponse<updateTr
       return res.data;
     },
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ["products", "tryout", "home", variables.productId] });
+      queryClient.invalidateQueries({ queryKey: ["products", "tryout"] });
       queryClient.invalidateQueries({ queryKey: ["products", "tryout", "home"] });
+      queryClient.invalidateQueries({ queryKey: ["products", "tryout", variables.productId] });
     },
   });
 };
 
-// Delete all tryout products (protected)
+// Delete all tryout products
 export const useDeleteAllTryOutProducts = (): UseMutationResult<WebResponse<string>, Error, void> => {
   const queryClient = useQueryClient();
 
@@ -103,12 +105,13 @@ export const useDeleteAllTryOutProducts = (): UseMutationResult<WebResponse<stri
       return res.data;
     },
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["products", "tryout"] });
       queryClient.invalidateQueries({ queryKey: ["products", "tryout", "home"] });
     },
   });
 };
 
-// Delete tryout product by ID (protected)
+// Delete tryout product by ID
 export const useDeleteTryOutProductById = (): UseMutationResult<WebResponse<string>, Error, number> => {
   const queryClient = useQueryClient();
 
@@ -117,13 +120,15 @@ export const useDeleteTryOutProductById = (): UseMutationResult<WebResponse<stri
       const res = await axios.delete(`${API_BASE_URL}/api/products/tryout/${productId}`, { withCredentials: true });
       return res.data;
     },
-    onSuccess: () => {
+    onSuccess: (_, productId) => {
+      queryClient.invalidateQueries({ queryKey: ["products", "tryout"] });
       queryClient.invalidateQueries({ queryKey: ["products", "tryout", "home"] });
+      queryClient.invalidateQueries({ queryKey: ["products", "tryout", productId] });
     },
   });
 };
 
-// Get tryout product image url by ID (protected)
+// Get product image by ID
 export const useGetTryOutProductImageById = (productId?: number | string | null) => {
   return useQuery<WebResponse<string>, Error>({
     queryKey: ["products", "tryout", "image", "home", productId],

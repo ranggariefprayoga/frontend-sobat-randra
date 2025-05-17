@@ -91,7 +91,7 @@ export default function PilihanPaketSection() {
           </div>
         </>
       ) : (
-        <NullComponent message="Belum ada produk tersedia" color="text-black" />
+        <NullComponent message="Produk Belum Tersedia" color="text-black" />
       )}
     </LayoutBackgroundWhite>
   );
