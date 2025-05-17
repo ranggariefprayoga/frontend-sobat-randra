@@ -6,6 +6,8 @@ import { useGetTryOutProductById } from "@/lib/api/productTryOut.api";
 import { ArrowLeft } from "lucide-react";
 import { use } from "react";
 import DetailTO from "./DetailTO";
+import { DialogInfo } from "@/components/Dialog/DialogInfo";
+import { caraAksesTryOut } from "@/data/cara-akses-to";
 
 export default function DetailPilihanPaketTO({ params }: { params: Promise<{ product_id: string }> }) {
   const { product_id: id } = use(params);
@@ -19,11 +21,15 @@ export default function DetailPilihanPaketTO({ params }: { params: Promise<{ pro
     );
   }
 
-  console.log(product);
-
   return (
     <LayoutBackgroundWhite>
       <ButtonWithIcon icon={ArrowLeft} label="Kembali" />
+      <div className="flex-flex-col lg:flex-row px-8 md:px-24 gap-2">
+        {caraAksesTryOut.map((item) => (
+          <DialogInfo key={item.title} title={item.title} description={item.description} triggerText={item.trigger} details={item.details} />
+        ))}
+      </div>
+
       <DetailTO product={product?.data} />
     </LayoutBackgroundWhite>
   );

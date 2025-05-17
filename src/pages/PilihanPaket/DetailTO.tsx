@@ -2,11 +2,8 @@
 
 import React from "react";
 import Image from "next/image";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { createTryOutResponse } from "@/model/product.model";
-import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 
 type Props = {
@@ -18,67 +15,85 @@ function ProdukBelumTersedia() {
 }
 
 export default function DetailTO({ product }: Props) {
-  const router = useRouter();
   if (!product) return <ProdukBelumTersedia />;
 
-  const handleLinkToForm = () => {
-    router.push(product.link_to_form || "");
-  };
+  const discount = product.old_price && product.old_price > product.price && product.old_price > 0 ? Math.round(((product.old_price - product.price) / product.old_price) * 100) : null;
+
+  const whatsappMessage = `https://wa.me/628774867857?text=Halo%20min%2C%20aku%20mau%20pesen%20${encodeURIComponent(product.name)}`;
 
   return (
-    <div className="px-8 md:px-24 max-w-7xl mx-auto mt-8">
-      <Card className="shadow-lg">
-        <CardHeader>
-          <CardTitle className="text-3xl font-bold">{product.name}</CardTitle>
-          <CardDescription className="text-muted-foreground">{product.marketing_text}</CardDescription>
-        </CardHeader>
+    <div className="w-full max-w-7xl mx-auto px-6 md:px-24 mt-8">
+      {/* Konten */}
+      <div className="flex flex-col md:flex-row gap-6 items-start">
+        {/* Banner */}
+        <div className="relative w-full md:w-[45%] aspect-[16/9] rounded-xl overflow-hidden flex-shrink-0">
+          {product.banner_image ? (
+            <Image src={product.banner_image} alt={product.name} fill className="object-cover" sizes="(max-width: 768px) 100vw, 45vw" priority />
+          ) : (
+            <div className="flex items-center justify-center w-full h-full bg-gray-200 text-gray-500 text-sm">Gambar tidak tersedia</div>
+          )}
+        </div>
 
-        <CardContent className="flex flex-col md:flex-row gap-6">
-          <div className="relative w-full h-64 md:h-auto md:w-1/2 rounded-lg overflow-hidden">
-            {product.banner_image ? (
-              <Image src={product.banner_image} alt={product.name} fill className="object-cover" sizes="(max-width: 768px) 100vw, 50vw" priority />
-            ) : (
-              <div className="flex items-center justify-center w-full h-full bg-gray-200 text-gray-500 text-sm">Gambar tidak tersedia</div>
-            )}
+        {/* Deskripsi */}
+        <div className="flex flex-col md:w-[55%] w-full">
+          <h1 className="text-2xl md:text-3xl font-bold text-[#ad0a1f] uppercase mb-2">{product.name}</h1>
+
+          <div className="flex flex-wrap gap-2 mb-4">
+            {product.is_free_available && <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs flex items-center gap-1">📘 Gratis</span>}
+            <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs flex items-center gap-1">📘 Premium</span>
           </div>
 
-          <div className="flex flex-col justify-between md:w-1/2">
-            <p className="mb-4">{product.description}</p>
+          <p className="text-sm text-gray-700 whitespace-pre-line mb-4">{product.description}</p>
 
-            <div className="flex flex-wrap gap-3 mb-4">
-              <Badge variant={product.is_active ? "default" : "outline"} className="uppercase">
-                {product.is_active ? "Aktif" : "Tidak Aktif"}
-              </Badge>
-              {product.is_free_available && (
-                <Badge variant="outline" className="uppercase">
-                  Gratis
-                </Badge>
-              )}
-            </div>
+          {product.is_free_available && product.link_to_form && (
+            <p className="text-sm mb-3">
+              🔐 Dapatkan password Try Out:{" "}
+              <a href={product.link_to_form} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
+                di sini
+              </a>
+            </p>
+          )}
 
-            <Separator className="my-4" />
-
-            <div className="space-y-2 text-lg font-semibold">
-              {product.old_price && (
-                <p>
-                  Harga Lama: <span className="font-normal text-muted-foreground">{product.old_price.toLocaleString("id-ID", { style: "currency", currency: "IDR" })}</span>
-                </p>
-              )}
-              <p>
-                Harga Baru: <span className="font-normal text-muted-foreground">{product.price.toLocaleString("id-ID", { style: "currency", currency: "IDR" })}</span>
-              </p>
-            </div>
-
-            {product.link_to_form && (
-              <Button onClick={handleLinkToForm} className="mt-4">
-                Daftar Sekarang
-              </Button>
-            )}
-
-            <p className="mt-6 text-xs text-muted-foreground">Terakhir diperbarui: {new Date(product.updated_at).toLocaleString("id-ID")}</p>
+          <div className="md:px-0">
+            <Separator className="mb-4" />
           </div>
-        </CardContent>
-      </Card>
+
+          {/* Harga */}
+          <div className="text-lg font-semibold space-y-1 mb-6">
+            {discount !== null && <div className="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded-md mb-1">{discount}%</div>}
+            <div className="flex items-center gap-2">
+              {product.old_price !== undefined && product.old_price > 0 && (
+                <span className="text-sm line-through text-muted-foreground">
+                  {product.old_price.toLocaleString("id-ID", {
+                    style: "currency",
+                    currency: "IDR",
+                  })}
+                </span>
+              )}
+
+              <span className="text-2xl font-bold text-[#ad0a1f]">
+                {product.price.toLocaleString("id-ID", {
+                  style: "currency",
+                  currency: "IDR",
+                })}
+              </span>
+            </div>
+          </div>
+
+          {/* CTA WhatsApp */}
+          <a href={whatsappMessage} target="_blank" rel="noopener noreferrer" className="block w-full md:max-w-xs">
+            <Button className="w-full md:w-auto bg-green-600 hover:bg-green-700 text-white">Pesan Sekarang via WhatsApp</Button>
+          </a>
+        </div>
+      </div>
+
+      {/* Marketing Text - bawah */}
+      {product.marketing_text && product.marketing_text !== "" && (
+        <div className="mt-10 bg-gray-50 border border-gray-200 p-4 rounded-lg text-sm text-gray-700 whitespace-pre-line leading-relaxed">
+          <h1 className="text-2xl md:text-3xl font-bold text-[#ad0a1f] uppercase mb-2">Tentang Paket</h1>
+          {product.marketing_text}
+        </div>
+      )}
     </div>
   );
 }

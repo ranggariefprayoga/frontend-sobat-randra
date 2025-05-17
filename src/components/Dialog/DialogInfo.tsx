@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from "@/components/ui/dialog";
 import { MessageCircleQuestion } from "lucide-react";
 
-interface DialogInfoProps {
+export interface DialogInfoProps {
   triggerText: string;
   title: string;
   description: string;
@@ -14,7 +14,7 @@ export function DialogInfo({ triggerText, title, description, details }: DialogI
     <Dialog>
       {/* Dialog Trigger */}
       <DialogTrigger asChild>
-        <Button size="lg" variant="outline" className="bg-[#f5f5f5] text-black flex justify-start">
+        <Button size="lg" variant="outline" className="mb-1 me-1">
           <MessageCircleQuestion />
           {triggerText}
         </Button>
