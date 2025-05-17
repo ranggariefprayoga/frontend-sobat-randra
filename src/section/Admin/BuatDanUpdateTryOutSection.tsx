@@ -29,7 +29,7 @@ export default function BuatDanUpdateTryOutSection() {
       ) : allProductTryOut?.data && allProductTryOut.data.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-8 md:px-24 mt-4">
           {allProductTryOut.data.map((product: TryOutProductModel) => (
-            <CardTryOutForAdmin key={product.id} product={product} customLink={`/pilihan-paket/tryout/${product.id}`} />
+            <CardTryOutForAdmin key={product.id} product={product} customLink={`/admin/layanan/tryout/${product.id}`} />
           ))}
         </div>
       ) : (

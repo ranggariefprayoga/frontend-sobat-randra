@@ -48,6 +48,19 @@ export const useGetTryOutProductById = (productId?: string | number | null) => {
   });
 };
 
+export const useGetTryOutProductByIdForAdmin = (productId?: string | number | null) => {
+  return useQuery<WebResponse<createTryOutResponse>, Error>({
+    queryKey: ["products", "tryout", productId],
+    queryFn: async () => {
+      if (!productId) throw new Error("productId is required");
+      const res = await axios.get(`${API_BASE_URL}/api/products/tryout/${productId}/admin`, { withCredentials: true });
+      return res.data;
+    },
+    enabled: Boolean(productId),
+    retry: false,
+  });
+};
+
 // Create new tryout product
 export const useCreateTryOutProduct = (): UseMutationResult<WebResponse<createTryOutResponse>, Error, { data: string; banner_image: File }> => {
   const queryClient = useQueryClient();

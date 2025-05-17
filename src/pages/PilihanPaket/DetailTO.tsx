@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
 import { createTryOutResponse } from "@/model/product.model";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
 type Props = {
   product?: createTryOutResponse | undefined;
@@ -39,6 +40,7 @@ export default function DetailTO({ product }: Props) {
           <h1 className="text-2xl md:text-3xl font-bold text-[#ad0a1f] uppercase mb-2">{product.name}</h1>
 
           <div className="flex flex-wrap gap-2 mb-4">
+            {!product.is_active && <Badge>📘 Tidak Aktif</Badge>}
             {product.is_free_available && <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs flex items-center gap-1">📘 Gratis</span>}
             <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs flex items-center gap-1">📘 Premium</span>
           </div>
