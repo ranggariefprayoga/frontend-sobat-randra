@@ -108,7 +108,7 @@ export function CreateTryOutModal() {
 
           {isFree && (
             <div className="mb-4 space-y-1.5">
-              <Label>Password Akses</Label>
+              <Label>Password Akses (Opsional)</Label>
               <Input placeholder="Masukkan password" value={password} onChange={(e) => setPassword(e.target.value)} />
             </div>
           )}

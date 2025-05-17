@@ -71,12 +71,7 @@ export default function DetailTO({ product }: Props) {
                 </span>
               )}
 
-              <span className="text-2xl font-bold text-[#ad0a1f]">
-                {product.price.toLocaleString("id-ID", {
-                  style: "currency",
-                  currency: "IDR",
-                })}
-              </span>
+              <p className="text-2xl font-bold text-[#ad0a1f]">Rp {product.price.toLocaleString("id-ID")}</p>
             </div>
           </div>
 
