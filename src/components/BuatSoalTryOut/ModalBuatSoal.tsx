@@ -95,7 +95,7 @@ export default function CreateQuestionModal({ productId, category, validQuestion
       <DialogTrigger asChild>
         <Button variant="default">Buat Soal Baru</Button>
       </DialogTrigger>
-      <DialogContent className="max-w-7xl max-h-[80vh] overflow-auto w-full">
+      <DialogContent aria-describedby={undefined} className="max-w-7xl max-h-[80vh] overflow-auto w-full">
         <DialogHeader>
           <DialogTitle>Buat Soal Baru - Kategori {category}</DialogTitle>
           <div className="border-b border-gray-300 mb-2" />

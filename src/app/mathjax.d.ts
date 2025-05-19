@@ -1,17 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// mathjax.d.ts
 declare global {
   interface Window {
-    MathJax?: {
-      typesetPromise?: () => Promise<void>;
-    };
+    MathJax: any;
   }
 }
 
 export {};
-
-export const MathJaxTypeset = async () => {
-  if (window.MathJax) {
-    await window.MathJax.typesetPromise();
-  }
-};
-
-export const MathJaxTypesetPromise = window.MathJax?.typesetPromise;

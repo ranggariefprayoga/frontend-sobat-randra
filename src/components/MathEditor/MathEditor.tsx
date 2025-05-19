@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
+import LatexRenderer from "../LatexRendered/LatexRendered";
 
 interface MathEditorProps {
   onChange: (mathTextArray: string[]) => void;
@@ -20,7 +21,18 @@ const MathEditor: React.FC<MathEditorProps> = ({ onChange }) => {
   const [output, setOutput] = useState<string[]>([]);
   const [isPreviewed, setIsPreviewed] = useState(false);
 
-  const convertInput = () => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setInput(e.target.value);
+    setIsPreviewed(false);
+  };
+
+  useEffect(() => {
+    if (window.MathJax) {
+      window.MathJax.typeset();
+    }
+  }, [output]);
+
+  const handlePreview = () => {
     const lines = input.split("\n").map((line) =>
       line
         .replace(/(\d+)\/(\d+)/g, "\\frac{$1}{$2}")
@@ -31,6 +43,7 @@ const MathEditor: React.FC<MathEditorProps> = ({ onChange }) => {
         .replace(/%/g, "\\%")
         .trim()
     );
+
     setOutput(lines);
     onChange(lines);
     setIsPreviewed(true);
@@ -38,15 +51,16 @@ const MathEditor: React.FC<MathEditorProps> = ({ onChange }) => {
 
   return (
     <div className="w-full bg-white rounded-lg">
-      {/* Format Guide */}
-      <div className="bg-blue-50 text-blue-800 p-4 rounded-lg mb-4 border border-blue-300 shadow-sm">
-        <h4 className="font-semibold mb-3 text-sm">Format Guide</h4>
+      <div className="bg-blue-50 text-blue-800 px-4 py-4 rounded-lg mb-4 border border-blue-300 shadow-sm">
         <div className="flex flex-col gap-3 text-xs sm:text-sm">
           {formulas.map(({ symbol, desc, example, result }, idx) => (
-            <div key={idx} className="flex items-start gap-2">
-              <span className="font-bold text-blue-700 whitespace-nowrap w-16">{symbol}</span>
-              <span>
-                {desc} → <code className="bg-gray-100 px-1 rounded">{example}</code> → <span className="font-mono" dangerouslySetInnerHTML={{ __html: `\\(${result}\\)` }} />
+            <div key={idx} className="flex items-center gap-3">
+              <span className="font-bold text-blue-700 whitespace-nowrap w-12 flex-shrink-0">{symbol}</span>
+              <span className="flex flex-wrap items-center gap-1 text-gray-900">
+                <span>{desc} →</span>
+                <code className="bg-gray-100 px-1 py-0.5 rounded text-[0.75rem] sm:text-xs">{example}</code>
+                <span>→</span>
+                <LatexRenderer latexStrings={[result]} />
               </span>
             </div>
           ))}
@@ -57,18 +71,15 @@ const MathEditor: React.FC<MathEditorProps> = ({ onChange }) => {
       <textarea
         rows={4}
         value={input}
-        onChange={(e) => {
-          setInput(e.target.value);
-          setIsPreviewed(false); // reset preview kalau input berubah
-        }}
+        onChange={handleInputChange}
         placeholder="Contoh: 3/10 - 1/2 x (0.75 - 2/5)"
         className="w-full border border-gray-300 px-3 py-2 rounded-md text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none placeholder-gray-400 bg-white text-black"
       />
 
       {/* Preview Button */}
-      <div className="flex justify-start mt-4">
-        <button onClick={convertInput} className="px-5 py-2 text-sm bg-[#081737] text-white hover:bg-[#102245] font-medium rounded-md shadow transition">
-          Cek Preview
+      <div className="flex mt-4">
+        <button onClick={handlePreview} className="px-5 py-2 text-sm bg-[#081737] text-white hover:bg-[#102245] font-medium rounded-md shadow transition">
+          Cek Hasil
         </button>
       </div>
 

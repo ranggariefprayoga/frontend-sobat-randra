@@ -45,7 +45,7 @@ export default function CardTryOutForAdmin({ product, customLink, buttonText = "
               Hapus
             </Button>
           </DialogTrigger>
-          <DialogContent>
+          <DialogContent aria-describedby={undefined}>
             <DialogHeader>
               <DialogTitle>Yakin ingin menghapus?</DialogTitle>
             </DialogHeader>

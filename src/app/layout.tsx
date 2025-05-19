@@ -5,6 +5,7 @@ import Navigation from "@/components/Navigation/NavigationLayout";
 import Footer from "@/components/Footer/Footer";
 import { Toaster } from "@/components/ui/sonner";
 import Providers from "./providers";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,6 +35,7 @@ export default function RootLayout({
             <Navigation />
             <Toaster position="top-center" />
             {children}
+            <Script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.js" strategy="afterInteractive" defer />
             <Footer />
           </main>
         </Providers>

@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client";
-
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { QuestionResponse } from "@/model/question.model";
 import { WebResponse } from "@/model/web-reponse.model";
-import MathRenderer from "../Math/MathRenderer";
+import { QuestionResponse } from "@/model/question.model";
+import LatexRenderer from "../LatexRendered/LatexRendered";
+import { useRef } from "react";
 
 type Props = {
   open: boolean;
@@ -18,10 +17,15 @@ type Props = {
 
 export default function PreviewQuestionDialog({ open, onClose, activeNumber, isLoading, error, questionDetail }: Props) {
   const data = questionDetail?.data;
+  console.log(data);
+
+  const mathRef = useRef<HTMLDivElement>(null);
+
+  const mathContents = data?.question_text_math?.map((item) => item) || [];
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-3xl max-h-[80vh] overflow-auto">
+      <DialogContent aria-describedby={undefined} className="max-w-3xl max-h-[80vh] overflow-auto">
         <DialogHeader>
           <DialogTitle>Preview Soal Nomor {activeNumber}</DialogTitle>
         </DialogHeader>
@@ -35,10 +39,11 @@ export default function PreviewQuestionDialog({ open, onClose, activeNumber, isL
 
           {!isLoading && data && (
             <div className="space-y-4">
+              {/* Teks Soal */}
               {Array.isArray(data.question_text) && data.question_text.length > 0 && (
                 <div>
                   <h4 className="font-semibold mb-1">Soal (Teks):</h4>
-                  {data.question_text.map((line, idx) => (
+                  {data.question_text.map((line: string, idx: number) => (
                     <p key={idx} className="mb-1">
                       {line}
                     </p>
@@ -46,13 +51,17 @@ export default function PreviewQuestionDialog({ open, onClose, activeNumber, isL
                 </div>
               )}
 
-              {Array.isArray(data.question_text_math) && data.question_text_math.length > 0 && (
-                <div>
-                  <h4 className="font-semibold mb-1">Soal (Math):</h4>
-                  <MathRenderer lines={data.question_text_math} />
+              {/* Math Soal */}
+              {mathContents.length > 0 && (
+                <div ref={mathRef} className="text-sm sm:text-base">
+                  {mathContents.map((expression, index) => (
+                    <div key={index} className="mb-2">
+                      <LatexRenderer latexStrings={[expression]} />
+                    </div>
+                  ))}
                 </div>
               )}
-
+              {/* Gambar Soal */}
               {Array.isArray(data.question_images) && data.question_images.length > 0 && (
                 <div>
                   <h4 className="font-semibold mb-2">Gambar:</h4>
