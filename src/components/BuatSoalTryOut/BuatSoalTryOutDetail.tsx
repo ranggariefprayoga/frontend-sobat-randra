@@ -28,7 +28,7 @@ export default function BuatSoalTryOutDetail({ params }: { params: Promise<{ pro
 
   // Panggil API valid questions untuk admin
   const { data: questionsData, isLoading, refetch } = useGetValidQuestionsAdmin(id);
-  const handleQuestionAdded = () => {
+  const handleChangeQuestion = () => {
     refetch(); // refresh data valid questions
   };
 
@@ -65,7 +65,7 @@ export default function BuatSoalTryOutDetail({ params }: { params: Promise<{ pro
       <TitleComponent title="Buat Soal Try Out" />
 
       <div className="px-8 md:px-24 my-4">
-        <CreateQuestionModal onQuestionAdded={handleQuestionAdded} productId={Number(id)} category={activeCategory} validQuestions={Array.from(validNumbers)} questionRanges={questionRanges[activeCategory]} />
+        <CreateQuestionModal onQuestionAdded={handleChangeQuestion} productId={Number(id)} category={activeCategory} validQuestions={Array.from(validNumbers)} questionRanges={questionRanges[activeCategory]} />
       </div>
 
       <Tabs value={activeCategory} onValueChange={(val: string) => setActiveCategory(val as "TWK" | "TIU" | "TKP")} className="w-full mb-6 px-4 md:px-24 mt-4">
@@ -116,7 +116,16 @@ export default function BuatSoalTryOutDetail({ params }: { params: Promise<{ pro
       </div>
 
       {/* Modal Preview Soal */}
-      <PreviewQuestionDialog open={openPreview} onClose={() => setOpenPreview(false)} activeNumber={activeNumber} isLoading={isLoadingQuestion} error={error} questionDetail={questionDetail} />
+      <PreviewQuestionDialog
+        handleChangeQuestion={handleChangeQuestion}
+        product_id={Number(id)}
+        open={openPreview}
+        onClose={() => setOpenPreview(false)}
+        activeNumber={activeNumber}
+        isLoading={isLoadingQuestion}
+        error={error}
+        questionDetail={questionDetail}
+      />
     </LayoutBackgroundWhite>
   );
 }

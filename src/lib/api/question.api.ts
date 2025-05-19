@@ -183,9 +183,7 @@ export const useDeleteQuestionById = (): UseMutationResult<WebResponse<string>, 
 
   return useMutation({
     mutationFn: async ({ productId, questionId }) => {
-      const res = await axios.delete(`${API_BASE_URL}/api/products/tryout/${productId}/questions/${questionId}`, {
-        withCredentials: true,
-      });
+      const res = await axios.delete(`${API_BASE_URL}/api/products/tryout/${productId}/questions/${questionId}`, { withCredentials: true });
       return res.data;
     },
     onSuccess: (_, { productId, questionId }) => {
