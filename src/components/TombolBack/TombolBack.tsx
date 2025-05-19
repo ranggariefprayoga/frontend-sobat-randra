@@ -18,9 +18,12 @@ const ButtonWithIcon = ({
   const router = useRouter();
 
   const handleToHome = () => {
-    router.push("/");
+    if (window.history.length > 1) {
+      router.back();
+    } else {
+      router.push("/");
+    }
   };
-
   return (
     <div className="w-1/4 px-8 md:px-24 mb-4">
       <Button variant="ghost" className={`${color}`} onClick={handleToHome}>
