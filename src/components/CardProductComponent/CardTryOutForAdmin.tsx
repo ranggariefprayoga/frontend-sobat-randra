@@ -11,9 +11,10 @@ import { toast } from "sonner";
 interface ProductCardProps {
   product: TryOutProductModel;
   customLink: string;
+  buttonText?: string;
 }
 
-export default function CardTryOutForAdmin({ product, customLink }: ProductCardProps) {
+export default function CardTryOutForAdmin({ product, customLink, buttonText = "Lihat Detail" }: ProductCardProps) {
   const [open, setOpen] = useState(false);
   const isFreeAvailable = product.is_free_available;
   const router = useRouter();
@@ -99,7 +100,7 @@ export default function CardTryOutForAdmin({ product, customLink }: ProductCardP
             router.push(customLink);
           }}
         >
-          Lihat Detail
+          {buttonText}
         </Button>
       </div>
     </div>
