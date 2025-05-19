@@ -17,9 +17,10 @@ interface Props {
   validQuestions: number[];
   questionRanges: { start: number; end: number };
   onSuccess?: () => void;
+  onQuestionAdded?: () => void;
 }
 
-export default function CreateQuestionModal({ productId, category, validQuestions, questionRanges, onSuccess }: Props) {
+export default function CreateQuestionModal({ productId, category, validQuestions, questionRanges, onSuccess, onQuestionAdded }: Props) {
   const [open, setOpen] = useState(false);
   const [numberOfQuestion, setNumberOfQuestion] = useState<number | null>(null);
   const [editorMode, setEditorMode] = useState<"text" | "math">(category === "TIU" ? "math" : "text");
@@ -83,6 +84,9 @@ export default function CreateQuestionModal({ productId, category, validQuestion
         files,
       } as CreateQuestionArgs);
       toast.success("Soal berhasil dibuat!");
+      if (onQuestionAdded) {
+        onQuestionAdded();
+      }
       setOpen(false);
       if (onSuccess) onSuccess();
     } catch {

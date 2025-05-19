@@ -17,7 +17,6 @@ type Props = {
 
 export default function PreviewQuestionDialog({ open, onClose, activeNumber, isLoading, error, questionDetail }: Props) {
   const data = questionDetail?.data;
-  console.log(data);
 
   const mathRef = useRef<HTMLDivElement>(null);
 

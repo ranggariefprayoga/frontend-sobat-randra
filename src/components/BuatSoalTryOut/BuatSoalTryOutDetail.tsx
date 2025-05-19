@@ -27,7 +27,10 @@ export default function BuatSoalTryOutDetail({ params }: { params: Promise<{ pro
   };
 
   // Panggil API valid questions untuk admin
-  const { data: questionsData, isLoading } = useGetValidQuestionsAdmin(id);
+  const { data: questionsData, isLoading, refetch } = useGetValidQuestionsAdmin(id);
+  const handleQuestionAdded = () => {
+    refetch(); // refresh data valid questions
+  };
 
   // Buat set nomor soal yang valid
   const validNumbers = new Set<number>();
@@ -51,8 +54,6 @@ export default function BuatSoalTryOutDetail({ params }: { params: Promise<{ pro
     );
   }
 
-  console.log(questionDetail);
-
   const openQuestionPreview = (number: number) => {
     setActiveNumber(number);
     setOpenPreview(true);
@@ -64,7 +65,7 @@ export default function BuatSoalTryOutDetail({ params }: { params: Promise<{ pro
       <TitleComponent title="Buat Soal Try Out" />
 
       <div className="px-8 md:px-24 my-4">
-        <CreateQuestionModal productId={Number(id)} category={activeCategory} validQuestions={Array.from(validNumbers)} questionRanges={questionRanges[activeCategory]} />
+        <CreateQuestionModal onQuestionAdded={handleQuestionAdded} productId={Number(id)} category={activeCategory} validQuestions={Array.from(validNumbers)} questionRanges={questionRanges[activeCategory]} />
       </div>
 
       <Tabs value={activeCategory} onValueChange={(val: string) => setActiveCategory(val as "TWK" | "TIU" | "TKP")} className="w-full mb-6 px-4 md:px-24 mt-4">
