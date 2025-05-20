@@ -2,6 +2,7 @@
 import React, { useRef } from "react";
 import LatexRenderer from "../LatexRendered/LatexRendered";
 import { QuestionResponse } from "@/model/question.model";
+import Image from "next/image";
 
 type QuestionPreviewProps = {
   isLoading: boolean;
@@ -26,7 +27,6 @@ export default function QuestionPreview({ isLoading, error, data }: QuestionPrev
           {/* Teks Soal */}
           {Array.isArray(data.question_text) && data.question_text.length > 0 && (
             <div>
-              <h4 className="font-semibold mb-1">Soal (Teks):</h4>
               {data.question_text.map((line: string, idx: number) => (
                 <p key={idx} className="mb-1">
                   {line}
@@ -37,9 +37,9 @@ export default function QuestionPreview({ isLoading, error, data }: QuestionPrev
 
           {/* Math Soal */}
           {mathContents.length > 0 && (
-            <div ref={mathRef} className="text-sm sm:text-base">
+            <div ref={mathRef} className="text-base sm:text-xl w-full">
               {mathContents.map((expression, index) => (
-                <div key={index} className="mb-2">
+                <div key={index} className="mb-2 text-base sm:text-xl">
                   <LatexRenderer latexStrings={[expression]} />
                 </div>
               ))}
@@ -49,10 +49,9 @@ export default function QuestionPreview({ isLoading, error, data }: QuestionPrev
           {/* Gambar Soal */}
           {Array.isArray(data.question_images) && data.question_images.length > 0 && (
             <div>
-              <h4 className="font-semibold mb-2">Gambar:</h4>
               <div className="flex flex-wrap gap-4">
                 {data.question_images.map((src: string, idx: number) => (
-                  <img key={idx} src={src} alt={`Gambar soal ${idx + 1}`} className="max-w-[150px] rounded border" />
+                  <Image width={100} height={100} key={idx} src={src} alt={`Gambar soal ${idx + 1}`} className="w-full rounded border" />
                 ))}
               </div>
             </div>

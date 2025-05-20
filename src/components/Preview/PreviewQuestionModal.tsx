@@ -21,9 +21,10 @@ type Props = {
 export default function PreviewQuestionDialog({ product_id, open, onClose, activeNumber, isLoading, error, questionDetail, handleChangeQuestion }: Props) {
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent aria-describedby={undefined} className="max-w-3xl max-h-[80vh] overflow-auto">
+      <DialogContent aria-describedby={undefined} className="max-w-7xl w-full max-h-[80vh] overflow-auto">
         <DialogHeader>
-          <DialogTitle>Preview Soal Nomor {activeNumber}</DialogTitle>
+          <DialogTitle>Soal Nomor {activeNumber}</DialogTitle>
+          <div className="border-b border-gray-300 mb-2" />
         </DialogHeader>
 
         <>

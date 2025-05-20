@@ -19,7 +19,7 @@ const LatexRenderer: React.FC<LatexRendererProps> = ({ latexStrings, className }
       {latexStrings.map((latex, idx) => (
         <div
           key={idx}
-          className="text-[0.65rem] sm:text-sm" // kecil di hp (sekitar 10.4px), standar di layar sm ke atas
+          className="text-base sm:text-xl" // kecil di hp (sekitar 10.4px), standar di layar sm ke atas
           dangerouslySetInnerHTML={{ __html: `\\(${latex}\\)` }}
         />
       ))}

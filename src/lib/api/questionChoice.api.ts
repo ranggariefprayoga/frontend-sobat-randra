@@ -5,35 +5,35 @@ import { WebResponse } from "@/model/web-reponse.model";
 import { CreateQuestionChoiceRequest, QuestionChoiceResponse, UpdateQuestionChoiceRequest } from "@/model/questionChoice.model";
 
 type QuestionChoicePayload = {
-  productId: number | string;
-  questionId: number | string;
+  product_try_out_id: number;
+  questionId: number;
   data?: CreateQuestionChoiceRequest | UpdateQuestionChoiceRequest;
   files?: File[];
-  questionChoiceId?: number | string;
+  questionChoiceId?: number;
 };
 
 // Get all choices
-export const useGetAllQuestionChoices = (productId?: number | string, questionId?: number | string) => {
+export const useGetAllQuestionChoices = (product_try_out_id?: number, questionId?: number) => {
   return useQuery<WebResponse<QuestionChoiceResponse[]>, Error>({
-    queryKey: ["question-choice", productId, questionId],
+    queryKey: ["question-choice", product_try_out_id, questionId],
     queryFn: async () => {
-      const res = await axios.get(`${API_BASE_URL}/api/products/tryout/${productId}/questions/${questionId}/choice`, { withCredentials: true });
+      const res = await axios.get(`${API_BASE_URL}/api/products/tryout/${product_try_out_id}/questions/${questionId}/choice`, { withCredentials: true });
       return res.data;
     },
-    enabled: Boolean(productId && questionId),
+    enabled: Boolean(product_try_out_id && questionId),
     retry: false,
   });
 };
 
 // Get choice by ID
-export const useGetQuestionChoiceById = (productId?: number | string, questionId?: number | string, questionChoiceId?: number | string) => {
+export const useGetQuestionChoiceById = (product_try_out_id?: number, questionId?: number, questionChoiceId?: number) => {
   return useQuery<WebResponse<QuestionChoiceResponse>, Error>({
-    queryKey: ["question-choice", productId, questionId, questionChoiceId],
+    queryKey: ["question-choice", product_try_out_id, questionId, questionChoiceId],
     queryFn: async () => {
-      const res = await axios.get(`${API_BASE_URL}/api/products/tryout/${productId}/questions/${questionId}/choice/${questionChoiceId}`, { withCredentials: true });
+      const res = await axios.get(`${API_BASE_URL}/api/products/tryout/${product_try_out_id}/questions/${questionId}/choice/${questionChoiceId}`, { withCredentials: true });
       return res.data;
     },
-    enabled: Boolean(productId && questionId && questionChoiceId),
+    enabled: Boolean(product_try_out_id && questionId && questionChoiceId),
     retry: false,
   });
 };
@@ -43,19 +43,19 @@ export const useCreateQuestionChoice = (): UseMutationResult<WebResponse<Questio
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ productId, questionId, data, files }) => {
+    mutationFn: async ({ product_try_out_id, questionId, data, files }: QuestionChoicePayload) => {
       const formData = new FormData();
       formData.append("data", JSON.stringify(data));
       if (files) files.forEach((file) => formData.append("question_choice_images", file));
 
-      const res = await axios.post(`${API_BASE_URL}/api/products/tryout/${productId}/questions/${questionId}/choice`, formData, {
+      const res = await axios.post(`${API_BASE_URL}/api/products/tryout/${product_try_out_id}/questions/${questionId}/choice`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
         withCredentials: true,
       });
       return res.data;
     },
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ["question-choice", variables.productId, variables.questionId] });
+      queryClient.invalidateQueries({ queryKey: ["question-choice", variables.product_try_out_id, variables.questionId] });
     },
   });
 };
@@ -65,22 +65,22 @@ export const useUpdateQuestionChoice = (): UseMutationResult<WebResponse<Questio
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ productId, questionId, questionChoiceId, data, files }) => {
+    mutationFn: async ({ product_try_out_id, questionId, questionChoiceId, data, files }) => {
       const formData = new FormData();
       if (data) formData.append("data", JSON.stringify(data));
       if (files) files.forEach((file) => formData.append("question_choice_images", file));
 
-      const res = await axios.patch(`${API_BASE_URL}/api/products/tryout/${productId}/questions/${questionId}/choice/${questionChoiceId}`, formData, {
+      const res = await axios.patch(`${API_BASE_URL}/api/products/tryout/${product_try_out_id}/questions/${questionId}/choice/${questionChoiceId}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
         withCredentials: true,
       });
       return res.data;
     },
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ["question-choice", variables.productId, variables.questionId] });
+      queryClient.invalidateQueries({ queryKey: ["question-choice", variables.product_try_out_id, variables.questionId] });
       if (variables.questionChoiceId) {
         queryClient.invalidateQueries({
-          queryKey: ["question-choice", variables.productId, variables.questionId, variables.questionChoiceId],
+          queryKey: ["question-choice", variables.product_try_out_id, variables.questionId, variables.questionChoiceId],
         });
       }
     },
@@ -88,47 +88,47 @@ export const useUpdateQuestionChoice = (): UseMutationResult<WebResponse<Questio
 };
 
 // Delete all choices in a question
-export const useDeleteAllQuestionChoices = (): UseMutationResult<WebResponse<string>, Error, { productId: number; questionId: number }> => {
+export const useDeleteAllQuestionChoices = (): UseMutationResult<WebResponse<string>, Error, { product_try_out_id: number; questionId: number }> => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ productId, questionId }) => {
-      const res = await axios.delete(`${API_BASE_URL}/api/products/tryout/${productId}/questions/${questionId}/choice`, {
+    mutationFn: async ({ product_try_out_id, questionId }) => {
+      const res = await axios.delete(`${API_BASE_URL}/api/products/tryout/${product_try_out_id}/questions/${questionId}/choice`, {
         withCredentials: true,
       });
       return res.data;
     },
-    onSuccess: (_, { productId, questionId }) => {
-      queryClient.invalidateQueries({ queryKey: ["question-choice", productId, questionId] });
+    onSuccess: (_, { product_try_out_id, questionId }) => {
+      queryClient.invalidateQueries({ queryKey: ["question-choice", product_try_out_id, questionId] });
     },
   });
 };
 
 // Delete choice by ID
-export const useDeleteQuestionChoiceById = (): UseMutationResult<WebResponse<string>, Error, { productId: number; questionId: number; questionChoiceId: number }> => {
+export const useDeleteQuestionChoiceById = (): UseMutationResult<WebResponse<string>, Error, { product_try_out_id: number; questionId: number; questionChoiceId: number }> => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ productId, questionId, questionChoiceId }) => {
-      const res = await axios.delete(`${API_BASE_URL}/api/products/tryout/${productId}/questions/${questionId}/choice/${questionChoiceId}`, { withCredentials: true });
+    mutationFn: async ({ product_try_out_id, questionId, questionChoiceId }) => {
+      const res = await axios.delete(`${API_BASE_URL}/api/products/tryout/${product_try_out_id}/questions/${questionId}/choice/${questionChoiceId}`, { withCredentials: true });
       return res.data;
     },
-    onSuccess: (_, { productId, questionId, questionChoiceId }) => {
-      queryClient.invalidateQueries({ queryKey: ["question-choice", productId, questionId] });
-      queryClient.invalidateQueries({ queryKey: ["question-choice", productId, questionId, questionChoiceId] });
+    onSuccess: (_, { product_try_out_id, questionId, questionChoiceId }) => {
+      queryClient.invalidateQueries({ queryKey: ["question-choice", product_try_out_id, questionId] });
+      queryClient.invalidateQueries({ queryKey: ["question-choice", product_try_out_id, questionId, questionChoiceId] });
     },
   });
 };
 
 // Get choice images
-export const useGetQuestionChoiceImages = (productId?: number | string, questionId?: number | string, questionChoiceId?: number | string) => {
+export const useGetQuestionChoiceImages = (product_try_out_id?: number, questionId?: number, questionChoiceId?: number) => {
   return useQuery<WebResponse<string[]>, Error>({
-    queryKey: ["question-choice", productId, questionId, questionChoiceId, "images"],
+    queryKey: ["question-choice", product_try_out_id, questionId, questionChoiceId, "images"],
     queryFn: async () => {
-      const res = await axios.get(`${API_BASE_URL}/api/products/tryout/${productId}/questions/${questionId}/choice/${questionChoiceId}/images`, { withCredentials: true });
+      const res = await axios.get(`${API_BASE_URL}/api/products/tryout/${product_try_out_id}/questions/${questionId}/choice/${questionChoiceId}/images`, { withCredentials: true });
       return res.data;
     },
-    enabled: Boolean(productId && questionId && questionChoiceId),
+    enabled: Boolean(product_try_out_id && questionId && questionChoiceId),
     retry: false,
   });
 };
