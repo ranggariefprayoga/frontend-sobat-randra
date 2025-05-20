@@ -5,7 +5,7 @@ export const historyNilaiDataDummy: HistoryNilaiModel[] = [
     id: 1,
     session_id: 101,
     user_id: 1,
-    product_id: 1,
+    product_try_out_id: 1,
     total_score: 450,
     is_free: false,
     details: [
@@ -36,7 +36,7 @@ export const historyNilaiDataDummy: HistoryNilaiModel[] = [
     id: 2,
     session_id: 102,
     user_id: 2,
-    product_id: 2,
+    product_try_out_id: 2,
     total_score: 380,
     is_free: false,
     details: [
@@ -67,7 +67,7 @@ export const historyNilaiDataDummy: HistoryNilaiModel[] = [
     id: 3,
     session_id: 103,
     user_id: 3,
-    product_id: 3,
+    product_try_out_id: 3,
     total_score: 500,
     is_free: false,
     details: [

@@ -9,8 +9,8 @@ import DetailTO from "./DetailTO";
 import { DialogInfo } from "@/components/Dialog/DialogInfo";
 import { caraAksesTryOut } from "@/data/cara-akses-to";
 
-export default function DetailPilihanPaketTO({ params }: { params: Promise<{ product_id: string }> }) {
-  const { product_id: id } = use(params);
+export default function DetailPilihanPaketTO({ params }: { params: Promise<{ product_try_out_id: string }> }) {
+  const { product_try_out_id: id } = use(params);
   const { data: product, isLoading } = useGetTryOutProductById(id);
 
   if (isLoading) {

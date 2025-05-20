@@ -12,7 +12,7 @@ import { UseMutationResult } from "@tanstack/react-query";
 import { WebResponse } from "@/model/web-reponse.model";
 
 interface Props {
-  productId: number | string;
+  product_try_out_id: number | string;
   category: "TWK" | "TIU" | "TKP";
   validQuestions: number[];
   questionRanges: { start: number; end: number };
@@ -20,7 +20,7 @@ interface Props {
   onQuestionAdded?: () => void;
 }
 
-export default function CreateQuestionModal({ productId, category, validQuestions, questionRanges, onSuccess, onQuestionAdded }: Props) {
+export default function CreateQuestionModal({ product_try_out_id, category, validQuestions, questionRanges, onSuccess, onQuestionAdded }: Props) {
   const [open, setOpen] = useState(false);
   const [numberOfQuestion, setNumberOfQuestion] = useState<number | null>(null);
   const [editorMode, setEditorMode] = useState<"text" | "math">(category === "TIU" ? "math" : "text");
@@ -38,6 +38,8 @@ export default function CreateQuestionModal({ productId, category, validQuestion
     }
     return nums;
   }, [validQuestions, questionRanges]);
+
+  const isLimitReached = availableNumbers.length === 0;
 
   useEffect(() => {
     if (open) {
@@ -66,7 +68,7 @@ export default function CreateQuestionModal({ productId, category, validQuestion
     }
 
     const payload: CreateQuestionRequest = {
-      product_try_out_id: Number(productId),
+      product_try_out_id: Number(product_try_out_id),
       number_of_question: numberOfQuestion,
       category,
     };
@@ -79,7 +81,7 @@ export default function CreateQuestionModal({ productId, category, validQuestion
 
     try {
       await mutateAsync({
-        productId,
+        product_try_out_id,
         data: payload,
         files,
       } as CreateQuestionArgs);
@@ -97,9 +99,11 @@ export default function CreateQuestionModal({ productId, category, validQuestion
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="default">Buat Soal Baru</Button>
+        <Button variant="default" disabled={isLimitReached} title={isLimitReached ? "Jumlah soal telah mencapai batas maksimal" : ""}>
+          Buat Soal Baru
+        </Button>
       </DialogTrigger>
-      <DialogContent aria-describedby={undefined} className="min-w-screen max-w-7xl max-h-[80vh] overflow-auto">
+      <DialogContent aria-describedby={undefined} className="max-w-7xl max-h-[80vh] overflow-auto">
         <DialogHeader>
           <DialogTitle>Buat Soal Baru - Kategori {category}</DialogTitle>
           <div className="border-b border-gray-300 mb-2" />

@@ -14,14 +14,14 @@ type Props = {
   isLoading: boolean;
   error?: any;
   questionDetail?: WebResponse<QuestionResponse>;
-  product_id: number;
+  product_try_out_id: number;
   handleChangeQuestion?: () => void;
 };
 
-export default function PreviewQuestionDialog({ product_id, open, onClose, activeNumber, isLoading, error, questionDetail, handleChangeQuestion }: Props) {
+export default function PreviewQuestionDialog({ product_try_out_id, open, onClose, activeNumber, isLoading, error, questionDetail, handleChangeQuestion }: Props) {
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent aria-describedby={undefined} className="max-w-7xl w-full max-h-[80vh] overflow-auto">
+      <DialogContent aria-describedby={undefined} className="max-w-7xl max-h-[80vh] overflow-auto">
         <DialogHeader>
           <DialogTitle>Soal Nomor {activeNumber}</DialogTitle>
           <div className="border-b border-gray-300 mb-2" />
@@ -34,7 +34,7 @@ export default function PreviewQuestionDialog({ product_id, open, onClose, activ
         <DialogFooter>
           <>
             <DeleteQuestionButton
-              productId={product_id}
+              productId={product_try_out_id}
               questionId={questionDetail?.data?.id || 0}
               onDeleted={() => {
                 if (handleChangeQuestion) {

@@ -1,7 +1,7 @@
 export interface QuizSessionModel {
   id: number;
   user_id: number;
-  product_id: number;
+  product_try_out_id: number;
   token: string | null;
   started_at: string;
   expired_at: string;

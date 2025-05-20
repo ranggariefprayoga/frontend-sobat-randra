@@ -14,8 +14,8 @@ import { useGetValidQuestionsAdmin, useGetQuestionByNumber } from "@/lib/api/que
 import CreateQuestionModal from "./ModalBuatSoal";
 import PreviewQuestionDialog from "../Preview/PreviewQuestionModal";
 
-export default function BuatSoalTryOutDetail({ params }: { params: Promise<{ product_id: string }> }) {
-  const { product_id: id } = use(params);
+export default function BuatSoalTryOutDetail({ params }: { params: Promise<{ product_try_out_id: string }> }) {
+  const { product_try_out_id: id } = use(params);
   const [activeCategory, setActiveCategory] = useState<"TWK" | "TIU" | "TKP">("TWK");
   const [activeNumber, setActiveNumber] = useState<number | null>(null);
   const [openPreview, setOpenPreview] = useState(false);
@@ -65,7 +65,7 @@ export default function BuatSoalTryOutDetail({ params }: { params: Promise<{ pro
       <TitleComponent title="Buat Soal Try Out" />
 
       <div className="px-8 md:px-24 my-4">
-        <CreateQuestionModal onQuestionAdded={handleChangeQuestion} productId={Number(id)} category={activeCategory} validQuestions={Array.from(validNumbers)} questionRanges={questionRanges[activeCategory]} />
+        <CreateQuestionModal onQuestionAdded={handleChangeQuestion} product_try_out_id={Number(id)} category={activeCategory} validQuestions={Array.from(validNumbers)} questionRanges={questionRanges[activeCategory]} />
       </div>
 
       <Tabs value={activeCategory} onValueChange={(val: string) => setActiveCategory(val as "TWK" | "TIU" | "TKP")} className="w-full mb-6 px-4 md:px-24 mt-4">
@@ -116,16 +116,18 @@ export default function BuatSoalTryOutDetail({ params }: { params: Promise<{ pro
       </div>
 
       {/* Modal Preview Soal */}
-      <PreviewQuestionDialog
-        handleChangeQuestion={handleChangeQuestion}
-        product_id={Number(id)}
-        open={openPreview}
-        onClose={() => setOpenPreview(false)}
-        activeNumber={activeNumber}
-        isLoading={isLoadingQuestion}
-        error={error}
-        questionDetail={questionDetail}
-      />
+      <>
+        <PreviewQuestionDialog
+          handleChangeQuestion={handleChangeQuestion}
+          product_try_out_id={Number(id)}
+          open={openPreview}
+          onClose={() => setOpenPreview(false)}
+          activeNumber={activeNumber}
+          isLoading={isLoadingQuestion}
+          error={error}
+          questionDetail={questionDetail}
+        />
+      </>
     </LayoutBackgroundWhite>
   );
 }

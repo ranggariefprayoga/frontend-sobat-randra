@@ -2,7 +2,7 @@ export interface HistoryNilaiModel {
   id: number;
   session_id: number;
   user_id: number;
-  product_id: number;
+  product_try_out_id: number;
   total_score: number;
   is_free: boolean;
   details: {

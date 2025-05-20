@@ -19,7 +19,7 @@ export default function CardMulaiTryOut({ product, userEmail, userId }: ProductC
       : QuizSessionDataDummy === null || QuizSessionDataDummy?.length === 0
       ? true
       : QuizSessionDataDummy.some((session: QuizSessionModel) => {
-          const hasValidSession = session.product_id === product.id && session.user_id === userId && session.for_product_free === true;
+          const hasValidSession = session.product_try_out_id === product.id && session.user_id === userId && session.for_product_free === true;
 
           if (hasValidSession) {
             return session.is_completed === false && session.is_active === true && session.token !== null && new Date(session.expired_at) > new Date();
@@ -29,7 +29,7 @@ export default function CardMulaiTryOut({ product, userEmail, userId }: ProductC
         });
 
   // backend-api cari data quiz session dengan user_id dengan for_product_free = false
-  const isPremiumAvailable = ProductAccessTryOutDummy?.some((access: TryOutProductAccessModel) => access.product_id === product.id && access.user_email === userEmail && access.get_access === true);
+  const isPremiumAvailable = ProductAccessTryOutDummy?.some((access: TryOutProductAccessModel) => access.product_try_out_id === product.id && access.user_email === userEmail && access.get_access === true);
 
   return (
     <div className={`relative shadow-lg rounded-xl overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 ${!product.is_active ? "bg-gray-100 text-gray-500" : "bg-white text-gray-900"}`}>

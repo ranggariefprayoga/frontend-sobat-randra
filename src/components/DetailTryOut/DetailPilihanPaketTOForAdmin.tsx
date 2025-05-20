@@ -8,8 +8,8 @@ import { use } from "react";
 import UpdateProductTryOutModal from "../Dialog/UpdateProductTryOut";
 import DetailTO from "@/pages/PilihanPaket/DetailTO";
 
-export default function DetailPilihanPaketTOForAdmin({ params }: { params: Promise<{ product_id: string }> }) {
-  const { product_id: id } = use(params);
+export default function DetailPilihanPaketTOForAdmin({ params }: { params: Promise<{ product_try_out_id: string }> }) {
+  const { product_try_out_id: id } = use(params);
   const { data: product, isLoading } = useGetTryOutProductByIdForAdmin(id);
 
   if (isLoading) {
