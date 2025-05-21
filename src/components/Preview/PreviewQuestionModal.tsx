@@ -56,7 +56,7 @@ export default function PreviewQuestionDialog({ product_try_out_id, open, onClos
                 <QuestionPreview isLoading={isLoading} error={error} data={questionDetail.data} />
                 <UpdateQuestionModal data={questionDetail.data} product_try_out_id={product_try_out_id} handleRefetchQuestion={handleRefetchQuestion} />
               </div>
-              <QuestionChoicePreview isLoading={isLoadingChoices} error={error} data={questionChoiceData?.data} />
+              <QuestionChoicePreview isLoading={isLoadingChoices} error={error} data={questionChoiceData?.data} questionCategory={questionDetail.data.category} handleRefecthQuestionChoice={handleRefetchQuestionChoice} />
             </>
           ) : (
             <p className="text-gray-500 text-sm">Lagi Loading soal...</p>

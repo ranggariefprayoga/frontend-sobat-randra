@@ -68,7 +68,7 @@ export default function UpdateQuestionModal({ product_try_out_id, data, onSucces
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="default" className="gap-2">
-          <Pencil className="w-2 h-2 sm:w-4 sm:h-4" />
+          <Pencil />
         </Button>
       </DialogTrigger>
       <DialogContent aria-describedby={undefined} className="max-w-7xl max-h-[80vh] overflow-auto">

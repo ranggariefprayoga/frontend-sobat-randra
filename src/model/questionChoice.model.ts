@@ -7,9 +7,6 @@ export interface CreateQuestionChoiceRequest {
 }
 
 export interface UpdateQuestionChoiceRequest {
-  product_try_out_id: number;
-  question_id: number;
-  question_choice_title?: string;
   question_choice_text?: string[];
   question_choice_text_math?: string[];
   question_choice_images?: string[];
