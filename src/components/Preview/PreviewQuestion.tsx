@@ -24,16 +24,35 @@ export default function QuestionPreview({ isLoading, error, data }: QuestionPrev
 
       {!isLoading && data && (
         <div className="space-y-4">
-          {/* Teks Soal */}
-          {Array.isArray(data.question_text) && data.question_text.length > 0 && (
-            <div>
-              {data.question_text.map((line: string, idx: number) => (
-                <p key={idx} className="mb-1">
-                  {line}
-                </p>
-              ))}
-            </div>
-          )}
+          <div className="flex flex-col gap-2">
+            {/* Teks Soal */}
+            {Array.isArray(data.question_text) && data.question_text.length > 0 && (
+              <div>
+                {data.question_text.map((line: string, idx: number) => (
+                  <p key={idx}>{line}</p>
+                ))}
+              </div>
+            )}
+
+            {/* Gambar Soal */}
+            {Array.isArray(data.question_images) && data.question_images.length > 0 && (
+              <div>
+                <div className="flex flex-wrap gap-4">
+                  {data.question_images.map((src: string, idx: number) => (
+                    <Image
+                      key={idx}
+                      src={src}
+                      alt={`Gambar soal ${idx + 1}`}
+                      className="w-full rounded border"
+                      width={800} // atur sesuai max width container-mu
+                      height={450} // sesuaikan aspect ratio-nya
+                      style={{ objectFit: "contain" }}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
 
           {/* Math Soal */}
           {mathContents.length > 0 && (
@@ -43,17 +62,6 @@ export default function QuestionPreview({ isLoading, error, data }: QuestionPrev
                   <LatexRenderer latexStrings={[expression]} />
                 </div>
               ))}
-            </div>
-          )}
-
-          {/* Gambar Soal */}
-          {Array.isArray(data.question_images) && data.question_images.length > 0 && (
-            <div>
-              <div className="flex flex-wrap gap-4">
-                {data.question_images.map((src: string, idx: number) => (
-                  <Image width={100} height={100} key={idx} src={src} alt={`Gambar soal ${idx + 1}`} className="w-full rounded border" />
-                ))}
-              </div>
             </div>
           )}
         </div>
