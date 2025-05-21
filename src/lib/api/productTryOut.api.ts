@@ -5,7 +5,7 @@ import { WebResponse } from "@/model/web-reponse.model";
 import { createTryOutResponse, updateTryOutRequest, updateTryOutResponse } from "@/model/product.model";
 
 type UpdateProductPayload = {
-  productId: number | string;
+  product_try_out_id: number | string;
   data: updateTryOutRequest;
   file?: File | null;
 };
@@ -35,28 +35,28 @@ export const useGetTryOutProductsForHome = () => {
 };
 
 // Get tryout product by ID (protected)
-export const useGetTryOutProductById = (productId?: string | number | null) => {
+export const useGetTryOutProductById = (product_try_out_id?: string | number | null) => {
   return useQuery<WebResponse<createTryOutResponse>, Error>({
-    queryKey: ["products", "tryout", productId],
+    queryKey: ["products", "tryout", product_try_out_id],
     queryFn: async () => {
-      if (!productId) throw new Error("productId is required");
-      const res = await axios.get(`${API_BASE_URL}/api/products/tryout/${productId}`, { withCredentials: true });
+      if (!product_try_out_id) throw new Error("product_try_out_id is required");
+      const res = await axios.get(`${API_BASE_URL}/api/products/tryout/${product_try_out_id}`, { withCredentials: true });
       return res.data;
     },
-    enabled: Boolean(productId),
+    enabled: Boolean(product_try_out_id),
     retry: false,
   });
 };
 
-export const useGetTryOutProductByIdForAdmin = (productId?: string | number | null) => {
+export const useGetTryOutProductByIdForAdmin = (product_try_out_id?: string | number | null) => {
   return useQuery<WebResponse<createTryOutResponse>, Error>({
-    queryKey: ["products", "tryout", productId],
+    queryKey: ["products", "tryout", product_try_out_id],
     queryFn: async () => {
-      if (!productId) throw new Error("productId is required");
-      const res = await axios.get(`${API_BASE_URL}/api/products/tryout/${productId}/admin`, { withCredentials: true });
+      if (!product_try_out_id) throw new Error("product_try_out_id is required");
+      const res = await axios.get(`${API_BASE_URL}/api/products/tryout/${product_try_out_id}/admin`, { withCredentials: true });
       return res.data;
     },
-    enabled: Boolean(productId),
+    enabled: Boolean(product_try_out_id),
     retry: false,
   });
 };
@@ -89,12 +89,12 @@ export const useUpdateTryOutProduct = (): UseMutationResult<WebResponse<updateTr
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ productId, data, file }) => {
+    mutationFn: async ({ product_try_out_id, data, file }) => {
       const formData = new FormData();
       if (data) formData.append("data", JSON.stringify(data));
       if (file) formData.append("banner_image", file);
 
-      const res = await axios.patch(`${API_BASE_URL}/api/products/tryout/${productId}`, formData, {
+      const res = await axios.patch(`${API_BASE_URL}/api/products/tryout/${product_try_out_id}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
         withCredentials: true,
       });
@@ -103,7 +103,7 @@ export const useUpdateTryOutProduct = (): UseMutationResult<WebResponse<updateTr
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ["products", "tryout"] });
       queryClient.invalidateQueries({ queryKey: ["products", "tryout", "home"] });
-      queryClient.invalidateQueries({ queryKey: ["products", "tryout", variables.productId] });
+      queryClient.invalidateQueries({ queryKey: ["products", "tryout", variables.product_try_out_id] });
     },
   });
 };
@@ -129,28 +129,28 @@ export const useDeleteTryOutProductById = (): UseMutationResult<WebResponse<stri
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (productId: number) => {
-      const res = await axios.delete(`${API_BASE_URL}/api/products/tryout/${productId}`, { withCredentials: true });
+    mutationFn: async (product_try_out_id: number) => {
+      const res = await axios.delete(`${API_BASE_URL}/api/products/tryout/${product_try_out_id}`, { withCredentials: true });
       return res.data;
     },
-    onSuccess: (_, productId) => {
+    onSuccess: (_, product_try_out_id) => {
       queryClient.invalidateQueries({ queryKey: ["products", "tryout"] });
       queryClient.invalidateQueries({ queryKey: ["products", "tryout", "home"] });
-      queryClient.invalidateQueries({ queryKey: ["products", "tryout", productId] });
+      queryClient.invalidateQueries({ queryKey: ["products", "tryout", product_try_out_id] });
     },
   });
 };
 
 // Get product image by ID
-export const useGetTryOutProductImageById = (productId?: number | string | null) => {
+export const useGetTryOutProductImageById = (product_try_out_id?: number | string | null) => {
   return useQuery<WebResponse<string>, Error>({
-    queryKey: ["products", "tryout", "image", "home", productId],
+    queryKey: ["products", "tryout", "image", "home", product_try_out_id],
     queryFn: async () => {
-      if (!productId) throw new Error("productId is required");
-      const res = await axios.get(`${API_BASE_URL}/api/products/tryout/${productId}/image`, { withCredentials: true });
+      if (!product_try_out_id) throw new Error("product_try_out_id is required");
+      const res = await axios.get(`${API_BASE_URL}/api/products/tryout/${product_try_out_id}/image`, { withCredentials: true });
       return res.data;
     },
-    enabled: Boolean(productId),
+    enabled: Boolean(product_try_out_id),
     retry: false,
   });
 };

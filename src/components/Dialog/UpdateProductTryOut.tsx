@@ -58,7 +58,7 @@ export function UpdateProductTryOutModal({ initialData }: { initialData?: update
 
     if (initialData?.id) {
       updateMutation.mutate(
-        { productId: initialData.id, data: payloadData, file: bannerImage || undefined },
+        { product_try_out_id: initialData.id, data: payloadData, file: bannerImage || undefined },
         {
           onSuccess: () => {
             setOpen(false);
