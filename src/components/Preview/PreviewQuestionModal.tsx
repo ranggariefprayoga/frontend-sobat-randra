@@ -52,7 +52,7 @@ export default function PreviewQuestionDialog({ product_try_out_id, open, onClos
         <DialogFooter>
           <>
             <DeleteQuestionButton
-              productId={product_try_out_id}
+              product_try_out_id={product_try_out_id}
               questionId={questionDetail?.data?.id || 0}
               onDeleted={() => {
                 if (handleChangeQuestion) {

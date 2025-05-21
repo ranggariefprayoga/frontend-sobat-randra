@@ -8,18 +8,18 @@ import { useDeleteQuestionById } from "@/lib/api/question.api";
 import { toast } from "sonner";
 
 type DeleteQuestionButtonProps = {
-  productId: number;
+  product_try_out_id: number;
   questionId: number;
   onDeleted?: () => void;
 };
 
-export default function DeleteQuestionButton({ productId, questionId, onDeleted }: DeleteQuestionButtonProps) {
+export default function DeleteQuestionButton({ product_try_out_id, questionId, onDeleted }: DeleteQuestionButtonProps) {
   const [open, setOpen] = useState(false);
 
   const { mutateAsync, isLoading }: any = useDeleteQuestionById();
   const handleDelete = async () => {
     try {
-      await mutateAsync({ productId, questionId });
+      await mutateAsync({ product_try_out_id, questionId });
       toast.success("Soal berhasil dihapus");
       setOpen(false);
       if (onDeleted) onDeleted();

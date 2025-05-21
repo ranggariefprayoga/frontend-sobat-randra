@@ -58,12 +58,7 @@ export default function CreateQuestionModal({ product_try_out_id, category, vali
     }
 
     if (editorMode === "math" && questionTextMath.length === 0) {
-      toast.error("Masukkan soal pada Math Editor!");
-      return;
-    }
-
-    if (editorMode === "text" && questionText.trim() === "") {
-      toast.error("Masukkan soal teks!");
+      toast.error("Masukkan soal terlebih dahulu!");
       return;
     }
 
@@ -123,12 +118,12 @@ export default function CreateQuestionModal({ product_try_out_id, category, vali
           </select>
         </div>
 
-        <div className="mb-2 flex gap-4 items-center">
+        <div className="mb-2 flex gap-2 items-center">
           <Button variant={editorMode === "text" ? "default" : "outline"} size="sm" onClick={() => setEditorMode("text")} disabled={isLoading}>
-            Text Editor
+            Text
           </Button>
           <Button variant={editorMode === "math" ? "default" : "outline"} size="sm" onClick={() => setEditorMode("math")} disabled={isLoading}>
-            Math Editor
+            Math
           </Button>
         </div>
 

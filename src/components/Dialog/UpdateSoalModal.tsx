@@ -30,12 +30,7 @@ export default function UpdateQuestionModal({ product_try_out_id, data, onSucces
 
   const handleSubmit = async () => {
     if (editorMode === "math" && questionTextMath.length === 0) {
-      toast.error("Masukkan soal pada Math Editor!");
-      return;
-    }
-
-    if (editorMode === "text" && questionText.trim() === "") {
-      toast.error("Masukkan soal teks!");
+      toast.error("Masukkan soal terlebih dahulu!");
       return;
     }
 
@@ -84,12 +79,12 @@ export default function UpdateQuestionModal({ product_try_out_id, data, onSucces
           <div className="border-b border-gray-300 mb-2" />
         </DialogHeader>
 
-        <div className="mb-2 flex gap-4 items-center">
+        <div className="mb-2 flex gap-2 items-center">
           <Button variant={editorMode === "text" ? "default" : "outline"} size="sm" onClick={() => setEditorMode("text")} disabled={isUpdatingQuestion}>
-            Text Editor
+            Text
           </Button>
           <Button variant={editorMode === "math" ? "default" : "outline"} size="sm" onClick={() => setEditorMode("math")} disabled={isUpdatingQuestion}>
-            Math Editor
+            Math
           </Button>
         </div>
 
