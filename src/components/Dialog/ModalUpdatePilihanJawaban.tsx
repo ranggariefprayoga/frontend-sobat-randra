@@ -42,20 +42,23 @@ export default function UpdateQuestionChoiceModal({ product_try_out_id, question
   const { mutateAsync, isLoading } = UpdateChoiceMutation;
 
   const handleSubmit = async () => {
-    if (editorMode === "math" && choiceTextMath.length === 0) {
-      toast.error("Masukkan teks soal matematika terlebih dahulu!");
-      return;
-    }
     if (choiceWeight === null || isNaN(choiceWeight)) {
       toast.error("Bobot pilihan harus berupa angka!");
       return;
     }
-
     const payload: UpdateQuestionChoiceRequest = {
       question_choice_weighted: choiceWeight,
-      question_choice_text: editorMode === "text" ? choiceText.trim().split("\n") : undefined,
-      question_choice_text_math: editorMode === "math" ? choiceTextMath : undefined,
     };
+
+    // Hanya set text jika ada isi
+    if (editorMode === "text" && choiceText.trim()) {
+      payload.question_choice_text = choiceText.trim().split("\n");
+    }
+
+    // Hanya set math jika ada isi
+    if (editorMode === "math" && choiceTextMath.length > 0) {
+      payload.question_choice_text_math = choiceTextMath;
+    }
 
     try {
       await mutateAsync({
@@ -89,7 +92,7 @@ export default function UpdateQuestionChoiceModal({ product_try_out_id, question
       </DialogTrigger>
 
       <DialogContent className="max-w-4xl max-h-[80vh] overflow-auto">
-        <DialogHeader>
+        <DialogHeader aria-describedby={undefined}>
           <DialogTitle>Update Pilihan Jawaban</DialogTitle>
           <div className="border-b border-gray-300 mb-2" />
         </DialogHeader>

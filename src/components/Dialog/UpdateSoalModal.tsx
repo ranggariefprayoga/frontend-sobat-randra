@@ -29,17 +29,25 @@ export default function UpdateQuestionModal({ product_try_out_id, data, onSucces
   const { mutateAsync, isLoading: isUpdatingQuestion } = UpdateQuestionMutation;
 
   const handleSubmit = async () => {
-    if (editorMode === "math" && questionTextMath.length === 0) {
+    if (editorMode === "math" && (questionTextMath.length === 0 || (questionTextMath.length === 1 && questionTextMath[0].trim() === ""))) {
       toast.error("Masukkan soal terlebih dahulu!");
+      return;
+    }
+
+    if (editorMode === "text" && questionText.trim().length === 0 && files.length === 0) {
+      toast.error("Masukkan soal atau gambar terlebih dahulu!");
       return;
     }
 
     const payload: UpdateQuestionRequest = {};
 
-    if (editorMode === "math") {
+    if (editorMode === "text" && questionText.trim()) {
+      payload.question_text = questionText.trim().split("\n");
+    }
+
+    // Hanya set math jika ada isi
+    if (editorMode === "math" && questionTextMath.length > 0) {
       payload.question_text_math = questionTextMath;
-    } else {
-      payload.question_text = questionText.split("\n");
     }
 
     try {
@@ -72,7 +80,7 @@ export default function UpdateQuestionModal({ product_try_out_id, data, onSucces
         </Button>
       </DialogTrigger>
       <DialogContent aria-describedby={undefined} className="max-w-7xl max-h-[80vh] overflow-auto">
-        <DialogHeader>
+        <DialogHeader aria-describedby={undefined}>
           <DialogTitle>
             Update Soal Nomor {data?.number_of_question} - {data?.category}
           </DialogTitle>

@@ -28,9 +28,15 @@ export default function QuestionPreview({ isLoading, error, data }: QuestionPrev
             {/* Teks Soal */}
             {Array.isArray(data.question_text) && data.question_text.length > 0 && (
               <div>
-                {data.question_text.map((line: string, idx: number) => (
-                  <p key={idx}>{line}</p>
-                ))}
+                {data.question_text.map((line: string, idx: number) => {
+                  if (line === "")
+                    return (
+                      <p key={idx} className="text-gray-500 text-sm">
+                        Soal masih kosong!
+                      </p>
+                    );
+                  return <p key={idx}>{line}</p>;
+                })}
               </div>
             )}
 

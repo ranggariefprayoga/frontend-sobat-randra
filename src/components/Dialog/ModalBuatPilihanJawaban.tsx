@@ -96,7 +96,7 @@ export default function CreateQuestionChoiceModal({ product_try_out_id, question
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-4xl max-h-[80vh] overflow-auto">
-        <DialogHeader>
+        <DialogHeader aria-describedby={undefined}>
           <DialogTitle>Tambah Pilihan Baru</DialogTitle>
           <div className="border-b border-gray-300 mb-2" />
         </DialogHeader>

@@ -29,7 +29,7 @@ export default function PreviewQuestionDialog({ product_try_out_id, open, onClos
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent aria-describedby={undefined} className="max-w-7xl max-h-[80vh] overflow-auto">
-        <DialogHeader>
+        <DialogHeader aria-describedby={undefined}>
           <DialogTitle className="text-center">
             Nomor {activeNumber} - {questionDetail?.data?.category}
           </DialogTitle>

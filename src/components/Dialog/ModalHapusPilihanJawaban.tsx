@@ -42,7 +42,7 @@ export default function DeleteQuestionChoiceModal({ product_try_out_id, question
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-md">
-        <DialogHeader>
+        <DialogHeader aria-describedby={undefined}>
           <DialogTitle>Konfirmasi Hapus</DialogTitle>
         </DialogHeader>
         <p>Apakah kamu yakin ingin menghapus pilihan jawaban ini? Tindakan ini tidak bisa dibatalkan.</p>
