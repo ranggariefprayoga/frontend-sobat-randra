@@ -36,7 +36,7 @@ export default function DeleteQuestionButton({ productId, questionId, onDeleted 
         </Button>
       </DialogTrigger>
 
-      <DialogContent>
+      <DialogContent aria-describedby={undefined}>
         <DialogHeader>
           <DialogTitle>Konfirmasi Hapus Soal</DialogTitle>
         </DialogHeader>

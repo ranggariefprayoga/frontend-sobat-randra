@@ -44,7 +44,11 @@ export default function BuatSoalTryOutDetail({ params }: { params: Promise<{ pro
   const questionNumbers = Array.from({ length: questionRanges[activeCategory].end - questionRanges[activeCategory].start + 1 }, (_, idx) => questionRanges[activeCategory].start + idx);
 
   // Ambil detail soal berdasarkan activeNumber dan id
-  const { data: questionDetail, isLoading: isLoadingQuestion, error } = useGetQuestionByNumber(Number(id), activeNumber ?? undefined);
+  const { data: questionDetail, isLoading: isLoadingQuestion, error, refetch: refetchQuestion } = useGetQuestionByNumber(Number(id), activeNumber ?? undefined);
+
+  const handleRefetchQuestion = () => {
+    refetchQuestion();
+  };
 
   if (isLoading) {
     return (
@@ -119,6 +123,7 @@ export default function BuatSoalTryOutDetail({ params }: { params: Promise<{ pro
       <>
         <PreviewQuestionDialog
           handleChangeQuestion={handleChangeQuestion}
+          handleRefetchQuestion={handleRefetchQuestion}
           product_try_out_id={Number(id)}
           open={openPreview}
           onClose={() => setOpenPreview(false)}

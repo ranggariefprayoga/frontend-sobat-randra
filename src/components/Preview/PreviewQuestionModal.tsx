@@ -6,6 +6,9 @@ import { QuestionResponse } from "@/model/question.model";
 
 import QuestionPreview from "./PreviewQuestion";
 import DeleteQuestionButton from "../Dialog/ModalHapusSoal";
+import { useGetAllQuestionChoices } from "@/lib/api/questionChoice.api";
+import QuestionChoicePreview from "./PreviewQuestionChoice";
+import UpdateQuestionModal from "../Dialog/UpdateSoalModal";
 
 type Props = {
   open: boolean;
@@ -16,19 +19,32 @@ type Props = {
   questionDetail?: WebResponse<QuestionResponse>;
   product_try_out_id: number;
   handleChangeQuestion?: () => void;
+  handleRefetchQuestion?: () => void;
 };
 
 export default function PreviewQuestionDialog({ product_try_out_id, open, onClose, activeNumber, isLoading, error, questionDetail, handleChangeQuestion }: Props) {
+  const { data: questionChoiceData, isLoading: isLoadingChoices } = useGetAllQuestionChoices(product_try_out_id, questionDetail?.data?.id);
+
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent aria-describedby={undefined} className="max-w-7xl max-h-[80vh] overflow-auto">
         <DialogHeader>
-          <DialogTitle>Soal Nomor {activeNumber}</DialogTitle>
+          <DialogTitle>
+            Nomor {activeNumber} - {questionDetail?.data?.category}
+          </DialogTitle>
           <div className="border-b border-gray-300 mb-2" />
         </DialogHeader>
 
         <>
-          <QuestionPreview isLoading={isLoading} error={error} data={questionDetail?.data} />
+          {questionDetail?.data ? (
+            <>
+              <QuestionPreview isLoading={isLoading} error={error} data={questionDetail.data} />
+              <UpdateQuestionModal data={questionDetail.data} product_try_out_id={product_try_out_id} onQuestionAdded={handleChangeQuestion} />
+              <QuestionChoicePreview isLoading={isLoadingChoices} error={error} data={questionChoiceData?.data} />
+            </>
+          ) : (
+            <p className="text-gray-500 text-sm">Soal belum tersedia atau gagal dimuat.</p>
+          )}
         </>
 
         <DialogFooter>

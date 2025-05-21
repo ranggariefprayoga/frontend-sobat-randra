@@ -4,15 +4,15 @@ import { API_BASE_URL } from "../apiBaseUrl";
 import { WebResponse } from "@/model/web-reponse.model";
 import { CreateQuestionRequest, QuestionResponse, UpdateQuestionRequest } from "@/model/question.model";
 
-type QuestionPayload = {
-  product_try_out_id: number | string;
-  questionId?: number | string;
-  data?: CreateQuestionRequest | UpdateQuestionRequest;
+export type QuestionPayload = {
+  product_try_out_id: number;
+  questionId?: number;
+  data: CreateQuestionRequest | UpdateQuestionRequest;
   files?: File[];
 };
 
 export interface CreateQuestionArgs {
-  product_try_out_id: string | number;
+  product_try_out_id: number;
   data: CreateQuestionRequest;
   files?: File[];
 }
