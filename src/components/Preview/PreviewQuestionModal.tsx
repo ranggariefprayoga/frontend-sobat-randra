@@ -32,7 +32,7 @@ export default function PreviewQuestionDialog({ product_try_out_id, open, onClos
   const existingChoices = questionChoiceData?.data?.map((choice) => choice.question_choice_title) || [];
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent aria-describedby={undefined} className="max-w-7xl max-h-[80vh] overflow-auto">
+      <DialogContent className="w-full max-w-md max-h-[80vh] overflow-auto px-4">
         <DialogHeader>
           <DialogTitle className="text-center">
             Nomor {activeNumber} - {questionDetail?.data?.category}
@@ -57,6 +57,7 @@ export default function PreviewQuestionDialog({ product_try_out_id, open, onClos
                 onCreated={() => handleRefetchAnswerExplanation()}
                 onCancel={onClose}
               />
+              <UpdateQuestionModal data={questionDetail.data} product_try_out_id={product_try_out_id} handleRefetchQuestion={handleRefetchQuestion} />
             </div>
           )}
           <div className="border-b border-gray-300 mb-2" />
@@ -67,12 +68,10 @@ export default function PreviewQuestionDialog({ product_try_out_id, open, onClos
             <p className="text-gray-500 text-sm">Loading data, mohon tunggu...</p>
           ) : questionDetail?.data ? (
             <>
-              <div className="flex justify-between gap-2">
-                <QuestionPreview isLoading={false} error={error} data={questionDetail.data} />
-                <UpdateQuestionModal data={questionDetail.data} product_try_out_id={product_try_out_id} handleRefetchQuestion={handleRefetchQuestion} />
-              </div>
+              <QuestionPreview isLoading={false} error={error} data={questionDetail.data} />
+
               <QuestionChoicePreview isLoading={false} error={error} data={questionChoiceData?.data} questionCategory={questionDetail.data.category} handleRefecthQuestionChoice={handleRefetchQuestionChoice} />
-              <AnswerExplanationPreview isLoading={false} error={error} data={answerExplanationData?.data} handleRefecthAnswerExplanation={handleRefetchAnswerExplanation} />
+              <AnswerExplanationPreview isLoading={false} error={error} data={answerExplanationData?.data} questionCategory={questionDetail.data.category} handleRefecthAnswerExplanation={handleRefetchAnswerExplanation} />
             </>
           ) : (
             <p className="text-gray-500 text-sm">Data soal tidak ditemukan.</p>

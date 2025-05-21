@@ -9,6 +9,7 @@ import { UseMutationResult } from "@tanstack/react-query";
 import { WebResponse } from "@/model/web-reponse.model";
 import { useCreateQuestionChoice } from "@/lib/api/questionChoice.api";
 import { CreateQuestionChoiceRequest, QuestionChoiceResponse } from "@/model/questionChoice.model";
+import { Plus } from "lucide-react";
 
 interface Props {
   product_try_out_id: number | string;
@@ -92,7 +93,7 @@ export default function CreateQuestionChoiceModal({ product_try_out_id, question
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="default" className="gap-2" disabled={isLoading || isLoadingChoices || availableChoices.length === 0} title={availableChoices.length === 0 ? "Semua pilihan sudah digunakan" : undefined}>
-          Pilihan Jawaban
+          <Plus />
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-4xl max-h-[80vh] overflow-auto">

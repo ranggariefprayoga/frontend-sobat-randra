@@ -9,6 +9,7 @@ import { useCreateAnswerExplanation } from "@/lib/api/answerExplanation.api";
 import { CreateAnswerExplanationRequest, AnswerExplanationResponse } from "@/model/answerExplanation.model";
 import { UseMutationResult } from "@tanstack/react-query";
 import { WebResponse } from "@/model/web-reponse.model";
+import { FileText } from "lucide-react";
 
 interface Props {
   product_try_out_id: number | string;
@@ -87,7 +88,7 @@ export default function CreateAnswerExplanationModal({ product_try_out_id, quest
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="default" disabled={isDisabled} title={isDisabled ? "Sudah ada penjelasan untuk soal ini" : ""}>
-          Penjelasan Jawaban
+          <FileText />
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-4xl max-h-[80vh] overflow-auto">
