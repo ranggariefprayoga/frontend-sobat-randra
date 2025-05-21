@@ -72,7 +72,7 @@ export default function PreviewQuestionDialog({ product_try_out_id, open, onClos
                 <UpdateQuestionModal data={questionDetail.data} product_try_out_id={product_try_out_id} handleRefetchQuestion={handleRefetchQuestion} />
               </div>
               <QuestionChoicePreview isLoading={false} error={error} data={questionChoiceData?.data} questionCategory={questionDetail.data.category} handleRefecthQuestionChoice={handleRefetchQuestionChoice} />
-              <AnswerExplanationPreview isLoading={false} error={error} data={answerExplanationData?.data} />
+              <AnswerExplanationPreview isLoading={false} error={error} data={answerExplanationData?.data} handleRefecthAnswerExplanation={handleRefetchAnswerExplanation} />
             </>
           ) : (
             <p className="text-gray-500 text-sm">Data soal tidak ditemukan.</p>

@@ -3,14 +3,16 @@ import React from "react";
 import LatexRenderer from "../LatexRendered/LatexRendered";
 import Image from "next/image";
 import { AnswerExplanationResponse } from "@/model/answerExplanation.model";
+import DeleteAnswerExplanationModal from "../Dialog/ModalHapusPenjelasanJawaban";
 
 type AnswerExplanationPreviewProps = {
   isLoading: boolean;
   error?: any;
   data?: AnswerExplanationResponse[];
+  handleRefecthAnswerExplanation: () => void;
 };
 
-const AnswerExplanationPreview: React.FC<AnswerExplanationPreviewProps> = ({ isLoading, error, data }) => {
+const AnswerExplanationPreview: React.FC<AnswerExplanationPreviewProps> = ({ isLoading, error, data, handleRefecthAnswerExplanation }) => {
   return (
     <div className="mb-4">
       {isLoading && <p>Loading penjelasan jawaban...</p>}
@@ -23,7 +25,13 @@ const AnswerExplanationPreview: React.FC<AnswerExplanationPreviewProps> = ({ isL
         <div className="space-y-6">
           {data.map((item, idx) => (
             <div key={idx} className="space-y-4 border p-4 rounded-md bg-gray-50">
-              <h1 className="text-base font-bold text-gray-800 mb-4 border-b pb-2 border-gray-300">📘 Pembahasan:</h1>
+              <div className="flex justify-between items-center border-b border-gray-200 pb-2 gap-2 font-semibold">
+                <h1 className="text-base font-bold text-gray-800 mb-4">📘 Pembahasan:</h1>
+
+                <div className="flex items-center gap-2">
+                  <DeleteAnswerExplanationModal product_try_out_id={item.product_try_out_id} questionId={item.question_id} answerExplanationId={item.id} onDeleted={() => handleRefecthAnswerExplanation()} />
+                </div>
+              </div>
 
               {/* Teks Penjelasan */}
               {Array.isArray(item.answer_explanation_text) && item.answer_explanation_text.length > 0 && (
