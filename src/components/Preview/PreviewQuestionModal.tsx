@@ -10,6 +10,9 @@ import { useGetAllQuestionChoices } from "@/lib/api/questionChoice.api";
 import QuestionChoicePreview from "./PreviewQuestionChoice";
 import UpdateQuestionModal from "../Dialog/UpdateSoalModal";
 import CreateQuestionChoiceModal from "../Dialog/ModalBuatPilihanJawaban";
+import AnswerExplanationPreview from "./PreviewAnswerExplanation";
+import { useGetAllAnswerExplanations } from "@/lib/api/answerExplanation.api";
+import CreateAnswerExplanationModal from "../Dialog/ModalBuatPenjelasanPertanyaan";
 
 type Props = {
   open: boolean;
@@ -25,16 +28,17 @@ type Props = {
 
 export default function PreviewQuestionDialog({ product_try_out_id, open, onClose, activeNumber, isLoading, error, questionDetail, handleChangeQuestion, handleRefetchQuestion }: Props) {
   const { data: questionChoiceData, isLoading: isLoadingChoices, refetch: handleRefetchQuestionChoice } = useGetAllQuestionChoices(product_try_out_id, questionDetail?.data?.id);
+  const { data: answerExplanationData, isLoading: isAnswerExplanationLoading, refetch: handleRefetchAnswerExplanation } = useGetAllAnswerExplanations(product_try_out_id, questionDetail?.data?.id);
   const existingChoices = questionChoiceData?.data?.map((choice) => choice.question_choice_title) || [];
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent aria-describedby={undefined} className="max-w-7xl max-h-[80vh] overflow-auto">
-        <DialogHeader aria-describedby={undefined}>
+        <DialogHeader>
           <DialogTitle className="text-center">
             Nomor {activeNumber} - {questionDetail?.data?.category}
           </DialogTitle>
-          <div className="flex justify-center gap-2 mt-2">
-            {questionDetail?.data && (
+          {questionDetail?.data && (
+            <div className="flex justify-center gap-2 mt-2">
               <CreateQuestionChoiceModal
                 product_try_out_id={product_try_out_id}
                 questionId={questionDetail.data.id}
@@ -44,22 +48,34 @@ export default function PreviewQuestionDialog({ product_try_out_id, open, onClos
                 onCancel={onClose}
                 onSuccess={() => handleRefetchQuestionChoice()}
               />
-            )}
-          </div>
+              <CreateAnswerExplanationModal
+                product_try_out_id={product_try_out_id}
+                questionId={questionDetail.data.id}
+                questionCategory={questionDetail.data.category}
+                existingAnswerExplanation={answerExplanationData?.data}
+                isLoadingAnswerExplanation={isAnswerExplanationLoading}
+                onCreated={() => handleRefetchAnswerExplanation()}
+                onCancel={onClose}
+              />
+            </div>
+          )}
           <div className="border-b border-gray-300 mb-2" />
         </DialogHeader>
 
         <>
-          {questionDetail?.data ? (
+          {isLoading || isLoadingChoices || isAnswerExplanationLoading ? (
+            <p className="text-gray-500 text-sm">Loading data, mohon tunggu...</p>
+          ) : questionDetail?.data ? (
             <>
               <div className="flex justify-between gap-2">
-                <QuestionPreview isLoading={isLoading} error={error} data={questionDetail.data} />
+                <QuestionPreview isLoading={false} error={error} data={questionDetail.data} />
                 <UpdateQuestionModal data={questionDetail.data} product_try_out_id={product_try_out_id} handleRefetchQuestion={handleRefetchQuestion} />
               </div>
-              <QuestionChoicePreview isLoading={isLoadingChoices} error={error} data={questionChoiceData?.data} questionCategory={questionDetail.data.category} handleRefecthQuestionChoice={handleRefetchQuestionChoice} />
+              <QuestionChoicePreview isLoading={false} error={error} data={questionChoiceData?.data} questionCategory={questionDetail.data.category} handleRefecthQuestionChoice={handleRefetchQuestionChoice} />
+              <AnswerExplanationPreview isLoading={false} error={error} data={answerExplanationData?.data} />
             </>
           ) : (
-            <p className="text-gray-500 text-sm">Lagi Loading soal...</p>
+            <p className="text-gray-500 text-sm">Data soal tidak ditemukan.</p>
           )}
         </>
 

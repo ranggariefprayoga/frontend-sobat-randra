@@ -92,12 +92,12 @@ export default function CreateQuestionChoiceModal({ product_try_out_id, question
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="default" className="gap-2" disabled={isLoading || isLoadingChoices || availableChoices.length === 0} title={availableChoices.length === 0 ? "Semua pilihan sudah digunakan" : undefined}>
-          Tambah Pilihan Jawaban
+          Pilihan Jawaban
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-4xl max-h-[80vh] overflow-auto">
         <DialogHeader aria-describedby={undefined}>
-          <DialogTitle>Tambah Pilihan Baru</DialogTitle>
+          <DialogTitle>Pilihan Jawaban Baru</DialogTitle>
           <div className="border-b border-gray-300 mb-2" />
         </DialogHeader>
 
