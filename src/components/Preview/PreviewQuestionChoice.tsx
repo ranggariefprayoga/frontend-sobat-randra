@@ -78,7 +78,7 @@ export default function QuestionChoicePreview({ isLoading, error, data, question
           {choice.question_choice_images.length > 0 && (
             <div className="flex flex-wrap gap-4">
               {choice.question_choice_images.map((src, idx) => (
-                <Image key={idx} src={src} alt={`Gambar soal ${idx + 1}`} className="w-3/4 rounded border" width={800} height={450} style={{ objectFit: "contain" }} />
+                <Image key={idx} src={src} alt={`Gambar soal ${idx + 1}`} className="w-full rounded border" width={800} height={450} style={{ objectFit: "contain" }} />
               ))}
             </div>
           )}
