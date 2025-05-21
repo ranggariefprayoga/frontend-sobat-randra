@@ -5,6 +5,7 @@ import React from "react";
 import LatexRenderer from "../LatexRendered/LatexRendered";
 import Image from "next/image";
 import { QuestionChoiceResponse } from "@/model/questionChoice.model";
+import { Badge } from "../ui/badge";
 
 type QuestionChoicePreviewProps = {
   isLoading: boolean;
@@ -22,8 +23,10 @@ export default function QuestionChoicePreview({ isLoading, error, data }: Questi
       {data.map((choice) => (
         <div key={choice.id} className="border rounded-md p-4 bg-white shadow-sm space-y-3">
           <div className="flex items-center gap-2 font-semibold">
-            <span className="text-sm bg-gray-100 text-gray-800 px-2 py-1 rounded">Pilihan {choice.question_choice_title}</span>
-            <span className="text-xs text-gray-500">Bobot: {choice.question_choice_weighted}</span>
+            <Badge variant="default" className="text-sm bg-[#ad0a1f]">
+              {choice.question_choice_title}.
+            </Badge>
+            <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs flex items-center gap-1">📘Bobot: {choice.question_choice_weighted}</span>
           </div>
 
           {/* Teks Pilihan */}
@@ -49,8 +52,8 @@ export default function QuestionChoicePreview({ isLoading, error, data }: Questi
           {/* Gambar Pilihan */}
           {choice.question_choice_images.length > 0 && (
             <div className="flex flex-wrap gap-4">
-              {choice.question_choice_images.map((src, i) => (
-                <Image key={i} width={100} height={100} src={src} alt={`Gambar pilihan ${choice.question_choice_title} - ${i + 1}`} className="rounded border" />
+              {choice.question_choice_images.map((src, idx) => (
+                <Image key={idx} src={src} alt={`Gambar soal ${idx + 1}`} className="w-3/4 rounded border" width={800} height={450} style={{ objectFit: "contain" }} />
               ))}
             </div>
           )}

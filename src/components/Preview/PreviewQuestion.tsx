@@ -39,15 +39,7 @@ export default function QuestionPreview({ isLoading, error, data }: QuestionPrev
               <div>
                 <div className="flex flex-wrap gap-4">
                   {data.question_images.map((src: string, idx: number) => (
-                    <Image
-                      key={idx}
-                      src={src}
-                      alt={`Gambar soal ${idx + 1}`}
-                      className="w-full rounded border"
-                      width={800} // atur sesuai max width container-mu
-                      height={450} // sesuaikan aspect ratio-nya
-                      style={{ objectFit: "contain" }}
-                    />
+                    <Image key={idx} src={src} alt={`Gambar soal ${idx + 1}`} className="w-3/4 rounded border" width={800} height={450} style={{ objectFit: "contain" }} />
                   ))}
                 </div>
               </div>
