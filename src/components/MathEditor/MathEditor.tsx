@@ -76,10 +76,12 @@ const MathEditor: React.FC<MathEditorProps> = ({ onChange }) => {
         className="w-full border border-gray-300 px-3 py-2 rounded-md text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none placeholder-gray-400 bg-white text-black"
       />
 
+      <p className="text-red-500 text-xs">Cek dulu sebelum Submit!!</p>
+
       {/* Preview Button */}
-      <div className="flex mt-4">
+      <div className="flex mt-2">
         <button onClick={handlePreview} className="px-5 py-2 text-sm bg-[#081737] text-white hover:bg-[#102245] font-medium rounded-md shadow transition">
-          Cek Hasil
+          Simpan & Preview
         </button>
       </div>
 
