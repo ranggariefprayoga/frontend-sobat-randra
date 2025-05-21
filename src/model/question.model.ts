@@ -7,12 +7,9 @@ export interface CreateQuestionRequest {
 }
 
 export interface UpdateQuestionRequest {
-  product_try_out_id: number;
-  number_of_question?: number;
   question_text?: string[];
   question_text_math?: string[];
   question_images?: string[];
-  category: string;
 }
 
 export interface QuestionResponse {

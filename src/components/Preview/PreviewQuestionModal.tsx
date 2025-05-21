@@ -22,7 +22,7 @@ type Props = {
   handleRefetchQuestion?: () => void;
 };
 
-export default function PreviewQuestionDialog({ product_try_out_id, open, onClose, activeNumber, isLoading, error, questionDetail, handleChangeQuestion }: Props) {
+export default function PreviewQuestionDialog({ product_try_out_id, open, onClose, activeNumber, isLoading, error, questionDetail, handleChangeQuestion, handleRefetchQuestion }: Props) {
   const { data: questionChoiceData, isLoading: isLoadingChoices } = useGetAllQuestionChoices(product_try_out_id, questionDetail?.data?.id);
 
   return (
@@ -38,8 +38,10 @@ export default function PreviewQuestionDialog({ product_try_out_id, open, onClos
         <>
           {questionDetail?.data ? (
             <>
-              <QuestionPreview isLoading={isLoading} error={error} data={questionDetail.data} />
-              <UpdateQuestionModal data={questionDetail.data} product_try_out_id={product_try_out_id} onQuestionAdded={handleChangeQuestion} />
+              <div className="flex justify-between gap-2">
+                <QuestionPreview isLoading={isLoading} error={error} data={questionDetail.data} />
+                <UpdateQuestionModal data={questionDetail.data} product_try_out_id={product_try_out_id} handleRefetchQuestion={handleRefetchQuestion} />
+              </div>
               <QuestionChoicePreview isLoading={isLoadingChoices} error={error} data={questionChoiceData?.data} />
             </>
           ) : (

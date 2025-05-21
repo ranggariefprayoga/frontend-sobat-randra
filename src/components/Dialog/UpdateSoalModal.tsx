@@ -3,21 +3,22 @@
 import React, { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { CreateQuestionRequest, QuestionResponse } from "@/model/question.model";
+import { QuestionResponse, UpdateQuestionRequest } from "@/model/question.model";
 import { toast } from "sonner";
 import MathEditor from "../MathEditor/MathEditor";
-import { CreateQuestionArgs, QuestionPayload, useUpdateQuestion } from "@/lib/api/question.api";
+import { QuestionPayload, useUpdateQuestion } from "@/lib/api/question.api";
 import { UseMutationResult } from "@tanstack/react-query";
 import { WebResponse } from "@/model/web-reponse.model";
+import { Pencil } from "lucide-react";
 
 interface Props {
   product_try_out_id: number | string;
   data: QuestionResponse;
   onSuccess?: () => void;
-  onQuestionAdded?: () => void;
+  handleRefetchQuestion?: () => void;
 }
 
-export default function UpdateQuestionModal({ product_try_out_id, data, onSuccess, onQuestionAdded }: Props) {
+export default function UpdateQuestionModal({ product_try_out_id, data, onSuccess, handleRefetchQuestion }: Props) {
   const [open, setOpen] = useState(false);
   const [editorMode, setEditorMode] = useState<"text" | "math">(data?.category === "TIU" ? "math" : "text");
   const [questionText, setQuestionText] = useState<string>("");
@@ -28,11 +29,6 @@ export default function UpdateQuestionModal({ product_try_out_id, data, onSucces
   const { mutateAsync, isLoading: isUpdatingQuestion } = UpdateQuestionMutation;
 
   const handleSubmit = async () => {
-    if (!data?.number_of_question) {
-      toast.error("Pilih nomor soal!");
-      return;
-    }
-
     if (editorMode === "math" && questionTextMath.length === 0) {
       toast.error("Masukkan soal pada Math Editor!");
       return;
@@ -43,11 +39,7 @@ export default function UpdateQuestionModal({ product_try_out_id, data, onSucces
       return;
     }
 
-    const payload: CreateQuestionRequest = {
-      product_try_out_id: Number(product_try_out_id),
-      number_of_question: data?.number_of_question,
-      category: data?.category,
-    };
+    const payload: UpdateQuestionRequest = {};
 
     if (editorMode === "math") {
       payload.question_text_math = questionTextMath;
@@ -57,17 +49,22 @@ export default function UpdateQuestionModal({ product_try_out_id, data, onSucces
 
     try {
       await mutateAsync({
-        product_try_out_id,
+        product_try_out_id: product_try_out_id,
+        questionId: data.id,
         data: payload,
         files,
-      } as CreateQuestionArgs);
+      } as QuestionPayload);
       toast.success("Soal berhasil dibuat!");
-      if (onQuestionAdded) {
-        onQuestionAdded();
+      if (handleRefetchQuestion) {
+        handleRefetchQuestion();
       }
       setOpen(false);
+      setQuestionTextMath([]);
+      setQuestionText("");
       if (onSuccess) onSuccess();
     } catch {
+      setQuestionTextMath([]);
+      setQuestionText("");
       toast.error("Gagal membuat soal");
     }
   };
@@ -75,7 +72,9 @@ export default function UpdateQuestionModal({ product_try_out_id, data, onSucces
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="default">Update Soal</Button>
+        <Button variant="default" className="gap-2">
+          <Pencil className="w-2 h-2 sm:w-4 sm:h-4" />
+        </Button>
       </DialogTrigger>
       <DialogContent aria-describedby={undefined} className="max-w-7xl max-h-[80vh] overflow-auto">
         <DialogHeader>
