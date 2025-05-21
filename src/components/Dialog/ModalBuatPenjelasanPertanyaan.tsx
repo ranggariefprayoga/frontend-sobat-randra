@@ -108,27 +108,28 @@ export default function CreateAnswerExplanationModal({ product_try_out_id, quest
         {editorMode === "math" ? (
           <MathEditor onChange={(lines) => setMathInput(lines)} />
         ) : (
-          <textarea
-            rows={5}
-            className="w-full border border-gray-300 rounded-md p-2 mb-3 max-h-[50vh] overflow-auto"
-            placeholder="Masukkan teks penjelasan, gunakan enter untuk baris baru"
-            value={textInput}
-            onChange={(e) => setTextInput(e.target.value)}
-          />
+          <>
+            <textarea
+              rows={5}
+              className="w-full border border-gray-300 rounded-md p-2 mb-3 max-h-[50vh] overflow-auto"
+              placeholder="Masukkan teks penjelasan, gunakan enter untuk baris baru"
+              value={textInput}
+              onChange={(e) => setTextInput(e.target.value)}
+            />
+            <div className="mb-4">
+              <label className="block font-semibold mb-1">Upload Gambar (opsional)</label>
+              <input
+                type="file"
+                multiple
+                accept="image/png, image/jpeg"
+                onChange={(e) => {
+                  if (e.target.files) setFiles(Array.from(e.target.files));
+                }}
+                className="w-full border border-gray-300 rounded-md p-2"
+              />
+            </div>
+          </>
         )}
-
-        <div className="mb-4">
-          <label className="block font-semibold mb-1">Upload Gambar (opsional)</label>
-          <input
-            type="file"
-            multiple
-            accept="image/png, image/jpeg"
-            onChange={(e) => {
-              if (e.target.files) setFiles(Array.from(e.target.files));
-            }}
-            className="w-full border border-gray-300 rounded-md p-2"
-          />
-        </div>
 
         <DialogFooter>
           <Button variant="outline" onClick={() => setOpen(false)} disabled={mutation.isLoading}>
