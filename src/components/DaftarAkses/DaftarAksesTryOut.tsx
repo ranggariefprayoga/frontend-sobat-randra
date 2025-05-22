@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import debounce from "lodash.debounce";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
@@ -12,7 +12,7 @@ import { LoaderCircle, Edit, Trash2, ChevronLeft, ChevronRight } from "lucide-re
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 
-export function Pagination({ page, totalPages, onPageChange }: { page: number; totalPages: number; onPageChange: (page: number) => void }) {
+function Pagination({ page, totalPages, onPageChange }: { page: number; totalPages: number; onPageChange: (page: number) => void }) {
   const prevDisabled = page <= 1;
   const nextDisabled = page >= totalPages;
 
@@ -31,7 +31,10 @@ export function Pagination({ page, totalPages, onPageChange }: { page: number; t
   );
 }
 
-export default function DaftarUser() {
+export default function DaftarAksesTryOut({ params }: { params: Promise<{ product_try_out_id: string }> }) {
+  const { product_try_out_id: id } = use(params);
+  console.log(id);
+
   const [page, setPage] = useState(1);
   const limit = 10;
   const [searchTerm, setSearchTerm] = useState("");
