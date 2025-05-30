@@ -111,11 +111,11 @@ export default function DetailTO({ product, user, isFreeAvailable }: Props) {
 
           {product.is_free_available && product.password && !isPremiumAvailable?.data && (
             <Button
-              className={`relative w-full md:w-1/3 font-semibold text-xs sm:text-sm transition duration-200 z-10 ${haveAccessGratis ? "bg-[#ad0a1f] text-white hover:bg-[#d7263d]" : "bg-gray-500 text-white cursor-not-allowed"}`}
+              className={`relative w-full lg:w-1/3 font-semibold text-xs sm:text-sm transition duration-200 z-10 ${haveAccessGratis ? "bg-[#ad0a1f] text-white hover:bg-[#d7263d]" : "bg-gray-500 text-white cursor-not-allowed"}`}
               onClick={openGratisDialog}
               disabled={!haveAccessGratis}
             >
-              {haveAccessGratis ? "Mulai Try Out Gratis" : "Akses Gratis Tidak Ada Lagi"}
+              {haveAccessGratis ? "Coba Try Out Gratis" : "Akses Gratis Tidak Ada Lagi"}
             </Button>
           )}
 
@@ -125,7 +125,7 @@ export default function DetailTO({ product, user, isFreeAvailable }: Props) {
 
           {isPremiumAvailable?.data ? (
             <Button
-              className={`relative w-full md:w-1/3 font-semibold text-xs sm:text-sm transition duration-200 z-10 ${haveAccessPremium ? "bg-[#ad0a1f] text-white hover:bg-[#d7263d]" : "bg-gray-500 text-white cursor-not-allowed"}`}
+              className={`relative w-full lg:w-1/3 font-semibold text-xs sm:text-sm transition duration-200 z-10 ${haveAccessPremium ? "bg-[#ad0a1f] text-white hover:bg-[#d7263d]" : "bg-gray-500 text-white cursor-not-allowed"}`}
               onClick={openPremiumDialog}
               disabled={!haveAccessPremium}
             >
@@ -134,9 +134,9 @@ export default function DetailTO({ product, user, isFreeAvailable }: Props) {
           ) : (
             <>
               {/* Harga */}
-              <div className="text-lg font-semibold space-y-1 mb-6">
-                {discount !== null && <div className="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded-md mb-1">{discount}%</div>}
+              <div className="font-semibold space-y-1 mb-6">
                 <div className="flex items-center gap-2">
+                  {discount !== null && <div className="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded-md mb-1">{discount}%</div>}
                   {product.old_price !== undefined && product.old_price > 0 && (
                     <span className="text-sm line-through text-muted-foreground">
                       {product.old_price.toLocaleString("id-ID", {
@@ -145,8 +145,8 @@ export default function DetailTO({ product, user, isFreeAvailable }: Props) {
                       })}
                     </span>
                   )}
-                  <p className="text-2xl font-bold text-[#ad0a1f]">Rp {product.price.toLocaleString("id-ID")}</p>
                 </div>
+                <p className="text-xl font-bold text-[#ad0a1f]">Rp {product.price.toLocaleString("id-ID")}</p>
               </div>
 
               {/* CTA WhatsApp */}
