@@ -48,6 +48,7 @@ export default function BuatSoalTryOutDetail({ params }: { params: Promise<{ pro
 
   const handleRefetchQuestion = () => {
     refetchQuestion();
+    refetch();
   };
 
   if (isLoading) {
@@ -61,6 +62,12 @@ export default function BuatSoalTryOutDetail({ params }: { params: Promise<{ pro
   const openQuestionPreview = (number: number) => {
     setActiveNumber(number);
     setOpenPreview(true);
+  };
+
+  const isQuestionComplete = (numberOfQuestion: number): boolean => {
+    if (!questionsData?.data) return false;
+    const target = questionsData?.data.find((item) => item.number_of_question === numberOfQuestion && item._count && item._count.question_choices === 5 && item._count.answer_explanations > 0);
+    return !!target;
   };
 
   return (
@@ -104,13 +111,14 @@ export default function BuatSoalTryOutDetail({ params }: { params: Promise<{ pro
       <div className="grid grid-cols-5 sm:grid-cols-8 md:grid-cols-10 gap-2 px-8 md:px-24 mb-8">
         {questionNumbers.map((number) => {
           const isValid = validNumbers.has(number);
+          const isFullFilled = isQuestionComplete(number);
           return (
             <Button
               key={number}
               variant="outline"
               onClick={() => isValid && openQuestionPreview(number)}
               disabled={!isValid}
-              className="h-9 px-3 bg-[#ad0a1f] text-sm text-white"
+              className={`transition duration-200 ${!isFullFilled ? "bg-[#ad0a1f] text-white hover:bg-[#d7263d] hover:text-white" : "bg-green-700 text-white hover:bg-green-600 hover:text-white"}`}
               title={isValid ? `Nomor Soal ${number}` : `Soal ${number} tidak tersedia`}
             >
               {number}

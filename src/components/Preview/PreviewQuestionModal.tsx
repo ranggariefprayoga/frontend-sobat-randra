@@ -30,6 +30,9 @@ export default function PreviewQuestionDialog({ product_try_out_id, open, onClos
   const { data: questionChoiceData, isLoading: isLoadingChoices, refetch: handleRefetchQuestionChoice } = useGetAllQuestionChoices(product_try_out_id, questionDetail?.data?.id);
   const { data: answerExplanationData, isLoading: isAnswerExplanationLoading, refetch: handleRefetchAnswerExplanation } = useGetAllAnswerExplanations(product_try_out_id, questionDetail?.data?.id);
   const existingChoices = questionChoiceData?.data?.map((choice) => choice.question_choice_title) || [];
+
+  const handleRefetchQuestionChoices = () => handleRefetchQuestionChoice().then(() => handleChangeQuestion?.());
+  const handleRefecthAnswerExplanations = () => handleRefetchAnswerExplanation().then(() => handleChangeQuestion?.());
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="w-full max-w-md max-h-[80vh] overflow-auto px-4">
@@ -46,7 +49,7 @@ export default function PreviewQuestionDialog({ product_try_out_id, open, onClos
                 isLoadingChoices={isLoadingChoices}
                 questionCategory={questionDetail.data.category}
                 onCancel={onClose}
-                onSuccess={() => handleRefetchQuestionChoice()}
+                onSuccess={handleRefetchQuestionChoices}
               />
               <CreateAnswerExplanationModal
                 product_try_out_id={product_try_out_id}
@@ -54,7 +57,7 @@ export default function PreviewQuestionDialog({ product_try_out_id, open, onClos
                 questionCategory={questionDetail.data.category}
                 existingAnswerExplanation={answerExplanationData?.data}
                 isLoadingAnswerExplanation={isAnswerExplanationLoading}
-                onCreated={() => handleRefetchAnswerExplanation()}
+                onCreated={handleRefecthAnswerExplanations}
                 onCancel={onClose}
               />
               <UpdateQuestionModal data={questionDetail.data} product_try_out_id={product_try_out_id} handleRefetchQuestion={handleRefetchQuestion} />
@@ -70,8 +73,8 @@ export default function PreviewQuestionDialog({ product_try_out_id, open, onClos
             <>
               <QuestionPreview isLoading={false} error={error} data={questionDetail.data} />
 
-              <QuestionChoicePreview isLoading={false} error={error} data={questionChoiceData?.data} questionCategory={questionDetail.data.category} handleRefecthQuestionChoice={handleRefetchQuestionChoice} />
-              <AnswerExplanationPreview isLoading={false} error={error} data={answerExplanationData?.data} questionCategory={questionDetail.data.category} handleRefecthAnswerExplanation={handleRefetchAnswerExplanation} />
+              <QuestionChoicePreview isLoading={false} error={error} data={questionChoiceData?.data} questionCategory={questionDetail.data.category} handleRefecthQuestionChoice={handleRefetchQuestionChoices} />
+              <AnswerExplanationPreview isLoading={false} error={error} data={answerExplanationData?.data} questionCategory={questionDetail.data.category} handleRefecthAnswerExplanation={handleRefecthAnswerExplanations} />
             </>
           ) : (
             <p className="text-gray-500 text-sm">Data soal tidak ditemukan.</p>
