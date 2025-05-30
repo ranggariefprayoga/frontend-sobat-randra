@@ -11,11 +11,22 @@ type UpdateProductPayload = {
 };
 
 // Get all tryout products (protected)
-export const useGetAllTryOutProducts = () => {
+export const useGetAllActiveTryOutProducts = () => {
   return useQuery<WebResponse<createTryOutResponse[]>, Error>({
     queryKey: ["products", "tryout"],
     queryFn: async () => {
       const res = await axios.get(`${API_BASE_URL}/api/products/tryout`, { withCredentials: true });
+      return res.data;
+    },
+    retry: false,
+  });
+};
+
+export const useGetAllTryOutProducts = () => {
+  return useQuery<WebResponse<createTryOutResponse[]>, Error>({
+    queryKey: ["products", "tryout"],
+    queryFn: async () => {
+      const res = await axios.get(`${API_BASE_URL}/api/products/tryout/all`, { withCredentials: true });
       return res.data;
     },
     retry: false,
@@ -35,7 +46,7 @@ export const useGetTryOutProductsForHome = () => {
 };
 
 // Get tryout product by ID (protected)
-export const useGetTryOutProductById = (product_try_out_id?: string | number | null) => {
+export const useGetTryOutProductById = (product_try_out_id: number) => {
   return useQuery<WebResponse<createTryOutResponse>, Error>({
     queryKey: ["products", "tryout", product_try_out_id],
     queryFn: async () => {
@@ -48,7 +59,7 @@ export const useGetTryOutProductById = (product_try_out_id?: string | number | n
   });
 };
 
-export const useGetTryOutProductByIdForAdmin = (product_try_out_id?: string | number | null) => {
+export const useGetTryOutProductByIdForAdmin = (product_try_out_id: number) => {
   return useQuery<WebResponse<createTryOutResponse>, Error>({
     queryKey: ["products", "tryout", product_try_out_id],
     queryFn: async () => {

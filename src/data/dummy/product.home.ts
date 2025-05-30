@@ -12,9 +12,8 @@ export const dummyProductTryOut: TryOutProductModel[] = [
     marketing_text: "Dapatkan pengalaman Try Out CPNS yang lebih realistis.",
     old_price: 200000,
     price: 150000,
-    link_to_form: "https://example.com/tryout-cpns",
-    created_at: "2023-05-01T10:00:00Z",
-    updated_at: "2023-05-01T10:00:00Z",
+    created_at: new Date("2023-05-01T10:00:00Z"),
+    updated_at: new Date("2023-05-01T10:00:00Z"),
   },
   {
     id: 2,
@@ -27,9 +26,8 @@ export const dummyProductTryOut: TryOutProductModel[] = [
     old_price: 250000,
     price: 200000,
     is_free_available: false,
-    link_to_form: "https://example.com/tryout-cpns",
-    created_at: "2023-06-01T10:00:00Z",
-    updated_at: "2023-06-01T10:00:00Z",
+    created_at: new Date("2023-05-01T10:00:00Z"),
+    updated_at: new Date("2023-05-01T10:00:00Z"),
   },
   {
     id: 3,
@@ -42,9 +40,8 @@ export const dummyProductTryOut: TryOutProductModel[] = [
     old_price: 220000,
     price: 180000,
     is_free_available: false,
-    link_to_form: "https://example.com/tryout-cpns",
-    created_at: "2023-07-01T10:00:00Z",
-    updated_at: "2023-07-01T10:00:00Z",
+    created_at: new Date("2023-05-01T10:00:00Z"),
+    updated_at: new Date("2023-05-01T10:00:00Z"),
   },
 ];
 
@@ -62,8 +59,8 @@ export const dummyProductBimbel: BimbelProductlModel[] = [
     old_price: 200000,
     link_to_meeting: "https://zoom.us/j/123456789",
     link_to_whatsApp: "https://wa.me/628123456789",
-    created_at: "2025-01-01T10:00:00",
-    updated_at: "2025-01-01T10:00:00",
+    created_at: new Date("2023-05-01T10:00:00Z"),
+    updated_at: new Date("2023-05-01T10:00:00Z"),
   },
   {
     id: 2,
@@ -78,7 +75,7 @@ export const dummyProductBimbel: BimbelProductlModel[] = [
     old_price: 400000,
     link_to_meeting: "https://zoom.us/j/987654321",
     link_to_whatsApp: "https://wa.me/628987654321",
-    created_at: "2025-01-01T10:00:00",
-    updated_at: "2025-01-01T10:00:00",
+    created_at: new Date("2023-05-01T10:00:00Z"),
+    updated_at: new Date("2023-05-01T10:00:00Z"),
   },
 ];

@@ -10,7 +10,7 @@ import DetailTO from "@/pages/PilihanPaket/DetailTO";
 
 export default function DetailPilihanPaketTOForAdmin({ params }: { params: Promise<{ product_try_out_id: string }> }) {
   const { product_try_out_id: id } = use(params);
-  const { data: product, isLoading } = useGetTryOutProductByIdForAdmin(id);
+  const { data: product, isLoading } = useGetTryOutProductByIdForAdmin(Number(id));
 
   if (isLoading) {
     return (

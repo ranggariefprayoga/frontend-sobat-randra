@@ -21,7 +21,6 @@ export function CreateTryOutModal() {
   const [marketingText, setMarketingText] = useState("");
   const [price, setPrice] = useState("");
   const [oldPrice, setOldPrice] = useState("");
-  const [linkToForm, setLinkToForm] = useState("");
 
   const createMutation = useCreateTryOutProduct();
 
@@ -30,6 +29,10 @@ export function CreateTryOutModal() {
     if (!name) return toast.error("Nama produk belum diisi.");
     if (!description) return toast.error("Deskripsi produk belum diisi.");
     if (!price) return toast.error("Harga produk belum diisi.");
+
+    if (isFree) {
+      if (!password) return toast.error("Password gratis belum diisi.");
+    }
 
     const payload = JSON.stringify({
       name,
@@ -40,7 +43,6 @@ export function CreateTryOutModal() {
       marketing_text: marketingText || "",
       price: Number(price),
       old_price: oldPrice ? Number(oldPrice) : 0,
-      link_to_form: linkToForm || "",
       banner_image: "",
     });
 
@@ -69,7 +71,6 @@ export function CreateTryOutModal() {
     setMarketingText("");
     setPrice("");
     setOldPrice("");
-    setLinkToForm("");
   };
 
   return (
@@ -142,11 +143,6 @@ export function CreateTryOutModal() {
           <div className="mb-4 space-y-1.5">
             <Label>Harga Lama (Opsional)</Label>
             <Input type="number" placeholder="Contoh: 75000" value={oldPrice} onChange={(e) => setOldPrice(e.target.value)} />
-          </div>
-
-          <div className="mb-4 space-y-1.5">
-            <Label>Link Form Password (Opsional)</Label>
-            <Input placeholder="https://contohform.com" value={linkToForm} onChange={(e) => setLinkToForm(e.target.value)} />
           </div>
 
           <Button onClick={handleSubmit} disabled={createMutation.isPending}>

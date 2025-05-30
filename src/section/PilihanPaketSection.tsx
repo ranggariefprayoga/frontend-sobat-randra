@@ -10,7 +10,7 @@ import ButtonWithIcon from "@/components/TombolBack/TombolBack";
 import { Button } from "@/components/ui/button";
 import { dummyProductBimbel } from "@/data/dummy/product.home";
 import LayoutBackgroundWhite from "@/layout/LayoutBackgroundWhite";
-import { useGetAllTryOutProducts } from "@/lib/api/productTryOut.api";
+import { useGetAllActiveTryOutProducts } from "@/lib/api/productTryOut.api";
 import { BimbelProductlModel, TryOutProductModel } from "@/model/product.model";
 import { ArrowLeft } from "lucide-react";
 import { useState } from "react";
@@ -18,7 +18,7 @@ import { useState } from "react";
 export default function PilihanPaketSection() {
   const [selectedCategory, setSelectedCategory] = useState<string>("try-out");
 
-  const { data: allProductTryOut, isLoading } = useGetAllTryOutProducts();
+  const { data: allProductTryOut, isLoading } = useGetAllActiveTryOutProducts();
 
   if (isLoading) {
     return (

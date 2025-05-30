@@ -18,6 +18,7 @@ interface UpdateUserEmailModalProps {
 export default function UpdateUserEmailModal({ productTryOutId, accessId, currentEmail, onSuccess }: UpdateUserEmailModalProps) {
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState(currentEmail);
+  const [phoneNumber, setPhoneNumber] = useState("");
 
   useEffect(() => {
     setEmail(currentEmail); // update saat currentEmail berubah
@@ -31,19 +32,27 @@ export default function UpdateUserEmailModal({ productTryOutId, accessId, curren
       toast.error("Email harus diisi");
       return;
     }
+
+    if (!/^[0-9]{10,15}$/.test(phoneNumber)) {
+      toast.error("Nomor telepon tidak valid");
+      return;
+    }
+
     try {
       await updateMutation.mutateAsync({
         id: accessId,
         product_try_out_id: productTryOutId,
-        data: { user_email: email.trim() },
+        data: { user_email: email.trim(), phone_number: phoneNumber.trim() },
       });
       toast.success("Email berhasil diupdate");
       setEmail("");
+      setPhoneNumber("");
       setOpen(false);
       if (onSuccess) onSuccess();
     } catch {
       toast.error("Gagal update email");
       setEmail("");
+      setPhoneNumber("");
     }
   };
 
@@ -62,6 +71,24 @@ export default function UpdateUserEmailModal({ productTryOutId, accessId, curren
         <div className="mt-4">
           <Input type="email" placeholder="andra@gmail.com" value={email} onChange={(e) => setEmail(e.target.value)} autoFocus disabled={updateMutation.isPending} />
         </div>
+        <div className="space-y-4">
+          <Input
+            id="phone_number"
+            type="text"
+            inputMode="numeric" // ← agar hanya muncul keypad angka di mobile
+            pattern="[0-9]*" // ← bantu validasi angka
+            placeholder="0877xxxxxxx"
+            value={phoneNumber}
+            onChange={(e) => {
+              const value = e.target.value;
+              if (/^\d*$/.test(value)) {
+                setPhoneNumber(value); // tetap string tapi hanya angka
+              }
+            }}
+            disabled={updateMutation.isPending}
+          />
+        </div>
+
         <DialogFooter className="mt-6 flex justify-end space-x-2">
           <Button variant="outline" onClick={() => setOpen(false)} disabled={updateMutation.isPending}>
             Batal

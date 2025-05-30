@@ -22,7 +22,6 @@ export function UpdateProductTryOutModal({ initialData }: { initialData?: update
   const [marketingText, setMarketingText] = useState("");
   const [price, setPrice] = useState("");
   const [oldPrice, setOldPrice] = useState("");
-  const [linkToForm, setLinkToForm] = useState("");
 
   useEffect(() => {
     if (initialData) {
@@ -34,7 +33,6 @@ export function UpdateProductTryOutModal({ initialData }: { initialData?: update
       setMarketingText(initialData.marketing_text || "");
       setPrice(initialData.price?.toString() || "");
       setOldPrice(initialData.old_price?.toString() || "");
-      setLinkToForm(initialData.link_to_form || "");
     }
   }, [initialData]);
 
@@ -52,7 +50,6 @@ export function UpdateProductTryOutModal({ initialData }: { initialData?: update
       marketing_text: marketingText || "",
       price: Number(price),
       old_price: oldPrice ? Number(oldPrice) : 0,
-      link_to_form: linkToForm || "",
       banner_image: "",
     };
 
@@ -140,11 +137,6 @@ export function UpdateProductTryOutModal({ initialData }: { initialData?: update
           <div className="mb-4 space-y-1.5">
             <Label>Harga Lama (Opsional)</Label>
             <Input type="number" placeholder="Contoh: 75000" value={oldPrice} onChange={(e) => setOldPrice(e.target.value)} />
-          </div>
-
-          <div className="mb-4 space-y-1.5">
-            <Label>Link Form Password (Opsional)</Label>
-            <Input placeholder="https://contohform.com" value={linkToForm} onChange={(e) => setLinkToForm(e.target.value)} />
           </div>
 
           <Button onClick={handleSubmit} disabled={updateMutation.isPending}>

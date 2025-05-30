@@ -76,8 +76,10 @@ export default function CreateAnswerExplanationModal({ product_try_out_id, quest
 
       toast.success("Penjelasan berhasil ditambahkan!");
       if (onCreated) onCreated();
+      setFiles([]);
       setOpen(false);
     } catch {
+      setFiles([]);
       toast.error("Gagal menyimpan penjelasan!");
     }
   };

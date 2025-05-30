@@ -93,7 +93,8 @@ export default function AksesTODetail({ params }: { params: Promise<{ product_tr
               <TableHeader>
                 <TableRow>
                   <TableHead>No.</TableHead>
-                  <TableHead>Email </TableHead>
+                  <TableHead>Email</TableHead>
+                  <TableHead>No Hp</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead>Editor</TableHead>
                 </TableRow>
@@ -103,6 +104,7 @@ export default function AksesTODetail({ params }: { params: Promise<{ product_tr
                   <TableRow key={item.id} className="odd:bg-white even:bg-gray-50">
                     <TableCell>{idx + 1}</TableCell>
                     <TableCell>{item.user_email ?? "-"}</TableCell>
+                    <TableCell>{item.phone_number ?? "No Hp belum ada"}</TableCell>
                     <TableCell>
                       <GetAccessSwitch
                         productTryOutId={Number(id)}

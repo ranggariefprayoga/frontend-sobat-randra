@@ -84,10 +84,12 @@ export default function CreateQuestionModal({ product_try_out_id, category, vali
       if (onQuestionAdded) {
         onQuestionAdded();
       }
+      setFiles([]);
       setOpen(false);
       if (onSuccess) onSuccess();
     } catch {
       toast.error("Gagal membuat soal");
+      setFiles([]);
     }
   };
 

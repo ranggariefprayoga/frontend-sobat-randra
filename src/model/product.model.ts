@@ -9,7 +9,7 @@ export interface TryOutProductModel {
   old_price?: number;
   price: number;
   is_free_available?: boolean;
-  link_to_form?: string;
+  max_free_questions?: number;
   created_at: Date;
   updated_at: Date;
 }
@@ -42,7 +42,7 @@ export interface createTryOutResponse {
   marketing_text?: string;
   price: number;
   old_price?: number;
-  link_to_form?: string;
+  max_free_questions?: number;
   created_at: Date;
   updated_at: Date;
 }
@@ -58,7 +58,7 @@ export interface updateTryOutResponse {
   marketing_text?: string;
   price?: number;
   old_price?: number;
-  link_to_form?: string;
+  max_free_questions?: number;
   created_at: Date;
   updated_at: Date;
 }
@@ -73,7 +73,7 @@ export interface updateTryOutRequest {
   marketing_text?: string;
   price?: number;
   old_price?: number;
-  link_to_form?: string;
+  max_free_questions?: number;
 }
 export interface createTryOutRequest {
   name: string;
@@ -85,7 +85,7 @@ export interface createTryOutRequest {
   marketing_text?: string;
   price: number;
   old_price?: number;
-  link_to_form?: string;
+  max_free_questions?: number;
 }
 
 export class BannerResponse {

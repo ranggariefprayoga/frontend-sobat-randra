@@ -6,17 +6,27 @@ import { Separator } from "@/components/ui/separator";
 import { createTryOutResponse } from "@/model/product.model";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { PasswordDisplay } from "@/components/ShowPasswordProduct/PasswordDisplay";
+import { UserDetailInterface } from "@/model/user.model";
+import { useCheckAvailablePremiumSession } from "@/lib/api/quisSession.api";
 
 type Props = {
   product?: createTryOutResponse | undefined;
+  user?: UserDetailInterface | undefined;
+  isFreeAvailable?: boolean;
 };
 
 function ProdukBelumTersedia() {
   return <div className="flex items-center justify-center min-h-[50vh] text-muted-foreground text-lg font-semibold">Produk Belum Tersedia</div>;
 }
 
-export default function DetailTO({ product }: Props) {
+export default function DetailTO({ product, user, isFreeAvailable }: Props) {
+  const { data: isPremiumAvailable, isLoading } = useCheckAvailablePremiumSession(product?.id, user?.email ?? "");
   if (!product) return <ProdukBelumTersedia />;
+
+  if (isLoading) {
+    return <div className="flex items-center justify-center min-h-[50vh] text-muted-foreground text-lg font-semibold">Loading...</div>;
+  }
 
   const discount = product.old_price && product.old_price > product.price && product.old_price > 0 ? Math.round(((product.old_price - product.price) / product.old_price) * 100) : null;
 
@@ -47,40 +57,40 @@ export default function DetailTO({ product }: Props) {
 
           <p className="text-sm text-gray-700 whitespace-pre-line mb-4">{product.description}</p>
 
-          {product.is_free_available && product.link_to_form && (
-            <p className="text-sm mb-3">
-              🔐 Dapatkan password Try Out:{" "}
-              <a href={product.link_to_form} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
-                di sini
-              </a>
-            </p>
-          )}
+          {product.is_free_available && product.password && isFreeAvailable && <PasswordDisplay password={product.password} />}
 
           <div className="md:px-0">
             <Separator className="mb-4" />
           </div>
 
-          {/* Harga */}
-          <div className="text-lg font-semibold space-y-1 mb-6">
-            {discount !== null && <div className="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded-md mb-1">{discount}%</div>}
-            <div className="flex items-center gap-2">
-              {product.old_price !== undefined && product.old_price > 0 && (
-                <span className="text-sm line-through text-muted-foreground">
-                  {product.old_price.toLocaleString("id-ID", {
-                    style: "currency",
-                    currency: "IDR",
-                  })}
-                </span>
-              )}
+          {isPremiumAvailable?.data ? (
+            <a href={whatsappMessage} target="_blank" rel="noopener noreferrer" className="block w-full md:max-w-xs">
+              <Button className="w-full md:w-auto bg-red-600 hover:bg-red-700 text-white">Mulai Try Out</Button>
+            </a>
+          ) : (
+            <>
+              {/* Harga */}
+              <div className="text-lg font-semibold space-y-1 mb-6">
+                {discount !== null && <div className="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded-md mb-1">{discount}%</div>}
+                <div className="flex items-center gap-2">
+                  {product.old_price !== undefined && product.old_price > 0 && (
+                    <span className="text-sm line-through text-muted-foreground">
+                      {product.old_price.toLocaleString("id-ID", {
+                        style: "currency",
+                        currency: "IDR",
+                      })}
+                    </span>
+                  )}
+                  <p className="text-2xl font-bold text-[#ad0a1f]">Rp {product.price.toLocaleString("id-ID")}</p>
+                </div>
+              </div>
 
-              <p className="text-2xl font-bold text-[#ad0a1f]">Rp {product.price.toLocaleString("id-ID")}</p>
-            </div>
-          </div>
-
-          {/* CTA WhatsApp */}
-          <a href={whatsappMessage} target="_blank" rel="noopener noreferrer" className="block w-full md:max-w-xs">
-            <Button className="w-full md:w-auto bg-green-600 hover:bg-green-700 text-white">Pesan Sekarang via WhatsApp</Button>
-          </a>
+              {/* CTA WhatsApp */}
+              <a href={whatsappMessage} target="_blank" rel="noopener noreferrer" className="block w-full md:max-w-xs">
+                <Button className="w-full md:w-auto bg-green-600 hover:bg-green-700 text-white">Beli Paket Premium</Button>
+              </a>
+            </>
+          )}
         </div>
       </div>
 

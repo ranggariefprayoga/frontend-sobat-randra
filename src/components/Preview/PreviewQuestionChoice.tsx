@@ -51,13 +51,6 @@ export default function QuestionChoicePreview({ isLoading, error, data, question
           {choice.question_choice_text.length > 0 && (
             <div className="space-y-1 text-sm">
               {choice.question_choice_text.map((line, idx) => {
-                if (line === "") {
-                  return (
-                    <p key={idx} className="text-gray-500 text-sm">
-                      Pilihan jawaban masih kosong!
-                    </p>
-                  );
-                }
                 return <p key={idx}>{line}</p>;
               })}
             </div>

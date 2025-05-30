@@ -17,22 +17,6 @@ export interface CreateQuestionArgs {
   files?: File[];
 }
 
-// Check if all questions are fulfilled
-export const useCheckAllQuestionsWasFullfiled = (product_try_out_id?: number | string, question_id?: number | string, answer_explanation_id?: number | string) => {
-  return useQuery<WebResponse<boolean>, Error>({
-    queryKey: ["questions", product_try_out_id, question_id, answer_explanation_id, "fullfilled-check"],
-    queryFn: async () => {
-      const res = await axios.get(`${API_BASE_URL}/api/products/tryout/${product_try_out_id}/questions/fullfilled/admin`, {
-        params: { product_try_out_id, question_id, answer_explanation_id },
-        withCredentials: true,
-      });
-      return res.data;
-    },
-    enabled: Boolean(product_try_out_id && question_id && answer_explanation_id),
-    retry: false,
-  });
-};
-
 // Get all valid questions for admin
 export const useGetValidQuestionsAdmin = (product_try_out_id?: number | string) => {
   return useQuery<WebResponse<QuestionResponse[]>, Error>({

@@ -2,18 +2,22 @@
 
 import ButtonWithIcon from "@/components/TombolBack/TombolBack";
 import LayoutBackgroundWhite from "@/layout/LayoutBackgroundWhite";
-import { useGetTryOutProductById } from "@/lib/api/productTryOut.api";
 import { ArrowLeft } from "lucide-react";
 import { use } from "react";
 import DetailTO from "./DetailTO";
 import { DialogInfo } from "@/components/Dialog/DialogInfo";
 import { caraAksesTryOut } from "@/data/cara-akses-to";
+import { useGetTryOutProductById } from "@/lib/api/productTryOut.api";
+import { useUser } from "@/lib/api/user.api";
+import { useCheckAvailableFreeSession } from "@/lib/api/quisSession.api";
 
 export default function DetailPilihanPaketTO({ params }: { params: Promise<{ product_try_out_id: string }> }) {
   const { product_try_out_id: id } = use(params);
-  const { data: product, isLoading } = useGetTryOutProductById(id);
+  const { data, isLoading } = useGetTryOutProductById(Number(id));
+  const { data: detailUser, isLoading: detailUserLoading } = useUser();
+  const { data: isAvailable, isLoading: isAvailableLoading } = useCheckAvailableFreeSession(Number(id), detailUser?.data?.id ?? 0);
 
-  if (isLoading) {
+  if (isLoading || detailUserLoading || isAvailableLoading) {
     return (
       <div className="min-h-screen flex justify-center items-center bg-white">
         <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-[#ad0a1f] border-opacity-70"></div>
@@ -30,7 +34,7 @@ export default function DetailPilihanPaketTO({ params }: { params: Promise<{ pro
         ))}
       </div>
 
-      <DetailTO product={product?.data} />
+      <DetailTO product={data?.data} user={detailUser?.data} isFreeAvailable={isAvailable?.data} />
     </LayoutBackgroundWhite>
   );
 }

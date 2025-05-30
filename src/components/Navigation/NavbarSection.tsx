@@ -6,7 +6,7 @@ import { Navbar } from "./Navbar";
 export default function NavbarSection() {
   const pathname = usePathname();
 
-  if (pathname.startsWith("/auth")) {
+  if (pathname?.startsWith("/auth")) {
     return null;
   }
 

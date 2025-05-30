@@ -79,12 +79,14 @@ export default function CreateQuestionChoiceModal({ product_try_out_id, question
       setChoiceTextMath([]);
       setChoiceText("");
       setChoiceWeight(0);
+      setFiles([]);
       setOpen(false);
       if (onSuccess) onSuccess();
     } catch {
       toast.error("Gagal membuat pilihan");
       setChoiceTextMath([]);
       setChoiceText("");
+      setFiles([]);
       setChoiceWeight(0);
     }
   };
