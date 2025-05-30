@@ -9,18 +9,27 @@ import NullComponent from "@/components/NullComponent/NullComponent";
 import TitleComponent from "@/components/TitleComponent/TitleComponent";
 import ButtonWithIcon from "@/components/TombolBack/TombolBack";
 import { Button } from "@/components/ui/button";
-import { dummyProductBimbel, dummyProductTryOut } from "@/data/dummy/product.home";
-import { userDetail } from "@/data/dummy/user.login";
+import { dummyProductBimbel } from "@/data/dummy/product.home";
 import LayoutBackgroundWhite from "@/layout/LayoutBackgroundWhite";
+import { useGetAllActiveTryOutProducts } from "@/lib/api/productTryOut.api";
+import { useUser } from "@/lib/api/user.api";
 import { BimbelProductlModel, TryOutProductModel } from "@/model/product.model";
 import { ArrowLeft } from "lucide-react";
 import { useState } from "react";
 
 export default function MulaiBelajarSection() {
   const [selectedCategory, setSelectedCategory] = useState<string>("try-out");
-  // backend-api
-  const userEmail = userDetail && userDetail.email;
-  const userId = userDetail && userDetail.id;
+
+  const { data: allProductTryOut, isLoading } = useGetAllActiveTryOutProducts();
+  const { data: detailUser, isLoading: detailUserLoading } = useUser();
+
+  if (isLoading || detailUserLoading) {
+    return (
+      <div className="min-h-screen flex justify-center items-center bg-white">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-[#ad0a1f] border-opacity-70"></div>
+      </div>
+    );
+  }
 
   const handleCategoryClick = (category: string) => {
     setSelectedCategory(category);
@@ -29,7 +38,7 @@ export default function MulaiBelajarSection() {
   let filteredProducts: any = [];
   if (selectedCategory === "try-out") {
     // backend-api
-    filteredProducts = dummyProductTryOut.filter((product: TryOutProductModel) => product.is_active === true);
+    filteredProducts = allProductTryOut?.data || [];
   } else if (selectedCategory === "bimbel") {
     // backend-api
     filteredProducts = dummyProductBimbel;
@@ -80,7 +89,7 @@ export default function MulaiBelajarSection() {
         filteredProducts && filteredProducts.length > 0 ? (
           <>
             <div className="w-full px-8 md:px-24 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mt-8">
-              {selectedCategory === "try-out" && filteredProducts.map((product: TryOutProductModel) => <CardMulaiTryOut userId={userId} userEmail={userEmail} key={product.id} product={product} />)}
+              {selectedCategory === "try-out" && filteredProducts.map((product: TryOutProductModel) => <CardMulaiTryOut userId={detailUser?.data?.id} userEmail={detailUser?.data?.email} key={product.id} product={product} />)}
               {selectedCategory === "bimbel" && filteredProducts.map((product: BimbelProductlModel) => <CardBimbel key={product.id} product={product} customLink="/pilihan-paket" />)}
             </div>
           </>

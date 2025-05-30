@@ -1,9 +1,7 @@
 import { TryOutProductModel } from "@/model/product.model";
 import AccessButtonWithModal from "../AccessProductButton/AccessProductButton";
-import { ProductAccessTryOutDummy } from "@/data/dummy/productAccess.try-out";
-import { QuizSessionDataDummy } from "@/data/dummy/quiz-session.dummy";
-import { QuizSessionModel } from "@/model/quiz-session.model";
-import { TryOutProductAccessModel } from "@/model/productAccess.model";
+import { useCheckAvailableFreeSession, useCheckAvailablePremiumSession } from "@/lib/api/quisSession.api";
+import { LoaderCircle } from "lucide-react";
 
 interface ProductCardProps {
   product: TryOutProductModel;
@@ -12,24 +10,16 @@ interface ProductCardProps {
 }
 
 export default function CardMulaiTryOut({ product, userEmail, userId }: ProductCardProps) {
-  // backend-api cari data quiz session dengan user_id dengan for_product_free = true
-  const isFreeAvailable =
-    product.is_free_available === false
-      ? false
-      : QuizSessionDataDummy === null || QuizSessionDataDummy?.length === 0
-      ? true
-      : QuizSessionDataDummy.some((session: QuizSessionModel) => {
-          const hasValidSession = session.product_try_out_id === product.id && session.user_id === userId && session.for_product_free === true;
+  const { data: isFreeAvailable, isLoading: isFreeAvailableLoading } = useCheckAvailableFreeSession(product.id, userId);
+  const { data: isPremiumAvailable, isLoading: isPremiumAvailableLoading } = useCheckAvailablePremiumSession(product.id, userEmail);
 
-          if (hasValidSession) {
-            return session.is_completed === false && session.is_active === true && session.token !== null && new Date(session.expired_at) > new Date();
-          }
-
-          return true;
-        });
-
-  // backend-api cari data quiz session dengan user_id dengan for_product_free = false
-  const isPremiumAvailable = ProductAccessTryOutDummy?.some((access: TryOutProductAccessModel) => access.product_try_out_id === product.id && access.user_email === userEmail && access.get_access === true);
+  if (isFreeAvailableLoading || isPremiumAvailableLoading) {
+    return (
+      <div className="px-8 md:px-24 flex justify-center py-12">
+        <LoaderCircle className="animate-spin" strokeWidth={3} color="#ad0a1f" />
+      </div>
+    );
+  }
 
   return (
     <div className={`relative shadow-lg rounded-xl overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 ${!product.is_active ? "bg-gray-100 text-gray-500" : "bg-white text-gray-900"}`}>
@@ -45,7 +35,7 @@ export default function CardMulaiTryOut({ product, userEmail, userId }: ProductC
         <p className="text-sm mt-1 truncate overflow-hidden whitespace-nowrap" title={product.description}>
           {product.description}
         </p>
-        <AccessButtonWithModal product={product} isPremiumAvailable={isPremiumAvailable} isFreeAvailable={isFreeAvailable} />
+        <AccessButtonWithModal product={product} isPremiumAvailable={isPremiumAvailable?.data} isFreeAvailable={isFreeAvailable?.data} />
       </div>
     </div>
   );
