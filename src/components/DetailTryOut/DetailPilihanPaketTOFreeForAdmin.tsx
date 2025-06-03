@@ -6,7 +6,7 @@ import { useGetTryOutProductByIdForAdminIncludeFree } from "@/lib/api/productTry
 import { ArrowLeft } from "lucide-react";
 import { use } from "react";
 import { useUser } from "@/lib/api/user.api";
-import { useCheckAvailableFreeSession } from "@/lib/api/quisSession.api";
+import { useCheckAvailableFree } from "@/lib/api/quisSession.api";
 import UpdateFreeProductTryOutModal from "../Dialog/UpdateFreeTryOut";
 import DetailTOFree from "@/pages/PilihanPaket/DetailTOFree";
 
@@ -14,7 +14,7 @@ export default function DetailPilihanPaketTOFreeForAdmin({ params }: { params: P
   const { product_try_out_id: id } = use(params);
   const { data: product, isLoading } = useGetTryOutProductByIdForAdminIncludeFree(Number(id));
   const { data: detailUser, isLoading: detailUserLoading } = useUser();
-  const { data: isFreeAvailable, isLoading: isAvailableLoading } = useCheckAvailableFreeSession(Number(id), detailUser?.data?.id ?? 0);
+  const { data: isFreeAvailable, isLoading: isAvailableLoading } = useCheckAvailableFree(Number(id), detailUser?.data?.id ?? 0);
 
   if (isLoading || detailUserLoading || isAvailableLoading) {
     return (

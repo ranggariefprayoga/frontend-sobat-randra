@@ -10,6 +10,8 @@ import { UserDetailInterface } from "@/model/user.model";
 import { toast } from "sonner";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { useRouter } from "next/navigation";
+import { useStartFreeTryOut } from "@/lib/api/quisSession.api";
 
 type Props = {
   product?: createTryOutResponse | undefined;
@@ -25,6 +27,8 @@ export default function DetailTOFree({ product, isFreeAvailable }: Props) {
   const [isGratisDialogOpen, setIsGratisDialogOpen] = useState(false);
   const [password, setPassword] = useState("");
   const [isPasswordCorrect, setIsPasswordCorrect] = useState(false);
+  const router = useRouter();
+  const { mutate: startFreeTryOut, isPending } = useStartFreeTryOut();
 
   const haveAccessGratis = isFreeAvailable;
   const correctPassword = product?.password;
@@ -50,10 +54,27 @@ export default function DetailTOFree({ product, isFreeAvailable }: Props) {
   };
 
   const handleGratisSubmit = () => {
-    toast.success(`Try Out dimulai gratis, tunggu sebentar...`);
-    setIsGratisDialogOpen(false);
-    setPassword("");
-    setIsPasswordCorrect(false);
+    if (!product) return;
+
+    startFreeTryOut(
+      {
+        productTryOutId: product.id,
+        password: password,
+      },
+      {
+        onSuccess: (res) => {
+          toast.success(res?.data?.message || "Try Out dimulai gratis, tunggu sebentar...");
+          setIsGratisDialogOpen(false);
+          setPassword("");
+          setIsPasswordCorrect(false);
+
+          router.push(`/free-quiz?product_try_out_id=${res?.data?.product_try_out_id}&number_of_question=${res?.data?.first_question_number}`);
+        },
+        onError: () => {
+          toast.error("Gagal memulai sesi. Pastikan password benar.");
+        },
+      }
+    );
   };
 
   return (
@@ -125,8 +146,8 @@ export default function DetailTOFree({ product, isFreeAvailable }: Props) {
 
             {/* Tombol Mulai Kerjakan, hanya muncul setelah password benar */}
             {isPasswordCorrect && (
-              <Button variant="default" onClick={handleGratisSubmit}>
-                Mulai Kerjakan!
+              <Button variant="default" onClick={handleGratisSubmit} disabled={isPending}>
+                {isPending ? "Memulai..." : "Mulai Kerjakan!"}
               </Button>
             )}
           </DialogFooter>

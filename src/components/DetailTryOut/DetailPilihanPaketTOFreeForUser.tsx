@@ -6,23 +6,21 @@ import { useGetTryOutProductByIdForUserIncludeFree } from "@/lib/api/productTryO
 import { ArrowLeft } from "lucide-react";
 import { use } from "react";
 import { useUser } from "@/lib/api/user.api";
-import { useCheckAvailableFreeSession } from "@/lib/api/quisSession.api";
 import DetailTOFree from "@/pages/PilihanPaket/DetailTOFree";
+import { useCheckAvailableFree } from "@/lib/api/quisSession.api";
 
 export default function DetailPilihanPaketTOFreeForUser({ params }: { params: Promise<{ product_try_out_id: string }> }) {
   const { product_try_out_id: id } = use(params);
   const { data: product, isLoading } = useGetTryOutProductByIdForUserIncludeFree(Number(id));
   const { data: detailUser, isLoading: detailUserLoading } = useUser();
-  const { data: isFreeAvailable, isLoading: isAvailableLoading } = useCheckAvailableFreeSession(Number(id), detailUser?.data?.id ?? 0);
 
-  if (isLoading || detailUserLoading || isAvailableLoading) {
-    return (
-      <div className="min-h-screen flex justify-center items-center bg-white">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-[#ad0a1f] border-opacity-70"></div>
-      </div>
-    );
-  }
-  if (isLoading) {
+  const userId = detailUser?.data?.id;
+
+  const { data: isFreeAvailable, isLoading: isAvailableLoading } = useCheckAvailableFree(Number(id), userId);
+
+  const isAnyLoading = isLoading || detailUserLoading || (userId && isAvailableLoading);
+
+  if (isAnyLoading) {
     return (
       <div className="min-h-screen flex justify-center items-center bg-white">
         <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-[#ad0a1f] border-opacity-70"></div>

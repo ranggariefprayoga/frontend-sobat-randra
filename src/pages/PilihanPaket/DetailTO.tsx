@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { PasswordDisplay } from "@/components/ShowPasswordProduct/PasswordDisplay";
 import { UserDetailInterface } from "@/model/user.model";
-import { useCheckAvailablePremiumSession } from "@/lib/api/quisSession.api";
+import { useCheckAvailablePremium } from "@/lib/api/quisSession.api";
 import { toast } from "sonner";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -28,7 +28,7 @@ export default function DetailTO({ product, user, isFreeAvailable }: Props) {
   const [isPremiumDialogOpen, setIsPremiumDialogOpen] = useState(false);
   const [password, setPassword] = useState("");
   const [isPasswordCorrect, setIsPasswordCorrect] = useState(false);
-  const { data: isPremiumAvailable, isLoading } = useCheckAvailablePremiumSession(product?.id, user?.email ?? "");
+  const { data: isPremiumAvailable, isLoading } = useCheckAvailablePremium(product?.id ?? "", user?.email ?? "");
 
   const haveAccessGratis = isFreeAvailable;
   const haveAccessPremium = isPremiumAvailable?.data;

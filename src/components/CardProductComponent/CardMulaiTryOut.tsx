@@ -1,6 +1,6 @@
 import { TryOutProductModel } from "@/model/product.model";
 import AccessButtonWithModal from "../AccessProductButton/AccessProductButton";
-import { useCheckAvailablePremiumSession } from "@/lib/api/quisSession.api";
+import { useCheckAvailablePremium } from "@/lib/api/quisSession.api";
 import { LoaderCircle } from "lucide-react";
 
 interface ProductCardProps {
@@ -9,7 +9,7 @@ interface ProductCardProps {
 }
 
 export default function CardMulaiTryOut({ product, userEmail }: ProductCardProps) {
-  const { data: isPremiumAvailable, isLoading: isPremiumAvailableLoading } = useCheckAvailablePremiumSession(product.id, userEmail);
+  const { data: isPremiumAvailable, isLoading: isPremiumAvailableLoading } = useCheckAvailablePremium(product.id, userEmail);
 
   if (isPremiumAvailableLoading) {
     return (
