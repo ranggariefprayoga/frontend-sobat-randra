@@ -8,7 +8,7 @@ import { usePathname } from "next/navigation";
 export default function Footer() {
   const pathname = usePathname();
 
-  if (pathname.startsWith("/auth")) {
+  if (pathname?.startsWith("/auth")) {
     return null;
   }
   const products = ["Try Out Gratis & Premium", "Bimbel Private & Barengan", "Smart Book", "Video Belajar"];

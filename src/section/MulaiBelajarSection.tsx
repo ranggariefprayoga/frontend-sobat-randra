@@ -11,7 +11,7 @@ import ButtonWithIcon from "@/components/TombolBack/TombolBack";
 import { Button } from "@/components/ui/button";
 import { dummyProductBimbel } from "@/data/dummy/product.home";
 import LayoutBackgroundWhite from "@/layout/LayoutBackgroundWhite";
-import { useGetAllActiveTryOutProducts } from "@/lib/api/productTryOut.api";
+import { useGetAllTryOutProductsExcludeFree } from "@/lib/api/productTryOut.api";
 import { useUser } from "@/lib/api/user.api";
 import { BimbelProductlModel, TryOutProductModel } from "@/model/product.model";
 import { ArrowLeft } from "lucide-react";
@@ -20,7 +20,7 @@ import { useState } from "react";
 export default function MulaiBelajarSection() {
   const [selectedCategory, setSelectedCategory] = useState<string>("try-out");
 
-  const { data: allProductTryOut, isLoading } = useGetAllActiveTryOutProducts();
+  const { data: allProductTryOut, isLoading } = useGetAllTryOutProductsExcludeFree();
   const { data: detailUser, isLoading: detailUserLoading } = useUser();
 
   if (isLoading || detailUserLoading) {
@@ -89,7 +89,7 @@ export default function MulaiBelajarSection() {
         filteredProducts && filteredProducts.length > 0 ? (
           <>
             <div className="w-full px-8 md:px-24 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mt-8">
-              {selectedCategory === "try-out" && filteredProducts.map((product: TryOutProductModel) => <CardMulaiTryOut userId={detailUser?.data?.id} userEmail={detailUser?.data?.email} key={product.id} product={product} />)}
+              {selectedCategory === "try-out" && filteredProducts.map((product: TryOutProductModel) => <CardMulaiTryOut userEmail={detailUser?.data?.email} key={product.id} product={product} />)}
               {selectedCategory === "bimbel" && filteredProducts.map((product: BimbelProductlModel) => <CardBimbel key={product.id} product={product} customLink="/pilihan-paket" />)}
             </div>
           </>

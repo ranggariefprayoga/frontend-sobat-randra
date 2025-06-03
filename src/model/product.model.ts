@@ -8,7 +8,7 @@ export interface TryOutProductModel {
   marketing_text?: string;
   old_price?: number;
   price: number;
-  is_free_available?: boolean;
+  is_trial_product?: boolean;
   max_free_questions?: number;
   created_at: Date;
   updated_at: Date;
@@ -35,7 +35,7 @@ export interface createTryOutResponse {
   id: number;
   name: string;
   is_active: boolean;
-  is_free_available: boolean;
+  is_trial_product: boolean;
   password?: string;
   banner_image: string;
   description: string;
@@ -51,7 +51,7 @@ export interface updateTryOutResponse {
   id: number;
   name?: string;
   is_active: boolean;
-  is_free_available: boolean;
+  is_trial_product: boolean;
   password?: string;
   banner_image?: string;
   description?: string;
@@ -66,7 +66,7 @@ export interface updateTryOutResponse {
 export interface updateTryOutRequest {
   name?: string;
   is_active?: boolean;
-  is_free_available?: boolean;
+  is_trial_product?: boolean;
   password?: string;
   banner_image?: string;
   description?: string;
@@ -78,7 +78,7 @@ export interface updateTryOutRequest {
 export interface createTryOutRequest {
   name: string;
   is_active: boolean;
-  is_free_available: boolean;
+  is_trial_product: boolean;
   password?: string;
   banner_image: string;
   description: string;

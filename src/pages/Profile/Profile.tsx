@@ -20,7 +20,6 @@ type ProfileProps = {
     token: string;
     token_expires: string;
     bimbel_bareng_access: string[];
-    booking_bimbel_private: string[];
     try_out_access: string[];
   } | null;
 };
@@ -134,7 +133,6 @@ export default function Profile({ userDetail }: ProfileProps) {
       <Card>
         <CardContent>
           <AccessSection title="Jadwal Bimbel Bareng Kamu" items={userDetail.bimbel_bareng_access} />
-          <AccessSection title="Jadwal Bimbel Bareng Kamu" items={userDetail.booking_bimbel_private} />
           <AccessSection title="Try Out Premium Kamu" items={userDetail.try_out_access} />
         </CardContent>
       </Card>
@@ -142,7 +140,7 @@ export default function Profile({ userDetail }: ProfileProps) {
   );
 }
 function AccessSection({ title, items }: { title: string; items: string[] }) {
-  const count = items.length;
+  const count = items?.length ?? 0;
   const router = useRouter();
 
   const handleLihatPaket = () => {

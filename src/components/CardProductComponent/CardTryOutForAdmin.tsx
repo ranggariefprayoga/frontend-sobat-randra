@@ -16,7 +16,7 @@ interface ProductCardProps {
 
 export default function CardTryOutForAdmin({ product, customLink, buttonText = "Lihat Detail" }: ProductCardProps) {
   const [open, setOpen] = useState(false);
-  const isFreeAvailable = product.is_free_available;
+  const isFreeAvailable = product.is_trial_product;
   const router = useRouter();
   const deleteMutation = useDeleteTryOutProductById();
   const oldPrice = product.old_price ?? 0;
@@ -69,7 +69,7 @@ export default function CardTryOutForAdmin({ product, customLink, buttonText = "
         {/* Badge */}
         <div className="flex items-center gap-2 text-sm mb-2">
           {isFreeAvailable && <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs">📘 Gratis</span>}
-          <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs">📘 Premium</span>
+          {!isFreeAvailable && <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs">📘 Premium</span>}
         </div>
 
         {/* Nama & Deskripsi */}
@@ -82,13 +82,21 @@ export default function CardTryOutForAdmin({ product, customLink, buttonText = "
         <hr className="my-3 border-gray-200" />
 
         {/* Harga */}
-        <div className="flex items-center justify-between mt-3">
-          <div className="flex items-center gap-2">
-            {discountPercentage !== null && <span className="bg-green-600 text-white text-[10px] font-bold px-2 py-1 rounded-md">{discountPercentage}%</span>}
-            {hasDiscount && <p className="text-xs line-through text-gray-500">Rp {product.old_price?.toLocaleString("id-ID")}</p>}
+        {!isFreeAvailable && (
+          <div className="flex items-center justify-between mt-3">
+            <div className="flex items-center gap-2">
+              {discountPercentage !== null && <span className="bg-green-600 text-white text-[10px] font-bold px-2 py-1 rounded-md">{discountPercentage}%</span>}
+              {hasDiscount && <p className="text-xs line-through text-gray-500">Rp {product.old_price?.toLocaleString("id-ID")}</p>}
+            </div>
+            <p className="text-lg font-bold text-[#ad0a1f]">Rp {product.price.toLocaleString("id-ID")}</p>
           </div>
-          <p className="text-lg font-bold text-[#ad0a1f]">Rp {product.price.toLocaleString("id-ID")}</p>
-        </div>
+        )}
+
+        {isFreeAvailable && (
+          <div className="flex items-center justify-end mt-3">
+            <p className="text-lg font-bold text-[#ad0a1f]">Gratis</p>
+          </div>
+        )}
 
         {/* Tombol Lihat Detail */}
         <Button

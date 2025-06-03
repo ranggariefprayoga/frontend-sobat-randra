@@ -11,11 +11,21 @@ type UpdateProductPayload = {
 };
 
 // Get all tryout products (protected)
-export const useGetAllActiveTryOutProducts = () => {
+export const useGetAllTryOutProductsExcludeFree = () => {
   return useQuery<WebResponse<createTryOutResponse[]>, Error>({
     queryKey: ["products", "tryout"],
     queryFn: async () => {
       const res = await axios.get(`${API_BASE_URL}/api/products/tryout`, { withCredentials: true });
+      return res.data;
+    },
+    retry: false,
+  });
+};
+export const useGetAllTryOutProductsForBuatSoalAdmin = () => {
+  return useQuery<WebResponse<createTryOutResponse[]>, Error>({
+    queryKey: ["products", "tryout"],
+    queryFn: async () => {
+      const res = await axios.get(`${API_BASE_URL}/api/products/tryout/buat-soal`, { withCredentials: true });
       return res.data;
     },
     retry: false,
@@ -27,6 +37,28 @@ export const useGetAllTryOutProducts = () => {
     queryKey: ["products", "tryout"],
     queryFn: async () => {
       const res = await axios.get(`${API_BASE_URL}/api/products/tryout/all`, { withCredentials: true });
+      return res.data;
+    },
+    retry: false,
+  });
+};
+
+export const useGetAllFreeTryOutProducts = () => {
+  return useQuery<WebResponse<createTryOutResponse[]>, Error>({
+    queryKey: ["products", "tryout"],
+    queryFn: async () => {
+      const res = await axios.get(`${API_BASE_URL}/api/products/tryout/free`, { withCredentials: true });
+      return res.data;
+    },
+    retry: false,
+  });
+};
+
+export const useGetAllFreeTryOutProductsForUser = () => {
+  return useQuery<WebResponse<createTryOutResponse[]>, Error>({
+    queryKey: ["products", "tryout", "user"],
+    queryFn: async () => {
+      const res = await axios.get(`${API_BASE_URL}/api/products/tryout/free/user`, { withCredentials: true });
       return res.data;
     },
     retry: false,
@@ -46,7 +78,7 @@ export const useGetTryOutProductsForHome = () => {
 };
 
 // Get tryout product by ID (protected)
-export const useGetTryOutProductById = (product_try_out_id: number) => {
+export const useGetTryOutProductByIdExcludeFree = (product_try_out_id: number) => {
   return useQuery<WebResponse<createTryOutResponse>, Error>({
     queryKey: ["products", "tryout", product_try_out_id],
     queryFn: async () => {
@@ -59,12 +91,37 @@ export const useGetTryOutProductById = (product_try_out_id: number) => {
   });
 };
 
-export const useGetTryOutProductByIdForAdmin = (product_try_out_id: number) => {
+export const useGetTryOutProductByIdForAdminExcludeFree = (product_try_out_id: number) => {
   return useQuery<WebResponse<createTryOutResponse>, Error>({
     queryKey: ["products", "tryout", product_try_out_id],
     queryFn: async () => {
       if (!product_try_out_id) throw new Error("product_try_out_id is required");
       const res = await axios.get(`${API_BASE_URL}/api/products/tryout/${product_try_out_id}/admin`, { withCredentials: true });
+      return res.data;
+    },
+    enabled: Boolean(product_try_out_id),
+    retry: false,
+  });
+};
+
+export const useGetTryOutProductByIdForAdminIncludeFree = (product_try_out_id: number) => {
+  return useQuery<WebResponse<createTryOutResponse>, Error>({
+    queryKey: ["products", "tryout", product_try_out_id],
+    queryFn: async () => {
+      if (!product_try_out_id) throw new Error("product_try_out_id is required");
+      const res = await axios.get(`${API_BASE_URL}/api/products/tryout/${product_try_out_id}/admin/free`, { withCredentials: true });
+      return res.data;
+    },
+    enabled: Boolean(product_try_out_id),
+    retry: false,
+  });
+};
+export const useGetTryOutProductByIdForUserIncludeFree = (product_try_out_id: number) => {
+  return useQuery<WebResponse<createTryOutResponse>, Error>({
+    queryKey: ["products", "tryout", product_try_out_id, "user"],
+    queryFn: async () => {
+      if (!product_try_out_id) throw new Error("product_try_out_id is required");
+      const res = await axios.get(`${API_BASE_URL}/api/products/tryout/${product_try_out_id}/user/free`, { withCredentials: true });
       return res.data;
     },
     enabled: Boolean(product_try_out_id),

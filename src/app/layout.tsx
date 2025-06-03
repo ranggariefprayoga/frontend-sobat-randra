@@ -31,10 +31,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Providers>
-          <main>
+          <main className="flex flex-col min-h-screen">
             <Navigation />
             <Toaster position="top-center" />
-            {children}
+            <div className="flex-grow">{children}</div>
             <Script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.js" strategy="afterInteractive" defer />
             <Footer />
           </main>

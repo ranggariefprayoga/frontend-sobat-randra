@@ -11,7 +11,7 @@ import ButtonWithIcon from "@/components/TombolBack/TombolBack";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import LayoutBackgroundWhite from "@/layout/LayoutBackgroundWhite";
-import { useGetTryOutProductByIdForAdmin } from "@/lib/api/productTryOut.api";
+import { useGetTryOutProductByIdForAdminExcludeFree } from "@/lib/api/productTryOut.api";
 import { useCountTryOutAccess, useGetTryOutAccesses } from "@/lib/api/tryOutAccess.api";
 import { Pagination } from "@/pages/Admin/PelangganComponent";
 import debounce from "lodash.debounce";
@@ -26,7 +26,7 @@ export default function AksesTODetail({ params }: { params: Promise<{ product_tr
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
 
-  const { data: tryOutById, isPending: isLoadingTryOut } = useGetTryOutProductByIdForAdmin(Number(id));
+  const { data: tryOutById, isPending: isLoadingTryOut } = useGetTryOutProductByIdForAdminExcludeFree(Number(id));
   const { data: accessTOData, isPending: isLoadingAccess, refetch: refetchAccess } = useGetTryOutAccesses(Number(id), page, limit, searchTerm);
   const { data: jumlahPesertaBerbayar, isPending: isLoadingJumlah, refetch: refetchJumlah } = useCountTryOutAccess(Number(id));
 

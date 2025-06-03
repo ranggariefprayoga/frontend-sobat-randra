@@ -10,10 +10,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { useCreateTryOutProduct } from "@/lib/api/productTryOut.api";
 import { toast } from "sonner";
 
-export function CreateTryOutModal() {
+export function CreateTryOutFreeModal() {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [isActive, setIsActive] = useState(false);
+  const isFree = true;
+  const [password, setPassword] = useState("");
   const [bannerImage, setBannerImage] = useState<File | null>(null);
   const [description, setDescription] = useState("");
   const [marketingText, setMarketingText] = useState("");
@@ -28,9 +30,15 @@ export function CreateTryOutModal() {
     if (!description) return toast.error("Deskripsi produk belum diisi.");
     if (!price) return toast.error("Harga produk belum diisi.");
 
+    if (isFree) {
+      if (!password) return toast.error("Password gratis belum diisi.");
+    }
+
     const payload = JSON.stringify({
       name,
       is_active: isActive,
+      is_trial_product: isFree,
+      password: isFree ? password : "",
       description,
       marketing_text: marketingText || "",
       price: Number(price),
@@ -56,6 +64,7 @@ export function CreateTryOutModal() {
   const resetForm = () => {
     setName("");
     setIsActive(false);
+    setPassword("");
     setBannerImage(null);
     setDescription("");
     setMarketingText("");
@@ -66,11 +75,11 @@ export function CreateTryOutModal() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>Buat Try Out Premium</Button>
+        <Button>Buat Try Out Gratis</Button>
       </DialogTrigger>
       <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[600px]">
         <DialogHeader>
-          <DialogTitle>Buat Try Out Premium</DialogTitle>
+          <DialogTitle>Buat Try Out Gratis</DialogTitle>
           <DialogDescription>Isi form dibawah ini untuk membuat Try Out.</DialogDescription>
           <div className="border-b border-gray-300 mb-2" />
         </DialogHeader>
@@ -89,6 +98,23 @@ export function CreateTryOutModal() {
               <span className="text-sm">{isActive ? "Aktif" : "Tidak Aktif"}</span>
             </div>
           </div>
+
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center space-x-2">
+              <Switch checked={isFree} />
+              <span className="text-sm">{isFree ? "Ada Try Out Gratis" : "Gak ada Try Out Gratis"}</span>
+            </div>
+          </div>
+
+          {isFree && (
+            <div className="mb-4 space-y-1.5">
+              <Label>
+                Password Akses<span className="text-red-600">*</span>
+              </Label>
+              <Input placeholder="Masukkan password" value={password} onChange={(e) => setPassword(e.target.value)} />
+            </div>
+          )}
+
           <div className="mb-4 space-y-1.5">
             <Label>
               Gambar Banner <span className="text-red-600">*</span>
@@ -110,14 +136,9 @@ export function CreateTryOutModal() {
 
           <div className="mb-4 space-y-1.5">
             <Label>
-              Harga <span className="text-red-600">*</span>
+              Harga Asli<span className="text-red-600">*</span>
             </Label>
             <Input type="number" placeholder="Contoh: 50000" value={price} onChange={(e) => setPrice(e.target.value)} />
-          </div>
-
-          <div className="mb-4 space-y-1.5">
-            <Label>Harga Lama (Opsional)</Label>
-            <Input type="number" placeholder="Contoh: 75000" value={oldPrice} onChange={(e) => setOldPrice(e.target.value)} />
           </div>
 
           <Button onClick={handleSubmit} disabled={createMutation.isPending}>
@@ -129,4 +150,4 @@ export function CreateTryOutModal() {
   );
 }
 
-export default CreateTryOutModal;
+export default CreateTryOutFreeModal;

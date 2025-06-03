@@ -11,7 +11,7 @@ interface ProductCardProps {
 }
 
 export default function CardTryOut({ product, customLink, buttonText = "Lihat Detail" }: ProductCardProps) {
-  const isFreeAvailable = product.is_free_available;
+  const isFreeAvailable = product.is_trial_product;
   const router = useRouter();
 
   const discountPercentage = product.old_price ? Math.round(((product.old_price - product.price) / product.old_price) * 100) : null;
@@ -40,13 +40,17 @@ export default function CardTryOut({ product, customLink, buttonText = "Lihat De
         <hr className="my-3 border-gray-200" />
 
         {/* Harga Produk & Diskon */}
-        <div className="flex items-center justify-between mt-3">
-          <div className="flex items-center gap-2">
-            {discountPercentage !== null && <span className="bg-green-600 text-white text-[10px] font-bold px-2 py-1 rounded-md">{discountPercentage}%</span>}
-            {(product.old_price ?? 0) > 0 && <p className="text-xs line-through text-gray-500">Rp {product.old_price?.toLocaleString("id-ID") ?? ""}</p>}
+        {!isFreeAvailable && (
+          <div className="flex items-center justify-between mt-3">
+            <div className="flex items-center gap-2">
+              {discountPercentage !== null && <span className="bg-green-600 text-white text-[10px] font-bold px-2 py-1 rounded-md">{discountPercentage}%</span>}
+              {(product.old_price ?? 0) > 0 && <p className="text-xs line-through text-gray-500">Rp {product.old_price?.toLocaleString("id-ID") ?? ""}</p>}
+            </div>
+            <p className="text-lg font-bold text-[#ad0a1f]">{`Rp ${product.price.toLocaleString("id-ID")}`}</p>
           </div>
-          <p className="text-lg font-bold text-[#ad0a1f]">{`Rp ${product.price.toLocaleString("id-ID")}`}</p>
-        </div>
+        )}
+
+        {isFreeAvailable && <p className="text-lg font-bold text-[#ad0a1f]">GRATIS</p>}
 
         {/* Tombol Navigasi */}
         <Button

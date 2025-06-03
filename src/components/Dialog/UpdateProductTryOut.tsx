@@ -15,8 +15,6 @@ export function UpdateProductTryOutModal({ initialData }: { initialData?: update
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [isActive, setIsActive] = useState(false);
-  const [isFree, setIsFree] = useState(true);
-  const [password, setPassword] = useState("");
   const [bannerImage, setBannerImage] = useState<File | null>(null);
   const [description, setDescription] = useState("");
   const [marketingText, setMarketingText] = useState("");
@@ -27,8 +25,6 @@ export function UpdateProductTryOutModal({ initialData }: { initialData?: update
     if (initialData) {
       setName(initialData.name || "");
       setIsActive(initialData.is_active || false);
-      setIsFree(initialData.is_free_available || false);
-      setPassword(initialData.password || "");
       setDescription(initialData.description || "");
       setMarketingText(initialData.marketing_text || "");
       setPrice(initialData.price?.toString() || "");
@@ -44,8 +40,6 @@ export function UpdateProductTryOutModal({ initialData }: { initialData?: update
     const payloadData = {
       name,
       is_active: isActive,
-      is_free_available: isFree,
-      password: isFree ? password : "",
       description,
       marketing_text: marketingText || "",
       price: Number(price),
@@ -72,11 +66,11 @@ export function UpdateProductTryOutModal({ initialData }: { initialData?: update
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>Edit Try Out</Button>
+        <Button>Edit Try Out Premium</Button>
       </DialogTrigger>
       <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[600px]">
         <DialogHeader>
-          <DialogTitle>Edit Try Out</DialogTitle>
+          <DialogTitle>Edit Try Out Premium</DialogTitle>
           <DialogDescription>Perbarui informasi Try Out di bawah ini.</DialogDescription>
           <div className="border-b border-gray-300 mb-2" />
         </DialogHeader>
@@ -95,21 +89,6 @@ export function UpdateProductTryOutModal({ initialData }: { initialData?: update
               <span className="text-sm">{isActive ? "Aktif" : "Tidak Aktif"}</span>
             </div>
           </div>
-
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center space-x-2">
-              <Switch checked={isFree} onCheckedChange={setIsFree} />
-              <span className="text-sm">{isFree ? "Ada Try Out Gratis" : "Gak ada Try Out Gratis"}</span>
-            </div>
-          </div>
-
-          {isFree && (
-            <div className="mb-4 space-y-1.5">
-              <Label>Password Akses (Opsional)</Label>
-              <Input placeholder="Masukkan password" value={password} onChange={(e) => setPassword(e.target.value)} />
-            </div>
-          )}
-
           <div className="mb-4 space-y-1.5">
             <Label>Gambar Banner {initialData?.banner_image ? "(Kosongkan jika tidak diubah)" : <span className="text-red-600">*</span>}</Label>
             <Input type="file" accept="image/*" onChange={(e) => setBannerImage(e.target.files?.[0] || null)} />
