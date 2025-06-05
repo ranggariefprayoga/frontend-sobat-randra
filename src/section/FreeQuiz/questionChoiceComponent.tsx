@@ -4,7 +4,7 @@ import LatexRenderer from "@/components/LatexRendered/LatexRendered";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 
-export interface QuestionChoiceForFreeQuizResponse {
+export interface QuestionChoiceQuizResponse {
   id: number;
   question_choice_title: string;
   question_choice_text: string[] | undefined;
@@ -14,12 +14,12 @@ export interface QuestionChoiceForFreeQuizResponse {
 }
 
 interface ChoiceProps {
-  choices: QuestionChoiceForFreeQuizResponse[];
+  choices: QuestionChoiceQuizResponse[];
   isSelected: boolean;
   onSelect: (choiceId: number) => void;
 }
 
-const QuestionChoiceComponentForFree = ({ choices, isSelected, onSelect }: ChoiceProps) => {
+const QuestionChoiceComponent = ({ choices, isSelected, onSelect }: ChoiceProps) => {
   if (!choices || choices.length === 0) return <p className="text-sm text-gray-400">Belum ada pilihan jawaban.</p>;
   console.log(onSelect);
   console.log(isSelected);
@@ -76,4 +76,4 @@ const QuestionChoiceComponentForFree = ({ choices, isSelected, onSelect }: Choic
   );
 };
 
-export default QuestionChoiceComponentForFree;
+export default QuestionChoiceComponent;

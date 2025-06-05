@@ -8,10 +8,10 @@ import { useGetFreeQuestion } from "@/lib/api/soalFree.api";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useQuizToken } from "@/lib/api/quisSession.api";
 import QuestionComponent from "@/section/FreeQuiz/questionComponent";
-import QuestionChoiceComponentForFree from "@/section/FreeQuiz/questionChoiceComponent";
 import { useSubmitFreeTryOut } from "@/lib/api/quisSession.api"; // Import the hook
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"; // Import Dialog
 import { useState } from "react";
+import QuestionChoiceComponent from "@/section/FreeQuiz/questionChoiceComponent";
 
 export default function FreeQuizSection() {
   const searchParams = useSearchParams();
@@ -80,7 +80,7 @@ export default function FreeQuizSection() {
             {data?.data?.question ? (
               <>
                 <QuestionComponent question={data?.data?.question} />
-                {data?.data?.question?.question_choices && <QuestionChoiceComponentForFree choices={data?.data?.question?.question_choices} isSelected={false} onSelect={() => {}} />}
+                {data?.data?.question?.question_choices && <QuestionChoiceComponent choices={data?.data?.question?.question_choices} isSelected={false} onSelect={() => {}} />}
                 <div className="flex justify-between items-center mb-4 mt-6">
                   <Button onClick={() => handleNavigation("prev")} disabled={numberOfQuestion === "1"} className="w-auto">
                     Sebelumnya
