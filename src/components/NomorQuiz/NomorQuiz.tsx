@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { LockKeyholeIcon } from "lucide-react";
 import { useState } from "react"; // Import useState for managing dialog open/close state
 
 interface NumberButtonsResponsiveProps {
@@ -32,8 +33,14 @@ export default function NumberButtonsResponsive({ onSelectNumber }: NumberButton
 
             <div className="grid grid-cols-5 gap-2">
               {numbers.map((num) => (
-                <Button key={num} variant="outline" size="sm" onClick={() => onSelectNumber(num)}>
-                  {num}
+                <Button
+                  key={num}
+                  variant="outline"
+                  size="sm"
+                  onClick={() => onSelectNumber(num)}
+                  className={`${num <= 10 ? "border-gray-300 text-gray-700 hover:bg-gray-200 hover:border-gray-500" : "border-gray-400 text-gray-500 bg-gray-200"} rounded-md transition-colors duration-200`}
+                >
+                  {num <= 10 ? num : <LockKeyholeIcon className="text-black" size={20} />}
                 </Button>
               ))}
             </div>
@@ -50,8 +57,14 @@ export default function NumberButtonsResponsive({ onSelectNumber }: NumberButton
       {/* Grid tombol langsung tampil di desktop/tablet (hidden di mobile) */}
       <div className="hidden lg:grid lg:grid-cols-4 gap-2">
         {numbers.map((num) => (
-          <Button key={num} variant="outline" size="sm" onClick={() => onSelectNumber(num)} className="border-gray-300 text-gray-700 hover:bg-gray-200 hover:border-gray-500 rounded-md transition-colors duration-200">
-            {num}
+          <Button
+            key={num}
+            variant="outline"
+            size="sm"
+            onClick={() => onSelectNumber(num)}
+            className={`${num <= 10 ? "border-gray-300 text-gray-700 hover:bg-gray-200 hover:border-gray-500" : "border-gray-400 text-gray-500 bg-gray-200"} rounded-md transition-colors duration-200`}
+          >
+            {num <= 10 ? num : <LockKeyholeIcon className="text-black" size={20} />}
           </Button>
         ))}
       </div>

@@ -53,6 +53,7 @@ export default function FreeQuizSection() {
 
   const handleConfirmSubmit = () => {
     console.log("submit berhasil yeay");
+    router.push("/pilihan-paket");
     setIsModalOpen(false); // Close the modal after submission
   };
 
@@ -76,21 +77,48 @@ export default function FreeQuizSection() {
         {/* Question + Number Buttons */}
         <div className="flex w-full gap-2">
           <div className="w-full lg:w-[80%]">
-            {data?.data?.question && <QuestionComponent question={data?.data?.question} />}
-            {data?.data?.question?.question_choices && <QuestionChoiceComponentForFree choices={data?.data?.question?.question_choices} isSelected={false} onSelect={() => {}} />}
-
-            <div className="flex justify-between items-center mb-4 mt-6">
-              <Button onClick={() => handleNavigation("prev")} disabled={numberOfQuestion === "1"} className="w-auto">
-                Sebelumnya
-              </Button>
-              <Button
-                onClick={numberOfQuestion === "110" ? handleSubmit : () => handleNavigation("next")} // Show modal if it's question 110
-                className="w-auto"
-              >
-                {numberOfQuestion === "110" ? "Selesikan" : "Selanjutnya"}
-              </Button>
-            </div>
+            {data?.data?.question ? (
+              <>
+                <QuestionComponent question={data?.data?.question} />
+                {data?.data?.question?.question_choices && <QuestionChoiceComponentForFree choices={data?.data?.question?.question_choices} isSelected={false} onSelect={() => {}} />}
+                <div className="flex justify-between items-center mb-4 mt-6">
+                  <Button onClick={() => handleNavigation("prev")} disabled={numberOfQuestion === "1"} className="w-auto">
+                    Sebelumnya
+                  </Button>
+                  <Button
+                    onClick={numberOfQuestion === "110" ? handleSubmit : () => handleNavigation("next")} // Show modal if it's question 110
+                    className="w-auto"
+                  >
+                    {numberOfQuestion === "110" ? "Selesaikan Quiz" : "Selanjutnya"}
+                  </Button>
+                </div>
+              </>
+            ) : (
+              <div className="text-center p-6 bg-gray-100 border border-gray-300 rounded-md shadow-md">
+                <div className="max-w-md mx-auto">
+                  <h2 className="text-xl font-semibold text-gray-700 mb-4">Uji Coba Try Out Gratis hanya tersedia sampai soal nomor 10.</h2>
+                  <p className="text-sm text-gray-600 mb-4">
+                    Untuk mendapatkan fitur lengkap dan soal terbaru, beli paket <strong>Try Out Premium</strong> kami:
+                  </p>
+                  <div className="space-y-2 text-start text-sm text-gray-600">
+                    <p>✅ Paket Try Out Online siap dikerjakan kapan saja.</p>
+                    <p>✅ Harganya cuman 15 ribu aja.</p>
+                    <p>✅ Tersedia harga promo, jika membeli paket bundling.</p>
+                    <p>✅ Model soal terbaru & sesuai sistem CAT SKD terkini.</p>
+                    <p>✅ Terdiri dari TWK, TIU, dan TKP lengkap.</p>
+                    <p>✅ Dapat dikerjakan berulang kali tanpa batas.</p>
+                    <p>✅ Pembahasan detail dan mendalam per soal.</p>
+                    <p>✅ Evaluasi dan pembahasan soal komprehensif di Website.</p>
+                    <p>✅ Informasi jumlah benar dan salah untuk setiap subtes.</p>
+                  </div>
+                  <Button variant="default" className="mt-4 bg-[#ad0a1f] hover:bg-[#d7263d] text-white" onClick={handleConfirmSubmit}>
+                    Lihat Try Out Premium
+                  </Button>
+                </div>
+              </div>
+            )}
           </div>
+
           <div className="hidden lg:block lg:w-[20%]">
             <NumberButtonsResponsive onSelectNumber={handleSelectNumber} />
           </div>
