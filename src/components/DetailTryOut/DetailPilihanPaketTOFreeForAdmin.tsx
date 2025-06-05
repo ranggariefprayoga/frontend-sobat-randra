@@ -31,6 +31,8 @@ export default function DetailPilihanPaketTOFreeForAdmin({ params }: { params: P
     );
   }
 
+  console.log(isFreeAvailable?.data);
+
   return (
     <LayoutBackgroundWhite>
       <ButtonWithIcon icon={ArrowLeft} label="Kembali" />

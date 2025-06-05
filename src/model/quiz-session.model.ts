@@ -15,7 +15,6 @@ export interface TryOutSessionResponse {
   started_at: string; // ISO date string from API
   expired_at: string; // ISO date string from API
   first_question_number?: number; // <- tambahan agar konsisten
-  first_question_id?: number; // <- kalau ini memang dikembalikan, tetapkan
   message?: string;
 }
 

@@ -63,18 +63,18 @@ export default function DetailTOFree({ product, isFreeAvailable }: Props) {
       },
       {
         onSuccess: (res) => {
-          toast.success(res?.data?.message || "Try Out dimulai gratis, tunggu sebentar...");
           setIsGratisDialogOpen(false);
+          router.push(`/free-quiz?number_of_question=${res?.data?.first_question_number}`);
           setPassword("");
           setIsPasswordCorrect(false);
-
-          router.push(`/free-quiz?product_try_out_id=${res?.data?.product_try_out_id}&number_of_question=${res?.data?.first_question_number}`);
+          toast.success(res?.data?.message || "Try Out dimulai gratis, tunggu sebentar...");
         },
         onError: () => {
           toast.error("Gagal memulai sesi. Pastikan password benar.");
         },
       }
     );
+    setIsGratisDialogOpen(false);
   };
 
   return (

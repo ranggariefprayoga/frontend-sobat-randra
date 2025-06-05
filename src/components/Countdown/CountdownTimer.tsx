@@ -101,7 +101,7 @@ export default function CountDown({ expired_at, productTryOutId, userId }: Count
       <Card className="p-2 px-4 border border-gray-300 bg-transparent text-gray-600 shadow-md rounded-lg">
         <div className="flex justify-between items-center gap-4">
           <div className="flex items-center gap-2">
-            <span className="text-base font-medium">Waktu tersisa:</span>
+            <span className="hidden sm:blocktext-base font-medium">Waktu tersisa:</span>
             <span className="font-bold text-[#ad0a1f] text-base">{formatTime(remainingTime)}</span>
           </div>
         </div>

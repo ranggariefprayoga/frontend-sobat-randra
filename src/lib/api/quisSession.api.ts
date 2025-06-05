@@ -1,7 +1,7 @@
 import { useMutation, useQuery, UseQueryOptions } from "@tanstack/react-query";
 import axios from "axios";
 import { WebResponse } from "@/model/web-reponse.model";
-import { quizTokenExtractResponse, submitFreeQuizSessionResponse, TryOutSessionResponse } from "@/model/quiz-session.model";
+import { quizTokenExtractResponse, TryOutSessionResponse } from "@/model/quiz-session.model";
 import { API_BASE_URL } from "../apiBaseUrl";
 
 interface UpdateFreeQuizSessionVariables {
@@ -59,11 +59,17 @@ export const useStartFreeTryOut = () => {
 };
 
 // ✅ Submit free try out session
-export const useSubmitFreeTryOut = () => {
+export const useSubmitFreeQuizSession = () => {
   return useMutation({
     mutationFn: async () => {
-      const res = await axios.post<WebResponse<submitFreeQuizSessionResponse>>(`${API_BASE_URL}/api/quiz/submit/free`, {}, { withCredentials: true });
-      return res.data;
+      // Send a POST request to the backend to submit the free quiz session
+      const res = await axios.post<WebResponse<TryOutSessionResponse>>(
+        `${API_BASE_URL}/api/quiz/submit/free`,
+        {}, // Body can be empty if no extra data is required
+        { withCredentials: true } // Ensures that cookies are sent with the request
+      );
+
+      return res.data; // Return the response data
     },
   });
 };

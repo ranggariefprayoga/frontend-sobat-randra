@@ -21,8 +21,8 @@ interface ChoiceProps {
 
 const QuestionChoiceComponent = ({ choices, isSelected, onSelect }: ChoiceProps) => {
   if (!choices || choices.length === 0) return <p className="text-sm text-gray-400">Belum ada pilihan jawaban.</p>;
-  console.log(onSelect);
-  console.log(isSelected);
+  console.log(onSelect); // ini api untuk jawab pertanyataan
+  console.log(isSelected); // ini api untuk tau pilihan jawaban user itu apa
 
   const order = ["A", "B", "C", "D", "E"];
 
@@ -36,7 +36,7 @@ const QuestionChoiceComponent = ({ choices, isSelected, onSelect }: ChoiceProps)
       {sortedChoices.map((choice) => (
         <div key={choice.id} className="border rounded-md p-4 bg-white shadow-sm space-y-3">
           <div className="flex items-center">
-            <div className="flex items-start gap-2">
+            <div className="flex items-start gap-1 sm:gap-2">
               <Badge variant="default" className="text-sm bg-[#ad0a1f]">
                 {choice.question_choice_title}.
               </Badge>

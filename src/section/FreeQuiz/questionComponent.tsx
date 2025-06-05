@@ -21,7 +21,7 @@ const QuestionComponent: React.FC<QuestionComponentProps> = ({ question }) => {
     <>
       <div key={question.id} className="rounded-md text-base mb-4 md:mb-8">
         <div className="flex items-center">
-          <div className="flex items-start gap-2">
+          <div className="flex items-start gap-1 sm:gap-2">
             <Badge variant="outline" className="text-base">
               {question.number_of_question}.
             </Badge>
