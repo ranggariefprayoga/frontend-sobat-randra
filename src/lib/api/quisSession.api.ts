@@ -1,9 +1,43 @@
 import { useMutation, useQuery, UseQueryOptions } from "@tanstack/react-query";
 import axios from "axios";
 import { WebResponse } from "@/model/web-reponse.model";
-import { submitFreeQuizSessionResponse, TryOutSessionResponse } from "@/model/quiz-session.model";
+import { quizTokenExtractResponse, submitFreeQuizSessionResponse, TryOutSessionResponse } from "@/model/quiz-session.model";
 import { API_BASE_URL } from "../apiBaseUrl";
 
+interface UpdateFreeQuizSessionVariables {
+  productTryOutId: number;
+  userId: number;
+  expiredAt: string;
+}
+
+export const useQuizToken = () => {
+  return useQuery<WebResponse<quizTokenExtractResponse>, Error>({
+    queryKey: ["quiz", "check-free"],
+    queryFn: async () => {
+      const res = await axios.get(`${API_BASE_URL}/api/quiz/quiz-token/free`, {
+        withCredentials: true,
+      });
+      return res.data;
+    },
+  });
+};
+
+export const useUpdateFreeQuizSession = () => {
+  return useMutation<WebResponse<TryOutSessionResponse>, Error, UpdateFreeQuizSessionVariables>({
+    mutationFn: async ({ productTryOutId, userId, expiredAt }) => {
+      const res = await axios.post<WebResponse<TryOutSessionResponse>>(
+        `${API_BASE_URL}/api/quiz/update/free`,
+        {
+          product_try_out_id: productTryOutId,
+          user_id: userId,
+          expired_at: expiredAt,
+        },
+        { withCredentials: true }
+      );
+      return res.data;
+    },
+  });
+};
 // ✅ Check password for free product
 export const useCheckFreeTryOutPassword = () => {
   return useMutation({

@@ -103,7 +103,7 @@ export default function DetailTOFree({ product, isFreeAvailable }: Props) {
 
           {product.is_trial_product && product.password && (
             <Button
-              className={`relative w-full lg:w-1/3 font-semibold text-xs sm:text-sm transition duration-200 z-10 ${haveAccessGratis ? "bg-[#ad0a1f] text-white hover:bg-[#d7263d]" : "bg-gray-500 text-white cursor-not-allowed"}`}
+              className={`relative w-full  font-semibold text-xs sm:text-sm transition duration-200 z-10 ${haveAccessGratis ? "bg-[#ad0a1f] text-white hover:bg-[#d7263d]" : "bg-gray-500 text-white cursor-not-allowed"}`}
               onClick={openGratisDialog}
               disabled={!haveAccessGratis}
             >

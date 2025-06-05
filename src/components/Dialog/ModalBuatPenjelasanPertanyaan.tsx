@@ -53,10 +53,6 @@ export default function CreateAnswerExplanationModal({ product_try_out_id, quest
     const payload: CreateAnswerExplanationRequest = {};
 
     if (editorMode === "text") {
-      if (!textInput.trim()) {
-        toast.error("Masukkan penjelasan terlebih dahulu!");
-        return;
-      }
       payload.answer_explanation_text = textInput.split("\n");
     } else {
       if (mathInput.length === 0) {

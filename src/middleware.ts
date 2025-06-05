@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
@@ -15,7 +14,6 @@ const decodeJWT = (token: string) => {
 
 export function middleware(req: NextRequest) {
   const accessToken = req.cookies.get("user_token")?.value;
-
   const quizToken = req.cookies.get("quiz_token")?.value;
   const url = req.nextUrl;
 
@@ -70,7 +68,7 @@ export function middleware(req: NextRequest) {
       if (userRole !== "Admin") {
         return NextResponse.redirect(new URL("/", req.url));
       }
-    } catch (error) {
+    } catch {
       return NextResponse.redirect(new URL("/auth/login", req.url)); // Error in JWT decoding or role check
     }
   }
@@ -79,5 +77,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/mulai-belajar", "/history-nilai", "/rangking-nasional", "/profile", "/kritik-saran", "/pilihan-paket/:path*", "/download-pembahasan", "/auth/:path*", "/admin/:path*", "/quiz(.*)"],
+  matcher: ["/mulai-belajar", "/history-nilai", "/rangking-nasional", "/profile", "/kritik-saran", "/pilihan-paket/:path*", "/download-pembahasan", "/auth/:path*", "/admin/:path*", "/quiz(.*)", "/free-quiz(.*)"],
 };

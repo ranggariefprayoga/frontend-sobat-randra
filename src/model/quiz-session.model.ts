@@ -26,3 +26,17 @@ export interface submitFreeQuizSessionResponse {
   total_answered: number;
   remaining_questions: number;
 }
+
+export interface quizTokenExtractResponse {
+  duration_minutes: number;
+  expired_at: string;
+  first_question_id: number;
+  first_question_number: number;
+  iat: number;
+  is_trial: boolean;
+  name: string;
+  product_try_out_id: number;
+  started_at: string;
+  user_email: string;
+  user_id: number;
+}
