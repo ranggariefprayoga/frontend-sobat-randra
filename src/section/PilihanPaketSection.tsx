@@ -60,7 +60,7 @@ export default function PilihanPaketSection() {
     <LayoutBackgroundWhite>
       <ButtonWithIcon icon={ArrowLeft} label="Kembali" />
       <TitleComponent title="Pilihan Paket" subTitle="Tersedia 4 paket belajar untuk kamu!" />
-      {allFreeProductTryOutForUser?.data?.length === 1 && (
+      {freeProductTryOut && freeProductTryOut.is_active && (
         <div className="px-8 md:px-24 py-4">
           <div className="w-full p-4 md:p-8  bg-[#ad0a1f] max-w-[1280px] mx-auto rounded-md">
             <h3 className="text-white font-semibold text-base">Belum Pernah Cobain Try Out?</h3>

@@ -7,12 +7,12 @@ import NullComponent from "@/components/NullComponent/NullComponent";
 import TitleComponent from "@/components/TitleComponent/TitleComponent";
 import ButtonWithIcon from "@/components/TombolBack/TombolBack";
 import LayoutBackgroundWhite from "@/layout/LayoutBackgroundWhite";
-import { useGetAllTryOutProducts } from "@/lib/api/productTryOut.api";
+import { useGetAllTryOutProductsExcludeFree } from "@/lib/api/productTryOut.api";
 import { TryOutProductModel } from "@/model/product.model";
 import { ArrowLeft } from "lucide-react";
 
 export default function BuatDanUpdateTryOutSection() {
-  const { data: allProductTryOut, isLoading } = useGetAllTryOutProducts();
+  const { data: allProductTryOut, isLoading } = useGetAllTryOutProductsExcludeFree();
 
   return (
     <LayoutBackgroundWhite>

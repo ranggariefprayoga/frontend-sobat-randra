@@ -46,7 +46,7 @@ export default function CreateQuestionChoiceModal({ product_try_out_id, question
   const availableChoices = allChoices.filter((choice) => !existingChoices.includes(choice));
 
   const handleSubmit = async () => {
-    if (choiceTitle.length === 0) {
+    if (choiceTitle.trim() === "") {
       toast.error("Pilihan jawaban harus dipilih!");
       return;
     }
@@ -79,6 +79,7 @@ export default function CreateQuestionChoiceModal({ product_try_out_id, question
       setChoiceTextMath([]);
       setChoiceText("");
       setChoiceWeight(0);
+      setChoiceTitle("");
       setFiles([]);
       setOpen(false);
       if (onSuccess) onSuccess();
@@ -86,8 +87,9 @@ export default function CreateQuestionChoiceModal({ product_try_out_id, question
       toast.error("Gagal membuat pilihan");
       setChoiceTextMath([]);
       setChoiceText("");
-      setFiles([]);
       setChoiceWeight(0);
+      setChoiceTitle("");
+      setFiles([]);
     }
   };
 
@@ -98,8 +100,8 @@ export default function CreateQuestionChoiceModal({ product_try_out_id, question
           <Plus />
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-4xl max-h-[80vh] overflow-auto">
-        <DialogHeader aria-describedby={undefined}>
+      <DialogContent aria-describedby={undefined} className="max-w-4xl max-h-[80vh] overflow-auto">
+        <DialogHeader>
           <DialogTitle>Pilihan Jawaban Baru</DialogTitle>
           <div className="border-b border-gray-300 mb-2" />
         </DialogHeader>

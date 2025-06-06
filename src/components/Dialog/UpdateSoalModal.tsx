@@ -80,7 +80,7 @@ export default function UpdateQuestionModal({ product_try_out_id, data, onSucces
         </Button>
       </DialogTrigger>
       <DialogContent aria-describedby={undefined} className="max-w-7xl max-h-[80vh] overflow-auto">
-        <DialogHeader aria-describedby={undefined}>
+        <DialogHeader>
           <DialogTitle>
             Update Soal Nomor {data?.number_of_question} - {data?.category}
           </DialogTitle>

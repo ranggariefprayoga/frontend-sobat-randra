@@ -89,7 +89,7 @@ export default function CreateAnswerExplanationModal({ product_try_out_id, quest
           <FileText />
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-4xl max-h-[80vh] overflow-auto">
+      <DialogContent aria-describedby={undefined} className="max-w-4xl max-h-[80vh] overflow-auto">
         <DialogHeader>
           <DialogTitle>Penjelasan Jawaban</DialogTitle>
           <div className="border-b border-gray-300 mb-2" />

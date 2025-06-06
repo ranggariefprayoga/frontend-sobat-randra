@@ -37,7 +37,7 @@ export default function DeleteQuestionButton({ product_try_out_id, questionId, o
       </DialogTrigger>
 
       <DialogContent aria-describedby={undefined}>
-        <DialogHeader aria-describedby={undefined}>
+        <DialogHeader >
           <DialogTitle>Konfirmasi Hapus Soal</DialogTitle>
         </DialogHeader>
         <p>Apakah Anda yakin ingin menghapus soal ini? Tindakan ini tidak dapat dibatalkan.</p>

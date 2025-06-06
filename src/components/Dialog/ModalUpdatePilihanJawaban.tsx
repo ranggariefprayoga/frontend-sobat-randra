@@ -91,8 +91,8 @@ export default function UpdateQuestionChoiceModal({ product_try_out_id, question
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="max-w-4xl max-h-[80vh] overflow-auto">
-        <DialogHeader aria-describedby={undefined}>
+      <DialogContent aria-describedby={undefined} className="max-w-4xl max-h-[80vh] overflow-auto">
+        <DialogHeader>
           <DialogTitle>Update Pilihan Jawaban</DialogTitle>
           <div className="border-b border-gray-300 mb-2" />
         </DialogHeader>

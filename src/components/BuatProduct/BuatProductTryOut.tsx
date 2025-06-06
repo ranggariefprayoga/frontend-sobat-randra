@@ -14,6 +14,7 @@ export function CreateTryOutModal() {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [isActive, setIsActive] = useState(false);
+  const is_trial_product = false;
   const [bannerImage, setBannerImage] = useState<File | null>(null);
   const [description, setDescription] = useState("");
   const [marketingText, setMarketingText] = useState("");
@@ -32,6 +33,7 @@ export function CreateTryOutModal() {
       name,
       is_active: isActive,
       description,
+      is_trial_product,
       marketing_text: marketingText || "",
       price: Number(price),
       old_price: oldPrice ? Number(oldPrice) : 0,

@@ -9,7 +9,9 @@ export default function CTASection() {
       <TitleComponent subTitleColor="text-white" titleColor="text-white" title="Hubungi Kami" />
       <LayoutContent>
         <p className="mb-8">Buat akunmu sekarang dan Uji Kemampuanmu melalui Try Out Sobat Randra. Sebuah langkah awal untuk lolos ke menjadi seorang CPNS, BUMN, dan Polri impianmu</p>
-        <HeroButtons />
+        <div className="flex justify-start">
+          <HeroButtons />
+        </div>
       </LayoutContent>
     </LayoutBackgroundRed>
   );

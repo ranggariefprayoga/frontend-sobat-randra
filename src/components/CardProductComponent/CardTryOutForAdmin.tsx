@@ -46,7 +46,7 @@ export default function CardTryOutForAdmin({ product, customLink, buttonText = "
             </Button>
           </DialogTrigger>
           <DialogContent aria-describedby={undefined}>
-            <DialogHeader aria-describedby={undefined}>
+            <DialogHeader>
               <DialogTitle>Yakin ingin menghapus?</DialogTitle>
             </DialogHeader>
             <p className="text-sm text-gray-600">Produk Try Out ini akan dihapus secara permanen.</p>

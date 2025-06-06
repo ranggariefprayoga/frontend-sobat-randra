@@ -26,7 +26,7 @@ export default function CardMulaiTryOut({ product, userEmail }: ProductCardProps
       <div className="p-4">
         <div className="flex items-center gap-2 text-sm mb-2">{isPremiumAvailable && <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs flex items-center gap-1">📘 Premium</span>}</div>
         <h2 className="text-lg font-bold">{product.name}</h2>
-        <p className="text-sm mt-1 truncate overflow-hidden whitespace-nowrap" title={product.description}>
+        <p className="text-sm my-2 truncate overflow-hidden whitespace-nowrap" title={product.description}>
           {product.description}
         </p>
         <AccessButtonWithModal isPremiumAvailable={isPremiumAvailable?.data} />
