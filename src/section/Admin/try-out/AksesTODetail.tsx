@@ -68,7 +68,7 @@ export default function AksesTODetail({ params }: { params: Promise<{ product_tr
       <ButtonWithIcon icon={ArrowLeft} label="Kembali" />
       <TitleComponent title={`Akses ${tryOutById?.data?.name}`} />
 
-      <div className="px-8 md:px-24 w-full mt-8 flex justify-between gap-2">
+      <div className="px-4 md:px-24 w-full mt-8 flex justify-between gap-2">
         <SearchInput value={searchTerm} onChange={handleSearchChange} />
 
         <CreateTryOutAccessModal
@@ -80,7 +80,7 @@ export default function AksesTODetail({ params }: { params: Promise<{ product_tr
         />
       </div>
 
-      <div className="mt-8 px-8 md:px-24 w-full">
+      <div className="mt-8 px-4 md:px-24 w-full">
         {isLoadingAccess || isLoadingTryOut || isLoadingJumlah ? (
           <div className="flex justify-center py-16">
             <LoadingComponent color="#ad0a1f" />

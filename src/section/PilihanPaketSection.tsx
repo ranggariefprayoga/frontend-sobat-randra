@@ -61,7 +61,7 @@ export default function PilihanPaketSection() {
       <ButtonWithIcon icon={ArrowLeft} label="Kembali" />
       <TitleComponent title="Pilihan Paket" subTitle="Tersedia 4 paket belajar untuk kamu!" />
       {freeProductTryOut && freeProductTryOut.is_active && (
-        <div className="px-8 md:px-24 py-4">
+        <div className="px-4 md:px-24 py-4">
           <div className="w-full p-4 md:p-8  bg-[#ad0a1f] max-w-[1280px] mx-auto rounded-md">
             <h3 className="text-white font-semibold text-base">Belum Pernah Cobain Try Out?</h3>
             <Button variant={"outline"} className="mt-4 text-sm" onClick={handleToFreeTryOut}>
@@ -70,7 +70,7 @@ export default function PilihanPaketSection() {
           </div>
         </div>
       )}
-      <div className="w-full px-8 md:px-24 mt-4 grid grid-cols-2 lg:grid-cols-4 gap-2">
+      <div className="w-full px-4 md:px-24 mt-4 grid grid-cols-2 lg:grid-cols-4 gap-2">
         <Button
           variant="outline"
           className={`transition duration-200 ${selectedCategory === "try-out" ? "bg-[#ad0a1f] text-white hover:bg-[#ad0a1f] hover:text-white" : "bg-transparent border hover:bg-[#f5f5f5] hover:text-black"}`}
@@ -109,7 +109,7 @@ export default function PilihanPaketSection() {
       </div>
       {filteredProducts && filteredProducts.length > 0 ? (
         <>
-          <div className="w-full px-8 md:px-24 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mt-8">
+          <div className="w-full px-4 md:px-24 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mt-8">
             {selectedCategory === "try-out" && filteredProducts.map((product: TryOutProductModel) => <CardTryOut key={product.id} product={product} customLink={`/pilihan-paket/tryout/${product.id}`} />)}
             {selectedCategory === "bimbel" && filteredProducts.map((product: BimbelProductlModel) => <CardBimbel key={product.id} product={product} customLink="/pilihan-paket" />)}
           </div>

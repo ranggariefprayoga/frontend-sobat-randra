@@ -18,16 +18,16 @@ export default function BuatDanUpdateTryOutSection() {
     <LayoutBackgroundWhite>
       <ButtonWithIcon icon={ArrowLeft} label="Kembali" />
       <TitleComponent title="Buat dan Update Try Out Premium" />
-      <div className="w-full px-8 md:px-24 mt-4 md:mt-8">
+      <div className="w-full px-4 md:px-24 mt-4 md:mt-8">
         <CreateTryOutModal />
       </div>
 
       {isLoading ? (
-        <div className="px-8 md:px-24 flex justify-center w-full">
+        <div className="px-4 md:px-24 flex justify-center w-full">
           <LoadingComponent color="#ad0a1f" />
         </div>
       ) : allProductTryOut?.data && allProductTryOut.data.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-8 md:px-24 mt-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4 md:px-24 mt-4">
           {allProductTryOut.data.map((product: TryOutProductModel) => (
             <CardTryOutForAdmin key={product.id} product={product} customLink={`/admin/layanan/tryout/${product.id}`} />
           ))}

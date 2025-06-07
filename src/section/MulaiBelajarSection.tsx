@@ -48,7 +48,7 @@ export default function MulaiBelajarSection() {
     <LayoutBackgroundWhite>
       <ButtonWithIcon icon={ArrowLeft} label="Kembali" />
       <TitleComponent title="Produk yang bisa kamu akses" subTitle="Yuk kerjain sekarang!" />
-      <div className="w-full px-8 md:px-24 mt-8 grid grid-cols-2 lg:grid-cols-4 gap-2">
+      <div className="w-full px-4 md:px-24 mt-8 grid grid-cols-2 lg:grid-cols-4 gap-2">
         <Button
           variant="outline"
           className={`transition duration-200 ${selectedCategory === "try-out" ? "bg-[#ad0a1f] text-white hover:bg-[#ad0a1f] hover:text-white" : "bg-transparent border hover:bg-[#f5f5f5] hover:text-black"}`}
@@ -88,7 +88,7 @@ export default function MulaiBelajarSection() {
       {selectedCategory === "try-out" || selectedCategory === "bimbel" ? (
         filteredProducts && filteredProducts.length > 0 ? (
           <>
-            <div className="w-full px-8 md:px-24 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mt-8">
+            <div className="w-full px-4 md:px-24 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mt-8">
               {selectedCategory === "try-out" && filteredProducts.map((product: TryOutProductModel) => <CardMulaiTryOut userEmail={detailUser?.data?.email} key={product.id} product={product} />)}
               {selectedCategory === "bimbel" && filteredProducts.map((product: BimbelProductlModel) => <CardBimbel key={product.id} product={product} customLink="/pilihan-paket" />)}
             </div>
@@ -98,7 +98,7 @@ export default function MulaiBelajarSection() {
         )
       ) : (
         // For Smart-book and Video-Belajar
-        <div className="w-full px-8 md:px-24 grid gap-6">
+        <div className="w-full px-4 md:px-24 grid gap-6">
           {selectedCategory === "smart-book" && <InfoComponent message="Silakan cek email kamu jika kamu sudah membeli produk Smart Book, jika produk belum tampil silakan hubungi Admin." color="text-gray-700" />}
           {selectedCategory === "video-belajar" && <InfoComponent message="Silakan cek email kamu jika kamu sudah membeli produk Video Belajar, jika produk belum tampil silakan hubungi Admin." color="text-gray-700" />}
         </div>

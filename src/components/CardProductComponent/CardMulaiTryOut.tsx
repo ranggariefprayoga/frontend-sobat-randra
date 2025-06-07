@@ -13,7 +13,7 @@ export default function CardMulaiTryOut({ product, userEmail }: ProductCardProps
 
   if (isPremiumAvailableLoading) {
     return (
-      <div className="px-8 md:px-24 flex justify-center py-12">
+      <div className="px-4 md:px-24 flex justify-center py-12">
         <LoaderCircle className="animate-spin" strokeWidth={3} color="#ad0a1f" />
       </div>
     );

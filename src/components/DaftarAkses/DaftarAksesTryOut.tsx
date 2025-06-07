@@ -107,7 +107,7 @@ export default function DaftarAksesTryOut({ params }: { params: Promise<{ produc
 
   if (isLoading || dataJumlahuserLoading) {
     return (
-      <div className="px-8 md:px-24 flex justify-center py-12">
+      <div className="px-4 md:px-24 flex justify-center py-12">
         <LoaderCircle className="animate-spin" strokeWidth={3} color="#ad0a1f" />
       </div>
     );
@@ -118,7 +118,7 @@ export default function DaftarAksesTryOut({ params }: { params: Promise<{ produc
   const jumlahUser = dataJumlahUser?.data;
 
   return (
-    <div className="px-8 md:px-24 mt-8">
+    <div className="px-4 md:px-24 mt-8">
       <Badge variant="default" className="mb-2">
         {jumlahUser} Pelanggan
       </Badge>

@@ -39,7 +39,7 @@ export default function HistoryNilaiSection() {
       <ButtonWithIcon icon={ArrowLeft} label="Kembali" />
       <TitleComponent title="History & Grafik" subTitle="Pengerjaan Try Out kamu!" />
 
-      <div className="w-full px-8 md:px-24 mt-8 grid grid-cols-2 xl:grid-cols-4 gap-2">
+      <div className="w-full px-4 md:px-24 mt-8 grid grid-cols-2 xl:grid-cols-4 gap-2">
         <Button
           variant="outline"
           className={`transition duration-200 ${selectedCategory === "try-out-gratis" ? "bg-[#ad0a1f] text-white hover:bg-[#ad0a1f] hover:text-white" : "bg-transparent border hover:bg-[#f5f5f5] hover:text-black"}`}
@@ -63,7 +63,7 @@ export default function HistoryNilaiSection() {
         {filteredProducts.length === 0 || !filteredProducts ? (
           <NullComponent message="Belum ada history nilai yang tersedia" color="text-gray-700" />
         ) : (
-          <div className="w-full px-8 md:px-24 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mt-8">
+          <div className="w-full px-4 md:px-24 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mt-8">
             {filteredProducts.map((product: any) => (
               <div key={product.id} className="card">
                 <h3 className="font-bold">{product.name}</h3>

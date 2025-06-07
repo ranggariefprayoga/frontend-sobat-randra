@@ -23,7 +23,7 @@ export default function Footer() {
   };
   return (
     <LayoutBackgroundRed>
-      <footer className="w-full px-8 md:px-28 pt-12">
+      <footer className="w-full px-4 md:px-24 pt-12">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 max-w-[1280px] mx-auto">
           {/* Logo & Deskripsi */}
           <div className="flex flex-col gap-4">

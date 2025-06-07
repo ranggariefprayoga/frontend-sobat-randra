@@ -78,7 +78,7 @@ export default function DetailTOFree({ product, isFreeAvailable }: Props) {
   };
 
   return (
-    <div className="w-full mx-auto px-8 md:px-24 mt-8">
+    <div className="w-full mx-auto px-4 md:px-24 mt-8">
       {/* Konten */}
       <div className="flex flex-col md:flex-row gap-6 items-start">
         {/* Banner */}

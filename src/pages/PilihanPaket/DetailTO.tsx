@@ -85,7 +85,7 @@ export default function DetailTO({ product, user, isFreeAvailable }: Props) {
   const whatsappMessage = `https://wa.me/628774867857?text=Halo%20min%2C%20aku%20mau%20pesen%20${encodeURIComponent(product.name)}`;
 
   return (
-    <div className="w-full mx-auto px-8 md:px-24 mt-8">
+    <div className="w-full mx-auto px-4 md:px-24 mt-8">
       {/* Konten */}
       <div className="flex flex-col md:flex-row gap-6 items-start">
         {/* Banner */}

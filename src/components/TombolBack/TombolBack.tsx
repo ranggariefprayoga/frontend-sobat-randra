@@ -25,7 +25,7 @@ const ButtonWithIcon = ({
     }
   };
   return (
-    <div className="w-1/4 px-8 md:px-24 mb-4">
+    <div className="w-1/4 px-4 md:px-24 mb-4">
       <Button variant="ghost" className={`${color}`} onClick={handleToHome}>
         <Icon className="h-4 w-4 mr-2" />
         {label}

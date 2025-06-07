@@ -36,7 +36,7 @@ export default function BuatSoalTryOutSection() {
 
       <TitleComponent title="Buat Soal Try Out" />
 
-      <div className="flex gap-4 px-8 md:px-24 mt-4">
+      <div className="flex gap-4 px-4 md:px-24 mt-4">
         <Button
           variant="outline"
           className={`transition duration-200 ${selectedCategory === "premium" ? "bg-[#ad0a1f] text-white hover:bg-[#ad0a1f] hover:text-white" : "bg-transparent border hover:bg-[#f5f5f5] hover:text-black"}`}
@@ -56,11 +56,11 @@ export default function BuatSoalTryOutSection() {
       </div>
 
       {isLoading ? (
-        <div className="px-8 md:px-24 flex justify-center w-full mt-8">
+        <div className="px-4 md:px-24 flex justify-center w-full mt-8">
           <LoadingComponent color="#ad0a1f" />
         </div>
       ) : filteredProducts.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-8 md:px-24 mt-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4 md:px-24 mt-8">
           {filteredProducts.map((product: TryOutProductModel) => (
             <CardTryOutForAdmin key={product.id} product={product} customLink={`/admin/tryout/buat-soal/${product.id}`} buttonText="Buat Soal" />
           ))}

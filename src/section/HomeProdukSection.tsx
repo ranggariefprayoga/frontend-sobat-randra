@@ -22,7 +22,7 @@ export default function HomeProdukSection() {
 
   if (isLoading) {
     return (
-      <div className="px-8 md:px-24 flex justify-center w-full">
+      <div className="px-4 md:px-24 flex justify-center w-full">
         <LoadingComponent />
       </div>
     );
@@ -47,7 +47,7 @@ export default function HomeProdukSection() {
     <LayoutBackgroundImage>
       <div className="max-w-[1420px] mx-auto">
         <TitleComponent subTitleColor="text-[#FFA500]" titleColor="text-white" title="Pilihan Paket Belajar" subTitle="Buat kamu pejuang CPNS, BUMN, dan POLRI" textAlign="start" />
-        <div className="w-full px-8 md:px-24 mt-8 grid grid-cols-2 lg:grid-cols-4 gap-2">
+        <div className="w-full px-4 md:px-24 mt-8 grid grid-cols-2 lg:grid-cols-4 gap-2">
           <Button
             className={`transition duration-200 ${selectedCategory === "try-out" ? "bg-white text-black hover:bg-[#f5f5f5]" : "bg-transparent border hover:bg-white hover:text-black"}`}
             variant="default"
@@ -84,7 +84,7 @@ export default function HomeProdukSection() {
 
         {filteredProducts && filteredProducts.length > 0 ? (
           <>
-            <div className="w-full px-8 md:px-24 grid grid-cols-1  lg:grid-cols-2 xl:grid-cols-3 gap-6 mt-8">
+            <div className="w-full px-4 md:px-24 grid grid-cols-1  lg:grid-cols-2 xl:grid-cols-3 gap-6 mt-8">
               {selectedCategory === "try-out" && filteredProducts.map((product: TryOutProductModel) => <CardTryOut key={product.id} product={product} customLink={`/pilihan-paket/tryout/${product.id}`} />)}
               {selectedCategory === "bimbel" && filteredProducts.map((product: BimbelProductlModel) => <CardBimbel key={product.id} product={product} customLink="/pilihan-paket" />)}
               {/* Tambahkan komponen lain seperti SmartBook atau VideoBelajar jika datanya ada */}

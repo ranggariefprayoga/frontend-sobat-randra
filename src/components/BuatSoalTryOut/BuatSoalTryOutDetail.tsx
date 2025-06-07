@@ -75,7 +75,7 @@ export default function BuatSoalTryOutDetail({ params }: { params: Promise<{ pro
       <ButtonWithIcon icon={ArrowLeft} label="Kembali" />
       <TitleComponent title="Buat Soal Try Out" />
 
-      <div className="px-8 md:px-24 my-4">
+      <div className="px-4 md:px-24 my-4">
         <CreateQuestionModal onQuestionAdded={handleChangeQuestion} product_try_out_id={Number(id)} category={activeCategory} validQuestions={Array.from(validNumbers)} questionRanges={questionRanges[activeCategory]} />
       </div>
 
@@ -108,7 +108,7 @@ export default function BuatSoalTryOutDetail({ params }: { params: Promise<{ pro
         </TabsList>
       </Tabs>
 
-      <div className="grid grid-cols-5 sm:grid-cols-8 md:grid-cols-10 gap-2 px-8 md:px-24 mb-8">
+      <div className="grid grid-cols-5 sm:grid-cols-8 md:grid-cols-10 gap-2 px-4 md:px-24 mb-8">
         {questionNumbers.map((number) => {
           const isValid = validNumbers.has(number);
           const isFullFilled = isQuestionComplete(number);

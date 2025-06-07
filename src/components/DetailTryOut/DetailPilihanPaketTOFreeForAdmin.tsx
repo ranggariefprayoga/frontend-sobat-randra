@@ -37,7 +37,7 @@ export default function DetailPilihanPaketTOFreeForAdmin({ params }: { params: P
     <LayoutBackgroundWhite>
       <ButtonWithIcon icon={ArrowLeft} label="Kembali" />
       {product && (
-        <div className="w-full px-8 md:px-24 mt-4 md:mt-8">
+        <div className="w-full px-4 md:px-24 mt-4 md:mt-8">
           <UpdateFreeProductTryOutModal initialData={product?.data} />
         </div>
       )}

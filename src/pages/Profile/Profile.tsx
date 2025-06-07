@@ -41,7 +41,7 @@ export default function Profile({ userDetail }: ProfileProps) {
   const [savingName, setSavingName] = useState(false);
   const [savingPassword, setSavingPassword] = useState(false);
 
-  if (!userDetail) return <p className="text-center px-8 md:px-24 py-8">User not logged in.</p>;
+  if (!userDetail) return <p className="text-center px-4 md:px-24 py-8">User not logged in.</p>;
 
   const handleSaveName = async () => {
     setSavingName(true);
@@ -71,7 +71,7 @@ export default function Profile({ userDetail }: ProfileProps) {
   };
 
   return (
-    <motion.div initial="hidden" animate="visible" variants={containerVariants} className="px-8 md:px-24 grid grid-cols-1 md:grid-cols-2 gap-2 max-w-7xl mt-8">
+    <motion.div initial="hidden" animate="visible" variants={containerVariants} className="px-4 md:px-24 grid grid-cols-1 md:grid-cols-2 gap-2 max-w-7xl mt-8">
       <Card className="flex flex-col justify-center">
         <CardHeader className="flex flex-row items-center gap-6">
           <Avatar className="w-12 h-12 md:w-16 md:h-16 mx-0 mb-0">

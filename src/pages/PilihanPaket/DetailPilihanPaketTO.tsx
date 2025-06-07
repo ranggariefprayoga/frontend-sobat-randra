@@ -28,7 +28,7 @@ export default function DetailPilihanPaketTO({ params }: { params: Promise<{ pro
   return (
     <LayoutBackgroundWhite>
       <ButtonWithIcon icon={ArrowLeft} label="Kembali" />
-      <div className="flex-flex-col lg:flex-row px-8 md:px-24 gap-2">
+      <div className="flex-flex-col lg:flex-row px-4 md:px-24 gap-2">
         {caraAksesTryOut.map((item) => (
           <DialogInfo key={item.title} title={item.title} description={item.description} triggerText={item.trigger} details={item.details} />
         ))}
