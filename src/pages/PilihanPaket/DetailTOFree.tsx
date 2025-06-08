@@ -48,6 +48,8 @@ export default function DetailTOFree({ product, isFreeAvailable }: Props) {
   const openGratisDialog = () => {
     if (haveAccessGratis) {
       setIsGratisDialogOpen(true);
+      setPassword("");
+      setIsPasswordCorrect(false);
     } else {
       toast.error("Akses gratis tidak tersedia untuk produk ini.");
     }
@@ -75,6 +77,8 @@ export default function DetailTOFree({ product, isFreeAvailable }: Props) {
       }
     );
     setIsGratisDialogOpen(false);
+    setPassword("");
+    setIsPasswordCorrect(false);
   };
 
   return (
