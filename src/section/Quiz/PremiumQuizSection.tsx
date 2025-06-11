@@ -26,8 +26,8 @@ export default function PremiumQuizSection() {
   const { data, isLoading } = useGetPremiumQuestion(Number(productTryOutId), Number(numberOfQuestion));
   const { isPending: isSubmitting, mutate } = useSubmitTryOutSession();
   const saveUserAnswer = useSaveUserAnswer();
-  const { data: userAnswer, refetch: refetchUserAnswer } = useGetUserAnswerByProductAndQuestionId();
-  const { data: checkUserHasAnswered, refetch: refetchCheckUserHasAnswered } = useCheckUserHasAnsweredOrNot();
+  const { data: userAnswer, refetch: refetchUserAnswer } = useGetUserAnswerByProductAndQuestionId(Number(productTryOutId), Number(data?.data?.session_id), Number(data?.data?.question?.id));
+  const { data: checkUserHasAnswered, refetch: refetchCheckUserHasAnswered } = useCheckUserHasAnsweredOrNot(Number(productTryOutId), Number(data?.data?.session_id), Number(data?.data?.question?.id));
 
   if (isLoading || isLoadingSession) {
     return (
