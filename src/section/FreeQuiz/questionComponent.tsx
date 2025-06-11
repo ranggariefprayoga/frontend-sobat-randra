@@ -12,9 +12,7 @@ interface QuestionComponentProps {
 
 const QuestionComponent: React.FC<QuestionComponentProps> = ({ question }) => {
   const mathRef = useRef<HTMLDivElement>(null);
-
   if (!question) return <p className="text-gray-500">Data soal tidak ditemukan.</p>;
-
   const mathContents = question?.question_text_math?.flatMap((item) => item) || [];
 
   return (

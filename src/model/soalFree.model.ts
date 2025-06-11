@@ -20,6 +20,7 @@ export interface Question {
 }
 
 export interface SoalPayload {
+  session_id: number;
   quiz_token: string | null;
   product_try_out_id: number;
   question: Question | null;

@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { LockKeyholeIcon } from "lucide-react";
 import { useState } from "react"; // Import useState for managing dialog open/close state
 
 interface NumberButtonsResponsiveProps {
@@ -10,8 +9,8 @@ interface NumberButtonsResponsiveProps {
   questionAnswered: boolean | undefined;
 }
 
-export default function NumberButtonsResponsive({ onSelectNumber, questionAnswered }: NumberButtonsResponsiveProps) {
-  const [isOpen, setIsOpen] = useState(false); // State to manage the dialog's open/close
+export default function NumberButtonsResponsiveForPremiumQuiz({ onSelectNumber, questionAnswered }: NumberButtonsResponsiveProps) {
+  const [isOpen, setIsOpen] = useState(false);
   const numbers = Array.from({ length: 110 }, (_, i) => i + 1);
 
   const handleDialogClose = () => {
@@ -43,7 +42,7 @@ export default function NumberButtonsResponsive({ onSelectNumber, questionAnswer
     ${questionAnswered ? "bg-green-500 text-white" : ""} 
     rounded-md transition-colors duration-200`}
                 >
-                  {num <= 10 ? num : <LockKeyholeIcon className="text-black" size={20} />}
+                  {num}
                 </Button>
               ))}
             </div>
@@ -69,7 +68,7 @@ export default function NumberButtonsResponsive({ onSelectNumber, questionAnswer
     ${questionAnswered ? "bg-green-500 text-white" : ""} 
     rounded-md transition-colors duration-200`}
           >
-            {num <= 10 ? num : <LockKeyholeIcon className="text-black" size={20} />}
+            {num}
           </Button>
         ))}
       </div>

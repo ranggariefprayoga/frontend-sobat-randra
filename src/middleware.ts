@@ -24,31 +24,31 @@ export function middleware(req: NextRequest) {
 
   // 2. Redirect to belajar if no quizToken or accessToken, and trying to access quiz routes
   if (!quizToken || !accessToken) {
-    if (url.pathname.includes("/quiz")) {
+    if (url.pathname.includes("/quiz") || url.pathname.includes("/free-quiz")) {
       return NextResponse.redirect(new URL("/mulai-belajar", req.url));
     }
   }
 
   // 3. Handle both quizToken and accessToken, ensuring they belong to the same user
   if (quizToken && accessToken) {
-    if (url.pathname.includes("/quiz")) {
+    // We only process the quizToken when the user accesses quiz-related routes (not when starting quiz)
+    if (url.pathname.includes("/quiz") || url.pathname.includes("/free-quiz")) {
       try {
         const accessPayload = decodeJWT(accessToken);
         const quizPayload = decodeJWT(quizToken);
 
         const userEmail = accessPayload.email;
-        const quizEmail = quizPayload.email;
+        const quizEmail = quizPayload.user_email;
 
         // If emails do not match, redirect to belajar
         if (userEmail !== quizEmail) {
           return NextResponse.redirect(new URL("/mulai-belajar", req.url));
         }
 
-        const response = NextResponse.next();
-        return response;
-      } catch (error) {
-        console.error("JWT Decode Failed:", error);
-        return NextResponse.redirect(new URL("/", req.url)); // Error decoding JWT
+        // Proceed with the request if tokens are valid and emails match
+        return NextResponse.next();
+      } catch {
+        return NextResponse.redirect(new URL("/auth/login", req.url)); // Error decoding JWT
       }
     }
   }

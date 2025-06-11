@@ -1,104 +1,100 @@
-import { useMutation, useQuery, UseQueryOptions } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import { WebResponse } from "@/model/web-reponse.model";
-import { quizTokenExtractResponse, TryOutSessionResponse } from "@/model/quiz-session.model";
 import { API_BASE_URL } from "../apiBaseUrl";
+import { WebResponse } from "@/model/web-reponse.model";
+import { TryOutSessionResponse } from "@/model/quiz-session.model";
 
-interface UpdateFreeQuizSessionVariables {
-  productTryOutId: number;
-  userId: number;
-  expiredAt: string;
-}
-
-export const useQuizToken = () => {
-  return useQuery<WebResponse<quizTokenExtractResponse>, Error>({
-    queryKey: ["quiz", "check-free"],
+// Get active quiz sessions
+export const useGetAllQuizSessions = () => {
+  return useQuery<WebResponse<TryOutSessionResponse[]>, Error>({
+    queryKey: ["quiz-sessions"],
     queryFn: async () => {
-      const res = await axios.get(`${API_BASE_URL}/api/quiz/quiz-token/free`, {
-        withCredentials: true,
-      });
+      const res = await axios.get(`${API_BASE_URL}/api/quiz`, { withCredentials: true });
       return res.data;
     },
+    retry: false,
   });
 };
 
-export const useUpdateFreeQuizSession = () => {
-  return useMutation<WebResponse<TryOutSessionResponse>, Error, UpdateFreeQuizSessionVariables>({
-    mutationFn: async ({ productTryOutId, userId, expiredAt }) => {
-      const res = await axios.post<WebResponse<TryOutSessionResponse>>(
-        `${API_BASE_URL}/api/quiz/update/free`,
-        {
-          product_try_out_id: productTryOutId,
-          user_id: userId,
-          expired_at: expiredAt,
-        },
-        { withCredentials: true }
-      );
+// Check available free tryout session
+export const useCheckAvailableFreeTryOut = (product_try_out_id?: number, user_id?: number) => {
+  return useQuery<WebResponse<boolean>, Error>({
+    queryKey: ["check-available-free", product_try_out_id, user_id],
+    queryFn: async () => {
+      const res = await axios.get(`${API_BASE_URL}/api/quiz/check-available-free/${product_try_out_id}/${user_id}`, { withCredentials: true });
       return res.data;
     },
+    enabled: Boolean(product_try_out_id && user_id),
+    retry: false,
   });
 };
-// ✅ Check password for free product
-export const useCheckFreeTryOutPassword = () => {
+
+// Start a quiz session
+export const useStartTryOutSession = () => {
+  const queryClient = useQueryClient();
+
   return useMutation({
-    mutationFn: async ({ productTryOutId, password }: { productTryOutId: number | string; password: string }) => {
-      const res = await axios.post<WebResponse<boolean>>(`${API_BASE_URL}/api/quiz/check-password/${productTryOutId}`, { password }, { withCredentials: true });
+    mutationFn: async ({ product_try_out_id, password }: { product_try_out_id: number; password?: string }) => {
+      const res = await axios.post(`${API_BASE_URL}/api/quiz/start/${product_try_out_id}`, { password }, { withCredentials: true });
       return res.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["quiz-sessions"] });
     },
   });
 };
 
-// ✅ Start free quiz session
-export const useStartFreeTryOut = () => {
-  return useMutation({
-    mutationFn: async ({ productTryOutId, password }: { productTryOutId: number | string; password: string }) => {
-      const res = await axios.post<WebResponse<TryOutSessionResponse>>(`${API_BASE_URL}/api/quiz/start/free/${productTryOutId}`, { password }, { withCredentials: true });
-      return res.data;
-    },
-  });
-};
+// Submit a quiz session
+export const useSubmitTryOutSession = () => {
+  const queryClient = useQueryClient();
 
-// ✅ Submit free try out session
-export const useSubmitFreeQuizSession = () => {
   return useMutation({
     mutationFn: async () => {
-      // Send a POST request to the backend to submit the free quiz session
-      const res = await axios.post<WebResponse<TryOutSessionResponse>>(
-        `${API_BASE_URL}/api/quiz/submit/free`,
-        {}, // Body can be empty if no extra data is required
-        { withCredentials: true } // Ensures that cookies are sent with the request
-      );
-
-      return res.data; // Return the response data
+      const res = await axios.post(`${API_BASE_URL}/api/quiz/submit`, {}, { withCredentials: true });
+      return res.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["quiz-sessions"] });
     },
   });
 };
 
-// ✅ Check available free session
-export const useCheckAvailableFree = (productTryOutId: number, userId: number | undefined, options?: UseQueryOptions<WebResponse<boolean>, Error>) => {
+// Update premium quiz session
+export const useUpdateTryOutSession = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ try_out_session_id, product_try_out_id, user_email }: { try_out_session_id: number; product_try_out_id: number; user_email: string }) => {
+      const res = await axios.patch(`${API_BASE_URL}/api/quiz/session/update`, { try_out_session_id, product_try_out_id, user_email }, { withCredentials: true });
+      return res.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["quiz-sessions"] });
+    },
+  });
+};
+
+// Check available premium tryout session
+export const useCheckAvailablePremiumTryOut = (product_try_out_id?: number, user_email?: string) => {
   return useQuery<WebResponse<boolean>, Error>({
-    queryKey: ["check-free", productTryOutId, userId],
+    queryKey: ["check-available-premium", product_try_out_id, user_email],
     queryFn: async () => {
-      const res = await axios.get(`${API_BASE_URL}/api/quiz/check-available-free/${productTryOutId}/${userId}`, {
-        withCredentials: true,
-      });
+      const res = await axios.get(`${API_BASE_URL}/api/quiz/check-available-premium/${product_try_out_id}/${user_email}`, { withCredentials: true });
       return res.data;
     },
-    enabled: Boolean(productTryOutId && userId),
-    ...options,
+    enabled: Boolean(product_try_out_id && user_email),
+    retry: false,
   });
 };
 
-// ✅ Check available premium session
-export const useCheckAvailablePremium = (productTryOutId: number | string, userEmail: string) => {
-  return useQuery<WebResponse<boolean>>({
-    queryKey: ["quiz", "available-premium", productTryOutId, userEmail],
+// Get quiz token
+export const useGetQuizToken = () => {
+  return useQuery<WebResponse<TryOutSessionResponse>, Error>({
+    queryKey: ["quiz-token"],
     queryFn: async () => {
-      const res = await axios.get(`${API_BASE_URL}/api/quiz/check-available-premium/${productTryOutId}/${userEmail}`, {
-        withCredentials: true,
-      });
+      const res = await axios.get(`${API_BASE_URL}/api/quiz/quiz-token`, { withCredentials: true });
       return res.data;
     },
-    enabled: Boolean(productTryOutId && userEmail),
+    retry: false,
   });
 };

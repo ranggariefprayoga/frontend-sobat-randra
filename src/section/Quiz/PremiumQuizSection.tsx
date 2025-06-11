@@ -1,30 +1,33 @@
 "use client";
 
-import { useGetUserAnswerByProductAndQuestionId, useSaveUserAnswer, useCheckUserHasAnsweredOrNot } from "@/lib/api/quizAnswer.api"; // Pastikan import API hooksnya
-import { useSearchParams, useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import CountDown from "@/components/Countdown/CountdownTimer";
-import NumberButtonsResponsive from "@/components/NomorQuiz/NomorQuiz";
-import QuestionComponent from "./questionComponent";
-import QuestionChoiceComponent from "./questionChoiceComponent";
-import { useGetQuizToken, useSubmitTryOutSession } from "@/lib/api/quisSession.api";
-import { useGetFreeQuestion } from "@/lib/api/soalFree.api";
 import LoadingComponent from "@/components/LoadingComponent/LoadingComponent";
+import NumberButtonsResponsive from "@/components/NomorQuiz/NomorQuiz";
+import { Button } from "@/components/ui/button";
+import { useSearchParams, useRouter } from "next/navigation";
+import QuestionComponent from "@/section/FreeQuiz/questionComponent";
+import QuestionChoiceComponent from "@/section/FreeQuiz/questionChoiceComponent";
 import { toast } from "sonner";
+import { useGetPremiumQuestion } from "@/lib/api/soalPremium.api";
+import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { useState } from "react";
+import NumberButtonsResponsiveForPremiumQuiz from "@/components/NomorQuiz/NomorQuizPremium";
+import CountDownTimerForPremium from "@/components/Countdown/CountdownTimerForPremium";
+import { useGetQuizToken, useSubmitTryOutSession } from "@/lib/api/quisSession.api";
+import { useCheckUserHasAnsweredOrNot, useGetUserAnswerByProductAndQuestionId, useSaveUserAnswer } from "@/lib/api/quizAnswer.api";
 
-export default function FreeQuizSection() {
+export default function PremiumQuizSection() {
   const searchParams = useSearchParams();
   const router = useRouter();
-
+  const [isSubmitDialogOpen, setIsSubmitDialogOpen] = useState(false);
   const numberOfQuestion = searchParams?.get("number_of_question");
+
   const { data: quizSessionData, isLoading: isLoadingSession } = useGetQuizToken();
   const productTryOutId = quizSessionData?.data?.product_try_out_id;
-  const { data, isLoading } = useGetFreeQuestion(Number(productTryOutId), Number(numberOfQuestion));
-
+  const { data, isLoading } = useGetPremiumQuestion(Number(productTryOutId), Number(numberOfQuestion));
   const { isPending: isSubmitting, mutate } = useSubmitTryOutSession();
   const saveUserAnswer = useSaveUserAnswer();
-  const { data: userAnswer, refetch: refetchUserAnswer } = useGetUserAnswerByProductAndQuestionId(Number(productTryOutId), Number(data?.data?.session_id), Number(data?.data?.question?.id));
-  const { data: checkUserHasAnswered, refetch: refetchCheckUserHasAnswered } = useCheckUserHasAnsweredOrNot(Number(productTryOutId), Number(data?.data?.session_id), Number(data?.data?.question?.id));
+  const { data: userAnswer, refetch: refetchUserAnswer } = useGetUserAnswerByProductAndQuestionId();
+  const { data: checkUserHasAnswered, refetch: refetchCheckUserHasAnswered } = useCheckUserHasAnsweredOrNot();
 
   if (isLoading || isLoadingSession) {
     return (
@@ -34,18 +37,21 @@ export default function FreeQuizSection() {
     );
   }
 
-  const handleSelectNumber = (num: number) => {
-    router.push(`/free-quiz?&number_of_question=${num}`);
-    refetchCheckUserHasAnswered();
-  };
-
   const handleNavigation = (direction: "next" | "prev") => {
     const currentQuestion = Number(numberOfQuestion);
     if (isNaN(currentQuestion)) return;
+    if (currentQuestion === 110) {
+      setIsSubmitDialogOpen(true);
+    }
     const newQuestion = direction === "next" ? currentQuestion + 1 : currentQuestion - 1;
     if (newQuestion >= 1 && newQuestion <= 110) {
-      router.push(`/free-quiz?&number_of_question=${newQuestion}`);
+      router.push(`/quiz?&number_of_question=${newQuestion}`);
     }
+  };
+
+  const handleSelectNumber = (num: number) => {
+    router.push(`/quiz?&number_of_question=${num}`);
+    refetchCheckUserHasAnswered();
   };
 
   const handleUserAnswer = (question_id: number, question_choice_id: number) => {
@@ -62,9 +68,9 @@ export default function FreeQuizSection() {
     try {
       mutate();
       toast.success("Tunggu sebentar...");
-      router.push("/pilihan-paket");
+      router.push("/history-nilai");
     } catch {
-      toast.success("Gagal submit Quiz, Coba lagi...");
+      toast.success("Submit gagal, coba refresh dulu...");
     }
   };
 
@@ -74,9 +80,9 @@ export default function FreeQuizSection() {
         {/* Countdown Timer */}
         {quizSessionData?.data && (
           <div className="flex flex-row gap-2 w-full items-center justify-between lg:justify-end mb-4 md:mb-8">
-            <CountDown quiz_session_data={quizSessionData.data} />
+            <CountDownTimerForPremium quiz_session_data={quizSessionData.data} />
             <div className="lg:hidden block">
-              <NumberButtonsResponsive onSelectNumber={handleSelectNumber} questionAnswered={checkUserHasAnswered?.data} />
+              <NumberButtonsResponsiveForPremiumQuiz onSelectNumber={handleSelectNumber} questionAnswered={checkUserHasAnswered?.data} />
             </div>
           </div>
         )}
@@ -94,21 +100,18 @@ export default function FreeQuizSection() {
                   <Button onClick={() => handleNavigation("prev")} disabled={numberOfQuestion === "1"} className="w-auto">
                     Sebelumnya
                   </Button>
-                  <Button onClick={() => handleNavigation("next")} className="w-auto">
-                    {numberOfQuestion === "110" ? "Selesaikan Quiz" : "Selanjutnya"}
+                  <Button
+                    onClick={() => handleNavigation("next")} // Show modal if it's question 110
+                    className="w-auto"
+                  >
+                    {numberOfQuestion === "110" ? "Selesaikan Try Out" : "Selanjutnya"}
                   </Button>
                 </div>
               </>
             ) : (
               <div className="text-center p-6 bg-gray-100 border border-gray-300 rounded-md shadow-md">
                 <div className="max-w-md mx-auto">
-                  <h2 className="text-xl font-semibold text-gray-700 mb-4">Uji Coba Try Out Gratis hanya tersedia sampai soal nomor 10.</h2>
-                  <p className="text-sm text-gray-600 mb-4">
-                    Untuk mendapatkan fitur lengkap dan soal terbaru, beli paket <strong>Try Out Premium</strong> kami:
-                  </p>
-                  <Button disabled={isSubmitting} variant="default" className="mt-4 w-auto bg-[#ad0a1f] hover:bg-[#d7263d] text-white" onClick={handleConfirmSubmit}>
-                    {isSubmitting ? <span className="animate-spin inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full" /> : "Lihat Try Out Premium"}
-                  </Button>
+                  <p className="text-sm text-gray-600 mb-4">Soal Belum Tersedia.</p>
                 </div>
               </div>
             )}
@@ -119,6 +122,24 @@ export default function FreeQuizSection() {
           </div>
         </div>
       </div>
+      <Dialog open={isSubmitDialogOpen} onOpenChange={setIsSubmitDialogOpen}>
+        <DialogContent aria-describedby={undefined} className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Yakin Ingin Menyelesaikan Try Out?</DialogTitle>
+          </DialogHeader>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button variant="outline" onClick={() => setIsSubmitDialogOpen(false)}>
+                Tutup
+              </Button>
+            </DialogClose>
+
+            <Button variant="default" className="bg-[#ad0a1f] hover:bg-[#d7263d]" disabled={isSubmitting} onClick={handleConfirmSubmit}>
+              {isSubmitting ? "Tunggu sebentar..." : "Selesaikan Try Out"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

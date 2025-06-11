@@ -15,14 +15,13 @@ export interface QuestionChoiceQuizResponse {
 
 interface ChoiceProps {
   choices: QuestionChoiceQuizResponse[];
-  isSelected: boolean;
-  onSelect: (choiceId: number) => void;
+  question_id: number;
+  isSelected: number | undefined;
+  onSelect: (question_id: number, question_choice_id: number) => void;
 }
 
-const QuestionChoiceComponent = ({ choices, isSelected, onSelect }: ChoiceProps) => {
+const QuestionChoiceComponent = ({ choices, isSelected, onSelect, question_id }: ChoiceProps) => {
   if (!choices || choices.length === 0) return <p className="text-sm text-gray-400">Belum ada pilihan jawaban.</p>;
-  console.log(onSelect); // ini api untuk jawab pertanyataan
-  console.log(isSelected); // ini api untuk tau pilihan jawaban user itu apa
 
   const order = ["A", "B", "C", "D", "E"];
 
@@ -33,45 +32,50 @@ const QuestionChoiceComponent = ({ choices, isSelected, onSelect }: ChoiceProps)
 
   return (
     <div className="mb-4 space-y-4">
-      {sortedChoices.map((choice) => (
-        <div key={choice.id} className="border rounded-md p-4 bg-white shadow-sm space-y-3">
-          <div className="flex items-center">
-            <div className="flex items-start gap-1 sm:gap-2">
-              <Badge variant="default" className="text-sm bg-[#ad0a1f]">
-                {choice.question_choice_title}.
-              </Badge>
-              {/* Teks Pilihan */}
-              {choice.question_choice_text && choice.question_choice_text.length > 0 && (
-                <div className="space-y-1 text-sm">
-                  {choice.question_choice_text.map((line, idx) => {
-                    return <p key={idx}>{line}</p>;
-                  })}
-                </div>
-              )}
+      {sortedChoices.map((choice) => {
+        // Check if this choice is selected
+        const isChoiceSelected = choice.id === isSelected;
 
-              {/* Math Pilihan */}
-              {choice.question_choice_text_math && choice.question_choice_text_math.length > 0 && (
-                <div className="text-base sm:text-xl w-full">
-                  {choice.question_choice_text_math.map((math, i) => (
-                    <div key={i} className="mb-2 text-base sm:text-xl">
-                      <LatexRenderer latexStrings={[math]} />
-                    </div>
-                  ))}
-                </div>
-              )}
+        return (
+          <div key={choice.id} className={`border rounded-md p-4 space-y-3 transition-all duration-200 ${isChoiceSelected ? "bg-green-200" : "bg-white"}`} onClick={() => onSelect(question_id, choice.id)}>
+            <div className="flex items-center">
+              <div className="flex items-start gap-1 sm:gap-2">
+                <Badge variant="default" className="text-sm text-[#f5f5f5]">
+                  {choice.question_choice_title}
+                </Badge>
+                {/* Teks Pilihan */}
+                {choice.question_choice_text && choice.question_choice_text.length > 0 && (
+                  <div className="space-y-1 text-sm">
+                    {choice.question_choice_text.map((line, idx) => {
+                      return <p key={idx}>{line}</p>;
+                    })}
+                  </div>
+                )}
 
-              {/* Gambar Pilihan */}
-              {choice.question_choice_images && choice.question_choice_images.length > 0 && (
-                <div className="flex flex-wrap gap-4">
-                  {choice.question_choice_images.map((src, idx) => (
-                    <Image key={idx} src={src} alt={`Gambar soal ${idx + 1}`} className="w-full lg:w-auto rounded border" width={800} height={450} style={{ objectFit: "contain" }} />
-                  ))}
-                </div>
-              )}
+                {/* Math Pilihan */}
+                {choice.question_choice_text_math && choice.question_choice_text_math.length > 0 && (
+                  <div className="text-base sm:text-xl w-full">
+                    {choice.question_choice_text_math.map((math, i) => (
+                      <div key={i} className="mb-2 text-base sm:text-xl">
+                        <LatexRenderer latexStrings={[math]} />
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Gambar Pilihan */}
+                {choice.question_choice_images && choice.question_choice_images.length > 0 && (
+                  <div className="flex flex-wrap gap-4">
+                    {choice.question_choice_images.map((src, idx) => (
+                      <Image key={idx} src={src} alt={`Gambar soal ${idx + 1}`} className="w-full lg:w-auto rounded border" width={800} height={450} style={{ objectFit: "contain" }} />
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 };

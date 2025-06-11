@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React, { useState } from "react";
@@ -11,28 +12,32 @@ import { toast } from "sonner";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
-import { useStartFreeTryOut } from "@/lib/api/quisSession.api";
+import { useCheckAvailableFreeTryOut, useStartTryOutSession } from "@/lib/api/quisSession.api";
 
 type Props = {
   product?: createTryOutResponse | undefined;
   user?: UserDetailInterface | undefined;
-  isFreeAvailable?: boolean;
 };
 
 function ProdukBelumTersedia() {
   return <div className="flex items-center justify-center min-h-[50vh] text-muted-foreground text-lg font-semibold">Produk Belum Tersedia</div>;
 }
 
-export default function DetailTOFree({ product, isFreeAvailable }: Props) {
+export default function DetailTOFree({ product, user }: Props) {
   const [isGratisDialogOpen, setIsGratisDialogOpen] = useState(false);
   const [password, setPassword] = useState("");
   const [isPasswordCorrect, setIsPasswordCorrect] = useState(false);
   const router = useRouter();
-  const { mutate: startFreeTryOut, isPending } = useStartFreeTryOut();
+  const { mutate: startFreeTryOut, isPending } = useStartTryOutSession();
+  const { data: isFreeAvailable, isLoading: isAvailableLoading, refetch: refetchAvailableTryOut } = useCheckAvailableFreeTryOut(Number(product?.id), user?.id);
 
-  const haveAccessGratis = isFreeAvailable;
+  const haveAccessGratis = isFreeAvailable?.data;
   const correctPassword = product?.password;
   if (!product) return <ProdukBelumTersedia />;
+
+  if (isAvailableLoading) {
+    return <div className="flex items-center justify-center min-h-[50vh] text-muted-foreground text-lg font-semibold">Loading...</div>;
+  }
 
   const handlePasswordSubmit = () => {
     if (password === correctPassword) {
@@ -48,8 +53,6 @@ export default function DetailTOFree({ product, isFreeAvailable }: Props) {
   const openGratisDialog = () => {
     if (haveAccessGratis) {
       setIsGratisDialogOpen(true);
-      setPassword("");
-      setIsPasswordCorrect(false);
     } else {
       toast.error("Akses gratis tidak tersedia untuk produk ini.");
     }
@@ -60,15 +63,14 @@ export default function DetailTOFree({ product, isFreeAvailable }: Props) {
 
     startFreeTryOut(
       {
-        productTryOutId: product.id,
+        product_try_out_id: product.id,
         password: password,
       },
       {
-        onSuccess: (res) => {
+        onSuccess: (res: any) => {
           setIsGratisDialogOpen(false);
+          refetchAvailableTryOut();
           router.push(`/free-quiz?number_of_question=${res?.data?.first_question_number}`);
-          setPassword("");
-          setIsPasswordCorrect(false);
           toast.success(res?.data?.message || "Try Out dimulai gratis, tunggu sebentar...");
         },
         onError: () => {

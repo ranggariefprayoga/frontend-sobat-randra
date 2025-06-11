@@ -9,13 +9,13 @@ import { DialogInfo } from "@/components/Dialog/DialogInfo";
 import { caraAksesTryOut } from "@/data/cara-akses-to";
 import { useGetTryOutProductByIdExcludeFree } from "@/lib/api/productTryOut.api";
 import { useUser } from "@/lib/api/user.api";
-import { useCheckAvailableFree } from "@/lib/api/quisSession.api";
+import { useCheckAvailableFreeTryOut } from "@/lib/api/quisSession.api";
 
 export default function DetailPilihanPaketTO({ params }: { params: Promise<{ product_try_out_id: string }> }) {
   const { product_try_out_id: id } = use(params);
   const { data, isLoading } = useGetTryOutProductByIdExcludeFree(Number(id));
   const { data: detailUser, isLoading: detailUserLoading } = useUser();
-  const { data: isAvailable, isLoading: isAvailableLoading } = useCheckAvailableFree(Number(id), detailUser?.data?.id ?? 0);
+  const { data: isAvailable, isLoading: isAvailableLoading } = useCheckAvailableFreeTryOut(Number(id), detailUser?.data?.id);
 
   if (isLoading || detailUserLoading || isAvailableLoading) {
     return (

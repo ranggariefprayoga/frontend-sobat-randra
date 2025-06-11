@@ -7,18 +7,13 @@ import { ArrowLeft } from "lucide-react";
 import { use } from "react";
 import { useUser } from "@/lib/api/user.api";
 import DetailTOFree from "@/pages/PilihanPaket/DetailTOFree";
-import { useCheckAvailableFree } from "@/lib/api/quisSession.api";
 
 export default function DetailPilihanPaketTOFreeForUser({ params }: { params: Promise<{ product_try_out_id: string }> }) {
   const { product_try_out_id: id } = use(params);
   const { data: product, isLoading } = useGetTryOutProductByIdForUserIncludeFree(Number(id));
   const { data: detailUser, isLoading: detailUserLoading } = useUser();
 
-  const userId = detailUser?.data?.id;
-
-  const { data: isFreeAvailable, isLoading: isAvailableLoading } = useCheckAvailableFree(Number(id), userId);
-
-  const isAnyLoading = isLoading || detailUserLoading || (userId && isAvailableLoading);
+  const isAnyLoading = isLoading || detailUserLoading;
 
   if (isAnyLoading) {
     return (
@@ -31,7 +26,7 @@ export default function DetailPilihanPaketTOFreeForUser({ params }: { params: Pr
   return (
     <LayoutBackgroundWhite>
       <ButtonWithIcon icon={ArrowLeft} label="Kembali" />
-      <DetailTOFree product={product?.data} isFreeAvailable={isFreeAvailable?.data} user={detailUser?.data} />
+      <DetailTOFree product={product?.data} user={detailUser?.data} />
     </LayoutBackgroundWhite>
   );
 }

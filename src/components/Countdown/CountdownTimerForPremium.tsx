@@ -12,9 +12,7 @@ interface CountDownProps {
   quiz_session_data: TryOutSessionResponse;
 }
 
-export default function CountDown({ quiz_session_data }: CountDownProps) {
-  console.log(quiz_session_data);
-
+export default function CountDownTimerForPremium({ quiz_session_data }: CountDownProps) {
   const router = useRouter();
   const { mutate, isPending } = useUpdateTryOutSession();
   const [countdownFinished, setCountdownFinished] = useState(false);
@@ -61,7 +59,7 @@ export default function CountDown({ quiz_session_data }: CountDownProps) {
   useEffect(() => {
     if (countdownFinished) {
       mutate(
-        { product_try_out_id: quiz_session_data.product_try_out_id, try_out_session_id: quiz_session_data.id, user_email: quiz_session_data.user_email },
+        { product_try_out_id: quiz_session_data.product_try_out_id, user_email: quiz_session_data.user_email, try_out_session_id: quiz_session_data.id },
         {
           onSuccess: () => {
             toast.success("Quiz selesai, Tunggu sebentar...");
@@ -81,7 +79,7 @@ export default function CountDown({ quiz_session_data }: CountDownProps) {
 
   if (countdownFinished) {
     return (
-      <div className="text-center font-semibold text-white bg-red-600 rounded-lg p-4 shadow-md">
+      <div className="text-center font-semibold text-white bg-red-600 rounded-lg p-2 px-4 shadow-md">
         <span className="text-xl">Sesi sudah berakhir!</span>
       </div>
     );

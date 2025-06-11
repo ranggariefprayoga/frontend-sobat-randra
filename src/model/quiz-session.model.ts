@@ -6,15 +6,15 @@ export interface CreateTryOutSessionRequest {
 
 export interface TryOutSessionResponse {
   id: number;
-  user_email?: string;
-  user_id?: number;
+  user_email: string;
+  user_id: number;
   product_try_out_id: number;
   try_out_token: string;
   is_trial: boolean;
   is_finished: boolean;
   started_at: string; // ISO date string from API
   expired_at: string; // ISO date string from API
-  first_question_number?: number; // <- tambahan agar konsisten
+  first_question_number: number; // <- tambahan agar konsisten
   message?: string;
 }
 

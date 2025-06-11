@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React, { useState } from "react";
@@ -6,12 +7,11 @@ import { Separator } from "@/components/ui/separator";
 import { createTryOutResponse } from "@/model/product.model";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { PasswordDisplay } from "@/components/ShowPasswordProduct/PasswordDisplay";
 import { UserDetailInterface } from "@/model/user.model";
-import { useCheckAvailablePremium } from "@/lib/api/quisSession.api";
 import { toast } from "sonner";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
+import { useRouter } from "next/navigation";
+import { useCheckAvailablePremiumTryOut, useStartTryOutSession } from "@/lib/api/quisSession.api";
 
 type Props = {
   product?: createTryOutResponse | undefined;
@@ -23,40 +23,20 @@ function ProdukBelumTersedia() {
   return <div className="flex items-center justify-center min-h-[50vh] text-muted-foreground text-lg font-semibold">Produk Belum Tersedia</div>;
 }
 
-export default function DetailTO({ product, user, isFreeAvailable }: Props) {
-  const [isGratisDialogOpen, setIsGratisDialogOpen] = useState(false);
+export default function DetailTO({ product, user }: Props) {
   const [isPremiumDialogOpen, setIsPremiumDialogOpen] = useState(false);
-  const [password, setPassword] = useState("");
-  const [isPasswordCorrect, setIsPasswordCorrect] = useState(false);
-  const { data: isPremiumAvailable, isLoading } = useCheckAvailablePremium(product?.id ?? "", user?.email ?? "");
+  const { data: isPremiumAvailable, isLoading, refetch } = useCheckAvailablePremiumTryOut(product?.id, user?.email);
+  const { mutate: startPremiumTryOut, isPending } = useStartTryOutSession();
+  const router = useRouter();
 
-  const haveAccessGratis = isFreeAvailable;
   const haveAccessPremium = isPremiumAvailable?.data;
-  const correctPassword = product?.password;
   if (!product) return <ProdukBelumTersedia />;
 
   if (isLoading) {
     return <div className="flex items-center justify-center min-h-[50vh] text-muted-foreground text-lg font-semibold">Loading...</div>;
   }
 
-  const handlePasswordSubmit = () => {
-    if (password === correctPassword) {
-      setIsPasswordCorrect(true);
-      toast.success(`Password benar, silakan klik "Mulai Kerjakan!" untuk mulai belajar.`);
-    } else {
-      toast.error("Password yang Anda masukkan salah! Coba lagi.");
-      setPassword("");
-    }
-  };
-
   // Fungsi untuk membuka dialog Akses Gratis
-  const openGratisDialog = () => {
-    if (haveAccessGratis) {
-      setIsGratisDialogOpen(true);
-    } else {
-      toast.error("Akses gratis tidak tersedia untuk produk ini.");
-    }
-  };
 
   // Fungsi untuk membuka dialog Akses Premium
   const openPremiumDialog = () => {
@@ -67,18 +47,29 @@ export default function DetailTO({ product, user, isFreeAvailable }: Props) {
     }
   };
 
-  // backend-api cari data quiz session dengan user_id dengan for_product_free = false
   const handlePremiumSubmit = () => {
-    toast.success(`Try Out dimulai premium, tunggu sebentar...`);
+    if (!product) return;
+
+    startPremiumTryOut(
+      {
+        product_try_out_id: product.id,
+      },
+      {
+        onSuccess: (res: any) => {
+          setIsPremiumDialogOpen(false);
+          refetch();
+          router.push(`/quiz?number_of_question=${res?.data?.first_question_number}`);
+          toast.success(res?.data?.message || `Try Out dimulai premium, tunggu sebentar...`);
+        },
+        onError: () => {
+          toast.error("Gagal memulai sesi. Coba refresh.");
+        },
+      }
+    );
     setIsPremiumDialogOpen(false);
   };
 
-  const handleGratisSubmit = () => {
-    toast.success(`Try Out dimulai gratis, tunggu sebentar...`);
-    setIsGratisDialogOpen(false);
-    setPassword("");
-    setIsPasswordCorrect(false);
-  };
+  // backend-api cari data quiz session dengan user_id dengan for_product_free = false
 
   const discount = product.old_price && product.old_price > product.price && product.old_price > 0 ? Math.round(((product.old_price - product.price) / product.old_price) * 100) : null;
 
@@ -103,21 +94,10 @@ export default function DetailTO({ product, user, isFreeAvailable }: Props) {
 
           <div className="flex flex-wrap gap-2 mb-4">
             {!product.is_active && <Badge>📘 Tidak Aktif</Badge>}
-            {product.is_trial_product && <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs flex items-center gap-1">📘 Gratis</span>}
             <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs flex items-center gap-1">📘 Premium</span>
           </div>
 
           <p className="text-sm text-gray-700 whitespace-pre-line mb-4">{product.description}</p>
-
-          {product.is_trial_product && product.password && !isPremiumAvailable?.data && (
-            <Button
-              className={`relative w-full lg:w-1/3 font-semibold text-xs sm:text-sm transition duration-200 z-10 ${haveAccessGratis ? "bg-[#ad0a1f] text-white hover:bg-[#d7263d]" : "bg-gray-500 text-white cursor-not-allowed"}`}
-              onClick={openGratisDialog}
-              disabled={!haveAccessGratis}
-            >
-              {haveAccessGratis ? "Coba Try Out Gratis" : "Akses Gratis Tidak Ada Lagi"}
-            </Button>
-          )}
 
           <div className="md:px-0">
             <Separator className="my-4" />
@@ -166,39 +146,6 @@ export default function DetailTO({ product, user, isFreeAvailable }: Props) {
         </div>
       )}
 
-      <Dialog open={isGratisDialogOpen} onOpenChange={setIsGratisDialogOpen}>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>Akses Gratis</DialogTitle>
-            <DialogDescription>
-              Masukkan password untuk mendapatkan akses gratis. <PasswordDisplay password={product?.password} />
-            </DialogDescription>
-          </DialogHeader>
-
-          <div className="grid">
-            <div className="grid grid-cols-2 items-center gap-4">
-              <Input disabled={isPasswordCorrect} id="password" type="password" placeholder="Cek password" value={password} onChange={(e) => setPassword(e.target.value)} className="col-span-3" />
-            </div>
-          </div>
-
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setIsGratisDialogOpen(false)}>
-              Tutup
-            </Button>
-            <Button variant="default" className="bg-[#ad0a1f] hover:bg-[#d7263d]" onClick={handlePasswordSubmit} disabled={isPasswordCorrect}>
-              Cek Password
-            </Button>
-
-            {/* Tombol Mulai Kerjakan, hanya muncul setelah password benar */}
-            {isPasswordCorrect && (
-              <Button variant="default" onClick={handleGratisSubmit}>
-                Mulai Kerjakan!
-              </Button>
-            )}
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-
       {/* Dialog Akses Premium */}
       <Dialog open={isPremiumDialogOpen} onOpenChange={setIsPremiumDialogOpen}>
         <DialogContent className="sm:max-w-[425px]">
@@ -213,8 +160,8 @@ export default function DetailTO({ product, user, isFreeAvailable }: Props) {
               </Button>
             </DialogClose>
 
-            <Button variant="default" className="bg-[#ad0a1f] hover:bg-[#d7263d]" onClick={handlePremiumSubmit}>
-              Mulai Kerjakan!
+            <Button variant="default" className="bg-[#ad0a1f] hover:bg-[#d7263d]" disabled={isPending} onClick={handlePremiumSubmit}>
+              {isPending ? "Tunggu sebentar..." : "Mulai Kerjakan!"}
             </Button>
           </DialogFooter>
         </DialogContent>
