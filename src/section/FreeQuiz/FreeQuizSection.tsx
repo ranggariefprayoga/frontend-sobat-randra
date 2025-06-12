@@ -7,13 +7,14 @@ import NumberButtonsResponsive from "@/components/NomorQuiz/NomorQuiz";
 import QuestionComponent from "./questionComponent";
 import QuestionChoiceComponent from "./questionChoiceComponent";
 import { useGetSessionsByProductIdAndSessionId, useSubmitTryOutSession } from "@/lib/api/quisSession.api";
-import { useGetFreeQuestion } from "@/lib/api/soalFree.api";
 import LoadingComponent from "@/components/LoadingComponent/LoadingComponent";
 import { toast } from "sonner";
 import { useUser } from "@/lib/api/user.api";
 import CountdownTimer from "@/components/Countdown/CountdownTimer";
 import { useGetValidQuestionsUser } from "@/lib/api/question.api";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useGetQuestionForQuiz } from "@/lib/api/soal.api";
+import Link from "next/link";
 
 export default function FreeQuizSection() {
   const searchParams = useSearchParams();
@@ -27,11 +28,11 @@ export default function FreeQuizSection() {
   const questionId = Number(q);
   const sessionId = Number(s);
 
-  const { data: quizSessionData, isLoading: isLoadingSession } = useGetSessionsByProductIdAndSessionId(productTryOutId, sessionId);
+  const { data: quizSessionData, isLoading: isLoadingSession, error } = useGetSessionsByProductIdAndSessionId(productTryOutId, sessionId);
   const { data: dataUser, isLoading: dataUserLoading } = useUser();
   const { data: validQuestions, isLoading: dataUserQuestionLoading } = useGetValidQuestionsUser(productTryOutId);
 
-  const { data, isLoading } = useGetFreeQuestion(productTryOutId, questionId);
+  const { data, isLoading } = useGetQuestionForQuiz(productTryOutId, questionId);
 
   const submitQuizMutation = useSubmitTryOutSession();
   const saveUserAnswer = useSaveUserAnswer();
@@ -47,12 +48,20 @@ export default function FreeQuizSection() {
     );
   }
 
-  const user = dataUser?.data ?? null;
-
-  if (user?.id !== quizSessionData?.data?.user_id) {
-    toast.error("sesi ini bukan punya kamu");
-    router.push("/pilihan-paket");
+  if (error) {
+    return (
+      <div className="min-h-screen flex flex-col justify-center items-center bg-white px-6 text-center">
+        <h1 className="text-6xl font-bold text-[#ad0a1f] mb-4">404</h1>
+        <h2 className="text-2xl font-semibold text-gray-700 mb-2">Terjadi Kesalahan</h2>
+        <p className="text-gray-500 mb-6">Coba kembali ke beranda.</p>
+        <Link href="/" className="bg-[#ad0a1f] hover:bg-[#d7263d] text-white px-6 py-3 rounded-full transition">
+          Kembali ke Beranda
+        </Link>
+      </div>
+    );
   }
+
+  const user = dataUser?.data ?? null;
 
   const question = data?.data?.question;
   const userEmail = user?.email;
@@ -109,9 +118,15 @@ export default function FreeQuizSection() {
       <div className="grid grid-cols-1">
         {/* Countdown Timer */}
         {quizSessionData?.data && (
-          <div className="flex flex-row gap-2 w-full items-center justify-between lg:justify-end mb-4">
-            <CountdownTimer expiredAt={expired_at} productId={productTryOutId} sessionId={sessionId} userEmail={userEmail} />
-            <div className="lg:hidden block">
+          <div className="flex flex-row gap-2 w-full items-center justify-between lg:justify-start mb-4">
+            {/* Soal Nomor UI */}
+
+            <div className="flex justify-between items-center w-full">
+              {question && <div className="bg-[#ad0a1f] text-white px-4 py-2 font-bold text-lg rounded-md">No {question?.number_of_question}</div>}
+              <CountdownTimer expiredAt={expired_at} productId={productTryOutId} sessionId={sessionId} userEmail={userEmail} />
+            </div>
+
+            <div className="lg:hidden block items-center">
               <NumberButtonsResponsive currentQuestionId={questionId} questions={validQuestions?.data} questionHasAswered={numberHasAswered} onSelectNumber={handleSelectNumber} />
             </div>
           </div>

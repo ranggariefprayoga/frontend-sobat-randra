@@ -7,7 +7,6 @@ import { useSearchParams, useRouter } from "next/navigation";
 import QuestionComponent from "@/section/FreeQuiz/questionComponent";
 import QuestionChoiceComponent from "@/section/FreeQuiz/questionChoiceComponent";
 import { toast } from "sonner";
-import { useGetPremiumQuestion } from "@/lib/api/soalPremium.api";
 import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useState } from "react";
 import { useGetSessionsByProductIdAndSessionId, useSubmitTryOutSession } from "@/lib/api/quisSession.api";
@@ -16,6 +15,8 @@ import CountdownTimer from "@/components/Countdown/CountdownTimer";
 import { useUser } from "@/lib/api/user.api";
 import { useGetValidQuestionsUser } from "@/lib/api/question.api";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useGetQuestionForQuiz } from "@/lib/api/soal.api";
+import Link from "next/link";
 
 export default function PremiumQuizSection() {
   const searchParams = useSearchParams();
@@ -30,9 +31,9 @@ export default function PremiumQuizSection() {
   const questionId = Number(q);
   const sessionId = Number(s);
 
-  const { data: quizSessionData, isLoading: isLoadingSession } = useGetSessionsByProductIdAndSessionId(productTryOutId, sessionId);
+  const { data: quizSessionData, isLoading: isLoadingSession, error } = useGetSessionsByProductIdAndSessionId(productTryOutId, sessionId);
   const { data: dataUser, isLoading: dataUserLoading } = useUser();
-  const { data, isLoading } = useGetPremiumQuestion(productTryOutId, questionId);
+  const { data, isLoading } = useGetQuestionForQuiz(productTryOutId, questionId);
   const { data: validQuestions, isLoading: dataUserQuestionLoading } = useGetValidQuestionsUser(productTryOutId);
 
   const submitQuizMutation = useSubmitTryOutSession();
@@ -49,12 +50,20 @@ export default function PremiumQuizSection() {
     );
   }
 
-  const user = dataUser?.data ?? null;
-
-  if (user?.id !== quizSessionData?.data?.user_id) {
-    toast.error("sesi ini bukan punya kamu");
-    router.push("/pilihan-paket");
+  if (error) {
+    return (
+      <div className="min-h-screen flex flex-col justify-center items-center bg-white px-6 text-center">
+        <h1 className="text-6xl font-bold text-[#ad0a1f] mb-4">404</h1>
+        <h2 className="text-2xl font-semibold text-gray-700 mb-2">Terjadi Kesalahan</h2>
+        <p className="text-gray-500 mb-6">Coba kembali ke beranda.</p>
+        <Link href="/" className="bg-[#ad0a1f] hover:bg-[#d7263d] text-white px-6 py-3 rounded-full transition">
+          Kembali ke Beranda
+        </Link>
+      </div>
+    );
   }
+
+  const user = dataUser?.data ?? null;
 
   const question = data?.data?.question;
   const userEmail = user?.email;
@@ -71,14 +80,25 @@ export default function PremiumQuizSection() {
     refetchCheckUserHasAnswered();
   };
 
-  const handleNavigation = (newQuestionId: number | null | undefined) => {
+  const handlePreviousSoal = (previousQuestionId: number | null | undefined) => {
+    if (previousQuestionId) {
+      router.push(`/quiz?sess=${sessionId}&ptid=${productTryOutId}&qid=${previousQuestionId}`);
+    }
+  };
+  const handleNextSoal = (nextQuestionId: number | null | undefined) => {
+    console.log(nextQuestionId);
+
+    if (nextQuestionId === null || nextQuestionId === undefined) {
+      router.push(`/free-quiz?sess=${sessionId}&ptid=${productTryOutId}&qid=${0}`);
+    }
+
     if (isLast) {
       setIsSubmitDialogOpen(true);
       return;
     }
 
-    if (newQuestionId) {
-      router.push(`/quiz?sess=${sessionId}&ptid=${productTryOutId}&qid=${newQuestionId}`);
+    if (nextQuestionId) {
+      router.push(`/quiz?sess=${sessionId}&ptid=${productTryOutId}&qid=${nextQuestionId}`);
     }
   };
 
@@ -111,16 +131,22 @@ export default function PremiumQuizSection() {
       <div className="grid grid-cols-1">
         {/* Countdown Timer */}
         {quizSessionData?.data && (
-          <div className="flex flex-row gap-2 w-full items-center justify-between lg:justify-end mb-4">
-            <CountdownTimer expiredAt={expired_at} productId={productTryOutId} sessionId={sessionId} userEmail={userEmail} />
-            <div className="lg:hidden block">
+          <div className="flex flex-row gap-2 w-full items-center justify-between lg:justify-start mb-4">
+            {/* Soal Nomor UI */}
+
+            <div className="flex justify-between items-center w-full">
+              {question && <div className="bg-[#ad0a1f] text-white px-4 py-2 font-bold text-lg rounded-md">No {question?.number_of_question}</div>}
+              <CountdownTimer expiredAt={expired_at} productId={productTryOutId} sessionId={sessionId} userEmail={userEmail} />
+            </div>
+
+            <div className="lg:hidden block items-center">
               <NumberButtonsResponsive currentQuestionId={questionId} questions={validQuestions?.data} questionHasAswered={numberHasAswered} onSelectNumber={handleSelectNumber} />
             </div>
           </div>
         )}
 
         {/* Question + Number Buttons */}
-        <div className="flex w-full gap-2">
+        <div className="flex w-full gap-8">
           <div className="w-full lg:w-[80%]">
             {question ? (
               <>
@@ -134,13 +160,13 @@ export default function PremiumQuizSection() {
                   />
                 )}
                 <div className="flex justify-between items-center mb-4 mt-6">
-                  <Button onClick={() => handleNavigation(previousQuestionId)} disabled={isFirst || previousQuestionId === null} className="w-auto flex items-center space-x-2">
+                  <Button onClick={() => handlePreviousSoal(previousQuestionId)} disabled={isFirst || !previousQuestionId} className="w-auto flex items-center space-x-2">
                     {/* Show icon and text for large screens, only icon for small screens */}
                     <span className="hidden sm:inline">Sebelumnya</span> {/* Text visible only on screen sizes larger than 'sm' */}
                     <ChevronLeft className="sm:hidden" /> {/* Icon visible only on small screens */}
                   </Button>
 
-                  <Button onClick={() => handleNavigation(nextQuestionId)} className="w-auto flex items-center space-x-2">
+                  <Button onClick={() => handleNextSoal(nextQuestionId)} className="w-auto flex items-center space-x-2">
                     {/* Show icon and text for large screens, only icon for small screens */}
                     <span className="hidden sm:inline">{isLast ? "Selesaikan Try Out" : "Selanjutnya"}</span>
                     <ChevronRight className="sm:hidden" /> {/* Icon visible only on small screens */}

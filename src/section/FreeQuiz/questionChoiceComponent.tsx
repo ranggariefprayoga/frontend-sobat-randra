@@ -51,36 +51,38 @@ const QuestionChoiceComponent = React.memo(({ choices, isSelected, onSelect }: C
                 <Badge variant={isChoiceSelected ? "secondary" : "outline"} className="text-sm">
                   {choice.question_choice_title}
                 </Badge>
-                {/* Display choice text */}
-                {choice.question_choice_text && choice.question_choice_text.length > 0 && (
-                  <div className="space-y-1 text-sm">
-                    {choice.question_choice_text.map((line, idx) => (
-                      <p className="text-start whitespace-pre-wrap" key={idx}>
-                        {line}
-                      </p>
-                    ))}
-                  </div>
-                )}
 
                 {/* Display math choice */}
                 {choice.question_choice_text_math && choice.question_choice_text_math.length > 0 && (
                   <div className="text-base sm:text-xl w-full">
                     {choice.question_choice_text_math.map((math, i) => (
-                      <div key={i} className="mb-2 text-base sm:text-xl text-start whitespace-pre-wrap">
+                      <div key={i} className="mb-2 text-base text-start whitespace-pre-wrap">
                         <LatexRenderer latexStrings={[math]} />
                       </div>
                     ))}
                   </div>
                 )}
+                <div className="flex flex-col gap-2">
+                  {/* Display choice text */}
+                  {choice.question_choice_text && choice.question_choice_text.length > 0 && (
+                    <div className="space-y-1 text-sm">
+                      {choice.question_choice_text.map((line, idx) => (
+                        <p className="text-start whitespace-pre-wrap" key={idx}>
+                          {line}
+                        </p>
+                      ))}
+                    </div>
+                  )}
 
-                {/* Display choice images */}
-                {choice.question_choice_images && choice.question_choice_images.length > 0 && (
-                  <div className="flex flex-wrap gap-4">
-                    {choice.question_choice_images.map((src, idx) => (
-                      <Image key={idx} src={src} alt={`Gambar soal ${idx + 1}`} className="w-full lg:w-[60%] rounded border" width={800} height={450} style={{ objectFit: "contain" }} />
-                    ))}
-                  </div>
-                )}
+                  {/* Display choice images */}
+                  {choice.question_choice_images && choice.question_choice_images.length > 0 && (
+                    <div className="flex flex-wrap gap-4">
+                      {choice.question_choice_images.map((src, idx) => (
+                        <Image key={idx} src={src} alt={`Gambar soal ${idx + 1}`} className="w-full lg:w-[60%] rounded border" width={800} height={450} style={{ objectFit: "contain" }} />
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </Button>

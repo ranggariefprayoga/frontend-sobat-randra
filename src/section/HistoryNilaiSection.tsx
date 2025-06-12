@@ -3,10 +3,8 @@
 
 import NullComponent from "@/components/NullComponent/NullComponent";
 import TitleComponent from "@/components/TitleComponent/TitleComponent";
-import ButtonWithIcon from "@/components/TombolBack/TombolBack";
 import { Button } from "@/components/ui/button";
 import LayoutBackgroundWhite from "@/layout/LayoutBackgroundWhite";
-import { ArrowLeft } from "lucide-react";
 import { useState } from "react";
 
 // Data dummy untuk kategori premium dan gratis
@@ -36,7 +34,6 @@ export default function HistoryNilaiSection() {
 
   return (
     <LayoutBackgroundWhite>
-      <ButtonWithIcon icon={ArrowLeft} label="Kembali" />
       <TitleComponent title="History & Grafik" subTitle="Pengerjaan Try Out kamu!" />
 
       <div className="w-full px-4 md:px-24 mt-8 grid grid-cols-2 xl:grid-cols-4 gap-2">

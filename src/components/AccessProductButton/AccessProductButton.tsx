@@ -1,12 +1,17 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from "@/components/ui/dialog";
 import { toast } from "sonner";
+import { useStartTryOutSession } from "@/lib/api/quisSession.api";
+import { useRouter } from "next/navigation";
 
-export default function AccessButtonWithModal({ isPremiumAvailable }: { isPremiumAvailable: boolean | undefined }) {
+export default function AccessButtonWithModal({ isPremiumAvailable, productTryOutId, refetchAvailableTryOut }: { isPremiumAvailable: boolean | undefined; productTryOutId: number; refetchAvailableTryOut: () => void }) {
+  const router = useRouter();
   const [isPremiumDialogOpen, setIsPremiumDialogOpen] = useState(false);
+  const { mutate: startPremiumTryOut, isPending } = useStartTryOutSession();
 
   const haveAccessPremium = isPremiumAvailable;
 
@@ -19,9 +24,25 @@ export default function AccessButtonWithModal({ isPremiumAvailable }: { isPremiu
     }
   };
 
-  // backend-api cari data quiz session dengan user_id dengan for_product_free = false
   const handlePremiumSubmit = () => {
-    toast.success(`Try Out dimulai premium, tunggu sebentar...`);
+    if (!productTryOutId) return;
+
+    startPremiumTryOut(
+      {
+        product_try_out_id: productTryOutId,
+      },
+      {
+        onSuccess: (res: any) => {
+          setIsPremiumDialogOpen(false);
+          refetchAvailableTryOut();
+          router.push(`/quiz?sess=${res?.data?.id}&ptid=${res?.data?.product_try_out_id}&qid=${res?.data?.first_question_id}`);
+          toast.success(res?.data?.message || `Try Out dimulai premium, tunggu sebentar...`);
+        },
+        onError: () => {
+          toast.error("Gagal memulai sesi. Coba refresh.");
+        },
+      }
+    );
     setIsPremiumDialogOpen(false);
   };
 
@@ -50,8 +71,8 @@ export default function AccessButtonWithModal({ isPremiumAvailable }: { isPremiu
               </Button>
             </DialogClose>
 
-            <Button variant="default" className="bg-[#ad0a1f] hover:bg-[#d7263d]" onClick={handlePremiumSubmit}>
-              Mulai Kerjakan!
+            <Button variant="default" className="bg-[#ad0a1f] hover:bg-[#d7263d]" disabled={isPending} onClick={handlePremiumSubmit}>
+              {isPending ? "Tunggu sebentar..." : "Mulai Kerjakan!"}
             </Button>
           </DialogFooter>
         </DialogContent>

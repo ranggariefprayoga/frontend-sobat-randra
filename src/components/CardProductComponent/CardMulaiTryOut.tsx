@@ -9,7 +9,7 @@ interface ProductCardProps {
 }
 
 export default function CardMulaiTryOut({ product, userEmail }: ProductCardProps) {
-  const { data: isPremiumAvailable, isLoading: isPremiumAvailableLoading } = useCheckAvailablePremiumTryOut(product.id, userEmail);
+  const { data: isPremiumAvailable, isLoading: isPremiumAvailableLoading, refetch } = useCheckAvailablePremiumTryOut(product.id, userEmail);
 
   if (isPremiumAvailableLoading) {
     return (
@@ -29,7 +29,7 @@ export default function CardMulaiTryOut({ product, userEmail }: ProductCardProps
         <p className="text-sm my-2 truncate overflow-hidden whitespace-nowrap" title={product.description}>
           {product.description}
         </p>
-        <AccessButtonWithModal isPremiumAvailable={isPremiumAvailable?.data} />
+        <AccessButtonWithModal isPremiumAvailable={isPremiumAvailable?.data} productTryOutId={product.id} refetchAvailableTryOut={refetch} />
       </div>
     </div>
   );
