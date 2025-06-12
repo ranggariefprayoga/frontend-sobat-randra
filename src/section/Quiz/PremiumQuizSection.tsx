@@ -10,26 +10,38 @@ import { toast } from "sonner";
 import { useGetPremiumQuestion } from "@/lib/api/soalPremium.api";
 import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useState } from "react";
-import NumberButtonsResponsiveForPremiumQuiz from "@/components/NomorQuiz/NomorQuizPremium";
-import CountDownTimerForPremium from "@/components/Countdown/CountdownTimerForPremium";
-import { useGetQuizToken, useSubmitTryOutSession } from "@/lib/api/quisSession.api";
+import { useGetSessionsByProductIdAndSessionId, useSubmitTryOutSession } from "@/lib/api/quisSession.api";
 import { useCheckUserHasAnsweredOrNot, useGetUserAnswerByProductAndQuestionId, useSaveUserAnswer } from "@/lib/api/quizAnswer.api";
+import CountdownTimer from "@/components/Countdown/CountdownTimer";
+import { useUser } from "@/lib/api/user.api";
+import { useGetValidQuestionsUser } from "@/lib/api/question.api";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function PremiumQuizSection() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [isSubmitDialogOpen, setIsSubmitDialogOpen] = useState(false);
-  const numberOfQuestion = searchParams?.get("number_of_question");
 
-  const { data: quizSessionData, isLoading: isLoadingSession } = useGetQuizToken();
-  const productTryOutId = quizSessionData?.data?.product_try_out_id;
-  const { data, isLoading } = useGetPremiumQuestion(Number(productTryOutId), Number(numberOfQuestion));
-  const { isPending: isSubmitting, mutate } = useSubmitTryOutSession();
+  const s = searchParams?.get("sess");
+  const p = searchParams?.get("ptid");
+  const q = searchParams?.get("qid");
+
+  const productTryOutId = Number(p);
+  const questionId = Number(q);
+  const sessionId = Number(s);
+
+  const { data: quizSessionData, isLoading: isLoadingSession } = useGetSessionsByProductIdAndSessionId(productTryOutId, sessionId);
+  const { data: dataUser, isLoading: dataUserLoading } = useUser();
+  const { data, isLoading } = useGetPremiumQuestion(productTryOutId, questionId);
+  const { data: validQuestions, isLoading: dataUserQuestionLoading } = useGetValidQuestionsUser(productTryOutId);
+
+  const submitQuizMutation = useSubmitTryOutSession();
   const saveUserAnswer = useSaveUserAnswer();
-  const { data: userAnswer, refetch: refetchUserAnswer } = useGetUserAnswerByProductAndQuestionId(Number(productTryOutId), Number(data?.data?.session_id), Number(data?.data?.question?.id));
-  const { data: checkUserHasAnswered, refetch: refetchCheckUserHasAnswered } = useCheckUserHasAnsweredOrNot(Number(productTryOutId), Number(data?.data?.session_id), Number(data?.data?.question?.id));
 
-  if (isLoading || isLoadingSession) {
+  const { data: userAnswer, refetch, isLoading: isLoadingUserAnswer } = useGetUserAnswerByProductAndQuestionId(productTryOutId, sessionId, questionId);
+  const { data: checkUserHasAnswered, isLoading: isLoadingCheckUserHasAnswered, refetch: refetchCheckUserHasAnswered } = useCheckUserHasAnsweredOrNot(productTryOutId, sessionId);
+
+  if (isLoading || isLoadingSession || isLoadingUserAnswer || isLoadingCheckUserHasAnswered || dataUserLoading || dataUserQuestionLoading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
         <LoadingComponent color="#ad0a1f" />
@@ -37,40 +49,60 @@ export default function PremiumQuizSection() {
     );
   }
 
-  const handleNavigation = (direction: "next" | "prev") => {
-    const currentQuestion = Number(numberOfQuestion);
-    if (isNaN(currentQuestion)) return;
-    if (currentQuestion === 110) {
-      setIsSubmitDialogOpen(true);
-    }
-    const newQuestion = direction === "next" ? currentQuestion + 1 : currentQuestion - 1;
-    if (newQuestion >= 1 && newQuestion <= 110) {
-      router.push(`/quiz?&number_of_question=${newQuestion}`);
-    }
-  };
+  const user = dataUser?.data ?? null;
 
-  const handleSelectNumber = (num: number) => {
-    router.push(`/quiz?&number_of_question=${num}`);
+  if (user?.id !== quizSessionData?.data?.user_id) {
+    toast.error("sesi ini bukan punya kamu");
+    router.push("/pilihan-paket");
+  }
+
+  const question = data?.data?.question;
+  const userEmail = user?.email;
+  const isFirst = data?.data?.isFirst;
+  const isLast = data?.data?.isLast;
+  const nextQuestionId = data?.data?.nextQuestionId;
+  const previousQuestionId = data?.data?.previousQuestionId;
+  const questionChoices = question?.question_choices || [];
+  const expired_at = quizSessionData?.data?.expired_at;
+  const numberHasAswered = checkUserHasAnswered?.data || [];
+
+  const handleSelectNumber = (newQuestionId: number) => {
+    router.push(`/quiz?sess=${sessionId}&ptid=${productTryOutId}&qid=${newQuestionId}`);
     refetchCheckUserHasAnswered();
   };
 
-  const handleUserAnswer = (question_id: number, question_choice_id: number) => {
-    try {
-      saveUserAnswer.mutate({ product_try_out_id: Number(productTryOutId), question_id, question_choice_id });
-      refetchUserAnswer();
-      toast.error("Pilihan Jawaban Berhasil Disimpan!");
-    } catch {
-      toast.error("Gagal memilih jawaban, coba lagi...");
+  const handleNavigation = (newQuestionId: number | null | undefined) => {
+    if (isLast) {
+      setIsSubmitDialogOpen(true);
+      return;
+    }
+
+    if (newQuestionId) {
+      router.push(`/quiz?sess=${sessionId}&ptid=${productTryOutId}&qid=${newQuestionId}`);
     }
   };
 
+  const handleUserAnswer = async (question_choice_id: number): Promise<void> => {
+    try {
+      await saveUserAnswer.mutateAsync({ product_try_out_id: productTryOutId, question_id: questionId, question_choice_id });
+      refetch();
+    } catch (error) {
+      // If the API fails, revert the UI change
+
+      toast.error("Gagal memilih jawaban, coba lagi...");
+      throw error; // Rethrow the error to allow catch in handleSelectChoice
+    }
+  };
+
+  // Optimistic answer handlin
+
   const handleConfirmSubmit = async () => {
     try {
-      mutate();
+      await submitQuizMutation.mutateAsync();
       toast.success("Tunggu sebentar...");
-      router.push("/history-nilai");
+      router.push("/pilihan-paket");
     } catch {
-      toast.success("Submit gagal, coba refresh dulu...");
+      toast.error("Gagal submit Quiz, Coba lagi...");
     }
   };
 
@@ -79,10 +111,10 @@ export default function PremiumQuizSection() {
       <div className="grid grid-cols-1">
         {/* Countdown Timer */}
         {quizSessionData?.data && (
-          <div className="flex flex-row gap-2 w-full items-center justify-between lg:justify-end mb-4 md:mb-8">
-            <CountDownTimerForPremium quiz_session_data={quizSessionData.data} />
+          <div className="flex flex-row gap-2 w-full items-center justify-between lg:justify-end mb-4">
+            <CountdownTimer expiredAt={expired_at} productId={productTryOutId} sessionId={sessionId} userEmail={userEmail} />
             <div className="lg:hidden block">
-              <NumberButtonsResponsiveForPremiumQuiz onSelectNumber={handleSelectNumber} questionAnswered={checkUserHasAnswered?.data} />
+              <NumberButtonsResponsive currentQuestionId={questionId} questions={validQuestions?.data} questionHasAswered={numberHasAswered} onSelectNumber={handleSelectNumber} />
             </div>
           </div>
         )}
@@ -90,21 +122,28 @@ export default function PremiumQuizSection() {
         {/* Question + Number Buttons */}
         <div className="flex w-full gap-2">
           <div className="w-full lg:w-[80%]">
-            {data?.data?.question ? (
+            {question ? (
               <>
-                <QuestionComponent question={data?.data?.question} />
-                {data?.data?.question?.question_choices && (
-                  <QuestionChoiceComponent question_id={data?.data?.question?.id} choices={data?.data?.question?.question_choices} isSelected={userAnswer?.data?.question_choice_id} onSelect={handleUserAnswer} />
+                <QuestionComponent question={question} />
+                {questionChoices && (
+                  <QuestionChoiceComponent
+                    question_id={data?.data?.question?.id}
+                    choices={questionChoices}
+                    isSelected={userAnswer?.data?.question_choice_id} // Pass the selected choice here
+                    onSelect={handleUserAnswer} // Handle immediate UI update// Passing the revert function
+                  />
                 )}
                 <div className="flex justify-between items-center mb-4 mt-6">
-                  <Button onClick={() => handleNavigation("prev")} disabled={numberOfQuestion === "1"} className="w-auto">
-                    Sebelumnya
+                  <Button onClick={() => handleNavigation(previousQuestionId)} disabled={isFirst || previousQuestionId === null} className="w-auto flex items-center space-x-2">
+                    {/* Show icon and text for large screens, only icon for small screens */}
+                    <span className="hidden sm:inline">Sebelumnya</span> {/* Text visible only on screen sizes larger than 'sm' */}
+                    <ChevronLeft className="sm:hidden" /> {/* Icon visible only on small screens */}
                   </Button>
-                  <Button
-                    onClick={() => handleNavigation("next")} // Show modal if it's question 110
-                    className="w-auto"
-                  >
-                    {numberOfQuestion === "110" ? "Selesaikan Try Out" : "Selanjutnya"}
+
+                  <Button onClick={() => handleNavigation(nextQuestionId)} className="w-auto flex items-center space-x-2">
+                    {/* Show icon and text for large screens, only icon for small screens */}
+                    <span className="hidden sm:inline">{isLast ? "Selesaikan Try Out" : "Selanjutnya"}</span>
+                    <ChevronRight className="sm:hidden" /> {/* Icon visible only on small screens */}
                   </Button>
                 </div>
               </>
@@ -118,7 +157,7 @@ export default function PremiumQuizSection() {
           </div>
 
           <div className="hidden lg:block lg:w-[20%]">
-            <NumberButtonsResponsive onSelectNumber={handleSelectNumber} questionAnswered={checkUserHasAnswered?.data} />
+            <NumberButtonsResponsive currentQuestionId={questionId} questions={validQuestions?.data} questionHasAswered={numberHasAswered} onSelectNumber={handleSelectNumber} />
           </div>
         </div>
       </div>
@@ -134,8 +173,8 @@ export default function PremiumQuizSection() {
               </Button>
             </DialogClose>
 
-            <Button variant="default" className="bg-[#ad0a1f] hover:bg-[#d7263d]" disabled={isSubmitting} onClick={handleConfirmSubmit}>
-              {isSubmitting ? "Tunggu sebentar..." : "Selesaikan Try Out"}
+            <Button disabled={submitQuizMutation.isPending} variant="default" className="w-auto bg-[#ad0a1f] hover:bg-[#d7263d] text-white" onClick={handleConfirmSubmit}>
+              {submitQuizMutation.isPending ? <span className="animate-spin inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full" /> : "Selesaikan Try Out"}
             </Button>
           </DialogFooter>
         </DialogContent>

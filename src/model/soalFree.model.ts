@@ -26,8 +26,8 @@ export interface SoalPayload {
   question: Question | null;
   isFirst: boolean;
   isLast: boolean;
-  nextQuestionNumber: number | null;
-  previousQuestionNumber: number | null;
+  nextQuestionId: number | null | undefined;
+  previousQuestionId: number | null | undefined;
   message?: string | null;
   redirectTimeoutSeconds?: number;
   expired_at: Date;

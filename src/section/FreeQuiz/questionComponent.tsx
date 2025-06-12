@@ -48,7 +48,7 @@ const QuestionComponent: React.FC<QuestionComponentProps> = ({ question }) => {
             {question.question_images && question.question_images.length > 0 && (
               <div className="flex flex-wrap gap-4">
                 {question.question_images.map((src, idx) => (
-                  <Image key={idx} src={src} alt={`Gambar soal ${idx + 1}`} className="w-full lg:w-auto rounded border" width={800} height={450} style={{ objectFit: "contain" }} />
+                  <Image key={idx} src={src} alt={`Gambar soal ${idx + 1}`} className="w-full lg:w-[60%] rounded border" width={800} height={450} style={{ objectFit: "contain" }} />
                 ))}
               </div>
             )}

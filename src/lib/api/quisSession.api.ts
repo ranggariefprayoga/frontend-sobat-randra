@@ -16,6 +16,17 @@ export const useGetAllQuizSessions = () => {
   });
 };
 
+export const useGetSessionsByProductIdAndSessionId = (product_try_out_id: number, session_id: number) => {
+  return useQuery({
+    queryKey: ["quiz_sessions", product_try_out_id, session_id],
+    queryFn: async () => {
+      const response = await axios.get(`${API_BASE_URL}/api/quiz/${product_try_out_id}/${session_id}`, { withCredentials: true });
+      return response.data;
+    },
+    retry: false,
+  });
+};
+
 // Check available free tryout session
 export const useCheckAvailableFreeTryOut = (product_try_out_id?: number, user_id?: number) => {
   return useQuery<WebResponse<boolean>, Error>({

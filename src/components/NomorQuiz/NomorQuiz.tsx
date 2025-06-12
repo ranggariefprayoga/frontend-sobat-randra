@@ -2,21 +2,30 @@
 
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { LockKeyholeIcon } from "lucide-react";
 import { useState } from "react"; // Import useState for managing dialog open/close state
+import QuestionButton from "./QuestionButton"; // Import the new QuestionButton component
 
-interface NumberButtonsResponsiveProps {
-  onSelectNumber: (num: number) => void;
-  questionAnswered: boolean | undefined;
+interface QuestionInterface {
+  id: number;
+  number_of_question: number | undefined;
 }
 
-export default function NumberButtonsResponsive({ onSelectNumber, questionAnswered }: NumberButtonsResponsiveProps) {
+interface NumberButtonsResponsiveProps {
+  onSelectNumber: (question_id: number) => void;
+  questions: QuestionInterface[] | undefined | null; // `questions` can be undefined
+  questionHasAswered: number[]; // Array of answered question numbers
+  currentQuestionId: number; // Current active question id
+}
+
+export default function NumberButtonsResponsive({ onSelectNumber, questions, questionHasAswered, currentQuestionId }: NumberButtonsResponsiveProps) {
   const [isOpen, setIsOpen] = useState(false); // State to manage the dialog's open/close
-  const numbers = Array.from({ length: 110 }, (_, i) => i + 1);
 
   const handleDialogClose = () => {
     setIsOpen(false); // Close the dialog when "Tutup" button is clicked
   };
+
+  // Generate 110 questions array (looping from 1 to 110)
+  const numbers = Array.from({ length: 110 }, (_, i) => i + 1);
 
   return (
     <>
@@ -33,19 +42,27 @@ export default function NumberButtonsResponsive({ onSelectNumber, questionAnswer
             </DialogHeader>
 
             <div className="grid grid-cols-5 gap-2">
-              {numbers.map((num) => (
-                <Button
-                  key={num}
-                  variant="outline"
-                  size="sm"
-                  onClick={() => onSelectNumber(num)}
-                  className={`${num <= 10 ? "border-gray-300 text-gray-700 hover:bg-gray-200 hover:border-gray-500" : "border-gray-400 text-gray-500 bg-gray-200"} 
-    ${questionAnswered ? "bg-green-500 text-white" : ""} 
-    rounded-md transition-colors duration-200`}
-                >
-                  {num <= 10 ? num : <LockKeyholeIcon className="text-black" size={20} />}
-                </Button>
-              ))}
+              {numbers.map((num) => {
+                // Find the question based on number
+                const question = questions?.find((q) => q.number_of_question === num);
+                const questionId = question?.id; // Get the question_id directly
+
+                return (
+                  <QuestionButton
+                    key={num}
+                    numberOfQuestions={question?.number_of_question}
+                    questionId={questionId} // Pass question_id for navigation
+                    isAnswered={questionHasAswered.includes(questionId ?? 0)} // Check if this question has been answered
+                    isCurrent={questionId === currentQuestionId} // Check if this is the current question
+                    onClick={() => {
+                      if (questionId) {
+                        onSelectNumber(questionId); // Use question_id for navigation
+                        setIsOpen(false); // Close modal after selecting a question
+                      }
+                    }}
+                  />
+                );
+              })}
             </div>
 
             <DialogFooter>
@@ -59,19 +76,32 @@ export default function NumberButtonsResponsive({ onSelectNumber, questionAnswer
 
       {/* Grid tombol langsung tampil di desktop/tablet (hidden di mobile) */}
       <div className="hidden lg:grid lg:grid-cols-4 gap-2">
-        {numbers.map((num) => (
-          <Button
-            key={num}
-            variant="outline"
-            size="sm"
-            onClick={() => onSelectNumber(num)}
-            className={`${num <= 10 ? "border-gray-300 text-gray-700 hover:bg-gray-200 hover:border-gray-500" : "border-gray-400 text-gray-500 bg-gray-200"} 
-    ${questionAnswered ? "bg-green-500 text-white" : ""} 
-    rounded-md transition-colors duration-200`}
-          >
-            {num <= 10 ? num : <LockKeyholeIcon className="text-black" size={20} />}
-          </Button>
-        ))}
+        {numbers.map((num: number) => {
+          // Find the question based on number
+          const question = questions?.find((q) => q.number_of_question === num);
+          const questionId = question?.id; // Get the question_id directly
+
+          return (
+            <QuestionButton
+              key={num}
+              numberOfQuestions={question?.number_of_question}
+              questionId={questionId} // Pass question_id for navigation
+              isAnswered={questionHasAswered.includes(questionId ?? 0)} // Check if this question has been answered
+              isCurrent={questionId === currentQuestionId} // Check if this is the current question
+              onClick={() => {
+                if (!questionId) {
+                  onSelectNumber(0);
+                  setIsOpen(false);
+                }
+
+                if (questionId) {
+                  onSelectNumber(questionId); // Use question_id for navigation
+                  setIsOpen(false); // Close modal after selecting a question
+                }
+              }}
+            />
+          );
+        })}
       </div>
     </>
   );

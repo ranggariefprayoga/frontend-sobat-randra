@@ -1,112 +1,69 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner";
-import LoadingComponent from "../LoadingComponent/LoadingComponent";
-import { Card } from "../ui/card";
 import { useUpdateTryOutSession } from "@/lib/api/quisSession.api";
-import { TryOutSessionResponse } from "@/model/quiz-session.model";
 
-interface CountDownProps {
-  quiz_session_data: TryOutSessionResponse;
+interface CountdownTimerProps {
+  expiredAt: string;
+  sessionId: number;
+  productId: number;
+  userEmail: string;
 }
 
-export default function CountDown({ quiz_session_data }: CountDownProps) {
-  console.log(quiz_session_data);
-
+const CountdownTimer: React.FC<CountdownTimerProps> = ({ expiredAt, sessionId, productId, userEmail }) => {
   const router = useRouter();
-  const { mutate, isPending } = useUpdateTryOutSession();
-  const [countdownFinished, setCountdownFinished] = useState(false);
+  const expiredTime = new Date(expiredAt).getTime();
+  const [timeLeft, setTimeLeft] = useState(expiredTime - Date.now());
 
-  // Set default value for expired_at if it's undefined
-  const validExpiredAt = quiz_session_data.expired_at ?? new Date().toISOString();
-
-  // Check if expired_at is undefined, show the refresh message
-  useEffect(() => {
-    if (!quiz_session_data.expired_at) {
-      toast.error("Silakan refresh halaman.");
-    }
-  }, [quiz_session_data.expired_at]);
-
-  const expiredTime = new Date(validExpiredAt).getTime();
-
-  const [remainingTime, setRemainingTime] = useState<number>(() => Math.max(0, expiredTime - Date.now()));
+  const { mutate: updateQuizSession } = useUpdateTryOutSession();
 
   useEffect(() => {
-    if (!validExpiredAt) return; // Skip if expired_at is undefined
+    if (timeLeft <= 0) return;
 
-    if (remainingTime <= 0) {
-      setCountdownFinished(true);
-      return;
-    }
-
-    const interval = setInterval(() => {
+    const timer = setInterval(() => {
       const now = Date.now();
-      const diff = expiredTime - now;
+      const remaining = expiredTime - now;
+      setTimeLeft(remaining);
 
-      if (diff <= 0) {
-        clearInterval(interval);
-        setRemainingTime(0);
-        setCountdownFinished(true); // Time's up, trigger mutation
-      } else {
-        setRemainingTime(diff);
+      if (remaining <= 0) {
+        clearInterval(timer);
+        updateQuizSession({
+          try_out_session_id: sessionId,
+          product_try_out_id: productId,
+          user_email: userEmail,
+        });
+        router.push("/history-nilai");
       }
     }, 1000);
 
-    return () => clearInterval(interval);
-  }, [expiredTime, remainingTime, validExpiredAt]);
+    return () => clearInterval(timer);
+  }, [expiredTime, timeLeft, router, sessionId, productId, userEmail, updateQuizSession]);
 
-  // Call API when countdown finishes
-  useEffect(() => {
-    if (countdownFinished) {
-      mutate(
-        { product_try_out_id: quiz_session_data.product_try_out_id, try_out_session_id: quiz_session_data.id, user_email: quiz_session_data.user_email },
-        {
-          onSuccess: () => {
-            toast.success("Quiz selesai, Tunggu sebentar...");
-            router.push("/history-nilai");
-          },
-          onError: () => {
-            toast.error("Gagal submit Quiz, Coba lagi...");
-          },
-        }
-      );
-    }
-  }, [countdownFinished, mutate, router, quiz_session_data.id, quiz_session_data.product_try_out_id, quiz_session_data.user_email]);
+  if (timeLeft <= 0) return null;
 
-  if (!validExpiredAt) return null; // Do not display the countdown if expired_at is not available
-
-  if (isPending) return <LoadingComponent color="ad0a1f" />;
-
-  if (countdownFinished) {
-    return (
-      <div className="text-center font-semibold text-white bg-red-600 rounded-lg p-4 shadow-md">
-        <span className="text-xl">Sesi sudah berakhir!</span>
-      </div>
-    );
-  }
-
-  // Format waktu menggunakan dayjs untuk tampilkan waktu yang lebih bagus
-  const formatTime = (ms: number) => {
-    const totalSeconds = Math.floor(ms / 1000);
-    const m = Math.floor(totalSeconds / 60)
-      .toString()
-      .padStart(2, "0");
-    const s = (totalSeconds % 60).toString().padStart(2, "0");
-    return `${m}:${s}`;
-  };
+  const hours = Math.floor((timeLeft / 1000 / 60 / 60) % 24);
+  const minutes = Math.floor((timeLeft / 1000 / 60) % 60);
+  const seconds = Math.floor((timeLeft / 1000) % 60);
 
   return (
-    <div className="space-y-2">
-      <Card className="p-2 px-4 border border-gray-300 bg-transparent text-gray-600 shadow-md rounded-lg">
-        <div className="flex justify-between items-center gap-4">
-          <div className="flex items-center gap-2">
-            <span className="hidden sm:blocktext-base font-medium">Waktu tersisa:</span>
-            <span className="font-bold text-[#ad0a1f] text-base">{formatTime(remainingTime)}</span>
-          </div>
-        </div>
-      </Card>
+    <div className="flex items-center gap-3 sm:gap-5">
+      <TimeBox label="Jam" value={hours} />
+      <TimeBox label="Menit" value={minutes} />
+      <TimeBox label="Detik" value={seconds} />
     </div>
   );
-}
+};
+
+const TimeBox = ({ label, value }: { label: string; value: number }) => (
+  <div className="flex flex-col items-center">
+    <span className="countdown font-mono text-base sm:text-lg md:text-2xl lg:text-3xl">
+      <span style={{ "--value": value } as React.CSSProperties} aria-live="polite">
+        {value}
+      </span>
+    </span>
+    <span className="text-[10px] sm:text-xs md:text-sm text-gray-600">{label}</span>
+  </div>
+);
+
+export default CountdownTimer;

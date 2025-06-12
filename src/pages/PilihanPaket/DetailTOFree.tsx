@@ -70,7 +70,7 @@ export default function DetailTOFree({ product, user }: Props) {
         onSuccess: (res: any) => {
           setIsGratisDialogOpen(false);
           refetchAvailableTryOut();
-          router.push(`/free-quiz?number_of_question=${res?.data?.first_question_number}`);
+          router.push(`/free-quiz?sess=${res?.data?.id}&ptid=${res?.data?.product_try_out_id}&qid=${res?.data?.first_question_id}`);
           toast.success(res?.data?.message || "Try Out dimulai gratis, tunggu sebentar...");
         },
         onError: () => {
