@@ -93,6 +93,18 @@ export default function HistoryNilaiSection() {
                       const categoryName = categoryMap[category.category];
                       const threshold = categoryThresholds[category.category as Category];
 
+                      const categoryQuestions = {
+                        TWK: 30, // Tes Wawasan Kebangsaan (TWK)
+                        TIU: 35, // Tes Intelegensia Umum (TIU)
+                        TKP: 45, // Tes Karakteristik Pribadi (TKP)
+                      };
+
+                      // Get the number of questions for the current category
+                      const totalQuestions = categoryQuestions[category.category as keyof typeof categoryQuestions];
+
+                      // Calculate the number of wrong answers
+                      const wrongAnswers = totalQuestions - category.correctAnswers;
+
                       // Conditional rendering based on the score and threshold
                       const isScoreAboveThreshold = category.score >= threshold;
 
@@ -102,9 +114,9 @@ export default function HistoryNilaiSection() {
                             <div>
                               <span className="font-medium text-base">{categoryName}</span>
                               <div className="flex justify-between items-center space-x-2 text-xs">
-                                <span>Pertanyaan: {category.totalQuestions}</span>
-                                <span>Benar: {category.correctAnswers}</span>
-                                <span>Salah: {category.wrongAnswers}</span>
+                                <span>Pertanyaan: {totalQuestions}</span> {/* Display total questions */}
+                                <span>Benar: {category.correctAnswers}</span> {/* Display correct answers */}
+                                <span>Salah: {wrongAnswers}</span> {/* Display wrong answers */}
                               </div>
                             </div>
                             {/* Score / Threshold */}
