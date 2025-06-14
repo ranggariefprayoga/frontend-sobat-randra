@@ -84,22 +84,22 @@ export default function PremiumQuizSection() {
     if (previousQuestionId) {
       router.push(`/quiz?sess=${sessionId}&ptid=${productTryOutId}&qid=${previousQuestionId}`);
     }
+    refetchCheckUserHasAnswered();
   };
   const handleNextSoal = (nextQuestionId: number | null | undefined) => {
-    console.log(nextQuestionId);
-
-    if (nextQuestionId === null || nextQuestionId === undefined) {
-      router.push(`/free-quiz?sess=${sessionId}&ptid=${productTryOutId}&qid=${0}`);
-    }
-
     if (isLast) {
       setIsSubmitDialogOpen(true);
       return;
     }
 
+    if (nextQuestionId === null || nextQuestionId === undefined) {
+      router.push(`/quiz?sess=${sessionId}&ptid=${productTryOutId}&qid=${0}`);
+    }
+
     if (nextQuestionId) {
       router.push(`/quiz?sess=${sessionId}&ptid=${productTryOutId}&qid=${nextQuestionId}`);
     }
+    refetchCheckUserHasAnswered();
   };
 
   const handleUserAnswer = async (question_choice_id: number): Promise<void> => {
@@ -107,8 +107,6 @@ export default function PremiumQuizSection() {
       await saveUserAnswer.mutateAsync({ product_try_out_id: productTryOutId, question_id: questionId, question_choice_id });
       refetch();
     } catch (error) {
-      // If the API fails, revert the UI change
-
       toast.error("Gagal memilih jawaban, coba lagi...");
       throw error; // Rethrow the error to allow catch in handleSelectChoice
     }
@@ -120,7 +118,8 @@ export default function PremiumQuizSection() {
     try {
       await submitQuizMutation.mutateAsync();
       toast.success("Tunggu sebentar...");
-      router.push("/pilihan-paket");
+      router.push("/history-nilai");
+      setIsSubmitDialogOpen(false);
     } catch {
       toast.error("Gagal submit Quiz, Coba lagi...");
     }

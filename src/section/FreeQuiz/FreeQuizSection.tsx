@@ -82,10 +82,12 @@ export default function FreeQuizSection() {
     if (newQuestionId === null || newQuestionId === undefined) {
       router.push(`/free-quiz?sess=${sessionId}&ptid=${productTryOutId}&qid=${0}`);
     }
+    refetchCheckUserHasAnswered();
 
     if (newQuestionId) {
       router.push(`/free-quiz?sess=${sessionId}&ptid=${productTryOutId}&qid=${newQuestionId}`);
     }
+    refetchCheckUserHasAnswered();
   };
 
   // Optimistic UI Update: immediately update the UI before API call
@@ -106,8 +108,8 @@ export default function FreeQuizSection() {
   const handleConfirmSubmit = async () => {
     try {
       await submitQuizMutation.mutateAsync();
-      toast.success("Tunggu sebentar...");
-      router.push("/pilihan-paket");
+      toast.success("Berhasil di submit, tunggu sebentar...");
+      router.push("/history-nilai");
     } catch {
       toast.error("Gagal submit Quiz, Coba lagi...");
     }

@@ -1,74 +1,147 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import NullComponent from "@/components/NullComponent/NullComponent";
+import LoadingComponent from "@/components/LoadingComponent/LoadingComponent";
 import TitleComponent from "@/components/TitleComponent/TitleComponent";
-import { Button } from "@/components/ui/button";
 import LayoutBackgroundWhite from "@/layout/LayoutBackgroundWhite";
-import { useState } from "react";
+import { useGetQuizSessionsForUser } from "@/lib/api/quizHistory.api";
+import { Flag, ClockIcon } from "lucide-react";
+import { Card, CardHeader, CardTitle, CardContent, CardFooter, CardDescription } from "@/components/ui/card"; // Import komponen Card dari ShadCN
+import { Button } from "@/components/ui/button";
+import { getAllQuizSessionByUser } from "@/model/quiz-history.model";
+import { Badge } from "@/components/ui/badge";
+import NullComponent from "@/components/NullComponent/NullComponent";
+import { useRouter } from "next/navigation";
 
-// Data dummy untuk kategori premium dan gratis
-const dummyPremiumProducts = [
-  { id: 1, name: "Premium Try Out 1", score: 450 },
-  { id: 2, name: "Premium Try Out 2", score: 400 },
-];
+const categoryThresholds = {
+  TWK: 60,
+  TIU: 80,
+  TKP: 166,
+} as const;
 
-const dummyGratisProducts: any = [
-  { id: 1, name: "Gratis Try Out 1", score: 450 },
-  { id: 2, name: "Gratis Try Out 2", score: 400 },
-];
+const categoryMap: Record<string, string> = {
+  TWK: "Tes Wawasan Kebangsaan",
+  TIU: "Tes Intelegensi Umum",
+  TKP: "Tes Karakteristik Pribadi",
+};
+
+type Category = keyof typeof categoryThresholds;
 
 export default function HistoryNilaiSection() {
-  const [selectedCategory, setSelectedCategory] = useState<string>("try-out-gratis");
+  const router = useRouter();
+  const { data: allQuizSesion, isLoading: isLoadingQuizSession } = useGetQuizSessionsForUser();
 
-  const handleCategoryClick = (category: string) => {
-    setSelectedCategory(category);
-  };
-
-  let filteredProducts: any[] = [];
-  if (selectedCategory === "try-out-premium") {
-    filteredProducts = dummyPremiumProducts;
-  } else if (selectedCategory === "try-out-gratis") {
-    filteredProducts = dummyGratisProducts;
+  if (isLoadingQuizSession) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <LoadingComponent color="#ad0a1f" />
+      </div>
+    );
   }
+
+  // Jika allQuizSesion kosong atau tidak ada data, tampilkan NullComponent
+  if (!allQuizSesion || allQuizSesion.data.sessions?.length === 0) {
+    return (
+      <LayoutBackgroundWhite>
+        <NullComponent message="Kamu Belum Memiliki Riwayat Pengerjaan Try Out!" />
+      </LayoutBackgroundWhite>
+    );
+  }
+
+  const handleToPembahasanQuiz = (sessionId: number, productTryOutId: number, questionId: number) => {
+    router.push(`/pembahasan-quiz?sess=${sessionId}&ptid=${productTryOutId}&qid=${questionId}`);
+  };
 
   return (
     <LayoutBackgroundWhite>
       <TitleComponent title="History & Grafik" subTitle="Pengerjaan Try Out kamu!" />
 
-      <div className="w-full px-4 md:px-24 mt-8 grid grid-cols-2 xl:grid-cols-4 gap-2">
-        <Button
-          variant="outline"
-          className={`transition duration-200 ${selectedCategory === "try-out-gratis" ? "bg-[#ad0a1f] text-white hover:bg-[#ad0a1f] hover:text-white" : "bg-transparent border hover:bg-[#f5f5f5] hover:text-black"}`}
-          size="lg"
-          onClick={() => handleCategoryClick("try-out-gratis")}
-        >
-          Try Out Gratis
-        </Button>
-
-        <Button
-          variant="outline"
-          className={`transition duration-200 ${selectedCategory === "try-out-premium" ? "bg-[#ad0a1f] text-white hover:bg-[#ad0a1f] hover:text-white" : "bg-transparent border hover:bg-[#f5f5f5] hover:text-black"}`}
-          size="lg"
-          onClick={() => handleCategoryClick("try-out-premium")}
-        >
-          Try Out Premium
-        </Button>
-      </div>
-
       <>
-        {filteredProducts.length === 0 || !filteredProducts ? (
-          <NullComponent message="Belum ada history nilai yang tersedia" color="text-gray-700" />
-        ) : (
-          <div className="w-full px-4 md:px-24 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mt-8">
-            {filteredProducts.map((product: any) => (
-              <div key={product.id} className="card">
-                <h3 className="font-bold">{product.name}</h3>
-                <p>Nilai: {product.score}</p>
-              </div>
-            ))}
-          </div>
-        )}
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 px-4 md:px-24 mt-4">
+          {allQuizSesion?.data?.sessions?.map((session: getAllQuizSessionByUser) => {
+            const isPassed = session.category_scores.every((category) => category.score >= categoryThresholds[category.category as Category]);
+
+            return (
+              <Card key={session.try_out_session_id} className="shadow-lg">
+                <CardHeader>
+                  <div className="flex gap-2">
+                    <CardTitle className="text-lg font-semibold w-[60%] md:w-[70%]">{session.product_name}</CardTitle>
+                    <CardDescription
+                      className={`flex flex-col justify-center items-center text-[#f5f5f5] p-2 rounded-md w-[40%] md:w-[30%] 
+    ${isPassed ? "bg-green-200 text-green-800" : "bg-red-200 text-red-800"}`} // Conditional background color based on isPassed
+                    >
+                      <span>Nilai kamu</span>
+                      <span className="text-xl font-extrabold">{session.total_score}</span>
+                    </CardDescription>
+                  </div>
+                  <Badge
+                    className={`${
+                      isPassed
+                        ? "bg-green-200 text-green-800" // Hijau lembut untuk lulus
+                        : "bg-red-200 text-red-800" // Merah lembut untuk tidak lulus
+                    }`}
+                  >
+                    {isPassed ? "Anda Lulus" : "Anda Tidak Lulus"}
+                  </Badge>
+                </CardHeader>
+
+                <CardContent className="space-y-2">
+                  {/* Expired At */}
+
+                  {/* Category Scores with Threshold Badge */}
+                  <div className="space-y-2">
+                    {session.category_scores.map((category, idx) => {
+                      const categoryName = categoryMap[category.category];
+                      const threshold = categoryThresholds[category.category as Category];
+
+                      // Conditional rendering based on the score and threshold
+                      const isScoreAboveThreshold = category.score >= threshold;
+
+                      return (
+                        <div key={idx}>
+                          <div className="flex justify-between items-center space-x-2 text-xs capitalize">
+                            <div>
+                              <span className="font-medium text-base">{categoryName}</span>
+                              <div className="flex justify-between items-center space-x-2 text-xs">
+                                <span>Pertanyaan: {category.totalQuestions}</span>
+                                <span>Benar: {category.correctAnswers}</span>
+                                <span>Salah: {category.wrongAnswers}</span>
+                              </div>
+                            </div>
+                            {/* Score / Threshold */}
+                            <span className={`font-medium text-base ${isScoreAboveThreshold ? "text-green-500" : "text-red-500"}`}>
+                              {category.score} / {threshold}
+                            </span>
+                          </div>
+                          <hr className="my-2" />
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  <div className="flex items-center gap-1">
+                    <ClockIcon className="h-5 w-5 text-yellow-500" />
+                    <p className="text-xs text-gray-600">
+                      {new Date(session.expired_at).toLocaleString("id-ID", {
+                        weekday: "long",
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </p>
+                  </div>
+                </CardContent>
+
+                <CardFooter className="flex w-full">
+                  <Button onClick={() => handleToPembahasanQuiz(session.try_out_session_id, session.product_try_out_id, session.question_id)} variant="outline" size="sm" className="text-blue-800 bg-blue-200">
+                    <Flag className="mr-2 h-4 w-4" /> Lihat Pembahasan
+                  </Button>
+                </CardFooter>
+              </Card>
+            );
+          })}
+        </div>
       </>
     </LayoutBackgroundWhite>
   );

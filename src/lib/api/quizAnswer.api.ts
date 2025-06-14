@@ -70,3 +70,16 @@ export const useCheckUserHasAnsweredOrNot = (product_try_out_id?: number, try_ou
     retry: false,
   });
 };
+export const useAnsweredUserInASessionThatsTrue = (product_try_out_id?: number, try_out_session_id?: number) => {
+  return useQuery<WebResponse<number[]>, Error>({
+    queryKey: ["check-user-answered-true", product_try_out_id, try_out_session_id],
+    queryFn: async () => {
+      const res = await axios.get(`${API_BASE_URL}/api/quiz/answer/user/product/${product_try_out_id}/answers/session/${try_out_session_id}/check/true-question-id`, {
+        withCredentials: true,
+      });
+      return res.data;
+    },
+    enabled: Boolean(product_try_out_id && try_out_session_id), // Make sure all values exist before running query
+    retry: false,
+  });
+};
