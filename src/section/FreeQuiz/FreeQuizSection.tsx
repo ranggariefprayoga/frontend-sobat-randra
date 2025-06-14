@@ -32,7 +32,7 @@ export default function FreeQuizSection() {
   const { data: dataUser, isLoading: dataUserLoading } = useUser();
   const { data: validQuestions, isLoading: dataUserQuestionLoading } = useGetValidQuestionsUser(productTryOutId);
 
-  const { data, isLoading } = useGetQuestionForQuiz(productTryOutId, questionId);
+  const { data, isLoading, error: errorGetSoal } = useGetQuestionForQuiz(productTryOutId, questionId);
 
   const submitQuizMutation = useSubmitTryOutSession();
   const saveUserAnswer = useSaveUserAnswer();
@@ -48,7 +48,7 @@ export default function FreeQuizSection() {
     );
   }
 
-  if (error) {
+  if (error || errorGetSoal) {
     return (
       <div className="min-h-screen flex flex-col justify-center items-center bg-white px-6 text-center">
         <h1 className="text-6xl font-bold text-[#ad0a1f] mb-4">404</h1>
