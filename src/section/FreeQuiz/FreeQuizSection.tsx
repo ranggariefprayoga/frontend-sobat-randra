@@ -14,7 +14,6 @@ import CountdownTimer from "@/components/Countdown/CountdownTimer";
 import { useGetValidQuestionsUser } from "@/lib/api/question.api";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useGetQuestionForQuiz } from "@/lib/api/soal.api";
-import Link from "next/link";
 
 export default function FreeQuizSection() {
   const searchParams = useSearchParams();
@@ -28,17 +27,21 @@ export default function FreeQuizSection() {
   const questionId = Number(q);
   const sessionId = Number(s);
 
+  const handleNullQuestion = () => {
+    router.back();
+  };
+
   const { data: quizSessionData, isLoading: isLoadingSession, error } = useGetSessionsByProductIdAndSessionId(productTryOutId, sessionId);
-  const { data: dataUser, isLoading: dataUserLoading } = useUser();
-  const { data: validQuestions, isLoading: dataUserQuestionLoading } = useGetValidQuestionsUser(productTryOutId);
+  const { data: dataUser, isLoading: dataUserLoading, error: errorUser } = useUser();
+  const { data: validQuestions, isLoading: dataUserQuestionLoading, error: errorValidQuestion } = useGetValidQuestionsUser(productTryOutId);
 
   const { data, isLoading, error: errorGetSoal } = useGetQuestionForQuiz(productTryOutId, questionId);
 
   const submitQuizMutation = useSubmitTryOutSession();
   const saveUserAnswer = useSaveUserAnswer();
 
-  const { data: userAnswer, refetch, isLoading: isLoadingUserAnswer } = useGetUserAnswerByProductAndQuestionId(productTryOutId, sessionId, questionId);
-  const { data: checkUserHasAnswered, isLoading: isLoadingCheckUserHasAnswered, refetch: refetchCheckUserHasAnswered } = useCheckUserHasAnsweredOrNot(productTryOutId, sessionId);
+  const { data: userAnswer, refetch, isLoading: isLoadingUserAnswer, error: errorUserAnswer } = useGetUserAnswerByProductAndQuestionId(productTryOutId, sessionId, questionId);
+  const { data: checkUserHasAnswered, isLoading: isLoadingCheckUserHasAnswered, refetch: refetchCheckUserHasAnswered, error: errorAnsweredUser } = useCheckUserHasAnsweredOrNot(productTryOutId, sessionId);
 
   if (isLoading || isLoadingSession || isLoadingUserAnswer || isLoadingCheckUserHasAnswered || dataUserLoading || dataUserQuestionLoading) {
     return (
@@ -48,15 +51,14 @@ export default function FreeQuizSection() {
     );
   }
 
-  if (error || errorGetSoal) {
+  if (error || errorGetSoal || errorUser || errorValidQuestion || errorUserAnswer || errorAnsweredUser) {
     return (
       <div className="min-h-screen flex flex-col justify-center items-center bg-white px-6 text-center">
-        <h1 className="text-6xl font-bold text-[#ad0a1f] mb-4">404</h1>
-        <h2 className="text-2xl font-semibold text-gray-700 mb-2">Terjadi Kesalahan</h2>
-        <p className="text-gray-500 mb-6">Coba kembali ke beranda.</p>
-        <Link href="/" className="bg-[#ad0a1f] hover:bg-[#d7263d] text-white px-6 py-3 rounded-full transition">
-          Kembali ke Beranda
-        </Link>
+        <h2 className="text-2xl font-semibold text-gray-700 mb-2">Terjadi kesalahan!</h2>
+        <p className="text-gray-500 mb-6">Kembali ke soal sebelumnya.</p>
+        <Button onClick={handleNullQuestion} className="bg-[#ad0a1f] hover:bg-[#d7263d] text-white px-6 py-3 rounded-full transition">
+          Kembali ke soal sebelumnya
+        </Button>
       </div>
     );
   }
@@ -168,10 +170,10 @@ export default function FreeQuizSection() {
                 <div className="max-w-md mx-auto">
                   <h2 className="text-xl font-semibold text-gray-700 mb-4">Uji Coba Try Out Gratis hanya tersedia sampai soal nomor 10.</h2>
                   <p className="text-sm text-gray-600 mb-4">
-                    Untuk mendapatkan fitur lengkap dan soal terbaru, beli paket <strong>Try Out Premium</strong> kami:
+                    Untuk mendapatkan fitur lengkap, soal terbaru, dan rangking nasional Try Out, beli paket <strong>Try Out Premium</strong> kami
                   </p>
                   <Button disabled={submitQuizMutation.isPending} variant="default" className="w-auto bg-[#ad0a1f] hover:bg-[#d7263d] text-white" onClick={handleConfirmSubmit}>
-                    {submitQuizMutation.isPending ? <span className="animate-spin inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full" /> : "Lihat Try Out Premium"}
+                    {submitQuizMutation.isPending ? <span className="animate-spin inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full" /> : "Lihat Nilai Kamu di Try Out ini"}
                   </Button>
                 </div>
               </div>

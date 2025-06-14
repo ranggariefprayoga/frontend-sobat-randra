@@ -48,7 +48,7 @@ export default function PembahasanQuizSection() {
   if (error) {
     return (
       <div className="min-h-screen flex flex-col justify-center items-center bg-white px-6 text-center">
-        <h2 className="text-2xl font-semibold text-gray-700 mb-2">Try Out Gratis Hanya Bisa Mengakses 10 Soal Saja!</h2>
+        <h2 className="text-2xl font-semibold text-gray-700 mb-2">Soal Tidak Ditemukan!</h2>
         <p className="text-gray-500 mb-6">Kembali ke soal sebelumnya.</p>
         <Button onClick={handleNullQuestion} className="bg-[#ad0a1f] hover:bg-[#d7263d] text-white px-6 py-3 rounded-full transition">
           Kembali ke soal sebelumnya
@@ -65,7 +65,7 @@ export default function PembahasanQuizSection() {
   const questionChoices = detailQuizSession?.data?.details?.question_choices;
   const correctAnswer = detailQuizSession?.data?.details?.correct_answer;
   const userAnswer = detailQuizSession?.data?.details?.user_answer;
-  const totalUserAnswer = detailQuizSession?.data?.total_user_answers;
+  // const totalUserAnswer = detailQuizSession?.data?.total_user_answers;
   const isCorrect = detailQuizSession?.data?.details?.correct_answer_title === detailQuizSession?.data?.details?.user_answer?.question_choice_title;
   const questionIdWasCorrect = checkTrueUserAnswerByQuestionId?.data;
   const answerExplanations = detailQuizSession?.data?.details?.answer_explanation;
@@ -108,11 +108,11 @@ export default function PembahasanQuizSection() {
 
             <div className="flex flex-row gap-2 items-start lg:items-center w-full lg:w-auto">
               {/* Total User Answer Badge */}
-              {totalUserAnswer && (
+              {/* {totalUserAnswer && (
                 <Badge variant="outline" className={`text-sm bg-gray-200 border-gray-300 text-gray-800 ${totalUserAnswer ? "bg-green-100 border-green-300 text-green-800" : ""}`}>
                   {totalUserAnswer || "-"} Soal Dijawab
                 </Badge>
-              )}
+              )} */}
 
               {/* User Answer Badge */}
               {

@@ -40,7 +40,7 @@ const QuestionChoiceComponent = React.memo(({ choices, isSelected, onSelect }: C
           <Button
             key={choice.id}
             variant="outline"
-            className={`border rounded-md p-4 space-y-3 w-full h-auto ${isChoiceSelected ? "bg-green-500 border-green-500 text-black" : "bg-gray-200 border-gray-300 text-gray-700"} ${
+            className={`border rounded-md p-4 space-y-3 w-full h-auto ${isChoiceSelected ? "bg-green-500 border-green-500 text-black" : "bg-transparent border-gray-300 text-black"} ${
               !isChoiceSelected && "hover:bg-gray-100 hover:border-gray-400"
             }`}
             onClick={() => onSelect(choice.id)} // Handle selection

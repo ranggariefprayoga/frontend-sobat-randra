@@ -57,7 +57,7 @@ const AnswerExplanationForPembahasan: React.FC<AnswerExplanationForPembahasanPro
           {Array.isArray(answerExplanations.answer_explanation_images) && answerExplanations.answer_explanation_images.length > 0 && (
             <div className="flex flex-wrap gap-4">
               {answerExplanations.answer_explanation_images.map((src, i) => (
-                <Image key={i} src={src} alt={`Gambar penjelasan ${i + 1}`} className="w-full rounded" width={800} height={450} style={{ objectFit: "contain" }} />
+                <Image key={i} src={src} alt={`Gambar penjelasan ${i + 1}`} className="w-full lg:w-[60%] rounded" width={800} height={450} style={{ objectFit: "contain" }} />
               ))}
             </div>
           )}

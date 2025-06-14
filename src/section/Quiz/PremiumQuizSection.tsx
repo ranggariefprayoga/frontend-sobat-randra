@@ -16,7 +16,6 @@ import { useUser } from "@/lib/api/user.api";
 import { useGetValidQuestionsUser } from "@/lib/api/question.api";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useGetQuestionForQuiz } from "@/lib/api/soal.api";
-import Link from "next/link";
 
 export default function PremiumQuizSection() {
   const searchParams = useSearchParams();
@@ -31,16 +30,20 @@ export default function PremiumQuizSection() {
   const questionId = Number(q);
   const sessionId = Number(s);
 
+  const handleNullQuestion = () => {
+    router.back();
+  };
+
   const { data: quizSessionData, isLoading: isLoadingSession, error } = useGetSessionsByProductIdAndSessionId(productTryOutId, sessionId);
-  const { data: dataUser, isLoading: dataUserLoading } = useUser();
+  const { data: dataUser, isLoading: dataUserLoading, error: errorUser } = useUser();
   const { data, isLoading, error: errorGetSoal } = useGetQuestionForQuiz(productTryOutId, questionId);
-  const { data: validQuestions, isLoading: dataUserQuestionLoading } = useGetValidQuestionsUser(productTryOutId);
+  const { data: validQuestions, isLoading: dataUserQuestionLoading, error: errorGetSoalValid } = useGetValidQuestionsUser(productTryOutId);
 
   const submitQuizMutation = useSubmitTryOutSession();
   const saveUserAnswer = useSaveUserAnswer();
 
-  const { data: userAnswer, refetch, isLoading: isLoadingUserAnswer } = useGetUserAnswerByProductAndQuestionId(productTryOutId, sessionId, questionId);
-  const { data: checkUserHasAnswered, isLoading: isLoadingCheckUserHasAnswered, refetch: refetchCheckUserHasAnswered } = useCheckUserHasAnsweredOrNot(productTryOutId, sessionId);
+  const { data: userAnswer, refetch, isLoading: isLoadingUserAnswer, error: errorUserAnswer } = useGetUserAnswerByProductAndQuestionId(productTryOutId, sessionId, questionId);
+  const { data: checkUserHasAnswered, isLoading: isLoadingCheckUserHasAnswered, refetch: refetchCheckUserHasAnswered, error: errorAnsweredUser } = useCheckUserHasAnsweredOrNot(productTryOutId, sessionId);
 
   if (isLoading || isLoadingSession || isLoadingUserAnswer || isLoadingCheckUserHasAnswered || dataUserLoading || dataUserQuestionLoading) {
     return (
@@ -50,15 +53,14 @@ export default function PremiumQuizSection() {
     );
   }
 
-  if (error || errorGetSoal) {
+  if (error || errorGetSoal || errorUser || errorGetSoalValid || errorUserAnswer || errorAnsweredUser) {
     return (
       <div className="min-h-screen flex flex-col justify-center items-center bg-white px-6 text-center">
-        <h1 className="text-6xl font-bold text-[#ad0a1f] mb-4">404</h1>
-        <h2 className="text-2xl font-semibold text-gray-700 mb-2">Terjadi Kesalahan</h2>
-        <p className="text-gray-500 mb-6">Coba kembali ke beranda.</p>
-        <Link href="/" className="bg-[#ad0a1f] hover:bg-[#d7263d] text-white px-6 py-3 rounded-full transition">
-          Kembali ke Beranda
-        </Link>
+        <h2 className="text-2xl font-semibold text-gray-700 mb-2">Terjadi kesalahan!</h2>
+        <p className="text-gray-500 mb-6">Kembali ke soal sebelumnya.</p>
+        <Button onClick={handleNullQuestion} className="bg-[#ad0a1f] hover:bg-[#d7263d] text-white px-6 py-3 rounded-full transition">
+          Kembali ke soal sebelumnya
+        </Button>
       </div>
     );
   }
