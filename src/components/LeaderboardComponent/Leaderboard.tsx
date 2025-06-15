@@ -56,7 +56,7 @@ const Leaderboard = () => {
                       {user.rank}
                     </TableCell>
                     <TableCell className="px-6 py-4 text-sm font-medium text-gray-800">{user.name}</TableCell>
-                    <TableCell className="px-6 py-4 text-sm font-medium bg-blue-200 text-blue-700 flex justify-center items-center  rounded-md">
+                    <TableCell className="px-6 py-4 text-sm  bg-green-200 font-bold text-green-700 flex justify-center items-center  rounded-md">
                       {user.score}
                       <User size={16} className="ml-2 inline" />
                     </TableCell>
