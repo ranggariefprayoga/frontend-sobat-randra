@@ -1,5 +1,6 @@
 "use client";
 
+import Leaderboard from "@/components/LeaderboardComponent/Leaderboard";
 import TitleComponent from "@/components/TitleComponent/TitleComponent";
 import ButtonWithIcon from "@/components/TombolBack/TombolBack";
 import LayoutBackgroundWhite from "@/layout/LayoutBackgroundWhite";
@@ -10,6 +11,7 @@ export default function RangkingNasionalSection() {
     <LayoutBackgroundWhite>
       <ButtonWithIcon icon={ArrowLeft} label="Kembali" />
       <TitleComponent title="Rangking Nasional" subTitle="Lihat Peringkat kamu" />
+      <Leaderboard />
     </LayoutBackgroundWhite>
   );
 }
