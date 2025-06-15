@@ -42,6 +42,7 @@ export default function CreateTryOutAccessModal({ product_try_out_id, onSuccess 
       toast.success("Akses try out berhasil ditambahkan");
       setOpen(false);
       setUserEmail("");
+      setPhoneNumber("");
       if (onSuccess) onSuccess();
     } catch (error: unknown) {
       let message = "Gagal menambahkan akses";

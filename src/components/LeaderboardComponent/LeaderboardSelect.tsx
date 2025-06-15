@@ -21,10 +21,10 @@ const LeaderboardSelect = ({ onProductSelect, productTryOuts }: LeaderboardSelec
   };
 
   return (
-    <div className="mb-4">
+    <div className="w-full lg:w-1/2">
       {/* Select Product */}
       <Select onValueChange={handleProductChange}>
-        <SelectTrigger className="w-1/2">
+        <SelectTrigger>
           {/* Set default value as placeholder */}
           <SelectValue placeholder={selectedTryOut} />
         </SelectTrigger>

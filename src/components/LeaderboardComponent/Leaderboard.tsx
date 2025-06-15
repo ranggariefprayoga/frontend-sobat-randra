@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { useGetProductTryOutsForLeaderboard, useGetQuizLeaderboardForUser } from "@/lib/api/leaderboards.api";
 import LoadingComponent from "../LoadingComponent/LoadingComponent";
 import LeaderboardSelect from "./LeaderboardSelect"; // Assuming you already have this component
@@ -9,12 +9,26 @@ import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { PaginationLeaderboard } from "./PaginationLeaderboard";
 import { RankUser } from "./UserRank";
 import { Star, TrendingUp, User } from "lucide-react";
+import debounce from "lodash.debounce";
+import { Input } from "../ui/input";
 
 const Leaderboard = () => {
   const { data: productTryOuts, isLoading: isLoadingProducts } = useGetProductTryOutsForLeaderboard();
   const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1); // Track current page
-  const { data, isLoading: isLoadingLeaderboard, error: leaderboardError } = useGetQuizLeaderboardForUser(selectedProductId, 10, currentPage);
+  const limit = 10;
+  const [searchTerm, setSearchTerm] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+
+  const debounceSearch = React.useMemo(
+    () =>
+      debounce((value: string) => {
+        setDebouncedSearch(value);
+        setCurrentPage(1);
+      }, 500),
+    []
+  );
+  const { data, isLoading: isLoadingLeaderboard, error: leaderboardError } = useGetQuizLeaderboardForUser(selectedProductId, limit, currentPage, debouncedSearch);
 
   // Handling loading state
   if (isLoadingProducts || isLoadingLeaderboard) {
@@ -25,21 +39,30 @@ const Leaderboard = () => {
     );
   }
 
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+    debounceSearch(e.target.value);
+  };
+
   // Handle product selection
   const handleProductSelect = (productId: number) => {
     setSelectedProductId(productId);
     setCurrentPage(1); // Reset to first page when product is selected
   };
 
+  console.log(data);
+
   return (
     <div className="px-4 md:px-24 mt-4">
       {/* Select Product Dropdown */}
-      <LeaderboardSelect onProductSelect={handleProductSelect} productTryOuts={productTryOuts?.data} />
-
+      <div className="flex flex-col lg:flex-row justify-between gap-2">
+        <LeaderboardSelect onProductSelect={handleProductSelect} productTryOuts={productTryOuts?.data} />
+        <Input type="text" className="w-full lg:w-1/2" placeholder="Cari nama atau email..." value={searchTerm} onChange={handleSearchChange} />
+      </div>
       {/* Leaderboard Table */}
       {selectedProductId ? (
         data?.data?.topUsers?.length ? (
-          <div className="mt-6">
+          <div className="mt-2">
             <Table className="w-full rounded-lg shadow-md border-separate border-spacing-2">
               <TableHeader className="bg-gray-100">
                 <TableRow>
@@ -79,8 +102,8 @@ const Leaderboard = () => {
             <div className="my-4">
               {/* Displaying the alert message using ShadCN UI Alert */}
               <Alert variant="default" className="w-full md:w-1/2">
-                <AlertTitle className="font-semibold">Belum Ada yang Mengerjakan</AlertTitle>
-                <AlertDescription className="text-sm">Belum ada yang mengerjakan try out ini. Silakan tunggu hingga peserta mulai mengerjakan.</AlertDescription>
+                <AlertTitle className="font-semibold">Tidak Ada Yang Mengerjakan</AlertTitle>
+                <AlertDescription className="text-sm">Peserta Belum ada yang mengerjakan try out ini. Silakan tunggu hingga peserta mulai mengerjakan.</AlertDescription>
               </Alert>
             </div>
           )

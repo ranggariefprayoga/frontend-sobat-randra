@@ -102,7 +102,7 @@ export default function AksesTODetail({ params }: { params: Promise<{ product_tr
               <TableBody>
                 {filteredAccesses.map((item, idx) => (
                   <TableRow key={item.id} className="odd:bg-white even:bg-gray-50">
-                    <TableCell>{idx + 1}</TableCell>
+                    <TableCell>{(page - 1) * limit + idx + 1}</TableCell>
                     <TableCell>{item.user_email ?? "-"}</TableCell>
                     <TableCell>{item.phone_number ?? "No Hp belum ada"}</TableCell>
                     <TableCell>

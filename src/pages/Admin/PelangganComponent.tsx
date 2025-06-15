@@ -78,6 +78,14 @@ export default function DaftarUser() {
     setShowDeleteModal(true);
   };
 
+  /*************  ✨ Windsurf Command ⭐  *************/
+  /**
+   * Handle save password
+   * This function is called when the user clicks the save button on the edit password modal
+   * It will update the user's password and show a success or error toast
+   * If the update is successful, it will also refetch the data and close the modal
+   */
+  /*******  e4cc95a7-16c1-4a61-b9db-3fe5a9ff0654  *******/
   const handleSavePassword = async () => {
     if (!selectedUserId) return;
     try {

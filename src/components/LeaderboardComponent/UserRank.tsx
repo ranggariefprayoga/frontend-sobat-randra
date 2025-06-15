@@ -13,7 +13,7 @@ export interface rankResponse {
 export const RankUser = ({ rank, name, email, score }: rankResponse) => {
   return (
     <div className="my-2">
-      <Alert variant="default" className="w-full md:w-1/2 mx-auto flex items-center gap-4 p-4">
+      <Alert variant="default" className="w-full md:w-1/2 mx-auto flex items-center gap-4 p-4 bg-[#f5f5f5]">
         <div className="flex items-center gap-3">
           <div className="bg-green-200 text-green-700 flex justify-center items-center p-4 rounded-full">
             <p className="font-extrabold">{rank}</p>
