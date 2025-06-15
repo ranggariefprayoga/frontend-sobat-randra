@@ -7,6 +7,8 @@ import LeaderboardSelect from "./LeaderboardSelect"; // Assuming you already hav
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "../ui/table";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { PaginationLeaderboard } from "./PaginationLeaderboard";
+import { RankUser } from "./UserRank";
+import { Star, TrendingUp, User } from "lucide-react";
 
 const Leaderboard = () => {
   const { data: productTryOuts, isLoading: isLoadingProducts } = useGetProductTryOutsForLeaderboard();
@@ -38,26 +40,32 @@ const Leaderboard = () => {
       {selectedProductId ? (
         data?.data?.topUsers?.length ? (
           <div className="mt-6">
-            <Table className="w-full">
-              <TableHeader>
+            <Table className="w-full rounded-lg shadow-md border-separate border-spacing-2">
+              <TableHeader className="bg-gray-100">
                 <TableRow>
-                  <TableCell className="px-4 py-2">Rank</TableCell>
-                  <TableCell className="px-4 py-2">Name</TableCell>
-                  <TableCell className="px-4 py-2">Email</TableCell>
-                  <TableCell className="px-4 py-2">Score</TableCell>
+                  <TableCell className="px-6 py-4 text-sm font-medium text-gray-700">Ranking</TableCell>
+                  <TableCell className="px-6 py-4 text-sm font-medium text-gray-700">Nama</TableCell>
+                  <TableCell className="px-6 py-4 text-sm font-medium text-gray-700">Nilai kamu</TableCell>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {data?.data?.topUsers?.map((user, index) => (
                   <TableRow key={index}>
-                    <TableCell className="px-4 py-2">{user.rank}</TableCell>
-                    <TableCell className="px-4 py-2">{user.name}</TableCell>
-                    <TableCell className="px-4 py-2">{user.email}</TableCell>
-                    <TableCell className="px-4 py-2">{user.score}</TableCell>
+                    <TableCell className="px-6 py-4 flex items-center gap-2 text-sm text-gray-800">
+                      {user.rank === 1 ? <Star size={16} className="text-yellow-500" /> : <TrendingUp size={16} className="text-gray-500" />}
+                      {user.rank}
+                    </TableCell>
+                    <TableCell className="px-6 py-4 text-sm font-medium text-gray-800">{user.name}</TableCell>
+                    <TableCell className="px-6 py-4 text-sm font-medium bg-blue-200 text-blue-700 flex justify-center items-center  rounded-md">
+                      {user.score}
+                      <User size={16} className="ml-2 inline" />
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
             </Table>
+
+            {data?.data?.myRank && <RankUser {...data?.data?.myRank} />}
 
             {/* Pagination */}
             <PaginationLeaderboard
@@ -67,13 +75,15 @@ const Leaderboard = () => {
             />
           </div>
         ) : (
-          <div className="my-4">
-            {/* Displaying the alert message using ShadCN UI Alert */}
-            <Alert variant="default" className="w-full md:w-1/2">
-              <AlertTitle className="font-semibold">Belum Ada yang Mengerjakan</AlertTitle>
-              <AlertDescription className="text-sm">Belum ada yang mengerjakan try out ini. Silakan tunggu hingga peserta mulai mengerjakan.</AlertDescription>
-            </Alert>
-          </div>
+          !leaderboardError && (
+            <div className="my-4">
+              {/* Displaying the alert message using ShadCN UI Alert */}
+              <Alert variant="default" className="w-full md:w-1/2">
+                <AlertTitle className="font-semibold">Belum Ada yang Mengerjakan</AlertTitle>
+                <AlertDescription className="text-sm">Belum ada yang mengerjakan try out ini. Silakan tunggu hingga peserta mulai mengerjakan.</AlertDescription>
+              </Alert>
+            </div>
+          )
         )
       ) : (
         <div className="my-4">

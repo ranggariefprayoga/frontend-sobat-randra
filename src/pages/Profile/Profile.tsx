@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -86,7 +86,7 @@ export default function Profile({ userDetail }: ProfileProps) {
 
         <CardContent className="space-y-4">
           <div className="flex flex-wrap gap-3 justify-start">
-            {/* Tombol Edit Nama */}
+            {/* Edit Name Button */}
             <Dialog open={editNameOpen} onOpenChange={setEditNameOpen}>
               <DialogTrigger asChild>
                 <Button variant="default">Edit Nama</Button>
@@ -107,7 +107,7 @@ export default function Profile({ userDetail }: ProfileProps) {
               </DialogContent>
             </Dialog>
 
-            {/* Tombol Edit Password */}
+            {/* Edit Password Button */}
             <Dialog open={editPasswordOpen} onOpenChange={setEditPasswordOpen}>
               <DialogTrigger asChild>
                 <Button variant="default">Edit Password</Button>
@@ -133,12 +133,13 @@ export default function Profile({ userDetail }: ProfileProps) {
       <Card>
         <CardContent>
           <AccessSection title="Jadwal Bimbel Bareng Kamu" items={userDetail.bimbel_bareng_access} />
-          <AccessSection title="Try Out Premium Kamu" items={userDetail.try_out_access} />
+          {/* <AccessSection title="Try Out Premium Kamu" items={userDetail.try_out_access} /> */}
         </CardContent>
       </Card>
     </motion.div>
   );
 }
+
 function AccessSection({ title, items }: { title: string; items: string[] }) {
   const count = items?.length ?? 0;
   const router = useRouter();

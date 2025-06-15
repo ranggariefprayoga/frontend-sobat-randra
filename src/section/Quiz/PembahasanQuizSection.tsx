@@ -100,7 +100,7 @@ export default function PembahasanQuizSection() {
                 <ArrowLeft className="h-4 w-4" />
                 Kembali
               </Button>
-              {question && <div className="bg-[#ad0a1f] text-center text-white w-full px-4 py-2 font-bold text-lg rounded-md">No {question?.number_of_question}</div>}
+              {question && <div className="bg-[#ad0a1f] text-center text-white w-full p-2 font-bold text-base rounded-md">No {question?.number_of_question}</div>}
               <div className="lg:hidden flex w-full justify-center items-center">
                 <NomorQuizPembahasan currentQuestionId={questionId} questions={validQuestions?.data} isCorrect={questionIdWasCorrect} onSelectNumber={handleSelectNumber} />
               </div>

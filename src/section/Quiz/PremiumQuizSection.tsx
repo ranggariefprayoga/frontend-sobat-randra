@@ -136,7 +136,7 @@ export default function PremiumQuizSection() {
             {/* Soal Nomor UI */}
 
             <div className="flex justify-between items-center w-full">
-              {question && <div className="bg-[#ad0a1f] text-white px-4 py-2 font-bold text-lg rounded-md">No {question?.number_of_question}</div>}
+              {question && <div className="bg-[#ad0a1f] text-white p-2 font-bold text-base rounded-md">No {question?.number_of_question}</div>}
               <CountdownTimer expiredAt={expired_at} productId={productTryOutId} sessionId={sessionId} userEmail={userEmail} />
             </div>
 
