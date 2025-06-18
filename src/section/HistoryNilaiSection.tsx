@@ -11,6 +11,7 @@ import { getAllQuizSessionByUser } from "@/model/quiz-history.model";
 import { Badge } from "@/components/ui/badge";
 import NullComponent from "@/components/NullComponent/NullComponent";
 import { useRouter } from "next/navigation";
+import ChartComponent from "@/components/StackChart/ChartComponent";
 
 const categoryThresholds = {
   TWK: 60,
@@ -47,13 +48,17 @@ export default function HistoryNilaiSection() {
     );
   }
 
+  const dataForChart = allQuizSesion?.data?.sessions
+    ?.filter((session: getAllQuizSessionByUser) => session.is_trial === false)
+    .slice(0, 10)
+    .reverse();
   const handleToPembahasanQuiz = (sessionId: number, productTryOutId: number, questionId: number) => {
     router.push(`/pembahasan-quiz?sess=${sessionId}&ptid=${productTryOutId}&qid=${questionId}`);
   };
 
   return (
     <LayoutBackgroundWhite>
-      <TitleComponent title="History & Grafik" subTitle="Pengerjaan Try Out kamu!" />
+      <TitleComponent title="History Nilai Kamu" subTitle="History Pengerjaan Try Out kamu!" />
 
       <>
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 px-4 md:px-24 mt-4">
@@ -112,8 +117,8 @@ export default function HistoryNilaiSection() {
                         <div key={idx}>
                           <div className="flex justify-between items-center space-x-2 text-xs capitalize">
                             <div>
-                              <span className="font-medium text-base">{categoryName}</span>
-                              <div className="flex justify-between items-center space-x-2 text-xs">
+                              <span className="font-medium text-sm sm:text-base">{categoryName}</span>
+                              <div className="flex justify-between items-center md:space-x-2 space-x-1 font-light text-xs">
                                 <span>Pertanyaan: {totalQuestions}</span> {/* Display total questions */}
                                 <span>Benar: {category.correctAnswers}</span> {/* Display correct answers */}
                                 <span>Salah: {wrongAnswers}</span> {/* Display wrong answers */}
@@ -155,6 +160,12 @@ export default function HistoryNilaiSection() {
           })}
         </div>
       </>
+      <div className="mt-8">
+        <TitleComponent title="Grafik Pengerjaan Try Out Premium Kamu" subTitle="Menampilkan Grafik 10 Try Out Premium Terakhir yang kamu kerjakan!" />
+      </div>
+      <div className="pe-4 md:px-16 mt-8">
+        <ChartComponent data={dataForChart} />
+      </div>
     </LayoutBackgroundWhite>
   );
 }

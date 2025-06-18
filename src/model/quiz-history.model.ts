@@ -9,6 +9,7 @@ interface CategoryScore {
 export interface getAllQuizSessionByUser {
   try_out_session_id: number;
   product_try_out_id: number;
+  is_trial: boolean;
   question_id: number;
   product_name: string;
   total_score: number;
