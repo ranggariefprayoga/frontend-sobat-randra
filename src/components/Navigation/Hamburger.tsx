@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useRouter } from "next/navigation";
@@ -115,12 +114,6 @@ export default function Hamburger({ userDetail }: { userDetail: UserDetailInterf
                       <Button variant="ghost" className="w-full flex justify-start" onClick={() => navigateTo("/admin/bimbel/bareng")}>
                         <Key size={18} />
                         <span>Tambahkan Akses Bimbel Bareng</span>
-                      </Button>
-                    </CommandItem>
-                    <CommandItem>
-                      <Button variant="ghost" className="w-full flex justify-start" onClick={() => navigateTo("/admin/bimbel/private")}>
-                        <Key size={18} />
-                        <span>Tambahkan Akses Bimbel Private</span>
                       </Button>
                     </CommandItem>
                   </CommandGroup>

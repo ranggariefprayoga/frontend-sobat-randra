@@ -6,7 +6,6 @@ import { useGetTryOutProductByIdForAdminIncludeFree } from "@/lib/api/productTry
 import { ArrowLeft } from "lucide-react";
 import { use } from "react";
 import { useUser } from "@/lib/api/user.api";
-import { useCheckAvailableFree } from "@/lib/api/quisSession.api";
 import UpdateFreeProductTryOutModal from "../Dialog/UpdateFreeTryOut";
 import DetailTOFree from "@/pages/PilihanPaket/DetailTOFree";
 
@@ -14,9 +13,8 @@ export default function DetailPilihanPaketTOFreeForAdmin({ params }: { params: P
   const { product_try_out_id: id } = use(params);
   const { data: product, isLoading } = useGetTryOutProductByIdForAdminIncludeFree(Number(id));
   const { data: detailUser, isLoading: detailUserLoading } = useUser();
-  const { data: isFreeAvailable, isLoading: isAvailableLoading } = useCheckAvailableFree(Number(id), detailUser?.data?.id ?? 0);
 
-  if (isLoading || detailUserLoading || isAvailableLoading) {
+  if (isLoading || detailUserLoading) {
     return (
       <div className="min-h-screen flex justify-center items-center bg-white">
         <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-[#ad0a1f] border-opacity-70"></div>
@@ -31,8 +29,6 @@ export default function DetailPilihanPaketTOFreeForAdmin({ params }: { params: P
     );
   }
 
-  console.log(isFreeAvailable?.data);
-
   return (
     <LayoutBackgroundWhite>
       <ButtonWithIcon icon={ArrowLeft} label="Kembali" />
@@ -41,7 +37,7 @@ export default function DetailPilihanPaketTOFreeForAdmin({ params }: { params: P
           <UpdateFreeProductTryOutModal initialData={product?.data} />
         </div>
       )}
-      <DetailTOFree product={product?.data} isFreeAvailable={isFreeAvailable?.data} user={detailUser?.data} />
+      <DetailTOFree product={product?.data} user={detailUser?.data} />
     </LayoutBackgroundWhite>
   );
 }

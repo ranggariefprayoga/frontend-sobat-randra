@@ -7,14 +7,14 @@ import { use } from "react";
 import UpdateProductTryOutModal from "../Dialog/UpdateProductTryOut";
 import DetailTO from "@/pages/PilihanPaket/DetailTO";
 import { useUser } from "@/lib/api/user.api";
-import { useCheckAvailableFree } from "@/lib/api/quisSession.api";
+import { useCheckAvailableFreeTryOut } from "@/lib/api/quisSession.api";
 import { useGetTryOutProductByIdForAdminExcludeFree } from "@/lib/api/productTryOut.api";
 
 export default function DetailPilihanPaketTOForAdmin({ params }: { params: Promise<{ product_try_out_id: string }> }) {
   const { product_try_out_id: id } = use(params);
   const { data: product, isLoading } = useGetTryOutProductByIdForAdminExcludeFree(Number(id));
   const { data: detailUser, isLoading: detailUserLoading } = useUser();
-  const { data: isFreeAvailable, isLoading: isAvailableLoading } = useCheckAvailableFree(Number(id), detailUser?.data?.id ?? 0);
+  const { data: isFreeAvailable, isLoading: isAvailableLoading } = useCheckAvailableFreeTryOut(Number(id), detailUser?.data?.id ?? 0);
 
   if (isLoading || detailUserLoading || isAvailableLoading) {
     return (
