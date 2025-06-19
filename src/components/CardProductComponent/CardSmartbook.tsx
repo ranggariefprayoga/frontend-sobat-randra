@@ -1,15 +1,15 @@
 "use client";
 
-import { bimbelBarengResponse } from "@/model/productBimbelBareng.model";
+import { ProductSmartbookResponse } from "@/model/productSmartbook.model";
 import { useRouter } from "next/navigation";
 
-interface ProductCardBimbelProps {
-  product: bimbelBarengResponse;
+interface ProductCardSmartbookProps {
+  product: ProductSmartbookResponse;
   customLink: string;
   buttonText?: string;
 }
 
-export default function CardBimbel({ product, customLink, buttonText = "Lihat Detail" }: ProductCardBimbelProps) {
+export default function CardSmartbook({ product, customLink, buttonText = "Lihat Detail" }: ProductCardSmartbookProps) {
   const router = useRouter();
 
   return (
@@ -27,7 +27,7 @@ export default function CardBimbel({ product, customLink, buttonText = "Lihat De
       <div className="p-4">
         {/* Badge Kategori */}
         <div className="flex items-center gap-2 text-sm mb-2">
-          <span className={`bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs flex items-center`}>📘 Kelas belajar bareng</span>
+          <span className={`bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs flex items-center`}>📘 Smartbook & Cheat Sheet</span>
         </div>
 
         {/* Judul Produk */}

@@ -3,16 +3,23 @@
 "use client";
 
 import CardBimbel from "@/components/CardProductComponent/CardBimbel";
+import CardSmartbook from "@/components/CardProductComponent/CardSmartbook";
 import CardTryOut from "@/components/CardProductComponent/CardTryOut";
+import CardVideoBelajar from "@/components/CardProductComponent/CardVideoBelajar";
 import LoadingComponent from "@/components/LoadingComponent/LoadingComponent";
 import NullComponent from "@/components/NullComponent/NullComponent";
 import TitleComponent from "@/components/TitleComponent/TitleComponent";
 import ButtonWithIcon from "@/components/TombolBack/TombolBack";
 import { Button } from "@/components/ui/button";
-import { dummyProductBimbel } from "@/data/dummy/product.home";
 import LayoutBackgroundWhite from "@/layout/LayoutBackgroundWhite";
+import { useGetAllBimbelBarengProducts } from "@/lib/api/productBimbelBareng.api";
+import { useGetAllSmartbookProducts } from "@/lib/api/productSmartbook.api";
 import { useGetAllFreeTryOutProductsForUser, useGetAllTryOutProductsExcludeFree } from "@/lib/api/productTryOut.api";
-import { BimbelProductlModel, TryOutProductModel } from "@/model/product.model";
+import { useGetAllVideoBelajarProducts } from "@/lib/api/productVideoBelajar.api";
+import { TryOutProductModel } from "@/model/product.model";
+import { bimbelBarengResponse } from "@/model/productBimbelBareng.model";
+import { ProductSmartbookResponse } from "@/model/productSmartbook.model";
+import { ProductVideoBelajarResponse } from "@/model/productVideoBelajar.model";
 import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -23,8 +30,11 @@ export default function PilihanPaketSection() {
 
   const { data: allProductTryOut, isLoading } = useGetAllTryOutProductsExcludeFree();
   const { data: allFreeProductTryOutForUser, isLoading: isLoadingFreeProductTryOut } = useGetAllFreeTryOutProductsForUser();
+  const { data: productBimbelBareng, isLoading: isLoadingBimbel } = useGetAllBimbelBarengProducts();
+  const { data: productSmartbook, isLoading: isLoadingSmartbook } = useGetAllSmartbookProducts();
+  const { data: productVideoBelajar, isLoading: isLoadingVideoBelajar } = useGetAllVideoBelajarProducts();
 
-  if (isLoading || isLoadingFreeProductTryOut) {
+  if (isLoading || isLoadingFreeProductTryOut || isLoadingBimbel || isLoadingSmartbook || isLoadingVideoBelajar) {
     return (
       <div className="min-h-screen flex justify-center items-center bg-white">
         <LoadingComponent color="#ad0a1f" />
@@ -50,11 +60,11 @@ export default function PilihanPaketSection() {
   if (selectedCategory === "try-out") {
     filteredProducts = allProductTryOut?.data || [];
   } else if (selectedCategory === "bimbel") {
-    filteredProducts = dummyProductBimbel;
+    filteredProducts = productBimbelBareng?.data || [];
   } else if (selectedCategory === "smart-book") {
-    filteredProducts = [];
+    filteredProducts = productSmartbook?.data || [];
   } else if (selectedCategory === "video-belajar") {
-    filteredProducts = [];
+    filteredProducts = productVideoBelajar?.data || [];
   }
   return (
     <LayoutBackgroundWhite>
@@ -111,7 +121,9 @@ export default function PilihanPaketSection() {
         <>
           <div className="w-full px-4 md:px-24 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mt-8">
             {selectedCategory === "try-out" && filteredProducts.map((product: TryOutProductModel) => <CardTryOut key={product.id} product={product} customLink={`/pilihan-paket/tryout/${product.id}`} />)}
-            {selectedCategory === "bimbel" && filteredProducts.map((product: BimbelProductlModel) => <CardBimbel key={product.id} product={product} customLink="/pilihan-paket" />)}
+            {selectedCategory === "bimbel" && filteredProducts.map((product: bimbelBarengResponse) => <CardBimbel key={product.id} product={product} customLink={`/pilihan-paket/bimbel/${product.id}`} />)}
+            {selectedCategory === "smart-book" && filteredProducts.map((product: ProductSmartbookResponse) => <CardSmartbook key={product.id} product={product} customLink={`/pilihan-paket/smartbook/${product.id}`} />)}
+            {selectedCategory === "video-belajar" && filteredProducts.map((product: ProductVideoBelajarResponse) => <CardVideoBelajar key={product.id} product={product} customLink={`/pilihan-paket/video-belajar/${product.id}`} />)}
           </div>
         </>
       ) : (

@@ -1,15 +1,15 @@
 "use client";
 
-import { bimbelBarengResponse } from "@/model/productBimbelBareng.model";
+import { ProductVideoBelajarResponse } from "@/model/productVideoBelajar.model";
 import { useRouter } from "next/navigation";
 
-interface ProductCardBimbelProps {
-  product: bimbelBarengResponse;
+interface ProductCardVideoBelajarProps {
+  product: ProductVideoBelajarResponse;
   customLink: string;
   buttonText?: string;
 }
 
-export default function CardBimbel({ product, customLink, buttonText = "Lihat Detail" }: ProductCardBimbelProps) {
+export default function CardVideoBelajar({ product, customLink, buttonText = "Lihat Detail" }: ProductCardVideoBelajarProps) {
   const router = useRouter();
 
   return (
@@ -27,7 +27,7 @@ export default function CardBimbel({ product, customLink, buttonText = "Lihat De
       <div className="p-4">
         {/* Badge Kategori */}
         <div className="flex items-center gap-2 text-sm mb-2">
-          <span className={`bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs flex items-center`}>📘 Kelas belajar bareng</span>
+          <span className={`bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs flex items-center`}>📘 Video Belajar</span>
         </div>
 
         {/* Judul Produk */}
