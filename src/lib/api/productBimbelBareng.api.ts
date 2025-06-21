@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient, UseMutationResult } from "@tanst
 import axios from "axios";
 import { API_BASE_URL } from "../apiBaseUrl";
 import { WebResponse } from "@/model/web-reponse.model";
-import { bimbelBarengResponse, updateBimbelBarengRequest, createBimbelBarengRequest } from "@/model/productBimbelBareng.model";
+import { bimbelBarengResponse, updateBimbelBarengRequest } from "@/model/productBimbelBareng.model";
 
 // Get all bimbel bareng products (protected)
 export const useGetAllBimbelBarengProducts = () => {
@@ -55,13 +55,13 @@ export const useGetBimbelBarengProductByIdForAdmin = (product_bimbel_bareng_id: 
 };
 
 // Create new bimbel bareng product
-export const useCreateBimbelBarengProduct = (): UseMutationResult<WebResponse<bimbelBarengResponse>, Error, { data: createBimbelBarengRequest; banner_image: File; jadwal_bimbel_image: File }> => {
+export const useCreateBimbelBarengProduct = (): UseMutationResult<WebResponse<bimbelBarengResponse>, Error, { data: string; banner_image: File; jadwal_bimbel_image: File }> => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async ({ data, banner_image, jadwal_bimbel_image }) => {
       const formData = new FormData();
-      formData.append("data", JSON.stringify(data));
+      formData.append("data", data);
       formData.append("banner_image", banner_image);
       formData.append("jadwal_bimbel_image", jadwal_bimbel_image);
 

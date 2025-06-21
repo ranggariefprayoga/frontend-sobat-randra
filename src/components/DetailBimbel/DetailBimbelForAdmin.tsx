@@ -18,7 +18,7 @@ function ProdukBelumTersedia() {
   return <div className="flex items-center justify-center min-h-[50vh] text-muted-foreground text-lg font-semibold">Produk Belum Tersedia</div>;
 }
 
-export default function DetailBimbel({ product, isUserAvailable, aksesSaatIni }: Props) {
+export default function DetailBimbelForAdmin({ product, isUserAvailable, aksesSaatIni }: Props) {
   const router = useRouter();
   if (!product) return <ProdukBelumTersedia />;
 

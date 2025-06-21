@@ -13,13 +13,8 @@ export default function CardBimbel({ product, customLink, buttonText = "Lihat De
   const router = useRouter();
 
   return (
-    <div className={`relative shadow-lg rounded-xl overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 ${!product.is_active ? "bg-gray-100 text-gray-500" : "bg-white text-gray-900"}`}>
+    <div className={`relative shadow-md rounded-xl overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 ${!product.is_active ? "bg-gray-300 text-gray-500" : "bg-white text-gray-900"}`}>
       {/* Overlay jika produk tidak aktif */}
-      {!product.is_active && (
-        <div className="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center pointer-events-none">
-          <span className="text-white font-semibold text-sm">Tidak Aktif</span>
-        </div>
-      )}
 
       {/* Gambar Produk */}
       <img src={product.banner_image || "/no-image.png"} alt={product.name} className="w-full h-48 object-cover" />
@@ -49,13 +44,14 @@ export default function CardBimbel({ product, customLink, buttonText = "Lihat De
 
         {/* Tombol Navigasi */}
         <button
-          className={`relative mt-3 w-full py-2 font-semibold rounded-full text-sm transition duration-200 z-10 ${product.is_active ? "bg-[#ad0a1f] text-white hover:bg-[#d7263d]" : "bg-gray-500 text-white hover:bg-gray-600"}`}
+          className={`relative mt-3 w-full py-2 font-semibold rounded-full text-sm transition duration-200 z-10 ${product.is_active ? "bg-[#ad0a1f] text-white hover:bg-[#d7263d]" : "bg-gray-500 text-white pointer-events-none"}`}
           onClick={(e) => {
             e.preventDefault();
             router.push(customLink);
           }}
+          disabled={!product.is_active}
         >
-          {buttonText}
+          {product.is_active ? buttonText : "Belum Tersedia"}
         </button>
       </div>
     </div>

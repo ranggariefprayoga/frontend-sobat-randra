@@ -111,7 +111,7 @@ export default function Hamburger({ userDetail }: { userDetail: UserDetailInterf
 
                   <CommandGroup heading="Bimbel">
                     <CommandItem>
-                      <Button variant="ghost" className="w-full flex justify-start" onClick={() => navigateTo("/admin/bimbel/bareng")}>
+                      <Button variant="ghost" className="w-full flex justify-start" onClick={() => navigateTo("/admin/bimbel/akses")}>
                         <Key size={18} />
                         <span>Tambahkan Akses Bimbel Bareng</span>
                       </Button>
