@@ -48,10 +48,35 @@ export default function HistoryNilaiSection() {
     );
   }
 
-  const dataForChart = allQuizSesion?.data?.sessions
-    ?.filter((session: getAllQuizSessionByUser) => session.is_trial === false)
-    .slice(0, 10)
-    .reverse();
+  const dataForChart = (() => {
+    const sessions = allQuizSesion?.data?.sessions;
+    if (!Array.isArray(sessions)) return [];
+
+    const map = new Map<number, getAllQuizSessionByUser>();
+
+    for (const session of sessions) {
+      if (!session || session.is_trial) continue;
+
+      const existing = map.get(session.product_try_out_id);
+      const currTime = new Date(session.expired_at).getTime();
+
+      if (!existing) {
+        map.set(session.product_try_out_id, session);
+      } else {
+        const existingTime = new Date(existing.expired_at).getTime();
+        if (!isNaN(currTime) && currTime < existingTime) {
+          map.set(session.product_try_out_id, session);
+        }
+      }
+    }
+
+    return [...map.values()]
+      .filter((s) => !isNaN(new Date(s.expired_at).getTime()))
+      .sort((a, b) => new Date(a.expired_at).getTime() - new Date(b.expired_at).getTime())
+      .slice(0, 10)
+      .reverse();
+  })();
+
   const handleToPembahasanQuiz = (sessionId: number, productTryOutId: number, questionId: number) => {
     router.push(`/pembahasan-quiz?sess=${sessionId}&ptid=${productTryOutId}&qid=${questionId}`);
   };
@@ -161,7 +186,7 @@ export default function HistoryNilaiSection() {
         </div>
       </>
       <div className="mt-8">
-        <TitleComponent title="Grafik Pengerjaan Try Out Premium Kamu" subTitle="Menampilkan Grafik 10 Try Out Premium Terakhir yang kamu kerjakan!" />
+        <TitleComponent title="Grafik Pengerjaan Try Out Premium Kamu" subTitle="Menampilkan Grafik 10 Try Out Premium yang Kamu Kerjakan!" />
       </div>
       <div className="pe-4 md:px-16 mt-8">
         <ChartComponent data={dataForChart} />
