@@ -9,11 +9,12 @@ import NullComponent from "@/components/NullComponent/NullComponent";
 import TitleComponent from "@/components/TitleComponent/TitleComponent";
 import ButtonWithIcon from "@/components/TombolBack/TombolBack";
 import { Button } from "@/components/ui/button";
-import { dummyProductBimbel } from "@/data/dummy/product.home";
 import LayoutBackgroundWhite from "@/layout/LayoutBackgroundWhite";
+import { useGetAllBimbelBarengProducts } from "@/lib/api/productBimbelBareng.api";
 import { useGetAllTryOutProductsExcludeFree } from "@/lib/api/productTryOut.api";
 import { useUser } from "@/lib/api/user.api";
-import { BimbelProductlModel, TryOutProductModel } from "@/model/product.model";
+import { TryOutProductModel } from "@/model/product.model";
+import { bimbelBarengResponse } from "@/model/productBimbelBareng.model";
 import { ArrowLeft } from "lucide-react";
 import { useState } from "react";
 
@@ -21,9 +22,10 @@ export default function MulaiBelajarSection() {
   const [selectedCategory, setSelectedCategory] = useState<string>("try-out");
 
   const { data: allProductTryOut, isLoading } = useGetAllTryOutProductsExcludeFree();
+  const { data: allProductBimbelBareng, isLoading: isLoadingBimbelBareng } = useGetAllBimbelBarengProducts();
   const { data: detailUser, isLoading: detailUserLoading } = useUser();
 
-  if (isLoading || detailUserLoading) {
+  if (isLoading || detailUserLoading || isLoadingBimbelBareng) {
     return (
       <div className="min-h-screen flex justify-center items-center bg-white">
         <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-[#ad0a1f] border-opacity-70"></div>
@@ -41,7 +43,7 @@ export default function MulaiBelajarSection() {
     filteredProducts = allProductTryOut?.data || [];
   } else if (selectedCategory === "bimbel") {
     // backend-api
-    filteredProducts = dummyProductBimbel;
+    filteredProducts = allProductBimbelBareng?.data || [];
   }
 
   return (
@@ -90,7 +92,7 @@ export default function MulaiBelajarSection() {
           <>
             <div className="w-full px-4 md:px-24 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mt-8">
               {selectedCategory === "try-out" && filteredProducts.map((product: TryOutProductModel) => <CardMulaiTryOut userEmail={detailUser?.data?.email} key={product.id} product={product} />)}
-              {selectedCategory === "bimbel" && filteredProducts.map((product: BimbelProductlModel) => <CardBimbel key={product.id} product={product} customLink="/pilihan-paket" />)}
+              {selectedCategory === "bimbel" && filteredProducts.map((product: bimbelBarengResponse) => <CardBimbel key={product.id} product={product} customLink="/pilihan-paket" />)}
             </div>
           </>
         ) : (

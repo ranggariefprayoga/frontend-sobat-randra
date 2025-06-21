@@ -3,13 +3,14 @@ import axios from "axios";
 import { API_BASE_URL } from "../apiBaseUrl";
 import { WebResponse } from "@/model/web-reponse.model";
 import { BimbelBarengAccessResponse, CreateBimbelBarengAccessRequest, UpdateBimbelBarengAccessRequest } from "@/model/productBimbelBarengAccess";
+import { WebPaginatedResponse } from "@/model/user.model";
 
 // Get all bimbel bareng access (protected)
-export const useGetAllBimbelBarengAccess = (product_bimbel_bareng_id: number) => {
-  return useQuery<WebResponse<BimbelBarengAccessResponse[]>, Error>({
-    queryKey: ["bimbel-bareng", "access", product_bimbel_bareng_id],
+export const useGetAllBimbelBarengAccess = (product_bimbel_bareng_id: number, page = 1, limit = 10, search = "") => {
+  return useQuery<WebPaginatedResponse<BimbelBarengAccessResponse[]>, Error>({
+    queryKey: ["bimbel-bareng", "access", product_bimbel_bareng_id, page, limit, search],
     queryFn: async () => {
-      const res = await axios.get(`${API_BASE_URL}/api/products/bimbel-bareng/${product_bimbel_bareng_id}/access`, { withCredentials: true });
+      const res = await axios.get(`${API_BASE_URL}/api/products/bimbel-bareng/${product_bimbel_bareng_id}/access`, { params: { page, limit, search }, withCredentials: true });
       return res.data;
     },
     retry: false,
@@ -40,12 +41,12 @@ export const useGetBimbelBarengAccessById = (product_bimbel_bareng_id: number, b
 };
 
 // Create bimbel bareng access
-export const useCreateBimbelBarengAccess = (): UseMutationResult<WebResponse<BimbelBarengAccessResponse>, Error, { product_bimbel_bareng_id: number; data: CreateBimbelBarengAccessRequest }> => {
+export const useCreateBimbelBarengAccess = (): UseMutationResult<WebResponse<BimbelBarengAccessResponse>, Error, CreateBimbelBarengAccessRequest> => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ product_bimbel_bareng_id, data }) => {
-      const res = await axios.post(`${API_BASE_URL}/api/products/bimbel-bareng/${product_bimbel_bareng_id}/access`, data, { withCredentials: true });
+    mutationFn: async (data: CreateBimbelBarengAccessRequest) => {
+      const res = await axios.post(`${API_BASE_URL}/api/products/bimbel-bareng/${data.product_bimbel_bareng_id}/access`, data, { withCredentials: true });
       return res.data;
     },
     onSuccess: () => {
