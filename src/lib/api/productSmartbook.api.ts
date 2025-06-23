@@ -79,14 +79,14 @@ export const useCreateSmartbookProduct = (): UseMutationResult<WebResponse<Produ
 };
 
 // Update smartbook product
-export const useUpdateSmartbookProduct = (): UseMutationResult<WebResponse<ProductSmartbookResponse>, Error, { product_smartbook_id: number; data: updateProductSmartbookRequest; file: File | null }> => {
+export const useUpdateSmartbookProduct = (): UseMutationResult<WebResponse<ProductSmartbookResponse>, Error, { product_smartbook_id: number; data: updateProductSmartbookRequest; banner_image: File | null }> => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ product_smartbook_id, data, file }) => {
+    mutationFn: async ({ product_smartbook_id, data, banner_image }) => {
       const formData = new FormData();
       if (data) formData.append("data", JSON.stringify(data));
-      if (file) formData.append("banner_image", file);
+      if (banner_image) formData.append("banner_image", banner_image);
 
       const res = await axios.patch(`${API_BASE_URL}/api/products/smartbook/${product_smartbook_id}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },

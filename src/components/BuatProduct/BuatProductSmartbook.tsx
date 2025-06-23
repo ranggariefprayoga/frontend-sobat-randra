@@ -8,59 +8,50 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
-import { useCreateBimbelBarengProduct } from "@/lib/api/productBimbelBareng.api";
+import { useCreateSmartbookProduct } from "@/lib/api/productSmartbook.api";
 
-export function BuatBimbelBarengModal() {
+export function BuatSmartbookModal() {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [isActive, setIsActive] = useState(false);
-  const [capacity, setCapacity] = useState(0);
-  const [pemateri, setPemateri] = useState("");
-  const [jadwalBimbelImage, setJadwalBimbelImage] = useState<File | null>(null);
   const [bannerImage, setBannerImage] = useState<File | null>(null);
   const [description, setDescription] = useState("");
   const [marketingText, setMarketingText] = useState("");
   const [price, setPrice] = useState("");
   const [oldPrice, setOldPrice] = useState("");
-  const [linkToMeeting, setLinkToMeeting] = useState("");
-  const [linkToWhatsapp, setLinkToWhatsapp] = useState("");
+  const [linkToProduct, setLinkToProduct] = useState("");
 
-  const buatProdukBimbelBareng = useCreateBimbelBarengProduct();
+  const buatProdukSmartbook = useCreateSmartbookProduct();
 
   const handleSubmit = async () => {
     if (!bannerImage) return toast.error("Mohon unggah gambar banner terlebih dahulu.");
-    if (!jadwalBimbelImage) return toast.error("Mohon unggah gambar jadwal bimbel terlebih dahulu.");
     if (!name) return toast.error("Nama produk belum diisi.");
     if (!description) return toast.error("Deskripsi produk belum diisi.");
-    if (!linkToMeeting) return toast.error("Link Zoom meeting produk belum diisi.");
-    if (!linkToWhatsapp) return toast.error("Link ke Whatsapp Group produk belum diisi.");
     if (!price) return toast.error("Harga produk belum diisi.");
+    if (!linkToProduct) return toast.error("Link produk ke Mayar atau Lynk Id harus diisi.");
 
     const payload = JSON.stringify({
       name,
       is_active: isActive,
-      capacity,
-      pemateri,
       description,
       marketing_text: marketingText || "",
       price: Number(price),
       old_price: oldPrice ? Number(oldPrice) : 0,
       banner_image: "",
-      link_to_meeting: linkToMeeting,
-      link_to_whatsapp: linkToWhatsapp,
       jadwal_bimbel_image: "",
+      link_to_product: linkToProduct,
     });
 
-    buatProdukBimbelBareng.mutate(
-      { data: payload, banner_image: bannerImage, jadwal_bimbel_image: jadwalBimbelImage },
+    buatProdukSmartbook.mutate(
+      { data: payload, banner_image: bannerImage },
       {
         onSuccess: () => {
           setOpen(false);
-          toast.success("Bimbel Bareng berhasil dibuat.");
+          toast.success("Smartbook berhasil dibuat.");
           resetForm();
         },
         onError: () => {
-          toast.error("Gagal membuat Bimbel Bareng.");
+          toast.error("Gagal membuat Smartbook.");
         },
       }
     );
@@ -70,26 +61,22 @@ export function BuatBimbelBarengModal() {
     setName("");
     setIsActive(false);
     setBannerImage(null);
-    setJadwalBimbelImage(null);
-    setPemateri("");
-    setCapacity(0);
     setDescription("");
     setMarketingText("");
     setPrice("");
     setOldPrice("");
-    setLinkToMeeting("");
-    setLinkToWhatsapp("");
+    setLinkToProduct("");
   };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>Buat Bimbel Bareng</Button>
+        <Button>Buat Smartbook</Button>
       </DialogTrigger>
       <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[600px]">
         <DialogHeader>
-          <DialogTitle>Buat Bimbel Bareng</DialogTitle>
-          <DialogDescription>Isi form dibawah ini untuk membuat Produk Bimbel Bareng.</DialogDescription>
+          <DialogTitle>Buat Smartbook</DialogTitle>
+          <DialogDescription>Isi form dibawah ini untuk membuat Produk Smartbook.</DialogDescription>
           <div className="border-b border-gray-300 mb-2" />
         </DialogHeader>
 
@@ -99,19 +86,6 @@ export function BuatBimbelBarengModal() {
               Nama Produk<span className="text-red-600">*</span>
             </Label>
             <Input placeholder="Masukkan nama produk" value={name} onChange={(e) => setName(e.target.value)} />
-          </div>
-
-          <div className="mb-4 space-y-1.5">
-            <Label>
-              Kapasitas Peserta <span className="text-red-600">*</span>
-            </Label>
-            <Input type="number" placeholder="Contoh: 20" value={capacity} onChange={(e) => setCapacity(Number(e.target.value))} />
-          </div>
-          <div className="mb-4 space-y-1.5">
-            <Label>
-              Pemateri<span className="text-red-600">*</span>
-            </Label>
-            <Input placeholder="Masukkan nama pemateri kelas" value={pemateri} onChange={(e) => setPemateri(e.target.value)} />
           </div>
 
           <div className="flex items-center justify-between mb-4">
@@ -126,12 +100,6 @@ export function BuatBimbelBarengModal() {
             </Label>
             <Input type="file" accept="image/*" onChange={(e) => setBannerImage(e.target.files?.[0] || null)} />
           </div>
-          <div className="mb-4 space-y-1.5">
-            <Label>
-              Gambar Jadwal Bimbel <span className="text-red-600">*</span>
-            </Label>
-            <Input type="file" accept="image/*" onChange={(e) => setJadwalBimbelImage(e.target.files?.[0] || null)} />
-          </div>
 
           <div className="mb-4 space-y-1.5">
             <Label>
@@ -144,19 +112,11 @@ export function BuatBimbelBarengModal() {
             <Label>Teks Pemasaran (Opsional)</Label>
             <Textarea placeholder="Tulis teks pemasaran jika ada..." value={marketingText} onChange={(e) => setMarketingText(e.target.value)} />
           </div>
-
           <div className="mb-4 space-y-1.5">
             <Label>
-              Link ke Grup WhatsApp Bimbel <span className="text-red-600">*</span>
+              Link ke Produk<span className="text-red-600">*</span>
             </Label>
-            <Input placeholder="Link ke Grup Whatsapp..." value={linkToWhatsapp} onChange={(e) => setLinkToWhatsapp(e.target.value)} />
-          </div>
-
-          <div className="mb-4 space-y-1.5">
-            <Label>
-              Link ke Zoom Meeting <span className="text-red-600">*</span>
-            </Label>
-            <Input placeholder="Tulis zoom meeting..." value={linkToMeeting} onChange={(e) => setLinkToMeeting(e.target.value)} />
+            <Input placeholder="Link ke Mayar atau Lynk.id" value={linkToProduct} onChange={(e) => setLinkToProduct(e.target.value)} />
           </div>
 
           <div className="mb-4 space-y-1.5">
@@ -171,8 +131,8 @@ export function BuatBimbelBarengModal() {
             <Input type="number" placeholder="Contoh: 75000" value={oldPrice} onChange={(e) => setOldPrice(e.target.value)} />
           </div>
 
-          <Button onClick={handleSubmit} disabled={buatProdukBimbelBareng.isPending}>
-            {buatProdukBimbelBareng.isPending ? "Membuat..." : "Simpan Produk"}
+          <Button onClick={handleSubmit} disabled={buatProdukSmartbook.isPending}>
+            {buatProdukSmartbook.isPending ? "Membuat..." : "Simpan Produk"}
           </Button>
         </div>
       </DialogContent>
@@ -180,4 +140,4 @@ export function BuatBimbelBarengModal() {
   );
 }
 
-export default BuatBimbelBarengModal;
+export default BuatSmartbookModal;

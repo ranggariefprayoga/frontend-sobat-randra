@@ -97,21 +97,13 @@ export default function HistoryNilaiSection() {
                     <CardTitle className="text-lg font-semibold w-[60%] md:w-[70%]">{session.product_name}</CardTitle>
                     <CardDescription
                       className={`flex flex-col justify-center items-center text-[#f5f5f5] p-2 rounded-md w-[40%] md:w-[30%] 
-    ${isPassed ? "bg-green-200 text-green-800" : "bg-red-200 text-red-800"}`} // Conditional background color based on isPassed
+    ${isPassed ? "bg-green-200 text-green-800" : "bg-red-200 text-red-800"}`}
                     >
                       <span>Nilai kamu</span>
                       <span className="text-xl font-extrabold">{session.total_score}</span>
                     </CardDescription>
                   </div>
-                  <Badge
-                    className={`${
-                      isPassed
-                        ? "bg-green-200 text-green-800" // Hijau lembut untuk lulus
-                        : "bg-red-200 text-red-800" // Merah lembut untuk tidak lulus
-                    }`}
-                  >
-                    {isPassed ? "Anda Lulus" : "Anda Tidak Lulus"}
-                  </Badge>
+                  <Badge className={`${isPassed ? "bg-green-200 text-green-800" : "bg-red-200 text-red-800"}`}>{isPassed ? "Anda Lulus" : "Anda Tidak Lulus"}</Badge>
                 </CardHeader>
 
                 <CardContent className="space-y-2">
