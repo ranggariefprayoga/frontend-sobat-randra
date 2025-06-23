@@ -8,9 +8,9 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
-import { useCreateSmartbookProduct } from "@/lib/api/productSmartbook.api";
+import { useCreateVideoBelajarProduct } from "@/lib/api/productVideoBelajar.api";
 
-export function BuatSmartbookModal() {
+export function BuatVideoBelajarModal() {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [isActive, setIsActive] = useState(false);
@@ -21,7 +21,7 @@ export function BuatSmartbookModal() {
   const [oldPrice, setOldPrice] = useState("");
   const [linkToProduct, setLinkToProduct] = useState("");
 
-  const buatProdukSmartbook = useCreateSmartbookProduct();
+  const buatProdukVideoBelajar = useCreateVideoBelajarProduct();
 
   const handleSubmit = async () => {
     if (!bannerImage) return toast.error("Mohon unggah gambar banner terlebih dahulu.");
@@ -42,16 +42,16 @@ export function BuatSmartbookModal() {
       link_to_product: linkToProduct,
     });
 
-    buatProdukSmartbook.mutate(
+    buatProdukVideoBelajar.mutate(
       { data: payload, banner_image: bannerImage },
       {
         onSuccess: () => {
           setOpen(false);
-          toast.success("Smartbook berhasil dibuat.");
+          toast.success("VideoBelajar berhasil dibuat.");
           resetForm();
         },
         onError: () => {
-          toast.error("Gagal membuat Smartbook.");
+          toast.error("Gagal membuat VideoBelajar.");
         },
       }
     );
@@ -71,12 +71,12 @@ export function BuatSmartbookModal() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>Buat Smartbook</Button>
+        <Button>Buat VideoBelajar</Button>
       </DialogTrigger>
       <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[600px]">
         <DialogHeader>
-          <DialogTitle>Buat Smartbook</DialogTitle>
-          <DialogDescription>Isi form dibawah ini untuk membuat Produk Smartbook.</DialogDescription>
+          <DialogTitle>Buat VideoBelajar</DialogTitle>
+          <DialogDescription>Isi form dibawah ini untuk membuat Produk VideoBelajar.</DialogDescription>
           <div className="border-b border-gray-300 mb-2" />
         </DialogHeader>
 
@@ -103,7 +103,7 @@ export function BuatSmartbookModal() {
 
           <div className="mb-4 space-y-1.5">
             <Label>
-              Deskripsi Smartbook <span className="text-red-600">*</span>
+              Deskripsi Video Belajar <span className="text-red-600">*</span>
             </Label>
             <Textarea placeholder="Tulis deskripsi produk..." value={description} onChange={(e) => setDescription(e.target.value)} />
           </div>
@@ -131,8 +131,8 @@ export function BuatSmartbookModal() {
             <Input type="number" placeholder="Contoh: 75000" value={oldPrice} onChange={(e) => setOldPrice(e.target.value)} />
           </div>
 
-          <Button onClick={handleSubmit} disabled={buatProdukSmartbook.isPending}>
-            {buatProdukSmartbook.isPending ? "Membuat..." : "Simpan Produk"}
+          <Button onClick={handleSubmit} disabled={buatProdukVideoBelajar.isPending}>
+            {buatProdukVideoBelajar.isPending ? "Membuat..." : "Simpan Produk"}
           </Button>
         </div>
       </DialogContent>
@@ -140,4 +140,4 @@ export function BuatSmartbookModal() {
   );
 }
 
-export default BuatSmartbookModal;
+export default BuatVideoBelajarModal;

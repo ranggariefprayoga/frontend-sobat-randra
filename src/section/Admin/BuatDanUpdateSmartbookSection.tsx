@@ -12,7 +12,7 @@ import { ProductSmartbookResponse } from "@/model/productSmartbook.model";
 import { ArrowLeft } from "lucide-react";
 
 export default function BuatDanUpdateSmartbookSection() {
-  const { data: allProductBimbel, isLoading } = useGetAllSmartbookProducts();
+  const { data: allProductSmartbook, isLoading } = useGetAllSmartbookProducts();
   return (
     <LayoutBackgroundWhite>
       <ButtonWithIcon icon={ArrowLeft} label="Kembali" />
@@ -26,9 +26,9 @@ export default function BuatDanUpdateSmartbookSection() {
         <div className="px-4 md:px-24 flex justify-center w-full">
           <LoadingComponent color="#ad0a1f" />
         </div>
-      ) : allProductBimbel?.data && allProductBimbel.data.length > 0 ? (
+      ) : allProductSmartbook?.data && allProductSmartbook.data.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4 md:px-24 mt-4">
-          {allProductBimbel.data.map((product: ProductSmartbookResponse) => (
+          {allProductSmartbook.data.map((product: ProductSmartbookResponse) => (
             <CardSmartbookForAdmin key={product.id} product={product} customLink={`/admin/layanan/smartbook/${product.id}`} />
           ))}
         </div>
