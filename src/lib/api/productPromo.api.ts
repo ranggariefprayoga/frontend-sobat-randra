@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient, UseMutationResult } from "@tanst
 import axios from "axios";
 import { API_BASE_URL } from "../apiBaseUrl";
 import { WebResponse } from "@/model/web-reponse.model";
-import { ProductPromoResponse, updateProductPromoRequest, createProductPromoRequest } from "@/model/productPromo.model";
+import { ProductPromoResponse, updateProductPromoRequest } from "@/model/productPromo.model";
 
 // Get all product promos (protected)
 export const useGetAllProductPromos = () => {
@@ -55,14 +55,14 @@ export const useGetProductPromoByIdForAdmin = (product_promo_id: number) => {
 };
 
 // Create new product promo
-export const useCreateProductPromo = (): UseMutationResult<WebResponse<ProductPromoResponse>, Error, createProductPromoRequest> => {
+export const useCreateProductPromo = (): UseMutationResult<WebResponse<ProductPromoResponse>, Error, { data: string; banner_image: File }> => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (data) => {
+    mutationFn: async ({ data, banner_image }) => {
       const formData = new FormData();
-      formData.append("data", data.name);
-      formData.append("banner_image", data.banner_image); // Assuming banner_image is a file
+      formData.append("data", data);
+      formData.append("banner_image", banner_image); // Assuming banner_image is a file
 
       const res = await axios.post(`${API_BASE_URL}/api/products/promo`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
@@ -79,14 +79,14 @@ export const useCreateProductPromo = (): UseMutationResult<WebResponse<ProductPr
 };
 
 // Update product promo
-export const useUpdateProductPromo = (): UseMutationResult<WebResponse<ProductPromoResponse>, Error, { product_promo_id: number; data: updateProductPromoRequest; file: File }> => {
+export const useUpdateProductPromo = (): UseMutationResult<WebResponse<ProductPromoResponse>, Error, { product_promo_id: number; data: updateProductPromoRequest; banner_image: File | null }> => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ product_promo_id, data, file }) => {
+    mutationFn: async ({ product_promo_id, data, banner_image }) => {
       const formData = new FormData();
       formData.append("data", JSON.stringify(data));
-      if (file) formData.append("banner_image", file);
+      if (banner_image) formData.append("banner_image", banner_image);
 
       const res = await axios.patch(`${API_BASE_URL}/api/products/promo/${product_promo_id}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
