@@ -8,7 +8,7 @@ import QuestionComponent from "@/section/FreeQuiz/questionComponent";
 import QuestionChoiceComponent from "@/section/FreeQuiz/questionChoiceComponent";
 import { toast } from "sonner";
 import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useGetSessionsByProductIdAndSessionId, useSubmitTryOutSession } from "@/lib/api/quisSession.api";
 import { useCheckUserHasAnsweredOrNot, useGetUserAnswerByProductAndQuestionId, useSaveUserAnswer } from "@/lib/api/quizAnswer.api";
 import CountdownTimer from "@/components/Countdown/CountdownTimer";
@@ -21,6 +21,7 @@ export default function PremiumQuizSection() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [isSubmitDialogOpen, setIsSubmitDialogOpen] = useState(false);
+  const [localSelectedChoiceId, setLocalSelectedChoiceId] = useState<number | null>(null);
 
   const s = searchParams?.get("sess");
   const p = searchParams?.get("ptid");
@@ -44,6 +45,11 @@ export default function PremiumQuizSection() {
 
   const { data: userAnswer, refetch, isLoading: isLoadingUserAnswer, error: errorUserAnswer } = useGetUserAnswerByProductAndQuestionId(productTryOutId, sessionId, questionId);
   const { data: checkUserHasAnswered, isLoading: isLoadingCheckUserHasAnswered, refetch: refetchCheckUserHasAnswered, error: errorAnsweredUser } = useCheckUserHasAnsweredOrNot(productTryOutId, sessionId);
+  const selectedChoiceId = localSelectedChoiceId ?? userAnswer?.data?.question_choice_id;
+
+  useEffect(() => {
+    setLocalSelectedChoiceId(null);
+  }, [questionId]);
 
   if (isLoading || isLoadingSession || isLoadingUserAnswer || isLoadingCheckUserHasAnswered || dataUserLoading || dataUserQuestionLoading) {
     return (
@@ -105,10 +111,12 @@ export default function PremiumQuizSection() {
   };
 
   const handleUserAnswer = async (question_choice_id: number): Promise<void> => {
+    setLocalSelectedChoiceId(question_choice_id); // Langsung update UI
     try {
       await saveUserAnswer.mutateAsync({ product_try_out_id: productTryOutId, question_id: questionId, question_choice_id });
       refetch();
     } catch (error) {
+      setLocalSelectedChoiceId(null);
       toast.error("Gagal memilih jawaban, coba lagi...");
       throw error; // Rethrow the error to allow catch in handleSelectChoice
     }
@@ -156,7 +164,7 @@ export default function PremiumQuizSection() {
                   <QuestionChoiceComponent
                     question_id={data?.data?.question?.id}
                     choices={questionChoices}
-                    isSelected={userAnswer?.data?.question_choice_id} // Pass the selected choice here
+                    isSelected={selectedChoiceId} // Pass the selected choice here
                     onSelect={handleUserAnswer} // Handle immediate UI update// Passing the revert function
                   />
                 )}

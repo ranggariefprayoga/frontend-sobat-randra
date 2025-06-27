@@ -14,10 +14,12 @@ import CountdownTimer from "@/components/Countdown/CountdownTimer";
 import { useGetValidQuestionsUser } from "@/lib/api/question.api";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useGetQuestionForQuiz } from "@/lib/api/soal.api";
+import { useEffect, useState } from "react";
 
 export default function FreeQuizSection() {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const [localSelectedChoiceId, setLocalSelectedChoiceId] = useState<number | null>(null);
 
   const s = searchParams?.get("sess");
   const p = searchParams?.get("ptid");
@@ -42,6 +44,12 @@ export default function FreeQuizSection() {
 
   const { data: userAnswer, refetch, isLoading: isLoadingUserAnswer, error: errorUserAnswer } = useGetUserAnswerByProductAndQuestionId(productTryOutId, sessionId, questionId);
   const { data: checkUserHasAnswered, isLoading: isLoadingCheckUserHasAnswered, refetch: refetchCheckUserHasAnswered, error: errorAnsweredUser } = useCheckUserHasAnsweredOrNot(productTryOutId, sessionId);
+
+  const selectedChoiceId = localSelectedChoiceId ?? userAnswer?.data?.question_choice_id;
+
+  useEffect(() => {
+    setLocalSelectedChoiceId(null);
+  }, [questionId]);
 
   if (isLoading || isLoadingSession || isLoadingUserAnswer || isLoadingCheckUserHasAnswered || dataUserLoading || dataUserQuestionLoading) {
     return (
@@ -94,12 +102,13 @@ export default function FreeQuizSection() {
 
   // Optimistic UI Update: immediately update the UI before API call
   const handleUserAnswer = async (question_choice_id: number): Promise<void> => {
+    setLocalSelectedChoiceId(question_choice_id); // Langsung update UI
     try {
       await saveUserAnswer.mutateAsync({ product_try_out_id: productTryOutId, question_id: questionId, question_choice_id });
       refetch();
     } catch (error) {
       // If the API fails, revert the UI change
-
+      setLocalSelectedChoiceId(null);
       toast.error("Gagal memilih jawaban, coba lagi...");
       throw error; // Rethrow the error to allow catch in handleSelectChoice
     }
@@ -146,7 +155,7 @@ export default function FreeQuizSection() {
                   <QuestionChoiceComponent
                     question_id={question.id}
                     choices={questionChoices}
-                    isSelected={userAnswer?.data?.question_choice_id} // Pass the selected choice here
+                    isSelected={selectedChoiceId} // Pass the selected choice here
                     onSelect={handleUserAnswer} // Handle immediate UI update
                     // Passing the revert function
                   />
