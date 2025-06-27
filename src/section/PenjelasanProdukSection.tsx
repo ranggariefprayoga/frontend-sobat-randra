@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import PenjelasanProdukComponent from "@/components/PenjelasanProdukComponent/PenjelasanProdukComponent";
 import TitleComponent from "@/components/TitleComponent/TitleComponent";
 import LayoutBackgroundWhite from "@/layout/LayoutBackgroundWhite";
-import { produkData } from "@/data/penjelasan-produk.data";
+import { KeunggulanItem, keunggulanKamiData } from "@/data/penjelasan-produk.data";
 
 export default function PenjelasanProdukSection() {
   const { ref, inView } = useInView({ threshold: 0.1 });
@@ -34,11 +34,11 @@ export default function PenjelasanProdukSection() {
   return (
     <LayoutBackgroundWhite>
       <>
-        <TitleComponent title="Layanan Kami" subTitle="Tersedia 4 paket belajar untuk kamu!" />
+        <TitleComponent title="Kenapa harus belajar di Sobat Randra?" subTitle="Ini dia keunggulan kami!" />
 
         <div ref={ref} className="w-full px-4 md:px-24 mt-8 mb-8 md:mb-16">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {produkData.map((item, index) => (
+            {keunggulanKamiData.map((item: KeunggulanItem, index) => (
               <motion.div key={index} custom={index} initial="hidden" animate={hasAnimated ? "visible" : "hidden"} variants={itemVariants}>
                 <PenjelasanProdukComponent key={index} {...item} />
               </motion.div>

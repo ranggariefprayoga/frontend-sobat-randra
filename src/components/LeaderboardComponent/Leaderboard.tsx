@@ -53,7 +53,7 @@ const Leaderboard = () => {
   console.log(data);
 
   return (
-    <div className="px-4 md:px-24 mt-4">
+    <div className="px-4 md:px-24 mt-8 md:mt-16">
       {/* Select Product Dropdown */}
       <div className="flex flex-col lg:flex-row justify-between gap-2">
         <LeaderboardSelect onProductSelect={handleProductSelect} productTryOuts={productTryOuts?.data} />

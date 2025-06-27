@@ -19,10 +19,10 @@ export default function HeroButtons() {
 
   return (
     <div className="flex flex-row gap-2 justify-center lg:justify-start">
-      <Button size="lg" variant="outline" onClick={handleProductClick} className="rounded-full text-orange-700 bg-orange-100">
+      <Button size="sm" variant="outline" onClick={handleProductClick} className="rounded-full text-orange-700 bg-orange-100">
         Lihat semua produk
       </Button>
-      <Button size="lg" variant="outline" onClick={handleWhatsAppClick} className="text-green-700 bg-green-100  rounded-full">
+      <Button size="sm" variant="outline" onClick={handleWhatsAppClick} className="text-green-700 bg-green-100  rounded-full">
         Hubungi Kami
       </Button>
     </div>

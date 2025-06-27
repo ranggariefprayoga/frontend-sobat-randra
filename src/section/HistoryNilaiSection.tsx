@@ -86,7 +86,7 @@ export default function HistoryNilaiSection() {
       <TitleComponent title="History Nilai Kamu" subTitle="History Pengerjaan Try Out kamu!" />
 
       <>
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 px-4 md:px-24 mt-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 px-4 md:px-24 mt-8 md:mt-16">
           {allQuizSesion?.data?.sessions?.map((session: getAllQuizSessionByUser) => {
             const isPassed = session.category_scores.every((category) => category.score >= categoryThresholds[category.category as Category]);
 
@@ -177,7 +177,7 @@ export default function HistoryNilaiSection() {
           })}
         </div>
       </>
-      <div className="mt-8">
+      <div className="mt-8 md:mt-16">
         <TitleComponent title="Grafik Pengerjaan Try Out Premium Kamu" subTitle="Menampilkan Grafik 10 Try Out Premium yang Kamu Kerjakan!" />
       </div>
       <div className="pe-4 md:px-16 mt-8">

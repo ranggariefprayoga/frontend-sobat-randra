@@ -1,15 +1,15 @@
 export interface TryOutProductModel {
   id: number;
   name: string;
-  password?: string;
   is_active: boolean;
+  is_trial_product?: boolean;
+  password?: string;
+  max_free_questions?: number;
   banner_image?: string;
   description: string;
   marketing_text?: string;
   old_price?: number;
   price: number;
-  is_trial_product?: boolean;
-  max_free_questions?: number;
   created_at: Date;
   updated_at: Date;
 }

@@ -16,7 +16,7 @@ export default function BuatDanUpdatePromoSection() {
   return (
     <LayoutBackgroundWhite>
       <ButtonWithIcon icon={ArrowLeft} label="Kembali" />
-      <TitleComponent title="Buat dan Update Promo" />
+      <TitleComponent title="Buat dan Update Promo" subTitle="Untuk admin" textAlign="start" />
 
       <div className="w-full px-4 md:px-24 mt-4 md:mt-8">
         <BuatPromoModal />

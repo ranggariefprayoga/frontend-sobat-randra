@@ -1,31 +1,41 @@
-import { Target, School, Notebook, PlaySquare } from "lucide-react"; // Pilih ikon dari lucide-react
+import { Smartphone, BookCheck, Users2, Timer, BarChart3, Award } from "lucide-react";
 import { ReactNode } from "react";
 
-interface ProdukItem {
+export interface KeunggulanItem {
   icon: ReactNode;
   title: string;
   description: string;
 }
 
-export const produkData: ProdukItem[] = [
+export const keunggulanKamiData: KeunggulanItem[] = [
   {
-    icon: <Target className="h-6 w-6 text-[#D94B6B]" />,
-    title: "Try Out",
-    description: "Latihan soal gratis sekali saja atau premium sepuasnya. Tersedia History Nilai dan Rangking Nasional TO!",
+    icon: <Smartphone className="h-6 w-6 text-[#D94B6B]" />,
+    title: "Akses Belajar Praktis",
+    description: "Ngerjain try out, baca materi dan nonton video bisa diakses pake handphone dan laptop.",
   },
   {
-    icon: <School className="h-6 w-6 text-[#D94B6B]" />,
-    title: "Bimbel",
-    description: "Belajar bareng tutor lewat Zoom, bahas soal dan strategi bareng peserta lain.",
+    icon: <BookCheck className="h-6 w-6 text-[#D94B6B]" />,
+    title: "Kisi-kisi Terupdate",
+    description: "Kami selalu menyesuaikan dengan kisi-kisi terbaru di setiap tahunnya.",
   },
   {
-    icon: <Notebook className="h-6 w-6 text-[#D94B6B]" />,
-    title: "Smart Book",
-    description: "Ebook & Cheat Sheet SKD & SKB.",
+    icon: <Users2 className="h-6 w-6 text-[#D94B6B]" />,
+    title: "Pengajar Pilihan dan Kompeten",
+    description: "Silakan curhat kekhawatiranmu kepada kami untuk diberikan solusi yang terbaik.",
   },
   {
-    icon: <PlaySquare className="h-6 w-6 text-[#D94B6B]" />,
-    title: "Video Belajar",
-    description: "Video materi CPNS dan BUMN. Akses kapan aja, sepuasnya.",
+    icon: <Timer className="h-6 w-6 text-[#D94B6B]" />,
+    title: "History dan Grafik Nilai",
+    description: "Kamu bisa lihat History dan Grafik Nilai kamu setelah mengerjakan soal.",
+  },
+  {
+    icon: <Award className="h-6 w-6 text-[#D94B6B]" />,
+    title: "Rangking Nasional Try Out",
+    description: "Ukur kemampuanmu dengan berkompetisi bersama pengguna lainnya se-Indonesia.",
+  },
+  {
+    icon: <BarChart3 className="h-6 w-6 text-[#D94B6B]" />,
+    title: "Evaluasi Secara Detail",
+    description: "Evaluasi hasil belajar kamu dengan grafik super detail dan informatif.",
   },
 ];

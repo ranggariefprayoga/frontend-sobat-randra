@@ -4,6 +4,7 @@ import HeroButtons from "./HeroButtons";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useEffect, useState } from "react";
+import { LayoutHeroSection } from "@/layout/LayoutHeroSection";
 
 export default function HeroSection() {
   const { ref, inView } = useInView({ threshold: 0.1 });
@@ -21,8 +22,8 @@ export default function HeroSection() {
   };
 
   return (
-    <div className="bg-white text-black -mt-8 -mb-10">
-      <div className="max-w-[1420px] mx-auto">
+    <LayoutHeroSection>
+      <>
         <section ref={ref} className="min-h-screen flex flex-col items-center justify-center text-center px-4 md:px-12 lg:px-24">
           <motion.h1 className="text-3xl md:text-4xl font-bold leading-relaxed mb-2" variants={fadeUp} initial="hidden" animate={hasAnimated ? "visible" : "hidden"} transition={{ duration: 0.6, delay: 0.2 }}>
             Belajar <span className="bg-red-100 text-red-700 px-2 rounded-md">CPNS</span> Jadi Lebih Gampang di <span className="bg-red-100 text-red-700 px-2 rounded-md">Sobat Randra!</span>
@@ -38,11 +39,11 @@ export default function HeroSection() {
             Try Out, Bimbel, Smart Book, dan Video Belajar — semua yang kamu butuhin buat lolos CPNS.
           </motion.p>
 
-          <motion.div variants={fadeUp} initial="hidden" animate={hasAnimated ? "visible" : "hidden"} transition={{ duration: 0.6, delay: 0.6 }}>
+          <motion.div className="px-4 md:px-24" variants={fadeUp} initial="hidden" animate={hasAnimated ? "visible" : "hidden"} transition={{ duration: 0.6, delay: 0.6 }}>
             <HeroButtons />
           </motion.div>
         </section>
-      </div>
-    </div>
+      </>
+    </LayoutHeroSection>
   );
 }
