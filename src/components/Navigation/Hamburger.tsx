@@ -38,7 +38,7 @@ export default function Hamburger({ userDetail }: { userDetail: UserDetailInterf
     <>
       <Sheet key={"left"}>
         <SheetTrigger asChild>
-          <Button variant="outline" className="flex items-center gap-2 px-4 py-2 rounded-md">
+          <Button variant="outline" className="flex items-center gap-2 px-4 py-2 rounded-md bg-red-700 text-red-100 transition">
             <Menu size={24} />
           </Button>
         </SheetTrigger>
@@ -47,7 +47,7 @@ export default function Hamburger({ userDetail }: { userDetail: UserDetailInterf
             <div className="flex items-center gap-2">
               <img src="/logo/logo.png" alt="Sobat Randra Logo" className="w-8 h-8 md:w-14 md:h-14 object-contain" />
               <div>
-                <SheetTitle className="text-[#ad0a1f] font-semibold text-lg md:text-xl">Sobat Randra</SheetTitle>
+                <SheetTitle className="text-red-700 font-semibold text-lg md:text-xl">Sobat Randra</SheetTitle>
                 <SheetDescription className="text-xs md:text-sm text-gray-600">All in one Platform belajar SKD CPNS, BUMN, dan Polri</SheetDescription>
               </div>
             </div>

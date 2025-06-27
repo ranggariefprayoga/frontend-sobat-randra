@@ -12,7 +12,7 @@ interface TitleComponentProps {
   titleColor?: string;
 }
 
-const TitleComponent = ({ subTitle, title, textAlign = "start", subTitleColor = "text-[#ad0a1f]", titleColor = "text-black" }: TitleComponentProps) => {
+const TitleComponent = ({ subTitle, title, textAlign = "center", subTitleColor = "text-red-700", titleColor = "text-black" }: TitleComponentProps) => {
   const { ref, inView } = useInView({ threshold: 0.1 });
   const [hasAnimated, setHasAnimated] = useState(false);
 
@@ -31,11 +31,17 @@ const TitleComponent = ({ subTitle, title, textAlign = "start", subTitleColor = 
 
   return (
     <div ref={ref} className={`w-full px-4 md:px-24 text-black flex flex-col gap-2 ${alignmentClass}`}>
-      <motion.h3 variants={titleVariants} initial="hidden" animate={hasAnimated ? "visible" : "hidden"} transition={{ duration: 0.5, ease: "easeInOut", delay: 0.2 }} className={`text-xl md:text-3xl font-bold  ${titleColor}`}>
+      <motion.h3 variants={titleVariants} initial="hidden" animate={hasAnimated ? "visible" : "hidden"} transition={{ duration: 0.5, ease: "easeInOut", delay: 0.2 }} className={`text-2xl md:text-3xl font-bold  ${titleColor}`}>
         {title}
       </motion.h3>
       {subTitle && (
-        <motion.h3 variants={titleVariants} initial="hidden" animate={hasAnimated ? "visible" : "hidden"} transition={{ duration: 0.5, ease: "easeInOut" }} className={`text-base md:text-lg font-bold tracking-widest  ${subTitleColor}`}>
+        <motion.h3
+          variants={titleVariants}
+          initial="hidden"
+          animate={hasAnimated ? "visible" : "hidden"}
+          transition={{ duration: 0.5, ease: "easeInOut" }}
+          className={`text-base md:text-lg font-bold tracking-widest bg-red-100 px-2 rounded-md ${subTitleColor}`}
+        >
           {subTitle}
         </motion.h3>
       )}

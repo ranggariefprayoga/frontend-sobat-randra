@@ -14,10 +14,10 @@ export default function NoAuthNavbarComponent() {
 
   return (
     <>
-      <Button variant="ghost" className="rounded-full bg-[#D94B6B] text-white hover:bg-[#C75C71]" onClick={goToRegister}>
+      <Button variant="ghost" className="rounded-full bg-red-100 text-red-700" onClick={goToRegister}>
         Daftar
       </Button>
-      <Button variant="ghost" className="rounded-full bg-[#FFA500] text-black hover:bg-[#FF8C00]" onClick={goToLogin}>
+      <Button variant="ghost" className="rounded-full bg-orange-100 text-orange-700" onClick={goToLogin}>
         Masuk
       </Button>
     </>

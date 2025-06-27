@@ -18,11 +18,11 @@ export default function HeroButtons() {
   };
 
   return (
-    <div className="flex flex-col sm:flex-row gap-2 justify-center lg:justify-start">
-      <Button size="lg" variant="ghost" onClick={handleProductClick} className="rounded-full text-white  bg-[#FF8C00]">
+    <div className="flex flex-row gap-2 justify-center lg:justify-start">
+      <Button size="lg" variant="outline" onClick={handleProductClick} className="rounded-full text-orange-700 bg-orange-100">
         Lihat semua produk
       </Button>
-      <Button size="lg" variant="ghost" onClick={handleWhatsAppClick} className="bg-green-500 text-white  rounded-full">
+      <Button size="lg" variant="outline" onClick={handleWhatsAppClick} className="text-green-700 bg-green-100  rounded-full">
         Hubungi Kami
       </Button>
     </div>

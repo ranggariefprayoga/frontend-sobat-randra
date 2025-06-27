@@ -6,7 +6,7 @@ type LayoutBackgroundImageProps = {
 
 export const LayoutBackgroundImage = ({ children }: LayoutBackgroundImageProps) => {
   return (
-    <div className="mx-auto  text-white">
+    <div className="mx-auto text-white mt-8 md:mt-16 mb-8 md:mb-16">
       <div className="w-full bg-cover bg-center bg-no-repeat py-8 md:py-14" style={{ backgroundImage: 'url("/background/1.png")' }}>
         {children}
       </div>

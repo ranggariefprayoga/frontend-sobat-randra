@@ -1,10 +1,9 @@
 "use client";
 
-import LayoutBackgroundRed from "@/layout/LayoutBackgroundRed";
 import HeroButtons from "./HeroButtons";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function HeroSection() {
   const { ref, inView } = useInView({ threshold: 0.1 });
@@ -16,31 +15,34 @@ export default function HeroSection() {
     }
   }, [inView, hasAnimated]);
 
-  const textVariants = {
-    hidden: { opacity: 0, y: -20 },
+  const fadeUp = {
+    hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0 },
   };
 
-  const imageVariants = {
-    hidden: { opacity: 0, scale: 0.8 },
-    visible: { opacity: 1, scale: 1 },
-  };
-
   return (
-    <LayoutBackgroundRed>
-      <div ref={ref} className="flex flex-col-reverse lg:flex-row items-center px-4 md:px-24 gap-10">
-        {/* Teks */}
-        <motion.div className="w-full lg:w-1/2 text-white text-center lg:text-left" variants={textVariants} initial="hidden" animate={hasAnimated ? "visible" : "hidden"} transition={{ duration: 0.5, ease: "easeInOut", delay: 0.2 }}>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-4">Perjuangan Jadi Lebih Seru Bareng Sobat Randra!</h1>
-          <p className="text-sm sm:text-base md:text-lg lg:text-xl mb-6">Satu platform lengkap buat kamu yang siap taklukin CPNS, BUMN, dan Polri. Akses Try Out, Bimbel, Smart Book, dan Video Belajar kapan aja, di mana aja.</p>
-          <HeroButtons />
-        </motion.div>
+    <div className="bg-white text-black -mt-8 -mb-10">
+      <div className="max-w-[1420px] mx-auto">
+        <section ref={ref} className="min-h-screen flex flex-col items-center justify-center text-center px-4 md:px-12 lg:px-24">
+          <motion.h1 className="text-3xl md:text-4xl font-bold leading-relaxed mb-2" variants={fadeUp} initial="hidden" animate={hasAnimated ? "visible" : "hidden"} transition={{ duration: 0.6, delay: 0.2 }}>
+            Belajar <span className="bg-red-100 text-red-700 px-2 rounded-md">CPNS</span> Jadi Lebih Gampang di <span className="bg-red-100 text-red-700 px-2 rounded-md">Sobat Randra!</span>
+          </motion.h1>
 
-        {/* Gambar */}
-        <motion.div className="w-full lg:w-1/2 flex justify-center lg:justify-end" variants={imageVariants} initial="hidden" animate={hasAnimated ? "visible" : "hidden"} transition={{ duration: 0.5, ease: "easeInOut", delay: 0.4 }}>
-          <img src="./logo/logo-bg.jpg" alt="Hero Sobat Randra" className="rounded-full w-48 sm:w-60 md:w-72 lg:w-80 xl:w-96" />
-        </motion.div>
+          <motion.div className="mb-4" variants={fadeUp} initial="hidden" animate={hasAnimated ? "visible" : "hidden"} transition={{ duration: 0.6, delay: 0.3 }}>
+            <svg viewBox="0 0 200 20" fill="none" xmlns="http://www.w3.org/2000/svg" className="mx-auto w-75 h-5">
+              <path d="M5 15 C40 0, 160 0, 195 15" stroke="#D94B6B" strokeWidth="7" strokeLinecap="round" />
+            </svg>
+          </motion.div>
+
+          <motion.p className="text-sm sm:text-base md:text-lg lg:text-xl max-w-2xl mb-8" variants={fadeUp} initial="hidden" animate={hasAnimated ? "visible" : "hidden"} transition={{ duration: 0.6, delay: 0.4 }}>
+            Try Out, Bimbel, Smart Book, dan Video Belajar — semua yang kamu butuhin buat lolos CPNS.
+          </motion.p>
+
+          <motion.div variants={fadeUp} initial="hidden" animate={hasAnimated ? "visible" : "hidden"} transition={{ duration: 0.6, delay: 0.6 }}>
+            <HeroButtons />
+          </motion.div>
+        </section>
       </div>
-    </LayoutBackgroundRed>
+    </div>
   );
 }

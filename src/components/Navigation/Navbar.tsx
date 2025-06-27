@@ -14,8 +14,8 @@ export function Navbar() {
   }
 
   return (
-    <div className="bg-[#ad0a1f]">
-      <div className="flex justify-between items-center  py-2 px-4 md:px-24 max-w-[1420px] mx-auto">
+    <div className="bg-white text-black z-50">
+      <div className="flex justify-between items-center py-2 px-4 md:px-24 max-w-[1420px] mx-auto">
         <div className="flex items-center gap-2 ">
           <Hamburger userDetail={data?.data} />
           <NavbarTitle />

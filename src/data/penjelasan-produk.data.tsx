@@ -1,4 +1,4 @@
-import { Book, Users, Video, BookOpen } from "lucide-react"; // Pilih ikon dari lucide-react
+import { Target, School, Notebook, PlaySquare } from "lucide-react"; // Pilih ikon dari lucide-react
 import { ReactNode } from "react";
 
 interface ProdukItem {
@@ -9,23 +9,23 @@ interface ProdukItem {
 
 export const produkData: ProdukItem[] = [
   {
-    icon: <BookOpen className="h-6 w-6 text-[#ad0a1f]" />,
+    icon: <Target className="h-6 w-6 text-[#D94B6B]" />,
     title: "Try Out",
-    description: "Tersedia dalam dua tipe: Gratis (hanya bisa dikerjakan sekali) dan Premium (bisa dikerjakan berkali-kali).",
+    description: "Latihan soal gratis sekali saja atau premium sepuasnya. Tersedia History Nilai dan Rangking Nasional TO!",
   },
   {
-    icon: <Users className="h-6 w-6 text-[#ad0a1f]" />,
+    icon: <School className="h-6 w-6 text-[#D94B6B]" />,
     title: "Bimbel",
-    description: "Dapatkan bimbingan secara private atau barengan melalui Zoom meeting.",
+    description: "Belajar bareng tutor lewat Zoom, bahas soal dan strategi bareng peserta lain.",
   },
   {
-    icon: <Book className="h-6 w-6 text-[#ad0a1f]" />,
+    icon: <Notebook className="h-6 w-6 text-[#D94B6B]" />,
     title: "Smart Book",
-    description: "Pilih antara Smart Book SKD atau Smart Book SKB sesuai kebutuhan persiapan kamu.",
+    description: "Ebook & Cheat Sheet SKD & SKB.",
   },
   {
-    icon: <Video className="h-6 w-6 text-[#ad0a1f]" />,
+    icon: <PlaySquare className="h-6 w-6 text-[#D94B6B]" />,
     title: "Video Belajar",
-    description: "Beli akses video belajar untuk materi CPNS, BUMN, atau Polri dan pelajari kapan saja.",
+    description: "Video materi CPNS dan BUMN. Akses kapan aja, sepuasnya.",
   },
 ];
