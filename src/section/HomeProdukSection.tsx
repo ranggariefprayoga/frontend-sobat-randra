@@ -10,7 +10,7 @@ export default function HomeProdukSection() {
   return (
     <LayoutBackgroundImage>
       <div className="max-w-[1420px] mx-auto">
-        <TitleComponent titleColor="text-white" title="Pilihan Paket Belajar" subTitle="Buat kamu pejuang CPNS dan BUMN" />
+        <TitleComponent titleColor="text-black" title="Pilihan Paket Belajar" subTitle="Buat kamu pejuang CPNS dan BUMN" />
         {/* === PROMO BESAR DI ATAS SENDIRI === */}
         <div className="w-full px-4 md:px-24 mt-8  grid grid-cols-1">
           <div

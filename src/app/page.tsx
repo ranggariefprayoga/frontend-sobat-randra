@@ -1,3 +1,4 @@
+import BannerCPNS from "@/components/CallToAction/CTAComponent";
 import HeroSection from "@/components/HeroComponent/HeroComponent";
 import CaraBeliSection from "@/section/CaraBeliSection";
 import HomeProdukSection from "@/section/HomeProdukSection";
@@ -10,6 +11,7 @@ export default function Home() {
       <PenjelasanProdukSection />
       <HomeProdukSection />
       <CaraBeliSection />
+      <BannerCPNS />
     </>
   );
 }
