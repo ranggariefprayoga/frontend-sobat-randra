@@ -12,6 +12,7 @@ import { Star, TrendingUp } from "lucide-react";
 import debounce from "lodash.debounce";
 import { Input } from "../ui/input";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import ScrollableTableWrapper from "../ScrollComponent/ScrollComponent";
 
 const Leaderboard = () => {
   const { data: productTryOuts, isLoading: isLoadingProducts } = useGetProductTryOutsForLeaderboard();
@@ -63,7 +64,7 @@ const Leaderboard = () => {
         data?.data?.topUsers?.length ? (
           <div className="mt-2">
             <div className="mt-2 rounded-md border border-gray-200 overflow-hidden">
-              <div className="w-full overflow-x-auto">
+              <ScrollableTableWrapper>
                 <Table className="min-w-[700px] w-full rounded-lg shadow-md border-separate border-spacing-0">
                   <TableHeader className="bg-gray-100 sticky top-0 z-10">
                     <TableRow>
@@ -142,7 +143,7 @@ const Leaderboard = () => {
                     </TooltipProvider>
                   </TableBody>
                 </Table>
-              </div>
+              </ScrollableTableWrapper>
             </div>
 
             {data?.data?.myRank && <RankUser {...data?.data?.myRank} />}
