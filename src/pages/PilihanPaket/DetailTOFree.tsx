@@ -74,13 +74,13 @@ export default function DetailTOFree({ product, user }: Props) {
           toast.success(res?.data?.message || "Try Out dimulai gratis, tunggu sebentar...");
         },
         onError: () => {
+          setPassword("");
+          setIsPasswordCorrect(false);
           toast.error("Gagal memulai sesi. Pastikan password benar.");
         },
       }
     );
     setIsGratisDialogOpen(false);
-    setPassword("");
-    setIsPasswordCorrect(false);
   };
 
   return (

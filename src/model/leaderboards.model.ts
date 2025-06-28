@@ -22,6 +22,7 @@ export interface rankResponse {
   email: string;
   score: number;
   status: string;
+  session_id: number;
   category_score: CategoryScore[];
 }
 export interface productLeaderboardAvailable {

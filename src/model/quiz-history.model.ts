@@ -58,18 +58,6 @@ export interface getHistorySessionDetailByUser {
   message: string | null;
 }
 
-export interface WebResponseSession<T> {
-  data: {
-    total_sessions: number;
-    total_pages: number;
-    current_page: number;
-    limit: number;
-    sessions?: T;
-  };
-  errors?: string;
-  message?: string;
-}
-
 export interface WebResponseDetailHistorySession<T> {
   data: {
     try_out_session_id: number;

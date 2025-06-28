@@ -1,14 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { API_BASE_URL } from "../apiBaseUrl";
-import { getAllQuizSessionByUser, getHistorySessionDetailByUser, WebResponseDetailHistorySession, WebResponseSession } from "@/model/quiz-history.model";
+import { getAllQuizSessionByUser, getHistorySessionDetailByUser, WebResponseDetailHistorySession } from "@/model/quiz-history.model";
+import { WebResponse } from "@/model/web-reponse.model";
 
 // Hook untuk mengambil daftar sesi quiz yang dikerjakan user
-export const useGetQuizSessionsForUser = (page: number = 1, limit: number = 10) => {
-  return useQuery<WebResponseSession<getAllQuizSessionByUser[]>, Error>({
-    queryKey: ["quiz-sessions", page, limit],
+export const useGetQuizSessionsForUser = () => {
+  return useQuery<WebResponse<getAllQuizSessionByUser[]>, Error>({
+    queryKey: ["quiz-sessions"],
     queryFn: async () => {
-      const res = await axios.get(`${API_BASE_URL}/api/quiz-history/sessions?page=${page}&limit=${limit}`, { withCredentials: true });
+      const res = await axios.get(`${API_BASE_URL}/api/quiz-history/sessions`, { withCredentials: true });
       return res.data;
     },
     retry: false,
