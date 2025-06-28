@@ -8,13 +8,22 @@ export interface WebPaginatedResponseForLeaderboards<T> {
   };
 }
 
+export interface CategoryScore {
+  category: string;
+  correctAnswers: number;
+  wrongAnswers: number;
+  totalQuestions: number;
+  score: number;
+}
+
 export interface rankResponse {
   rank: number;
   name: string;
   email: string;
   score: number;
+  status: string;
+  category_score: CategoryScore[];
 }
-
 export interface productLeaderboardAvailable {
   id: number;
   name: string;

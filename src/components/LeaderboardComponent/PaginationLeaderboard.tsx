@@ -1,26 +1,36 @@
 "use client";
 
-import { Button } from "../ui/button"; // Ensure you're using the correct button component
-import { ChevronLeft, ChevronRight } from "lucide-react"; // For pagination arrows
+import { Button } from "../ui/button";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export const PaginationLeaderboard = ({ currentPage, totalPages, onPageChange }: { currentPage: number; totalPages: number; onPageChange: (page: number) => void }) => {
   const prevDisabled = currentPage <= 1;
   const nextDisabled = currentPage >= totalPages;
 
   return (
-    <div className="flex justify-between items-center mt-4 w-full ">
-      {/* Previous Page Button */}
-      <Button variant="default" disabled={prevDisabled} onClick={() => onPageChange(currentPage - 1)} aria-label="Previous page">
+    <div className="mt-4 flex justify-center items-center w-full gap-4">
+      {/* Previous Button */}
+      <Button
+        variant="outline"
+        onClick={() => onPageChange(currentPage - 1)}
+        disabled={prevDisabled}
+        className={`rounded-full px-4 py-2 text-sm font-medium transition ${prevDisabled ? "cursor-not-allowed bg-red-100 text-red-700" : "bg-red-200 text-red-900 "}`}
+      >
         <ChevronLeft size={16} />
       </Button>
 
       {/* Page Info */}
-      <span className="text-sm">
-        Page {currentPage} of {totalPages}
+      <span className="text-sm md:text-base text-gray-700 font-medium">
+        Halaman {currentPage} dari {totalPages}
       </span>
 
-      {/* Next Page Button */}
-      <Button variant="default" disabled={nextDisabled} onClick={() => onPageChange(currentPage + 1)} aria-label="Next page">
+      {/* Next Button */}
+      <Button
+        variant="outline"
+        onClick={() => onPageChange(currentPage + 1)}
+        disabled={nextDisabled}
+        className={`rounded-full px-4 py-2 text-sm font-medium transition ${nextDisabled ? "cursor-not-allowed bg-red-100 text-red-700" : "bg-red-200 text-red-900 "}`}
+      >
         <ChevronRight size={16} />
       </Button>
     </div>

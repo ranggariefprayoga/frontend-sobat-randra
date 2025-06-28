@@ -1,39 +1,34 @@
 "use client";
 
 import { useState } from "react";
-import { Select, SelectItem, SelectTrigger, SelectValue, SelectContent } from "../ui/select"; // Correct import for SelectContent
+import { Select, SelectItem, SelectTrigger, SelectValue, SelectContent } from "../ui/select";
 
 interface LeaderboardSelectProps {
-  onProductSelect: (productId: number) => void; // Function to handle product selection
-  productTryOuts: { id: number; name: string }[] | undefined; // Array of products with id and name
+  onProductSelect: (productId: number) => void;
+  productTryOuts: { id: number; name: string }[] | undefined;
 }
 
-// The LeaderboardSelect component receives props from the parent
 const LeaderboardSelect = ({ onProductSelect, productTryOuts }: LeaderboardSelectProps) => {
-  const [selectedTryOut, setSelectedTryOut] = useState<string>("Silakan Pilih Try Out Terlebih Dahulu");
-  const handleProductChange = (value: string) => {
-    // Convert the value to a number before passing it to the parent
-    onProductSelect(Number(value));
+  const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
 
-    if (value) {
-      setSelectedTryOut(productTryOuts?.find((product) => product.id === Number(value))?.name || "Silakan Pilih Try Out Terlebih Dahulu");
-    }
+  const handleProductChange = (value: string) => {
+    const productId = Number(value);
+    setSelectedProductId(productId);
+    onProductSelect(productId);
   };
 
   return (
     <div className="w-full lg:w-1/2">
-      {/* Select Product */}
-      <Select onValueChange={handleProductChange}>
-        <SelectTrigger>
-          {/* Set default value as placeholder */}
-          <SelectValue placeholder={selectedTryOut} />
+      <Select value={selectedProductId ? String(selectedProductId) : "Silakan Pilih Try Out Terlebih Dahulu"} onValueChange={handleProductChange}>
+        <SelectTrigger className="w-full border rounded-lg shadow-sm px-4 py-2   ring-[#ad0a1f] border-[#ad0a1f] transition text-gray-800 bg-white">
+          <SelectValue placeholder="Silakan pilih Try Out" />
         </SelectTrigger>
-        <SelectContent>
-          {/* Placeholder item */}
-          <SelectItem value="Silakan Pilih Try Out Terlebih Dahulu">Silakan pilih Try Out</SelectItem>
-          {/* Loop through the products and create SelectItems */}
+        <SelectContent className="rounded-lg shadow-md border border-gray-200 bg-white">
+          <SelectItem disabled value="Silakan Pilih Try Out Terlebih Dahulu" className="text-gray-400 cursor-default">
+            Silakan pilih Try Out
+          </SelectItem>
           {productTryOuts?.map((product) => (
-            <SelectItem key={product.id} value={String(product.id)}>
+            <SelectItem key={product.id} value={String(product.id)} className="cursor-pointer hover:bg-gray-100 px-4 py-2 text-sm">
               {product.name}
             </SelectItem>
           ))}

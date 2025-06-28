@@ -24,11 +24,8 @@ export default function CardMulaiTryOut({ product, userEmail }: ProductCardProps
       <img src={product.banner_image || "/no-image.png"} alt={product.name} className="w-full h-48 object-cover" />
 
       <div className="p-4">
-        <div className="flex items-center gap-2 text-sm mb-2">{isPremiumAvailable && <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs flex items-center gap-1">📘 Premium</span>}</div>
-        <h2 className="text-lg font-bold">{product.name}</h2>
-        <p className="text-sm my-2 truncate overflow-hidden whitespace-nowrap" title={product.description}>
-          {product.description}
-        </p>
+        <div className="flex items-center gap-2 text-sm mb-2">{isPremiumAvailable && <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs font-medium">⭐ Premium</span>}</div>
+        <h2 className="text-lg font-bold mb-4">{product.name}</h2>
         <AccessButtonWithModal isPremiumAvailable={isPremiumAvailable?.data} productTryOutId={product.id} refetchAvailableTryOut={refetch} />
       </div>
     </div>
