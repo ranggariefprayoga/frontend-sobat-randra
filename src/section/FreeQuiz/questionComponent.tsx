@@ -17,12 +17,12 @@ const QuestionComponent: React.FC<QuestionComponentProps> = ({ question }) => {
 
   return (
     <>
-      <div key={question.id} className="rounded-md text-base mb-4 md:mb-8">
+      <div key={question.id} className="rounded-md  mb-4 md:mb-8">
         <div className="flex items-center">
           <div className="flex items-start gap-1 sm:gap-2">
             {/* Math Pilihan */}
             {question.question_text_math && question.question_text_math.length > 0 && (
-              <div ref={mathRef} className="text-base sm:text-base w-full">
+              <div ref={mathRef} className="text-base w-full">
                 {mathContents.map((expression, index) => (
                   <div key={index} className="mb-2 text-base text-start whitespace-pre-wrap">
                     <LatexRenderer latexStrings={[expression]} />
@@ -34,7 +34,7 @@ const QuestionComponent: React.FC<QuestionComponentProps> = ({ question }) => {
             <div className="flex flex-col gap-2">
               {/* Teks Pilihan */}
               {question.question_text && question.question_text.length > 0 && (
-                <div className="space-y-1 text-base">
+                <div className="space-y-1 text-base md:text-lg font-medium">
                   {question.question_text.map((line, idx) => {
                     return (
                       <p className="text-start whitespace-pre-wrap" key={idx}>

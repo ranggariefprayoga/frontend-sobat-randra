@@ -13,6 +13,7 @@ import { QuestionResponse } from "@/model/question.model";
 import { useGetValidQuestionsAdmin, useGetQuestionByNumber } from "@/lib/api/question.api";
 import CreateQuestionModal from "./ModalBuatSoal";
 import PreviewQuestionDialog from "../Preview/PreviewQuestionModal";
+import { useGetTryOutProductsNameById } from "@/lib/api/productTryOut.api";
 
 export default function BuatSoalTryOutDetail({ params }: { params: Promise<{ product_try_out_id: string }> }) {
   const { product_try_out_id: id } = use(params);
@@ -25,6 +26,8 @@ export default function BuatSoalTryOutDetail({ params }: { params: Promise<{ pro
     TIU: { start: 31, end: 65 },
     TKP: { start: 66, end: 110 },
   };
+
+  const { data: productName, isLoading: productNameLoading } = useGetTryOutProductsNameById(Number(id));
 
   // Panggil API valid questions untuk admin
   const { data: questionsData, isLoading, refetch } = useGetValidQuestionsAdmin(id);
@@ -51,7 +54,7 @@ export default function BuatSoalTryOutDetail({ params }: { params: Promise<{ pro
     refetch();
   };
 
-  if (isLoading) {
+  if (isLoading || productNameLoading) {
     return (
       <div className="min-h-screen flex justify-center items-center bg-white">
         <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-[#ad0a1f] border-opacity-70"></div>
@@ -73,7 +76,7 @@ export default function BuatSoalTryOutDetail({ params }: { params: Promise<{ pro
   return (
     <LayoutBackgroundWhite>
       <ButtonWithIcon icon={ArrowLeft} label="Kembali" />
-      <TitleComponent title="Buat Soal Try Out" />
+      {productName?.data && <TitleComponent title={`Buat Soal ${activeCategory} ${productName?.data.name}`} />}
 
       <div className="px-4 md:px-24 my-4">
         <CreateQuestionModal onQuestionAdded={handleChangeQuestion} product_try_out_id={Number(id)} category={activeCategory} validQuestions={Array.from(validNumbers)} questionRanges={questionRanges[activeCategory]} />

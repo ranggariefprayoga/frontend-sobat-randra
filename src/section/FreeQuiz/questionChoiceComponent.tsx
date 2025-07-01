@@ -40,23 +40,23 @@ const QuestionChoiceComponent = React.memo(({ choices, isSelected, onSelect }: C
           <Button
             key={choice.id}
             variant="outline"
-            className={`border rounded-md p-4 space-y-3 w-full h-auto ${isChoiceSelected ? "bg-green-500 border-green-500 text-black" : "bg-transparent border-gray-300 text-black"} ${
-              !isChoiceSelected && "hover:bg-gray-100 hover:border-gray-400"
-            }`}
+            className={`border rounded-md px-2 py-4 space-y-2 w-full h-auto ${isChoiceSelected ? "bg-blue-100 border-blue-500 hover:bg-blue-100 text-blue-700 cursor-not-allowed" : "bg-transparent border-gray-300 text-black"}`}
             onClick={() => onSelect(choice.id)} // Handle selection
-            disabled={isChoiceSelected} // Disable button if already selected
           >
             <div className="flex flex-col items-start gap-2 w-full h-auto">
               <div className="flex gap-2 justify-start items-start">
-                <Badge variant={isChoiceSelected ? "secondary" : "outline"} className="text-sm">
+                <Badge
+                  variant={isChoiceSelected ? "secondary" : "outline"}
+                  className={`text-sm font-semibold ${isChoiceSelected ? "bg-blue-100 border-blue-500 hover:bg-blue-100 text-blue-700 cursor-not-allowed" : "bg-transparent border-gray-300 text-black"}`}
+                >
                   {choice.question_choice_title}
                 </Badge>
 
                 {/* Display math choice */}
                 {choice.question_choice_text_math && choice.question_choice_text_math.length > 0 && (
-                  <div className="text-base sm:text-xl w-full">
+                  <div className="text-sm sm:text-base w-full">
                     {choice.question_choice_text_math.map((math, i) => (
-                      <div key={i} className="mb-2 text-base text-start whitespace-pre-wrap">
+                      <div key={i} className="mb-2 text-sm  text-start whitespace-pre-wrap">
                         <LatexRenderer latexStrings={[math]} />
                       </div>
                     ))}
@@ -65,9 +65,9 @@ const QuestionChoiceComponent = React.memo(({ choices, isSelected, onSelect }: C
                 <div className="flex flex-col gap-2">
                   {/* Display choice text */}
                   {choice.question_choice_text && choice.question_choice_text.length > 0 && (
-                    <div className="space-y-1 text-sm">
+                    <div className="space-y-1 text-sm sm:text-base">
                       {choice.question_choice_text.map((line, idx) => (
-                        <p className="text-start whitespace-pre-wrap" key={idx}>
+                        <p className="text-start text-sm sm:text-base font-semibold whitespace-pre-wrap" key={idx}>
                           {line}
                         </p>
                       ))}

@@ -71,6 +71,15 @@ export default function DetailTO({ product, user }: Props) {
 
   const whatsappMessage = `https://wa.me/628774867857?text=Halo%20min%2C%20aku%20mau%20pesen%20${encodeURIComponent(product.name)}`;
 
+  const formatCurrency = (value: number | undefined) => {
+    return (
+      value?.toLocaleString("id-ID", {
+        style: "currency",
+        currency: "IDR",
+      }) ?? "Harga tidak tersedia"
+    );
+  };
+
   return (
     <div className="w-full mx-auto px-4 md:px-24 mt-8">
       <div className="flex flex-col md:flex-row gap-6 items-start">
@@ -88,7 +97,7 @@ export default function DetailTO({ product, user }: Props) {
 
           <div className="flex flex-wrap gap-2 mb-4">
             {!product.is_active && <Badge>📘 Tidak Aktif</Badge>}
-            <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs flex items-center gap-1">📘 Premium</span>
+            {!product.is_trial_product && <span className={`bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs font-medium`}>⭐ Premium</span>}
           </div>
 
           <p className="text-sm text-gray-700 whitespace-pre-line mb-4">{product.description}</p>
@@ -111,21 +120,14 @@ export default function DetailTO({ product, user }: Props) {
               <div className="font-semibold space-y-1 mb-6">
                 <div className="flex items-center gap-2">
                   {discount !== null && <div className="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded-md mb-1">{discount}%</div>}
-                  {product.old_price !== undefined && product.old_price > 0 && (
-                    <span className="text-sm line-through text-muted-foreground">
-                      {product.old_price.toLocaleString("id-ID", {
-                        style: "currency",
-                        currency: "IDR",
-                      })}
-                    </span>
-                  )}
+                  {product.old_price !== undefined && product.old_price > 0 && <span className="text-sm line-through text-muted-foreground">{formatCurrency(product.old_price)}</span>}
                 </div>
-                <p className="text-xl font-bold text-[#ad0a1f]">Rp {product.price.toLocaleString("id-ID")}</p>
+                <p className="text-xl font-bold text-[#ad0a1f]">{formatCurrency(product.price)}</p>
               </div>
 
               {/* CTA WhatsApp */}
               <a href={whatsappMessage} target="_blank" rel="noopener noreferrer" className="block w-full md:max-w-xs">
-                <Button className="w-full md:w-auto bg-green-600 hover:bg-green-700 text-white">Beli Paket Premium</Button>
+                <Button className="w-full md:w-auto bg-green-600 hover:bg-green-700 text-white">Beli Try Out</Button>
               </a>
             </>
           )}

@@ -22,7 +22,7 @@ const QuestionButton: React.FC<QuestionButtonProps> = ({ questionId, isAnswered,
     baseClass += " border-[#081737] text-[#081737] font-semibold bg-white";
   } else if (isAnswered) {
     // Answered question
-    baseClass += " bg-green-500 text-white border-green-600 hover:bg-green-600";
+    baseClass += " bg-blue-100 text-blue-700 border-blue-500 hover:bg-blue-500 hover:text-white";
   } else {
     // Unanswered question
     baseClass += " border-gray-400 hover:bg-gray-100 text-gray-800";

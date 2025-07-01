@@ -26,6 +26,15 @@ export default function DetailSmartbook({ product }: Props) {
     router.push(link);
   };
 
+  const formatCurrency = (value: number | undefined) => {
+    return (
+      value?.toLocaleString("id-ID", {
+        style: "currency",
+        currency: "IDR",
+      }) ?? "Harga tidak tersedia"
+    );
+  };
+
   return (
     <div className="w-full mx-auto px-4 md:px-24 mt-8">
       {/* Konten */}
@@ -56,16 +65,9 @@ export default function DetailSmartbook({ product }: Props) {
             <div className="font-semibold space-y-1 mb-6">
               <div className="flex items-center gap-2">
                 {discount !== null && <div className="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded-md mb-1">{discount}%</div>}
-                {product.old_price !== undefined && product.old_price > 0 && (
-                  <span className="text-sm line-through text-muted-foreground">
-                    {product.old_price.toLocaleString("id-ID", {
-                      style: "currency",
-                      currency: "IDR",
-                    })}
-                  </span>
-                )}
+                {product.old_price !== undefined && product.old_price > 0 && <span className="text-sm line-through text-muted-foreground">{formatCurrency(product.old_price)}</span>}
               </div>
-              <p className="text-xl font-bold text-[#ad0a1f]">Rp {product.price.toLocaleString("id-ID")}</p>
+              <p className="text-xl font-bold text-[#ad0a1f]">{formatCurrency(product.price)}</p>
             </div>
 
             {/* CTA WhatsApp */}

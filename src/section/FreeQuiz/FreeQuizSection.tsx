@@ -12,9 +12,9 @@ import { toast } from "sonner";
 import { useUser } from "@/lib/api/user.api";
 import CountdownTimer from "@/components/Countdown/CountdownTimer";
 import { useGetValidQuestionsUser } from "@/lib/api/question.api";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useGetQuestionForQuiz } from "@/lib/api/soal.api";
 import { useEffect, useState } from "react";
+import { PaginationTryOut } from "@/components/PaginationSoal/PaginationTryOut";
 
 export default function FreeQuizSection() {
   const searchParams = useSearchParams();
@@ -134,19 +134,18 @@ export default function FreeQuizSection() {
           <div className="flex flex-row gap-2 w-full items-center justify-between lg:justify-start mb-4">
             {/* Soal Nomor UI */}
 
-            <div className="flex justify-between items-center w-full">
-              {question && <div className="bg-[#ad0a1f] text-white p-2 font-bold text-base rounded-md">No {question?.number_of_question}</div>}
+            <div className="flex justify-between items-center w-full mb-8 md:mb-12 bg-gray-100 text-gray-700 px-2 py-4 rounded-md border border-gray-500">
+              {question && <div className="bg-blue-100 text-blue-700 p-2 font-bold text-base rounded-md">{question?.number_of_question}</div>}
+              <div className="lg:hidden block items-center mt-2 md:mt-0">
+                <NumberButtonsResponsive currentQuestionId={questionId} questions={validQuestions?.data} questionHasAswered={numberHasAswered} onSelectNumber={handleSelectNumber} />
+              </div>
               <CountdownTimer expiredAt={expired_at} productId={productTryOutId} sessionId={sessionId} userEmail={userEmail} />
-            </div>
-
-            <div className="lg:hidden block items-center">
-              <NumberButtonsResponsive currentQuestionId={questionId} questions={validQuestions?.data} questionHasAswered={numberHasAswered} onSelectNumber={handleSelectNumber} />
             </div>
           </div>
         )}
 
         {/* Question + Number Buttons */}
-        <div className="flex w-full gap-2">
+        <div className="flex w-full gap-8">
           <div className="w-full lg:w-[80%]">
             {question ? (
               <>
@@ -160,24 +159,12 @@ export default function FreeQuizSection() {
                     // Passing the revert function
                   />
                 )}
-                <div className="flex justify-between items-center mb-4 mt-6">
-                  <Button onClick={() => handleNavigation(previousQuestionId)} disabled={isFirst || previousQuestionId === null} className="w-auto flex items-center space-x-2">
-                    {/* Show icon and text for large screens, only icon for small screens */}
-                    <span className="hidden sm:inline">Sebelumnya</span> {/* Text visible only on screen sizes larger than 'sm' */}
-                    <ChevronLeft className="sm:hidden" /> {/* Icon visible only on small screens */}
-                  </Button>
-
-                  <Button onClick={() => handleNavigation(nextQuestionId)} className="w-auto flex items-center space-x-2">
-                    {/* Show icon and text for large screens, only icon for small screens */}
-                    <span className="hidden sm:inline">{isLast ? "Selesaikan Try Out" : "Selanjutnya"}</span>
-                    <ChevronRight className="sm:hidden" /> {/* Icon visible only on small screens */}
-                  </Button>
-                </div>
+                <PaginationTryOut handleNextSoal={handleNavigation} handlePreviousSoal={handleNavigation} previousQuestionId={previousQuestionId} nextQuestionId={nextQuestionId} isFirst={isFirst} isLast={isLast} />
               </>
             ) : (
               <div className="text-center p-6 bg-gray-100 border border-gray-300 rounded-md shadow-md">
                 <div className="max-w-md mx-auto">
-                  <h2 className="text-xl font-semibold text-gray-700 mb-4">Uji Coba Try Out Gratis hanya tersedia sampai soal nomor 10.</h2>
+                  <h2 className="text-xl font-semibold text-gray-700 mb-4">Uji Coba Try Out Gratis hanya menyediakan {validQuestions?.data?.length} soal saja.</h2>
                   <p className="text-sm text-gray-600 mb-4">
                     Untuk mendapatkan fitur lengkap, soal terbaru, dan rangking nasional Try Out, beli paket <strong>Try Out Premium</strong> kami
                   </p>
