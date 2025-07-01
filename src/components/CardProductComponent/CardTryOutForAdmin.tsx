@@ -65,7 +65,7 @@ export default function CardTryOutForAdmin({ product, customLink, buttonText = "
       {/* Gambar Produk */}
       <img src={product.banner_image || "/no-image.png"} alt={product.name} className="w-full h-48 object-cover" />
 
-      <div className="p-4">
+      <div className="px-2 py-4">
         {/* Badge */}
         <div className="flex items-center gap-2 text-sm mb-2">
           {isFreeAvailable && <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs">📘 Gratis</span>}

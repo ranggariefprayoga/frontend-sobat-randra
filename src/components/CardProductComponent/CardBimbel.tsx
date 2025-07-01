@@ -20,8 +20,8 @@ export default function CardBimbel({ product, customLink, buttonText = "Lihat De
     <div className={`relative shadow-md rounded-xl overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 ${!product.is_active ? "bg-gray-300 text-gray-500" : "bg-white text-gray-900"}`}>
       <img src={product.banner_image || "/no-image.png"} alt={product.name} className="w-full h-48 object-cover" />
 
-      <div className="p-4">
-        <div className="flex items-center gap-2 text-sm mb-2">
+      <div className="px-2 py-4">
+        <div className="flex items-center gap-1 mb-2">
           <span className={`bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs font-medium`}>🎓 Bimbel Bareng</span>
           {isLoading ? <h1 className="text-xs">Tunggu sebentar...</h1> : <>{product.capacity && <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">👥 Sisa {sisaKuota} kuota</span>}</>}
         </div>

@@ -27,7 +27,7 @@ export default function DetailPromo({ product }: Props) {
       {/* Konten */}
       <div className="flex flex-col md:flex-row gap-6 items-start">
         {/* Banner */}
-        <div className="relative w-full md:w-[45%] aspect-[16/9] rounded-xl overflow-hidden flex-shrink-0">
+        <div className="relative w-full md:w-[50%] aspect-[16/9] rounded-xl overflow-hidden flex-shrink-0">
           {product.banner_image ? (
             <Image src={product.banner_image} alt={product.name} fill className="object-cover" sizes="(max-width: 768px) 100vw, 45vw" priority />
           ) : (
@@ -36,15 +36,15 @@ export default function DetailPromo({ product }: Props) {
         </div>
 
         {/* Deskripsi */}
-        <div className="flex flex-col md:w-[55%] w-full">
+        <div className="flex flex-col md:w-[50%] w-full">
           <h1 className="text-2xl md:text-3xl font-bold text-[#ad0a1f] uppercase mb-2">{product.name}</h1>
 
           <div className="flex flex-wrap gap-2 mb-4">{!product.is_active && <Badge>📘 Tidak Aktif</Badge>}</div>
 
-          <p className="text-sm text-gray-700 whitespace-pre-line mb-4">{product.description}</p>
+          <p className="text-sm text-gray-700 whitespace-pre-line">{product.description}</p>
 
           <div className="md:px-0">
-            <Separator className="my-4" />
+            <Separator className="my-2" />
           </div>
 
           <>
@@ -64,7 +64,7 @@ export default function DetailPromo({ product }: Props) {
               <p className="text-xl font-bold text-[#ad0a1f]">Rp {product.price.toLocaleString("id-ID")}</p>
             </div>
             <a href={whatsappMessage} target="_blank" rel="noopener noreferrer" className="block w-full md:max-w-xs">
-              <Button className="w-full md:w-auto bg-green-600 hover:bg-green-700 text-white">Beli Paket Premium</Button>
+              <Button className="w-full md:w-auto bg-green-600 hover:bg-green-700 text-white">Beli Paket Promo</Button>
             </a>
           </>
         </div>
@@ -72,7 +72,7 @@ export default function DetailPromo({ product }: Props) {
 
       {product.marketing_text && product.marketing_text !== "" && (
         <div className="mt-10 bg-gray-50 border border-gray-200 p-4 rounded-lg text-sm text-gray-700 whitespace-pre-line leading-relaxed">
-          <h1 className="text-2xl md:text-3xl font-bold text-[#ad0a1f] uppercase mb-2">Tentang Paket</h1>
+          <h1 className="text-2xl md:text-3xl font-bold text-[#ad0a1f] uppercase mb-2">🏷️ Tentang Promo</h1>
           {product.marketing_text}
         </div>
       )}

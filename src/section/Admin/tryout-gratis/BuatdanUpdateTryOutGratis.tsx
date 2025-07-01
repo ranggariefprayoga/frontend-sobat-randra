@@ -14,12 +14,20 @@ import { ArrowLeft } from "lucide-react";
 export default function BuatDanUpdateTryOutGratisSection() {
   const { data: allFreeProductTryOut, isLoading } = useGetAllFreeTryOutProducts();
 
+  const checkFreeProduct = () => {
+    if (allFreeProductTryOut?.data && allFreeProductTryOut.data.length > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   return (
     <LayoutBackgroundWhite>
       <ButtonWithIcon icon={ArrowLeft} label="Kembali" />
       <TitleComponent title="Buat dan Update Try Out Gratis" />
       <div className="w-full px-4 md:px-24 mt-4 md:mt-8">
-        <CreateTryOutFreeModal />
+        <CreateTryOutFreeModal checkFreeProduct={checkFreeProduct()} />
       </div>
 
       {isLoading ? (

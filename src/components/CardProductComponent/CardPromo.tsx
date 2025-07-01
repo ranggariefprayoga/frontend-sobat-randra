@@ -17,7 +17,7 @@ export default function CardPromo({ product, customLink, buttonText = "Lihat Det
     <div className={`relative shadow-md rounded-xl overflow-hidden border border-gray-200 hover:shadow-lg transition-all duration-300 ${!product.is_active ? "bg-gray-200 text-gray-500 pointer-events-none" : `bg-white text-gray-900`}`}>
       <img src={product.banner_image || "/no-image.png"} alt={product.name} className="w-full h-48 object-cover" />
 
-      <div className="p-4">
+      <div className="px-2 py-4">
         <div className="flex items-center gap-2 text-sm mb-2">
           <span className={`bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs flex items-center font-medium`}>🎉 Promo</span>
         </div>

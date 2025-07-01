@@ -47,46 +47,47 @@ export default function DetailBimbel({ product, isUserAvailable, aksesSaatIni }:
       {/* Konten */}
       <div className="flex flex-col md:flex-row gap-6 items-start">
         {/* Banner */}
-        <div className="relative w-full md:w-[45%] aspect-[16/9] rounded-xl overflow-hidden flex-shrink-0">
-          {product.banner_image ? (
-            <Image src={product.banner_image} alt={product.name} fill className="object-cover" sizes="(max-width: 768px) 100vw, 45vw" priority />
+        <div className="relative w-full md:w-[50%] aspect-[16/9] rounded-xl overflow-hidden flex-shrink-0">
+          {product.jadwal_bimbel_image ? (
+            <Image src={product.jadwal_bimbel_image} alt={product.name} fill className="object-cover" sizes="(max-width: 768px) 100vw, 45vw" priority />
           ) : (
             <div className="flex items-center justify-center w-full h-full bg-gray-200 text-gray-500 text-sm">Gambar tidak tersedia</div>
           )}
         </div>
 
         {/* Deskripsi */}
-        <div className="flex flex-col md:w-[55%] w-full">
+        <div className="flex flex-col md:w-[50%] w-full">
           <h1 className="text-2xl md:text-3xl font-bold text-[#ad0a1f] uppercase mb-2">{product.name}</h1>
 
           <div className="flex flex-wrap gap-2 mb-4">
             {!product.is_active && <Badge>📘 Tidak Aktif</Badge>}
-            <span className="bg-green-100 text-green-600 px-3 py-1 rounded-full text-xs flex items-center gap-1">👥 Sisa {sisaKuota} Kuota</span>
+            {product.pemateri && <span className="bg-orange-100 text-orange-600 px-3 py-1 rounded-full text-xs flex items-center gap-1 font-semibold">👨‍🏫 Pemateri: {product.pemateri}</span>}
+            <span className="bg-green-100 text-green-600 px-3 py-1 rounded-full text-xs flex items-center gap-1 font-semibold">👥 Sisa {sisaKuota} Kuota</span>
           </div>
 
-          <p className="text-sm text-gray-700 whitespace-pre-line mb-4">{product.description}</p>
+          <p className="text-sm text-gray-700 whitespace-pre-line">{product.description}</p>
 
           <div className="md:px-0">
             <Separator className="my-4" />
           </div>
 
           {isUserAvailable ? (
-            <>
+            <div className="flex flex-col justify-start items-start gap-2">
               <Button
-                className={`relative w-full lg:w-1/3 font-semibold text-xs sm:text-sm transition duration-200 z-10 ${isUserAvailable ? "bg-[#ad0a1f] text-white hover:bg-[#d7263d]" : "bg-gray-500 text-white cursor-not-allowed"}`}
+                className={`relative w-auto font-semibold text-xs sm:text-sm transition duration-200 z-10 ${isUserAvailable ? "bg-[#ad0a1f] text-white hover:bg-[#d7263d]" : "bg-gray-500 text-white cursor-not-allowed"}`}
                 onClick={() => handleRouter(product.link_to_whatsapp)}
                 disabled={!isUserAvailable}
               >
                 {isUserAvailable ? "Join Group WhatsApp Bimbel" : "Anda Belum Memiliki Akses"}
               </Button>
               <Button
-                className={`relative w-full lg:w-1/3 font-semibold text-xs sm:text-sm transition duration-200 z-10 ${isUserAvailable ? "bg-[#ad0a1f] text-white hover:bg-[#d7263d]" : "bg-gray-500 text-white cursor-not-allowed"}`}
+                className={`relative w-auto font-semibold text-xs sm:text-sm transition duration-200 z-10 ${isUserAvailable ? "bg-[#ad0a1f] text-white hover:bg-[#d7263d]" : "bg-gray-500 text-white cursor-not-allowed"}`}
                 onClick={() => handleRouter(product.link_to_meeting)}
                 disabled={!isUserAvailable}
               >
                 {isUserAvailable ? "Link Meeting" : "Anda Belum Memiliki Akses"}
               </Button>
-            </>
+            </div>
           ) : (
             <>
               {/* Harga */}
@@ -107,15 +108,10 @@ export default function DetailBimbel({ product, isUserAvailable, aksesSaatIni }:
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-6 items-start">
-        {product.jadwal_bimbel_image && (
-          <div className="relative w-full md:w-[45%] aspect-[16/9] rounded-xl overflow-hidden flex-shrink-0">
-            <Image src={product.jadwal_bimbel_image} alt="Jadwal Bimbel" fill className="object-cover" sizes="(max-width: 768px) 100vw, 45vw" priority />
-          </div>
-        )}
+      <div className="flex flex-col md:flex-row gap-6 items-start mt-8 md:mt-16">
         {product.marketing_text && product.marketing_text !== "" && (
-          <div className="mt-10 bg-gray-50 border border-gray-200 p-4 rounded-lg text-sm text-gray-700 whitespace-pre-line leading-relaxed">
-            <h1 className="text-2xl md:text-3xl font-bold text-[#ad0a1f] uppercase mb-2">Tentang Paket</h1>
+          <div className="w-full bg-gray-50 border border-gray-200 p-4 rounded-lg text-sm text-gray-700 whitespace-pre-line leading-relaxed">
+            <h1 className="text-2xl md:text-3xl font-bold text-[#ad0a1f] uppercase mb-2">📅 Tentang Bimbel</h1>
             {product.marketing_text}
           </div>
         )}

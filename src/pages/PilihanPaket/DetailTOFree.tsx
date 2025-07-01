@@ -90,7 +90,7 @@ export default function DetailTOFree({ product, user }: Props) {
       {/* Konten */}
       <div className="flex flex-col md:flex-row gap-6 items-start">
         {/* Banner */}
-        <div className="relative w-full md:w-[45%] aspect-[16/9] rounded-xl overflow-hidden flex-shrink-0">
+        <div className="relative w-full md:w-[50%] aspect-[16/9] rounded-xl overflow-hidden flex-shrink-0">
           {product.banner_image ? (
             <Image src={product.banner_image} alt={product.name} fill className="object-cover" sizes="(max-width: 768px) 100vw, 45vw" priority />
           ) : (
@@ -99,7 +99,7 @@ export default function DetailTOFree({ product, user }: Props) {
         </div>
 
         {/* Deskripsi */}
-        <div className="flex flex-col md:w-[55%] w-full">
+        <div className="flex flex-col md:w-[50%] w-full">
           <h1 className="text-2xl md:text-3xl font-bold text-[#ad0a1f] uppercase mb-2">{product.name}</h1>
 
           <div className="flex flex-wrap gap-2 mb-4">
@@ -124,7 +124,7 @@ export default function DetailTOFree({ product, user }: Props) {
       {/* Marketing Text - bawah */}
       {product.marketing_text && product.marketing_text !== "" && (
         <div className="mt-10 bg-gray-50 border border-gray-200 p-4 rounded-lg text-sm text-gray-700 whitespace-pre-line leading-relaxed">
-          <h1 className="text-2xl md:text-3xl font-bold text-[#ad0a1f] uppercase mb-2">Tentang Paket</h1>
+          <h1 className="text-2xl md:text-3xl font-bold text-[#ad0a1f] uppercase mb-2">Tentang Try Out Gratis</h1>
           {product.marketing_text}
         </div>
       )}

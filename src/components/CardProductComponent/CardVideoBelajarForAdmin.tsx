@@ -64,7 +64,7 @@ export default function CardVideoBelajarForAdmin({ product, customLink, buttonTe
       {/* Gambar Produk */}
       <img src={product.banner_image || "/no-image.png"} alt={product.name} className="w-full h-48 object-cover" />
 
-      <div className="p-4">
+      <div className="px-2 py-4">
         {/* Badge */}
 
         {/* Nama & Deskripsi */}

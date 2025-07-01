@@ -23,7 +23,7 @@ export default function CardTryOut({ product, customLink, buttonText = "Lihat De
     >
       <img src={product.banner_image || "/no-image.png"} alt={product.name} className="w-full h-48 object-cover" />
 
-      <div className="p-4">
+      <div className="px-2 py-4">
         <div className="flex items-center gap-2 text-sm mb-2">
           {isFreeAvailable && <span className={`px-3 py-1 rounded-full text-xs font-medium ${tagColor}`}>🎓 Gratis</span>}
           {!isFreeAvailable && <span className={`${tagColor} px-3 py-1 rounded-full text-xs font-medium`}>⭐ Premium</span>}

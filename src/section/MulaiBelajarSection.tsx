@@ -88,7 +88,7 @@ export default function MulaiBelajarSection() {
       {selectedCategory === "try-out" || selectedCategory === "bimbel" ? (
         filteredProducts && filteredProducts.length > 0 ? (
           <>
-            <div className="w-full px-4 md:px-24 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mt-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 gap-2 px-4 md:px-24 mt-8">
               {selectedCategory === "try-out" && filteredProducts.map((product: TryOutProductModel) => <CardMulaiTryOut userEmail={detailUser?.data?.email} key={product.id} product={product} />)}
               {selectedCategory === "bimbel" && filteredProducts.map((product: bimbelBarengResponse) => <CardMulaiBimbel key={product.id} product={product} userEmail={detailUser?.data?.email} />)}
             </div>

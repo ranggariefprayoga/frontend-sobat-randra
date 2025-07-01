@@ -76,7 +76,7 @@ export default function Profile({ userDetail }: ProfileProps) {
   return (
     <motion.div initial="hidden" animate="visible" variants={containerVariants} className="px-4 md:px-24 grid grid-cols-1 md:grid-cols-2 gap-2 max-w-7xl mt-8">
       <Card className="flex flex-col justify-start">
-        <CardHeader className="flex flex-row items-center gap-6">
+        <CardHeader className="flex flex-row items-center gap-4">
           <Avatar className="w-12 h-12 md:w-16 md:h-16 mx-0 mb-0">
             <AvatarImage src={`https://ui-avatars.com/api/?name=${encodeURIComponent(userDetail.name)}&background=ad0a1f&color=fff`} alt={userDetail.name} />
             <AvatarFallback>{userDetail.name.charAt(0)}</AvatarFallback>
@@ -88,11 +88,11 @@ export default function Profile({ userDetail }: ProfileProps) {
         </CardHeader>
 
         <CardContent className="space-y-4">
-          <div className="flex flex-wrap gap-3 justify-start">
+          <div className="flex flex-wrap gap-2 justify-start">
             {/* Edit Name Button */}
             <Dialog open={editNameOpen} onOpenChange={setEditNameOpen}>
               <DialogTrigger asChild>
-                <Button variant="default">Edit Nama</Button>
+                <Button variant="outline">Edit Nama</Button>
               </DialogTrigger>
               <DialogContent className="sm:max-w-[400px]">
                 <DialogHeader>
@@ -113,7 +113,7 @@ export default function Profile({ userDetail }: ProfileProps) {
             {/* Edit Password Button */}
             <Dialog open={editPasswordOpen} onOpenChange={setEditPasswordOpen}>
               <DialogTrigger asChild>
-                <Button variant="default">Edit Password</Button>
+                <Button variant="outline">Edit Password</Button>
               </DialogTrigger>
               <DialogContent className="sm:max-w-[400px]">
                 <DialogHeader>

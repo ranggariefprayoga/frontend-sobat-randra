@@ -33,7 +33,7 @@ export const useGetProductPromoById = (product_promo_id: number) => {
   return useQuery<WebResponse<ProductPromoResponse>, Error>({
     queryKey: ["products", "promo", product_promo_id],
     queryFn: async () => {
-      const res = await axios.get(`${API_BASE_URL}/api/products/promo/${product_promo_id}`, { withCredentials: true });
+      const res = await axios.get(`${API_BASE_URL}/api/products/promo/${product_promo_id}/user`, { withCredentials: true });
       return res.data;
     },
     enabled: Boolean(product_promo_id),

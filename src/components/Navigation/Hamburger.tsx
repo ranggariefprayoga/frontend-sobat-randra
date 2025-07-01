@@ -59,6 +59,12 @@ export default function Hamburger({ userDetail }: { userDetail: UserDetailInterf
                 <CommandList>
                   <CommandGroup heading="Layanan">
                     <CommandItem>
+                      <Button variant="ghost" className="w-full flex justify-start" onClick={() => navigateTo("/admin/layanan/promo")}>
+                        <BookOpen size={18} />
+                        <span>Buat & Update Promo</span>
+                      </Button>
+                    </CommandItem>
+                    <CommandItem>
                       <Button variant="ghost" className="w-full flex justify-start" onClick={() => navigateTo("/admin/layanan/tryout")}>
                         <BookOpen size={18} />
                         <span>Buat & Update Try Out Premium</span>

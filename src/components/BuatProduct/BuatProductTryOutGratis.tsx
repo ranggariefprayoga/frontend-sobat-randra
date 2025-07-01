@@ -10,7 +10,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { useCreateTryOutProduct } from "@/lib/api/productTryOut.api";
 import { toast } from "sonner";
 
-export function CreateTryOutFreeModal() {
+interface checkFreeProductProps {
+  checkFreeProduct: boolean;
+}
+
+export function CreateTryOutFreeModal({ checkFreeProduct }: checkFreeProductProps) {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [isActive, setIsActive] = useState(false);
@@ -75,7 +79,7 @@ export function CreateTryOutFreeModal() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>Buat Try Out Gratis</Button>
+        <Button disabled={checkFreeProduct}>Buat Try Out Gratis</Button>
       </DialogTrigger>
       <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[600px]">
         <DialogHeader>
