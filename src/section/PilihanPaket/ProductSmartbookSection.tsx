@@ -6,12 +6,12 @@ import ButtonWithIcon from "@/components/TombolBack/TombolBack";
 import LayoutBackgroundWhite from "@/layout/LayoutBackgroundWhite";
 import NullComponent from "@/components/NullComponent/NullComponent";
 import { ArrowLeft } from "lucide-react";
-import { useGetAllProductPromos } from "@/lib/api/productPromo.api";
-import { ProductPromoResponse } from "@/model/productPromo.model";
-import CardPromo from "@/components/CardProductComponent/CardPromo";
+import { ProductSmartbookResponse } from "@/model/productSmartbook.model";
+import CardSmartbook from "@/components/CardProductComponent/CardSmartbook";
+import { useGetAllSmartbookProducts } from "@/lib/api/productSmartbook.api";
 
-export default function ProductPromoSection() {
-  const { data, isLoading } = useGetAllProductPromos();
+export default function ProductSmartbookSection() {
+  const { data, isLoading } = useGetAllSmartbookProducts();
 
   if (isLoading) {
     return <LoadingComponent color="#ad0a1f" />;
@@ -25,8 +25,8 @@ export default function ProductPromoSection() {
         <NullComponent message="Belum ada Promo Tersedia" />
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 gap-2 px-4 md:px-24 mt-8">
-          {data?.data.map((product: ProductPromoResponse) => (
-            <CardPromo key={product.id} product={product} customLink={`/pilihan-paket/promo/${product.id}`} />
+          {data?.data.map((product: ProductSmartbookResponse) => (
+            <CardSmartbook key={product.id} product={product} customLink={`/pilihan-paket/smartbook/${product.id}`} />
           ))}
         </div>
       )}

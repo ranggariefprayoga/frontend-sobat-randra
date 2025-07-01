@@ -14,8 +14,6 @@ export default function CardBimbel({ product, customLink, buttonText = "Lihat De
 
   return (
     <div className={`relative shadow-md rounded-xl overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 ${!product.is_active ? "bg-gray-300 text-gray-500" : "bg-white text-gray-900"}`}>
-      {/* Overlay jika produk tidak aktif */}
-
       {/* Gambar Produk */}
       <img src={product.banner_image || "/no-image.png"} alt={product.name} className="w-full h-48 object-cover" />
 

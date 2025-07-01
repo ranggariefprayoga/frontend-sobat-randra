@@ -6,12 +6,12 @@ import ButtonWithIcon from "@/components/TombolBack/TombolBack";
 import LayoutBackgroundWhite from "@/layout/LayoutBackgroundWhite";
 import NullComponent from "@/components/NullComponent/NullComponent";
 import { ArrowLeft } from "lucide-react";
-import { useGetAllProductPromos } from "@/lib/api/productPromo.api";
-import { ProductPromoResponse } from "@/model/productPromo.model";
-import CardPromo from "@/components/CardProductComponent/CardPromo";
+import { useGetAllBimbelBarengProducts } from "@/lib/api/productBimbelBareng.api";
+import CardBimbel from "@/components/CardProductComponent/CardBimbel";
+import { bimbelBarengResponse } from "@/model/productBimbelBareng.model";
 
-export default function ProductPromoSection() {
-  const { data, isLoading } = useGetAllProductPromos();
+export default function ProductBimbelSection() {
+  const { data, isLoading } = useGetAllBimbelBarengProducts();
 
   if (isLoading) {
     return <LoadingComponent color="#ad0a1f" />;
@@ -20,13 +20,13 @@ export default function ProductPromoSection() {
   return (
     <LayoutBackgroundWhite>
       <ButtonWithIcon icon={ArrowLeft} label="Kembali" />
-      <TitleComponent title="Paket Promo" subTitle="Pilihan Promo Buat Kamu!" textAlign="start" />
+      <TitleComponent title="Paket Bimbel" subTitle="Pilihan Bimbel Yang Bisa Kamu Beli!" textAlign="start" />
       {!data?.data || data?.data.length === 0 ? (
-        <NullComponent message="Belum ada Promo Tersedia" />
+        <NullComponent message="Belum ada Bimbel Tersedia" />
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 gap-2 px-4 md:px-24 mt-8">
-          {data?.data.map((product: ProductPromoResponse) => (
-            <CardPromo key={product.id} product={product} customLink={`/pilihan-paket/promo/${product.id}`} />
+          {data?.data.map((product: bimbelBarengResponse) => (
+            <CardBimbel key={product.id} product={product} customLink={`/pilihan-paket/bimbel/${product.id}`} />
           ))}
         </div>
       )}
