@@ -10,32 +10,32 @@ export interface KeunggulanItem {
 export const keunggulanKamiData: KeunggulanItem[] = [
   {
     icon: <Smartphone className="h-6 w-6 text-[#D94B6B]" />,
-    title: "Akses Belajar Praktis",
-    description: "Ngerjain try out, baca materi dan nonton video bisa diakses pake handphone dan laptop.",
+    title: "Akses Mudah",
+    description: "Bisa akses try out, cheat sheet, dan video lewat HP atau laptop.",
   },
   {
     icon: <BookCheck className="h-6 w-6 text-[#D94B6B]" />,
-    title: "Kisi-kisi Terupdate",
-    description: "Kami selalu menyesuaikan dengan kisi-kisi terbaru di setiap tahunnya.",
+    title: "Kisi-kisi Terbaru",
+    description: "Selalu up-to-date dengan kisi-kisi terbaru setiap tahun.",
   },
   {
     icon: <Users2 className="h-6 w-6 text-[#D94B6B]" />,
-    title: "Pengajar Pilihan dan Kompeten",
-    description: "Silakan curhat kekhawatiranmu kepada kami untuk diberikan solusi yang terbaik.",
+    title: "Pengajar Kompeten",
+    description: "Mengajar dengan hati, siap mendampingi perjalanan belajarmu.",
   },
   {
     icon: <Timer className="h-6 w-6 text-[#D94B6B]" />,
-    title: "History dan Grafik Nilai",
-    description: "Kamu bisa lihat History dan Grafik Nilai kamu setelah mengerjakan soal.",
+    title: "History & Grafik Nilai",
+    description: "Lihat history dan grafik nilai kamu setelah mengerjakan try out.",
   },
   {
     icon: <Award className="h-6 w-6 text-[#D94B6B]" />,
-    title: "Rangking Nasional Try Out",
-    description: "Ukur kemampuanmu dengan berkompetisi bersama pengguna lainnya se-Indonesia.",
+    title: "Rangking Nasional",
+    description: "Ukur kemampuanmu dan berkompetisi se-Indonesia.",
   },
   {
     icon: <BarChart3 className="h-6 w-6 text-[#D94B6B]" />,
-    title: "Evaluasi Secara Detail",
-    description: "Evaluasi hasil belajar kamu dengan grafik super detail dan informatif.",
+    title: "Evaluasi Detail",
+    description: "Dapatkan evaluasi & pembahasan hasil try out secara detail.",
   },
 ];

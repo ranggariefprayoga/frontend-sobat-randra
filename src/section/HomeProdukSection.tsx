@@ -6,7 +6,7 @@ export default function HomeProdukSection() {
   return (
     <LayoutBackgroundImage>
       <div className="max-w-[1420px] mx-auto">
-        <TitleComponent titleColor="text-black" title="Pilihan Paket Belajar" subTitle="Buat kamu pejuang CPNS dan BUMN" />
+        <TitleComponent titleColor="text-black" title="Pilihan Paket Belajar" subTitle="Buat kamu pejuang CPNS" />
         <SemuaPaketSobatRandraSection />
       </div>
     </LayoutBackgroundImage>

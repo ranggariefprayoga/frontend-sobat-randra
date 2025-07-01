@@ -22,9 +22,9 @@ export default function ProductSmartbookSection() {
   return (
     <LayoutBackgroundWhite>
       <ButtonWithIcon icon={ArrowLeft} label="Kembali" />
-      <TitleComponent title="Paket Smartbook" subTitle="Pilihan Smartbook Buat Kamu!" textAlign="start" />
+      <TitleComponent title="Paket Cheat Sheet" subTitle="Pilihan Cheat Sheet Buat Kamu!" textAlign="start" />
       {!activeProduct || activeProduct.length === 0 ? (
-        <NullComponent message="Belum ada Smartbook Tersedia" />
+        <NullComponent message="Belum ada Cheat Sheet Tersedia" />
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 gap-2 px-4 md:px-24 mt-8">
           {activeProduct.map((product: ProductSmartbookResponse) => (

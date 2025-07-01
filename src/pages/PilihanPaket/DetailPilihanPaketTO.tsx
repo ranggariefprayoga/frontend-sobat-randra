@@ -5,8 +5,6 @@ import LayoutBackgroundWhite from "@/layout/LayoutBackgroundWhite";
 import { ArrowLeft } from "lucide-react";
 import { use } from "react";
 import DetailTO from "./DetailTO";
-import { DialogInfo } from "@/components/Dialog/DialogInfo";
-import { caraAksesTryOut } from "@/data/cara-akses-to";
 import { useGetTryOutProductByIdExcludeFree } from "@/lib/api/productTryOut.api";
 import { useUser } from "@/lib/api/user.api";
 import { useCheckAvailableFreeTryOut } from "@/lib/api/quisSession.api";
@@ -28,12 +26,6 @@ export default function DetailPilihanPaketTO({ params }: { params: Promise<{ pro
   return (
     <LayoutBackgroundWhite>
       <ButtonWithIcon icon={ArrowLeft} label="Kembali" />
-      <div className="flex-flex-col lg:flex-row px-4 md:px-24 gap-2">
-        {caraAksesTryOut.map((item) => (
-          <DialogInfo key={item.title} title={item.title} description={item.description} triggerText={item.trigger} details={item.details} />
-        ))}
-      </div>
-
       <DetailTO product={data?.data} user={detailUser?.data} isFreeAvailable={isAvailable?.data} />
     </LayoutBackgroundWhite>
   );

@@ -47,11 +47,11 @@ export function BuatVideoBelajarModal() {
       {
         onSuccess: () => {
           setOpen(false);
-          toast.success("VideoBelajar berhasil dibuat.");
+          toast.success("Video Belajar berhasil dibuat.");
           resetForm();
         },
         onError: () => {
-          toast.error("Gagal membuat VideoBelajar.");
+          toast.error("Gagal membuat Video Belajar.");
         },
       }
     );

@@ -12,7 +12,9 @@ export default function FreeTryOutModalSection() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="bg-[#ad0a1f] text-white hover:bg-[#d7263d] transition font-semibold">Lihat Try Out Gratis</Button>
+        <Button size={"sm"} className="bg-[#ad0a1f] text-white hover:bg-[#d7263d] transition font-semibold">
+          Lihat Try Out Gratis
+        </Button>
       </DialogTrigger>
       <DialogContent className="max-w-xl w-full max-h-[90vh] overflow-y-auto px-4 py-6">
         <DialogTitle className="text-lg font-bold text-center mb-4">Try Out Gratis</DialogTitle>

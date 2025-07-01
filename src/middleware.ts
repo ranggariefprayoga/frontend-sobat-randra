@@ -77,5 +77,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/mulai-belajar", "/history-nilai", "/rangking-nasional", "/profile", "/kritik-saran", "/pilihan-paket/:path*", "/download-pembahasan", "/auth/:path*", "/admin/:path*", "/quiz(.*)", "/free-quiz(.*)"],
+  matcher: ["/mulai-belajar", "/history-nilai", "/uji-coba", "/rangking-nasional", "/profile", "/kritik-saran", "/pilihan-paket/:path*", "/download-pembahasan", "/auth/:path*", "/admin/:path*", "/quiz(.*)", "/free-quiz(.*)"],
 };

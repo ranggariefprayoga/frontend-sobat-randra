@@ -35,8 +35,8 @@ export default function ProfileComponent({ userDetail }: { userDetail: UserDetai
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           {userDetail && (
-            <Button variant="outline" className="flex items-center gap-2">
-              <User size={18} />
+            <Button variant="destructive" className="flex items-center gap-2 font-bold bg-red-700 text-white">
+              <User size={18} strokeWidth={3} stroke="white" />
               <span className="text-base hidden sm:block">{getFirstName(userDetail.name)}</span>
             </Button>
           )}

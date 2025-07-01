@@ -56,10 +56,10 @@ export function UpdateProductSmartbookModal({ initialData }: { initialData?: Pro
         {
           onSuccess: () => {
             setOpen(false);
-            toast.success("Smartbook berhasil diperbarui.");
+            toast.success("Cheat Sheet berhasil diperbarui.");
           },
           onError: () => {
-            toast.error("Gagal memperbarui Smartbook.");
+            toast.error("Gagal memperbarui Cheat Sheet.");
           },
         }
       );

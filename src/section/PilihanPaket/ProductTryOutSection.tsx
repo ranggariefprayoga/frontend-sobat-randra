@@ -10,6 +10,8 @@ import { ArrowLeft } from "lucide-react";
 import CardTryOut from "@/components/CardProductComponent/CardTryOut";
 import { TryOutProductModel } from "@/model/product.model";
 import FreeTryOutModalSection from "@/components/Dialog/ModalFreeTryOut";
+import { caraAksesTryOut } from "@/data/cara-akses-to";
+import { DialogInfo } from "@/components/Dialog/DialogInfo";
 
 export default function ProductTryOutSection() {
   const { data, isLoading } = useGetAllTryOutProductsExcludeFree();
@@ -24,9 +26,13 @@ export default function ProductTryOutSection() {
     <LayoutBackgroundWhite>
       <ButtonWithIcon icon={ArrowLeft} label="Kembali" />
       <TitleComponent title="Paket Try Out" subTitle="Pilihan Try Out Yang Bisa Kamu Beli!" textAlign="start" />
-      <div className="px-4 md:px-24 mt-8">
+      <div className="px-4 md:px-24 mt-8 flex flex-wrap gap-2">
         <FreeTryOutModalSection />
+        {caraAksesTryOut.map((item) => (
+          <DialogInfo key={item.title} title={item.title} description={item.description} triggerText={item.trigger} details={item.details} />
+        ))}
       </div>
+
       {!activeProduct || activeProduct.length === 0 ? (
         <NullComponent message="Belum ada Try Out Tersedia" />
       ) : (

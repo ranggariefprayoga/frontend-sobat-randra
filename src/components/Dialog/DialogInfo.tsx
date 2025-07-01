@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from "@/components/ui/dialog";
-import { MessageCircleQuestion } from "lucide-react";
 
 export interface DialogInfoProps {
   triggerText: string;
@@ -14,9 +13,8 @@ export function DialogInfo({ triggerText, title, description, details }: DialogI
     <Dialog>
       {/* Dialog Trigger */}
       <DialogTrigger asChild>
-        <Button size="lg" variant="outline" className="mb-1 me-1">
-          <MessageCircleQuestion />
-          {triggerText}
+        <Button size="sm" variant="outline" className="w-auto">
+          ❓{triggerText}
         </Button>
       </DialogTrigger>
 
@@ -31,7 +29,9 @@ export function DialogInfo({ triggerText, title, description, details }: DialogI
         {details && details.length > 0 && (
           <ol className="list-decimal pl-6">
             {details.map((item, index) => (
-              <li key={index}>{item}</li>
+              <li className="text-xs" key={index}>
+                {item}
+              </li>
             ))}
           </ol>
         )}

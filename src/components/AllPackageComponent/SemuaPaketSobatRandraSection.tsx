@@ -29,7 +29,7 @@ export default function SemuaPaketSobatRandraSection() {
         >
           <div className="flex flex-col flex-1 min-w-0 pr-4">
             <h3 className="text-base md:text-lg font-bold mb-1 truncate">Try Out</h3>
-            <p className="text-sm">Latihan soal premium & gratis. Skor langsung keluar!</p>
+            <p className="text-sm">Latihan soal premium & gratis. Nilai Try Out langsung keluar!</p>
           </div>
           <img src="/layanan/tryout.svg" alt="Try Out" className="w-14 md:w-16 h-auto flex-shrink-0" />
         </div>
@@ -41,7 +41,7 @@ export default function SemuaPaketSobatRandraSection() {
         >
           <div className="flex flex-col flex-1 min-w-0 pr-4">
             <h3 className="text-base md:text-lg font-bold mb-1 truncate">Bimbel</h3>
-            <p className="text-sm">Belajar bareng tutor via Zoom. Fokus ke materi penting!</p>
+            <p className="text-sm">Belajar bareng tutor via Zoom. Fokus ke materi yang sesuai kisi-kisi!</p>
           </div>
           <img src="/layanan/bimbel.svg" alt="Bimbel" className="w-14 md:w-16 h-auto flex-shrink-0" />
         </div>
@@ -52,10 +52,10 @@ export default function SemuaPaketSobatRandraSection() {
           className="cursor-pointer flex items-center justify-between bg-gradient-to-r from-[#6F86FF] to-[#A094F7] text-white px-6 py-4 rounded-xl shadow-md hover:scale-[1.01] transition"
         >
           <div className="flex flex-col flex-1 min-w-0 pr-4">
-            <h3 className="text-base md:text-lg font-bold mb-1 truncate">Smart Book</h3>
-            <p className="text-sm">Ebook interaktif SKD/SKB. Praktis & padat materi.</p>
+            <h3 className="text-base md:text-lg font-bold mb-1 truncate">Cheat Sheet</h3>
+            <p className="text-sm">Cheat Sheet colorful, membantu memperbaiki mood belajar kamu.</p>
           </div>
-          <img src="/layanan/cheatsheet.svg" alt="Smart Book" className="w-14 md:w-16 h-auto flex-shrink-0" />
+          <img src="/layanan/cheatsheet.svg" alt="Cheat Sheet" className="w-14 md:w-16 h-auto flex-shrink-0" />
         </div>
 
         {/* Video Belajar */}
@@ -65,7 +65,7 @@ export default function SemuaPaketSobatRandraSection() {
         >
           <div className="flex flex-col flex-1 min-w-0 pr-4">
             <h3 className="text-base md:text-lg font-bold mb-1 truncate">Video Belajar</h3>
-            <p className="text-sm">Akses materi CPNS & BUMN lewat video kapan aja.</p>
+            <p className="text-sm">Akses materi CPNS lewat video kapan aja, dimana saja.</p>
           </div>
           <img src="/layanan/video-belajar.svg" alt="Video Belajar" className="w-14 md:w-16 h-auto flex-shrink-0" />
         </div>

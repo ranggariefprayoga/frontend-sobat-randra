@@ -36,7 +36,7 @@ export default function AccessButtonWithModal({ isPremiumAvailable, productTryOu
           setIsPremiumDialogOpen(false);
           refetchAvailableTryOut();
           router.push(`/quiz?sess=${res?.data?.id}&ptid=${res?.data?.product_try_out_id}&qid=${res?.data?.first_question_id}`);
-          toast.success(res?.data?.message || `Try Out dimulai premium, tunggu sebentar...`);
+          toast.success(res?.data?.message || `Try Out dimulai, tunggu sebentar...`);
         },
         onError: () => {
           toast.error("Gagal memulai sesi. Coba refresh.");

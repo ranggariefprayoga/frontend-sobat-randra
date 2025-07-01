@@ -127,11 +127,11 @@ export default function PremiumQuizSection() {
   const handleConfirmSubmit = async () => {
     try {
       await submitQuizMutation.mutateAsync();
-      toast.success("Tunggu sebentar...");
+      toast.success("Mengakhiri try out, tunggu sebentar...");
       router.push("/history-nilai");
       setIsSubmitDialogOpen(false);
     } catch {
-      toast.error("Gagal submit Quiz, Coba lagi...");
+      toast.error("Gagal submit try out, Coba lagi...");
     }
   };
 

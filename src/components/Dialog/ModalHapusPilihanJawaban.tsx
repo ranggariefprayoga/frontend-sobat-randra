@@ -26,7 +26,7 @@ export default function DeleteQuestionChoiceModal({ product_try_out_id, question
   const handleDelete = async () => {
     try {
       await mutateAsync({ product_try_out_id, questionId, questionChoiceId });
-      toast.success("Pilihan berhasil dihapus!");
+      toast.success("Pilihan Jawaban berhasil dihapus!");
       setOpen(false);
       if (onDeleted) onDeleted();
     } catch {

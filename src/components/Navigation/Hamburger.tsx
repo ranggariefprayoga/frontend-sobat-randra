@@ -4,7 +4,7 @@
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { Edit, Key, LogOut, Menu } from "lucide-react";
+import { Clipboard, Edit, Key, LogOut, Menu, Percent } from "lucide-react";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import NoAuthNavbarComponent from "./NoAuthNavbar";
 import { Command, CommandGroup, CommandItem, CommandList, CommandSeparator } from "../ui/command";
@@ -38,7 +38,7 @@ export default function Hamburger({ userDetail }: { userDetail: UserDetailInterf
     <>
       <Sheet key={"left"}>
         <SheetTrigger asChild>
-          <Button variant="outline" className="flex items-center gap-2 px-4 py-2 rounded-md bg-red-700 text-white transition">
+          <Button variant="destructive" className="flex items-center gap-2 px-4 py-2 rounded-md bg-red-700 text-white transition">
             <Menu size={24} />
           </Button>
         </SheetTrigger>
@@ -47,20 +47,20 @@ export default function Hamburger({ userDetail }: { userDetail: UserDetailInterf
             <div className="flex items-center gap-2">
               <img src="/logo/logo.png" alt="Sobat Randra Logo" className="w-8 h-8 md:w-14 md:h-14 object-contain" />
               <div>
-                <SheetTitle className="text-red-700 font-semibold text-lg md:text-xl">Sobat Randra</SheetTitle>
-                <SheetDescription className="text-xs md:text-sm text-gray-600">All in one Platform belajar SKD CPNS, BUMN, dan Polri</SheetDescription>
+                <SheetTitle className="text-red-700 font-extrabold text-lg md:text-xl">Sobat Randra</SheetTitle>
+                <SheetDescription className="text-xs md:text-sm text-gray-600">All in one Platform belajar buat lolos CPNS.</SheetDescription>
               </div>
             </div>
           </SheetHeader>
 
           <SheetClose asChild>
             {userDetail?.role === "Admin" ? (
-              <Command>
-                <CommandList>
+              <Command className="w-full h-full">
+                <CommandList className="w-full h-full">
                   <CommandGroup heading="Layanan">
                     <CommandItem>
                       <Button variant="ghost" className="w-full flex justify-start" onClick={() => navigateTo("/admin/layanan/promo")}>
-                        <BookOpen size={18} />
+                        <Percent size={18} />
                         <span>Buat & Update Promo</span>
                       </Button>
                     </CommandItem>
@@ -154,8 +154,8 @@ export default function Hamburger({ userDetail }: { userDetail: UserDetailInterf
                 </CommandList>
               </Command>
             ) : (
-              <Command>
-                <CommandList>
+              <Command className="w-full h-full">
+                <CommandList className="w-full h-full">
                   <CommandGroup heading="Menu Utama">
                     <CommandItem>
                       <Button variant="ghost" className="w-full flex justify-start " onClick={() => navigateTo("/")}>
@@ -180,6 +180,12 @@ export default function Hamburger({ userDetail }: { userDetail: UserDetailInterf
                       <Button variant="ghost" className="w-full flex justify-start" onClick={() => navigateTo("/history-nilai")}>
                         <ClipboardList size={18} />
                         <span>History Nilai Saya</span>
+                      </Button>
+                    </CommandItem>
+                    <CommandItem>
+                      <Button variant="ghost" className="w-full flex justify-start" onClick={() => navigateTo("/uji-coba")}>
+                        <Clipboard size={18} />
+                        <span>Nilai Uji Coba Try Out</span>
                       </Button>
                     </CommandItem>
                     <CommandItem>

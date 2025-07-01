@@ -19,7 +19,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Sobat Randra",
-  description: "All in one Platform belajar SKD CPNS, BUMN, dan Polri",
+  description: "All in one Platform belajar buat lolos CPNS.",
 };
 
 export default function RootLayout({

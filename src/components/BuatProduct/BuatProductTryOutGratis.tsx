@@ -55,11 +55,11 @@ export function CreateTryOutFreeModal({ checkFreeProduct }: checkFreeProductProp
       {
         onSuccess: () => {
           setOpen(false);
-          toast.success("Try Out berhasil dibuat.");
+          toast.success("Try Out Gratis berhasil dibuat.");
           resetForm();
         },
         onError: () => {
-          toast.error("Gagal membuat Try Out.");
+          toast.error("Gagal membuat Try Out Gratis.");
         },
       }
     );

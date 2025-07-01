@@ -31,7 +31,7 @@ export default function Footer() {
               <Image src="/logo/logo-bg.jpg" alt="Logo Sobat Randra" width={100} height={100} className="object-contain rounded-full" />
             </motion.div>
             <motion.p variants={fadeInUp} initial="hidden" animate="visible" custom={1} className="text-sm md:text-base text-black/80">
-              Satu platform lengkap buat kamu yang siap taklukin CPNS dan BUMN. Akses Try Out, Bimbel, Smart Book, dan Video Belajar kapan aja, di mana aja.
+              Satu platform lengkap buat kamu yang siap taklukin CPNS. Akses Try Out, Bimbel, Smart Book, dan Video Belajar kapan aja, di mana aja.
             </motion.p>
           </div>
 

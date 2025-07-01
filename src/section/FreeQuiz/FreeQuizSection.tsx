@@ -119,10 +119,10 @@ export default function FreeQuizSection() {
   const handleConfirmSubmit = async () => {
     try {
       await submitQuizMutation.mutateAsync();
-      toast.success("Berhasil di submit, tunggu sebentar...");
-      router.push("/history-nilai");
+      toast.success("Mengakhiri try out, tunggu sebentar...");
+      router.push("/uji-coba");
     } catch {
-      toast.error("Gagal submit Quiz, Coba lagi...");
+      toast.error("Gagal submit try out, Coba lagi...");
     }
   };
 
