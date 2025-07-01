@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient, UseMutationResult } from "@tanst
 import axios from "axios";
 import { API_BASE_URL } from "../apiBaseUrl";
 import { WebResponse } from "@/model/web-reponse.model";
-import { createTryOutResponse, updateTryOutRequest, updateTryOutResponse } from "@/model/product.model";
+import { createTryOutResponse, TryOutNameResponse, updateTryOutRequest, updateTryOutResponse } from "@/model/product.model";
 
 type UpdateProductPayload = {
   product_try_out_id: number | string;
@@ -65,12 +65,11 @@ export const useGetAllFreeTryOutProductsForUser = () => {
   });
 };
 
-// Get tryout products for home (public)
-export const useGetTryOutProductsForHome = () => {
-  return useQuery<WebResponse<createTryOutResponse[]>, Error>({
-    queryKey: ["products", "tryout", "home"],
+export const useGetTryOutProductsNameById = (product_try_out_id: number) => {
+  return useQuery<WebResponse<TryOutNameResponse>, Error>({
+    queryKey: ["products", "tryout", product_try_out_id],
     queryFn: async () => {
-      const res = await axios.get(`${API_BASE_URL}/api/products/tryout/home`);
+      const res = await axios.get(`${API_BASE_URL}/api/products/tryout/${product_try_out_id}/name`, { withCredentials: true });
       return res.data;
     },
     retry: false,
@@ -147,7 +146,6 @@ export const useCreateTryOutProduct = (): UseMutationResult<WebResponse<createTr
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["products", "tryout"] });
-      queryClient.invalidateQueries({ queryKey: ["products", "tryout", "home"] });
     },
   });
 };
@@ -170,7 +168,6 @@ export const useUpdateTryOutProduct = (): UseMutationResult<WebResponse<updateTr
     },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ["products", "tryout"] });
-      queryClient.invalidateQueries({ queryKey: ["products", "tryout", "home"] });
       queryClient.invalidateQueries({ queryKey: ["products", "tryout", variables.product_try_out_id] });
     },
   });
@@ -187,7 +184,6 @@ export const useDeleteAllTryOutProducts = (): UseMutationResult<WebResponse<stri
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["products", "tryout"] });
-      queryClient.invalidateQueries({ queryKey: ["products", "tryout", "home"] });
     },
   });
 };
@@ -203,7 +199,6 @@ export const useDeleteTryOutProductById = (): UseMutationResult<WebResponse<stri
     },
     onSuccess: (_, product_try_out_id) => {
       queryClient.invalidateQueries({ queryKey: ["products", "tryout"] });
-      queryClient.invalidateQueries({ queryKey: ["products", "tryout", "home"] });
       queryClient.invalidateQueries({ queryKey: ["products", "tryout", product_try_out_id] });
     },
   });
@@ -212,7 +207,7 @@ export const useDeleteTryOutProductById = (): UseMutationResult<WebResponse<stri
 // Get product image by ID
 export const useGetTryOutProductImageById = (product_try_out_id?: number | string | null) => {
   return useQuery<WebResponse<string>, Error>({
-    queryKey: ["products", "tryout", "image", "home", product_try_out_id],
+    queryKey: ["products", "tryout", "image", product_try_out_id],
     queryFn: async () => {
       if (!product_try_out_id) throw new Error("product_try_out_id is required");
       const res = await axios.get(`${API_BASE_URL}/api/products/tryout/${product_try_out_id}/image`, { withCredentials: true });

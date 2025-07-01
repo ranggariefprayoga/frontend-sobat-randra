@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient, UseMutationResult } from "@tanst
 import axios from "axios";
 import { API_BASE_URL } from "../apiBaseUrl";
 import { WebResponse } from "@/model/web-reponse.model";
-import { bimbelBarengResponse, updateBimbelBarengRequest } from "@/model/productBimbelBareng.model";
+import { BimbelBarengNameResponse, bimbelBarengResponse, updateBimbelBarengRequest } from "@/model/productBimbelBareng.model";
 
 // Get all bimbel bareng products (protected)
 export const useGetAllBimbelBarengProducts = () => {
@@ -17,11 +17,11 @@ export const useGetAllBimbelBarengProducts = () => {
 };
 
 // Get all bimbel bareng products for home (public)
-export const useGetAllBimbelBarengForHome = () => {
-  return useQuery<WebResponse<bimbelBarengResponse[]>, Error>({
-    queryKey: ["products", "bimbel-bareng", "home"],
+export const useGetBimbelBarengNameById = (product_bimbel_bareng_id: number) => {
+  return useQuery<WebResponse<BimbelBarengNameResponse>, Error>({
+    queryKey: ["products", "bimbel-bareng", product_bimbel_bareng_id],
     queryFn: async () => {
-      const res = await axios.get(`${API_BASE_URL}/api/products/bimbel-bareng/home`);
+      const res = await axios.get(`${API_BASE_URL}/api/products/bimbel-bareng/${product_bimbel_bareng_id}/name`, { withCredentials: true });
       return res.data;
     },
     retry: false,
@@ -74,7 +74,6 @@ export const useCreateBimbelBarengProduct = (): UseMutationResult<WebResponse<bi
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["products", "bimbel-bareng"] });
-      queryClient.invalidateQueries({ queryKey: ["products", "bimbel-bareng", "home"] });
     },
   });
 };
@@ -119,7 +118,6 @@ export const useDeleteAllBimbelBarengProducts = (): UseMutationResult<WebRespons
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["products", "bimbel-bareng"] });
-      queryClient.invalidateQueries({ queryKey: ["products", "bimbel-bareng", "home"] });
     },
   });
 };

@@ -71,6 +71,10 @@ export interface createTryOutRequest {
   max_free_questions?: number;
 }
 
+export interface TryOutNameResponse {
+  name: string;
+}
+
 export class BannerResponse {
   banner_image?: string;
 }

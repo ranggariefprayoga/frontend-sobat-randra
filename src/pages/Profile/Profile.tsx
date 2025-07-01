@@ -9,7 +9,10 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Input } from "@/components/ui/input";
 import { useUpdateName, useUpdatePassword } from "@/lib/api/user.api";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+import { AccessSectionCardView } from "./AccessSection";
+import { BimbelBarengAccessResponse } from "@/model/productBimbelBarengAccess";
+import { ProductAccessTryOutResponse } from "@/model/productAccess.model";
+import { AccessSectionCardBimbelBarengView } from "./AccessSectionBimbelBareng";
 
 type ProfileProps = {
   userDetail: {
@@ -19,8 +22,8 @@ type ProfileProps = {
     role: string;
     token: string;
     token_expires: string;
-    bimbel_bareng_access: string[];
-    try_out_access: string[];
+    bimbel_bareng_access: BimbelBarengAccessResponse[];
+    try_out_access: ProductAccessTryOutResponse[];
   } | null;
 };
 
@@ -72,7 +75,7 @@ export default function Profile({ userDetail }: ProfileProps) {
 
   return (
     <motion.div initial="hidden" animate="visible" variants={containerVariants} className="px-4 md:px-24 grid grid-cols-1 md:grid-cols-2 gap-2 max-w-7xl mt-8">
-      <Card className="flex flex-col justify-center">
+      <Card className="flex flex-col justify-start">
         <CardHeader className="flex flex-row items-center gap-6">
           <Avatar className="w-12 h-12 md:w-16 md:h-16 mx-0 mb-0">
             <AvatarImage src={`https://ui-avatars.com/api/?name=${encodeURIComponent(userDetail.name)}&background=ad0a1f&color=fff`} alt={userDetail.name} />
@@ -132,41 +135,10 @@ export default function Profile({ userDetail }: ProfileProps) {
       </Card>
       <Card>
         <CardContent>
-          <AccessSection title="Jadwal Bimbel Bareng Kamu" items={userDetail.bimbel_bareng_access} />
-          {/* <AccessSection title="Try Out Premium Kamu" items={userDetail.try_out_access} /> */}
+          <AccessSectionCardView title="Akses Try Out Premium Kamu" items={userDetail.try_out_access} />
+          <AccessSectionCardBimbelBarengView title="Akses Bimbel Bareng Kamu" items={userDetail.bimbel_bareng_access} />
         </CardContent>
       </Card>
     </motion.div>
-  );
-}
-
-function AccessSection({ title, items }: { title: string; items: string[] }) {
-  const count = items?.length ?? 0;
-  const router = useRouter();
-
-  const handleLihatPaket = () => {
-    router.push("/mulai-belajar");
-  };
-
-  return (
-    <div className="mb-6">
-      <div className="flex items-center justify-between mb-2 border-b border-gray-300 pb-2">
-        <h3 className="font-semibold text-lg">{title}</h3>
-
-        <Button onClick={handleLihatPaket} size="sm" variant="outline">
-          Lihat Paket
-        </Button>
-      </div>
-
-      {count === 0 ? (
-        <p className="text-sm text-muted-foreground italic">Kamu belum memiliki satupun akses</p>
-      ) : (
-        <ul className="list-disc list-inside max-h-32 overflow-auto text-sm">
-          {items.map((item, i) => (
-            <li key={i}>{item}</li>
-          ))}
-        </ul>
-      )}
-    </div>
   );
 }

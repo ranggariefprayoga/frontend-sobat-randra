@@ -45,6 +45,10 @@ export interface createBimbelBarengRequest {
   link_to_whatsapp: string;
 }
 
+export interface BimbelBarengNameResponse {
+  name: string;
+}
+
 export interface BannerBimbelResponse {
   banner_image?: string;
   jadwal_bimbel_image?: string;
