@@ -127,7 +127,7 @@ export default function FreeQuizSection() {
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col mt-4 md:mt-8">
       <div className="grid grid-cols-1">
         {/* Countdown Timer */}
         {quizSessionData?.data && (
@@ -136,7 +136,7 @@ export default function FreeQuizSection() {
 
             <div className="flex justify-between items-center w-full mb-8 md:mb-12 bg-gray-100 text-gray-700 px-2 py-4 rounded-md border border-gray-500">
               {question && <div className="bg-blue-100 text-blue-700 p-2 font-bold text-base rounded-md">{question?.number_of_question}</div>}
-              <div className="lg:hidden block items-center mt-2 md:mt-0">
+              <div className="lg:hidden block items-center">
                 <NumberButtonsResponsive currentQuestionId={questionId} questions={validQuestions?.data} questionHasAswered={numberHasAswered} onSelectNumber={handleSelectNumber} />
               </div>
               <CountdownTimer expiredAt={expired_at} productId={productTryOutId} sessionId={sessionId} userEmail={userEmail} />

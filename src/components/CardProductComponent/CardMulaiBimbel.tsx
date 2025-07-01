@@ -42,7 +42,7 @@ export default function CardMulaiBimbel({ product, userEmail }: ProductCardProps
               </a>
             </div>
           ) : (
-            <button className="relative w-full py-2 font-semibold rounded-full text-xs sm:text-sm transition duration-200 z-10 bg-gray-500 text-white cursor-not-allowed">Anda Belum Memiliki Akses Premium</button>
+            <button className="relative w-full py-2 font-semibold rounded-full text-xs sm:text-sm transition duration-200 z-10 bg-gray-500 text-white cursor-not-allowed">Anda Belum Memiliki Akses Bimbel Ini</button>
           )}
         </div>
       </div>

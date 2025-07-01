@@ -38,7 +38,7 @@ export default function Hamburger({ userDetail }: { userDetail: UserDetailInterf
     <>
       <Sheet key={"left"}>
         <SheetTrigger asChild>
-          <Button variant="outline" className="flex items-center gap-2 px-4 py-2 rounded-md bg-red-700 text-red-100 transition">
+          <Button variant="outline" className="flex items-center gap-2 px-4 py-2 rounded-md bg-red-700 text-white transition">
             <Menu size={24} />
           </Button>
         </SheetTrigger>

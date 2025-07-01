@@ -117,7 +117,7 @@ export default function Footer() {
           <p>&copy; {new Date().getFullYear()} Sobat Randra. All rights reserved.</p>
           <p>
             Website ini dibuat oleh{" "}
-            <a href="https://randraweb.com" target="_blank" rel="noopener noreferrer" className="text-yellow-400 hover:underline font-semibold transition-all duration-300">
+            <a href="https://randraweb.com" target="_blank" rel="noopener noreferrer" className="text-red-700 bg-red-200 px-2 rounded-md hover:underline font-semibold transition-all duration-300">
               Randra Web
             </a>
           </p>

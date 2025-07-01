@@ -30,9 +30,9 @@ export default function NumberButtonsResponsive({ onSelectNumber, questions, que
   return (
     <>
       {/* Tombol buka modal hanya tampil di mobile (sm:hidden) */}
-      <div className="lg:hidden mb-4">
+      <div className="lg:hidden">
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
-          <DialogTrigger className="bg-blue-100 text-blue-700" asChild>
+          <DialogTrigger className="bg-blue-100 text-blue-700 border-blue-500" asChild>
             <Button variant="outline">🔍 Lihat Soal</Button>
           </DialogTrigger>
 

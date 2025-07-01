@@ -30,12 +30,10 @@ export default function NumberButtonsResponsive({ onSelectNumber, questions, cur
   return (
     <>
       {/* Mobile version: Open a dialog to select questions */}
-      <div className="lg:hidden mb-4">
+      <div className="lg:hidden">
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
-          <DialogTrigger asChild>
-            <Button variant="outline" className="w-full">
-              📘 Lihat Soal
-            </Button>
+          <DialogTrigger className="bg-blue-100 text-blue-700 border-blue-500" asChild>
+            <Button variant="outline">🔍 Lihat Soal</Button>
           </DialogTrigger>
 
           <DialogContent aria-describedby={undefined} className="w-full max-w-md max-h-[90vh] overflow-y-auto">

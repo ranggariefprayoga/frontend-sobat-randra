@@ -22,7 +22,7 @@ const QuestionComponentForPembahasan: React.FC<QuestionComponentProps> = ({ ques
           <div className="flex items-start gap-1 sm:gap-2">
             {/* Math Pilihan */}
             {question.question_text_math && question.question_text_math.length > 0 && (
-              <div ref={mathRef} className="text-base sm:text-base w-full">
+              <div ref={mathRef} className="text-base  w-full">
                 {mathContents.map((expression, index) => (
                   <div key={index} className="mb-2 text-base text-start whitespace-pre-wrap">
                     <LatexRenderer latexStrings={[expression]} />
@@ -37,7 +37,7 @@ const QuestionComponentForPembahasan: React.FC<QuestionComponentProps> = ({ ques
                 <div className="space-y-1 text-base">
                   {question.question_text.map((line, idx) => {
                     return (
-                      <p className="text-start whitespace-pre-wrap" key={idx}>
+                      <p className="text-start whitespace-pre-wrap text-base md:text-lg font-medium" key={idx}>
                         {line}
                       </p>
                     );

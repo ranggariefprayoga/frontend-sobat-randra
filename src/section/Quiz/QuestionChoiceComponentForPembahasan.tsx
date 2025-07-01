@@ -48,20 +48,20 @@ const QuestionChoiceComponentForPembahasan = React.memo(({ choices, correctAnswe
             key={choice.id}
             variant="outline"
             className={`border rounded-md p-4 space-y-3 w-full h-auto 
-              ${isCorrect ? "bg-green-200 border-green-400 text-green-700" : ""}
-              ${isWrongAnswer ? "bg-red-200 border-red-400 text-red-700" : ""}
-              ${!isCorrect && !isWrongAnswer ? "bg-transparent border-gray-300 text-gray-700" : ""}
+              ${isCorrect ? "bg-green-200 border-green-400 text-green-700 hover:bg-green-200" : ""}
+              ${isWrongAnswer ? "bg-red-200 border-red-400 text-red-700 hover:bg-red-200" : ""}
+              ${!isCorrect && !isWrongAnswer ? "bg-transparent border-gray-300 text-black" : ""}
             `}
           >
             <div className="flex flex-col items-start gap-2 w-full h-auto">
               <div className="flex gap-2 justify-start items-start">
-                <Badge variant={isCorrect || isWrongAnswer ? "secondary" : "outline"} className="text-sm">
+                <Badge variant={isCorrect || isWrongAnswer ? "secondary" : "outline"} className="text-sm font-medium">
                   {choice.question_choice_title}
                 </Badge>
 
                 {/* Display math choice */}
                 {choice.question_choice_text_math && choice.question_choice_text_math.length > 0 && (
-                  <div className="text-base sm:text-xl w-full">
+                  <div className="text-base w-full">
                     {choice.question_choice_text_math.map((math, i) => (
                       <div key={i} className="mb-2 text-base text-start whitespace-pre-wrap">
                         <LatexRenderer latexStrings={[math]} />
@@ -74,7 +74,7 @@ const QuestionChoiceComponentForPembahasan = React.memo(({ choices, correctAnswe
                   {choice.question_choice_text && choice.question_choice_text.length > 0 && (
                     <div className="space-y-1 text-sm">
                       {choice.question_choice_text.map((line, idx) => (
-                        <p className="text-start whitespace-pre-wrap" key={idx}>
+                        <p className="text-start text-gray-700 whitespace-pre-wrap text-base md:text-lg font-medium" key={idx}>
                           {line}
                         </p>
                       ))}

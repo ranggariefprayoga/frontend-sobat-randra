@@ -47,7 +47,7 @@ const QuestionChoiceComponent = React.memo(({ choices, isSelected, onSelect }: C
               <div className="flex gap-2 justify-start items-start">
                 <Badge
                   variant={isChoiceSelected ? "secondary" : "outline"}
-                  className={`text-sm font-semibold ${isChoiceSelected ? "bg-blue-100 border-blue-500 hover:bg-blue-100 text-blue-700 cursor-not-allowed" : "bg-transparent border-gray-300 text-black"}`}
+                  className={`text-sm font-medium ${isChoiceSelected ? "bg-blue-100 border-blue-500 hover:bg-blue-100 text-blue-700 cursor-not-allowed" : "bg-transparent border-gray-300 text-black"}`}
                 >
                   {choice.question_choice_title}
                 </Badge>
@@ -67,7 +67,7 @@ const QuestionChoiceComponent = React.memo(({ choices, isSelected, onSelect }: C
                   {choice.question_choice_text && choice.question_choice_text.length > 0 && (
                     <div className="space-y-1 text-sm sm:text-base">
                       {choice.question_choice_text.map((line, idx) => (
-                        <p className="text-start text-sm sm:text-base font-semibold whitespace-pre-wrap" key={idx}>
+                        <p className="text-start text-sm sm:text-base font-medium whitespace-pre-wrap" key={idx}>
                           {line}
                         </p>
                       ))}

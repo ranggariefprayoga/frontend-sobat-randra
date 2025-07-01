@@ -4,7 +4,7 @@ import LoadingComponent from "@/components/LoadingComponent/LoadingComponent";
 import { Button } from "@/components/ui/button";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useGetValidQuestionsUser } from "@/lib/api/question.api";
-import { ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useGetQuizSessionQuestionDetailForUser } from "@/lib/api/quizHistory.api";
 import QuestionComponentForPembahasan from "./QuestionComponentForPembahasan";
 import QuestionChoiceComponentForPembahasan from "./QuestionChoiceComponentForPembahasan";
@@ -27,10 +27,6 @@ export default function PembahasanQuizSection() {
 
   const handleNullQuestion = () => {
     router.back();
-  };
-
-  const handleToHome = () => {
-    router.push("/history-nilai");
   };
 
   const { data: detailQuizSession, isLoading: isLoadingSession, error } = useGetQuizSessionQuestionDetailForUser(sessionId, productTryOutId, questionId);
@@ -94,27 +90,25 @@ export default function PembahasanQuizSection() {
       <div className="grid grid-cols-1">
         {/* Countdown Timer */}
         {detailQuizSession?.data && (
-          <div className="flex flex-col lg:flex-row gap-2 w-full items-start justify-between mb-8">
-            <div className="flex flex-row lg:flex-col justify-evenly items-center  lg:items-start gap-2 w-full lg:w-auto">
-              <Button variant="ghost" className="text-[#ad0a1f] flex items-center gap-2" onClick={handleToHome}>
-                <ArrowLeft className="h-4 w-4" />
-                Kembali
-              </Button>
-              {question && <div className="bg-[#ad0a1f] text-center text-white w-full p-2 font-bold text-base rounded-md">No {question?.number_of_question}</div>}
+          <div className="flex flex-col lg:flex-row gap-2 w-full items-center justify-between mb-8 md:mb-12">
+            <div className="flex items-center bg-gray-100 text-gray-700 w-full px-2 py-4 rounded-md border border-gray-500 gap-2">
+              {question && <div className="bg-[#ad0a1f] text-center text-white w-full lg:w-auto p-2 font-bold text-base rounded-md">No {question?.number_of_question} </div>}
+              <div className="flex justify-between items-center gap-2">
+                <Button variant="outline" onClick={() => handlePreviousSoal(previousQuestionId)} disabled={isFirst || !previousQuestionId} className="w-auto flex items-center space-x-2 text-blue-700 bg-blue-100 border-blue-500">
+                  {/* Show icon and text for large screens, only icon for small screens */}
+                  <ChevronLeft /> {/* Icon visible only on small screens */}
+                </Button>
+
+                <Button variant="outline" onClick={() => handleNextSoal(nextQuestionId)} disabled={isLast || !nextQuestionId} className="w-auto flex items-center space-x-2 text-blue-700 border-blue-500 bg-blue-100">
+                  {/* Show icon and text for large screens, only icon for small screens */}
+                  <ChevronRight /> {/* Icon visible only on small screens */}
+                </Button>
+              </div>
               <div className="lg:hidden flex w-full justify-center items-center">
                 <NomorQuizPembahasan currentQuestionId={questionId} questions={validQuestions?.data} isCorrect={questionIdWasCorrect} onSelectNumber={handleSelectNumber} />
               </div>
             </div>
-
             <div className="flex flex-row gap-2 items-start lg:items-center w-full lg:w-auto">
-              {/* Total User Answer Badge */}
-              {/* {totalUserAnswer && (
-                <Badge variant="outline" className={`text-sm bg-gray-200 border-gray-300 text-gray-800 ${totalUserAnswer ? "bg-green-100 border-green-300 text-green-800" : ""}`}>
-                  {totalUserAnswer || "-"} Soal Dijawab
-                </Badge>
-              )} */}
-
-              {/* User Answer Badge */}
               {
                 <Badge variant="outline" className={`text-sm bg-gray-200 border-gray-300 text-gray-800 ${isCorrect ? "bg-green-100 border-green-300 text-green-800" : "bg-red-100 border-red-300 text-red-800"}`}>
                   Jawaban kamu: {userAnswer?.question_choice_title || "-"}
@@ -141,14 +135,14 @@ export default function PembahasanQuizSection() {
                 <QuestionComponentForPembahasan question={question} />
                 <QuestionChoiceComponentForPembahasan correctAnswer={correctAnswer} userAnswer={userAnswer} choices={questionChoices} />
                 <AnswerExplanationForPembahasan answerExplanations={answerExplanations} />
-                <div className="flex justify-between items-center mb-4 mt-6">
-                  <Button onClick={() => handlePreviousSoal(previousQuestionId)} disabled={isFirst || !previousQuestionId} className="w-auto flex items-center space-x-2">
+                <div className="flex justify-between items-center mb-4 mt-6 ">
+                  <Button variant="outline" onClick={() => handlePreviousSoal(previousQuestionId)} disabled={isFirst || !previousQuestionId} className="w-auto flex items-center space-x-2 text-blue-700 bg-blue-100 border-blue-500">
                     {/* Show icon and text for large screens, only icon for small screens */}
                     <span className="hidden sm:inline">Sebelumnya</span> {/* Text visible only on screen sizes larger than 'sm' */}
                     <ChevronLeft className="sm:hidden" /> {/* Icon visible only on small screens */}
                   </Button>
 
-                  <Button onClick={() => handleNextSoal(nextQuestionId)} disabled={isLast || !nextQuestionId} className="w-auto flex items-center space-x-2">
+                  <Button variant="outline" onClick={() => handleNextSoal(nextQuestionId)} disabled={isLast || !nextQuestionId} className="w-auto flex items-center space-x-2 text-blue-700 border-blue-500 bg-blue-100">
                     {/* Show icon and text for large screens, only icon for small screens */}
                     <span className="hidden sm:inline">Selanjutnya</span>
                     <ChevronRight className="sm:hidden" /> {/* Icon visible only on small screens */}

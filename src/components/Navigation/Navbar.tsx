@@ -5,9 +5,19 @@ import Hamburger from "./Hamburger";
 import NavbarTitle from "./NavbarTitle";
 import Profile from "./Profile";
 import { useUser } from "@/lib/api/user.api";
+import { usePathname } from "next/navigation";
 
 export function Navbar() {
   const { data, isLoading } = useUser();
+  const pathname = usePathname();
+
+  // Corrected: Check if the current path starts with '/quiz' or '/free-quiz'
+  const isQuizPage = pathname?.startsWith("/quiz") || pathname?.startsWith("/free-quiz");
+
+  // If on the '/quiz' or '/free-quiz' page, return null
+  if (isQuizPage) {
+    return null;
+  }
 
   if (isLoading) {
     return <LoadingComponent />;
