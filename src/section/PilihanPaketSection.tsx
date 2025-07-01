@@ -3,16 +3,18 @@
 import SemuaPaketSobatRandraSection from "@/components/AllPackageComponent/SemuaPaketSobatRandraSection";
 import TitleComponent from "@/components/TitleComponent/TitleComponent";
 import ButtonWithIcon from "@/components/TombolBack/TombolBack";
-import LayoutBackgroundWhite from "@/layout/LayoutBackgroundWhite";
-
 import { ArrowLeft } from "lucide-react";
 
 export default function PilihanPaketSection() {
   return (
-    <LayoutBackgroundWhite>
-      <ButtonWithIcon icon={ArrowLeft} label="Kembali" />
-      <TitleComponent title="Pilihan Paket" subTitle="Tersedia 4 paket belajar untuk kamu!" textAlign="start" />
-      <SemuaPaketSobatRandraSection />
-    </LayoutBackgroundWhite>
+    <>
+      <div className="w-full bg-cover bg-center bg-no-repeat py-4" style={{ backgroundImage: 'url("/background/3.png")' }}>
+        <div className="max-w-[1420px] mx-auto">
+          <ButtonWithIcon icon={ArrowLeft} label="Kembali" />
+          <TitleComponent title="Pilihan Paket" subTitle="Tersedia 4 paket belajar untuk kamu!" textAlign="start" />
+          <SemuaPaketSobatRandraSection />
+        </div>
+      </div>
+    </>
   );
 }

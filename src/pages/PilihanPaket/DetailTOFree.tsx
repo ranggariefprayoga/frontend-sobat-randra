@@ -61,10 +61,12 @@ export default function DetailTOFree({ product, user }: Props) {
   const handleGratisSubmit = () => {
     if (!product) return;
 
+    const trimmedPassword = password.trim(); // Trim spaces to ensure correct comparison
+
     startFreeTryOut(
       {
         product_try_out_id: product.id,
-        password: password,
+        password: trimmedPassword, // Ensure password is correct
       },
       {
         onSuccess: (res: any) => {

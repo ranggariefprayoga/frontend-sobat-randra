@@ -2,12 +2,12 @@
 
 "use client";
 
-import CardBimbel from "@/components/CardProductComponent/CardBimbel";
+import CardMulaiBimbel from "@/components/CardProductComponent/CardMulaiBimbel";
 import CardMulaiTryOut from "@/components/CardProductComponent/CardMulaiTryOut";
-import InfoComponent from "@/components/InfoComponent.tsx/InfoComponent";
 import NullComponent from "@/components/NullComponent/NullComponent";
 import TitleComponent from "@/components/TitleComponent/TitleComponent";
 import ButtonWithIcon from "@/components/TombolBack/TombolBack";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import LayoutBackgroundWhite from "@/layout/LayoutBackgroundWhite";
 import { useGetAllBimbelBarengProducts } from "@/lib/api/productBimbelBareng.api";
@@ -39,17 +39,15 @@ export default function MulaiBelajarSection() {
 
   let filteredProducts: any = [];
   if (selectedCategory === "try-out") {
-    // backend-api
-    filteredProducts = allProductTryOut?.data || [];
+    filteredProducts = allProductTryOut?.data?.filter((product: TryOutProductModel) => product.is_active) || [];
   } else if (selectedCategory === "bimbel") {
-    // backend-api
-    filteredProducts = allProductBimbelBareng?.data || [];
+    filteredProducts = allProductBimbelBareng?.data?.filter((product: bimbelBarengResponse) => product.is_active) || [];
   }
 
   return (
     <LayoutBackgroundWhite>
       <ButtonWithIcon icon={ArrowLeft} label="Kembali" />
-      <TitleComponent title="Produk yang bisa kamu akses" subTitle="Yuk kerjain sekarang!" />
+      <TitleComponent title="Produk yang bisa kamu akses" subTitle="Yuk belajar sekarang!" />
       <div className="w-full px-4 md:px-24 mt-8 grid grid-cols-2 lg:grid-cols-4 gap-2">
         <Button
           variant="outline"
@@ -92,7 +90,7 @@ export default function MulaiBelajarSection() {
           <>
             <div className="w-full px-4 md:px-24 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mt-8">
               {selectedCategory === "try-out" && filteredProducts.map((product: TryOutProductModel) => <CardMulaiTryOut userEmail={detailUser?.data?.email} key={product.id} product={product} />)}
-              {selectedCategory === "bimbel" && filteredProducts.map((product: bimbelBarengResponse) => <CardBimbel key={product.id} product={product} customLink="/pilihan-paket" />)}
+              {selectedCategory === "bimbel" && filteredProducts.map((product: bimbelBarengResponse) => <CardMulaiBimbel key={product.id} product={product} userEmail={detailUser?.data?.email} />)}
             </div>
           </>
         ) : (
@@ -101,8 +99,32 @@ export default function MulaiBelajarSection() {
       ) : (
         // For Smart-book and Video-Belajar
         <div className="w-full px-4 md:px-24 grid gap-6">
-          {selectedCategory === "smart-book" && <InfoComponent message="Silakan cek email kamu jika kamu sudah membeli produk Smart Book, jika produk belum tampil silakan hubungi Admin." color="text-gray-700" />}
-          {selectedCategory === "video-belajar" && <InfoComponent message="Silakan cek email kamu jika kamu sudah membeli produk Video Belajar, jika produk belum tampil silakan hubungi Admin." color="text-gray-700" />}
+          {selectedCategory === "smart-book" && (
+            <div className="my-4">
+              <Alert variant="default" className="w-full md:w-1/2 mx-auto flex flex-col items-start md:items-center gap-3 bg-blue-50 border-l-4 border-blue-400 shadow-sm">
+                <div className="flex items-center gap-2 text-blue-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M18 10A8 8 0 11.999 10 8 8 0 0118 10zM9 5a1 1 0 112 0v4a1 1 0 11-2 0V5zm1 8a1.5 1.5 0 100 3 1.5 1.5 0 000-3z" clipRule="evenodd" />
+                  </svg>
+                  <AlertTitle className="text-sm font-semibold">Cek Email Kamu Jika Sudah Membeli Cheat Sheet</AlertTitle>
+                </div>
+                <AlertDescription className="text-sm text-gray-700 md:ml-2">Hubungi Admin jika produk belum masuk ke email kamu!.</AlertDescription>
+              </Alert>
+            </div>
+          )}
+          {selectedCategory === "video-belajar" && (
+            <div className="my-4">
+              <Alert variant="default" className="w-full md:w-1/2 mx-auto flex flex-col items-start md:items-center gap-3 bg-blue-50 border-l-4 border-blue-400 shadow-sm">
+                <div className="flex items-center gap-2 text-blue-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M18 10A8 8 0 11.999 10 8 8 0 0118 10zM9 5a1 1 0 112 0v4a1 1 0 11-2 0V5zm1 8a1.5 1.5 0 100 3 1.5 1.5 0 000-3z" clipRule="evenodd" />
+                  </svg>
+                  <AlertTitle className="text-sm font-semibold">Cek Email Kamu Jika Sudah Membeli Video Belajar</AlertTitle>
+                </div>
+                <AlertDescription className="text-sm text-gray-700 md:ml-2">Hubungi Admin jika produk belum masuk ke email kamu!.</AlertDescription>
+              </Alert>
+            </div>
+          )}
         </div>
       )}
     </LayoutBackgroundWhite>

@@ -27,14 +27,12 @@ export default function CardVideoBelajar({ product, customLink, buttonText = "Li
       <div className="p-4">
         {/* Badge Kategori */}
         <div className="flex items-center gap-2 text-sm mb-2">
-          <span className={`bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs flex items-center`}>📘 Video Belajar</span>
+          <span className={`bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs flex items-center font-medium`}>🎬 Video Belajar</span>
         </div>
 
-        {/* Judul Produk */}
-        <h2 className="text-lg font-bold">{product.name}</h2>
+        <h2 className="text-sm md:text-base font-bold">{product.name}</h2>
 
-        {/* Deskripsi - Hanya 1 Baris, Jika Lebih Pakai Ellipsis */}
-        <p className="text-sm mt-1 truncate overflow-hidden whitespace-nowrap" title={product.description}>
+        <p className="text-xs md:text-sm mt-1 truncate overflow-hidden whitespace-nowrap" title={product.description}>
           {product.description}
         </p>
 
@@ -43,8 +41,8 @@ export default function CardVideoBelajar({ product, customLink, buttonText = "Li
 
         {/* Harga Produk & Diskon */}
         <div className="flex items-center justify-between mt-3">
-          <p className="text-lg font-bold text-[#ad0a1f]">{product.price === 0 ? "GRATIS" : `Rp ${product.price.toLocaleString("id-ID")}`}</p>
           {product.old_price && product.price !== product.old_price && <p className="text-xs line-through text-gray-500">Rp {product.old_price?.toLocaleString("id-ID")}</p>}
+          <p className="text-lg font-bold text-[#ad0a1f]">{product.price === 0 ? "GRATIS" : `Rp ${product.price.toLocaleString("id-ID")}`}</p>
         </div>
 
         {/* Tombol Navigasi */}

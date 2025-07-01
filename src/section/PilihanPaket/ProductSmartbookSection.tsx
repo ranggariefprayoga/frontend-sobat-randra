@@ -17,15 +17,17 @@ export default function ProductSmartbookSection() {
     return <LoadingComponent color="#ad0a1f" />;
   }
 
+  const activeProduct = data?.data?.filter((product: ProductSmartbookResponse) => product.is_active === true);
+
   return (
     <LayoutBackgroundWhite>
       <ButtonWithIcon icon={ArrowLeft} label="Kembali" />
       <TitleComponent title="Paket Smartbook" subTitle="Pilihan Smartbook Buat Kamu!" textAlign="start" />
-      {!data?.data || data?.data.length === 0 ? (
+      {!activeProduct || activeProduct.length === 0 ? (
         <NullComponent message="Belum ada Smartbook Tersedia" />
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 gap-2 px-4 md:px-24 mt-8">
-          {data?.data.map((product: ProductSmartbookResponse) => (
+          {activeProduct.map((product: ProductSmartbookResponse) => (
             <CardSmartbook key={product.id} product={product} customLink={`/pilihan-paket/smartbook/${product.id}`} />
           ))}
         </div>

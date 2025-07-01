@@ -18,6 +18,8 @@ export default function ProductTryOutSection() {
     return <LoadingComponent color="#ad0a1f" />;
   }
 
+  const activeProduct = data?.data?.filter((product: TryOutProductModel) => product.is_active === true);
+
   return (
     <LayoutBackgroundWhite>
       <ButtonWithIcon icon={ArrowLeft} label="Kembali" />
@@ -25,11 +27,11 @@ export default function ProductTryOutSection() {
       <div className="px-4 md:px-24 mt-8">
         <FreeTryOutModalSection />
       </div>
-      {!data?.data || data?.data.length === 0 ? (
+      {!activeProduct || activeProduct.length === 0 ? (
         <NullComponent message="Belum ada Try Out Tersedia" />
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 gap-2 px-4 md:px-24 mt-8">
-          {data?.data.map((product: TryOutProductModel) => (
+          {activeProduct.map((product: TryOutProductModel) => (
             <CardTryOut key={product.id} product={product} customLink={`/pilihan-paket/tryout/${product.id}`} />
           ))}
         </div>

@@ -17,15 +17,17 @@ export default function ProductVideoBelajarSection() {
     return <LoadingComponent color="#ad0a1f" />;
   }
 
+  const activeProduct = data?.data?.filter((product: ProductVideoBelajarResponse) => product.is_active === true);
+
   return (
     <LayoutBackgroundWhite>
       <ButtonWithIcon icon={ArrowLeft} label="Kembali" />
       <TitleComponent title="Paket Video Belajar" subTitle="Pilihan Video Belajar Buat Kamu!" textAlign="start" />
-      {!data?.data || data?.data.length === 0 ? (
+      {!activeProduct || activeProduct.length === 0 ? (
         <NullComponent message="Belum ada Video Belajar Tersedia" />
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 gap-2 px-4 md:px-24 mt-8">
-          {data?.data.map((product: ProductVideoBelajarResponse) => (
+          {activeProduct.map((product: ProductVideoBelajarResponse) => (
             <CardVideoBelajar key={product.id} product={product} customLink={`/pilihan-paket/video-belajar/${product.id}`} />
           ))}
         </div>

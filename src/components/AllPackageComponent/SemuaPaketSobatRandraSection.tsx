@@ -21,7 +21,7 @@ export default function SemuaPaketSobatRandraSection() {
       </div>
 
       {/* === LIST PRODUK === */}
-      <div className="w-full px-4 md:px-24 mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-4">
+      <div className="w-full px-4 md:px-24 mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-2">
         {/* Try Out */}
         <div
           onClick={() => router.push("/pilihan-paket/tryout")}

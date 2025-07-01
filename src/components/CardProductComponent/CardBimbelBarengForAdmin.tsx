@@ -69,14 +69,14 @@ export default function CardBimbelBarengForAdmin({ product, customLink, buttonTe
       <img src={product.banner_image || "/no-image.png"} alt={product.name} className="w-full h-48 object-cover" />
 
       <div className="p-4">
-        {/* Badge */}
         <div className="flex items-center gap-2 text-sm mb-2">
           {isLoading ? <h1 className="text-xs">Tunggu sebentar...</h1> : <>{product.capacity && <span className="bg-green-100 text-green-600 px-3 py-1 rounded-full text-xs">👥 Sisa {sisaKuota} kuota</span>}</>}
         </div>
 
         {/* Nama & Deskripsi */}
-        <h2 className="text-lg font-bold">{product.name}</h2>
-        <p className="text-sm mt-1 truncate overflow-hidden whitespace-nowrap" title={product.description}>
+        <h2 className="text-sm md:text-base font-bold">{product.name}</h2>
+
+        <p className="text-xs md:text-sm mt-1 truncate overflow-hidden whitespace-nowrap" title={product.description}>
           {product.description}
         </p>
 
