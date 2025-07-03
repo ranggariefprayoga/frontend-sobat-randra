@@ -65,7 +65,7 @@ const Leaderboard = () => {
           <div className="mt-2">
             <div className="mt-2 rounded-md border border-gray-200 overflow-hidden">
               <ScrollableTableWrapper>
-                <Table className="min-w-[700px] w-full rounded-lg shadow-md border-separate border-spacing-0">
+                <Table className="min-w-[700px] w-full rounded-lg shadow-md border-separate border-spacing-1">
                   <TableHeader className="bg-gray-100 sticky top-0 z-10">
                     <TableRow>
                       <TableCell className="px-4 py-3 text-sm font-medium text-gray-700">Ranking</TableCell>

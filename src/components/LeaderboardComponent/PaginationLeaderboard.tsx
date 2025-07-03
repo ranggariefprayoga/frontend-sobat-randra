@@ -14,7 +14,7 @@ export const PaginationLeaderboard = ({ currentPage, totalPages, onPageChange }:
         variant="outline"
         onClick={() => onPageChange(currentPage - 1)}
         disabled={prevDisabled}
-        className={`rounded-full px-4 py-2 text-sm font-medium transition ${prevDisabled ? "cursor-not-allowed bg-red-100 text-red-700" : "bg-red-200 text-red-900 "}`}
+        className={`rounded-full px-4 py-2 text-sm font-medium transition ${prevDisabled ? "cursor-not-allowed bg-blue-100 text-blue-700" : "bg-blue-200 text-blue-900 "}`}
       >
         <ChevronLeft size={16} />
       </Button>
@@ -29,7 +29,7 @@ export const PaginationLeaderboard = ({ currentPage, totalPages, onPageChange }:
         variant="outline"
         onClick={() => onPageChange(currentPage + 1)}
         disabled={nextDisabled}
-        className={`rounded-full px-4 py-2 text-sm font-medium transition ${nextDisabled ? "cursor-not-allowed bg-red-100 text-red-700" : "bg-red-200 text-red-900 "}`}
+        className={`rounded-full px-4 py-2 text-sm font-medium transition ${nextDisabled ? "cursor-not-allowed bg-blue-100 text-blue-700" : "bg-blue-200 text-blue-900 "}`}
       >
         <ChevronRight size={16} />
       </Button>

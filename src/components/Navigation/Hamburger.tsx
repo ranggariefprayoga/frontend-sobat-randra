@@ -4,7 +4,7 @@
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { Clipboard, Edit, Key, LogOut, Menu, Percent } from "lucide-react";
+import { Clipboard, Edit, Key, LogOut, Menu, Percent, Torus } from "lucide-react";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import NoAuthNavbarComponent from "./NoAuthNavbar";
 import { Command, CommandGroup, CommandItem, CommandList, CommandSeparator } from "../ui/command";
@@ -55,9 +55,15 @@ export default function Hamburger({ userDetail }: { userDetail: UserDetailInterf
 
           <SheetClose asChild>
             {userDetail?.role === "Admin" ? (
-              <Command className="w-full h-full">
+              <Command className="w-full h-full font-semibold text-sm md:text-base">
                 <CommandList className="w-full h-full">
                   <CommandGroup heading="Layanan">
+                    <CommandItem>
+                      <Button variant="ghost" className="w-full flex justify-start " onClick={() => navigateTo("/")}>
+                        <Home size={18} />
+                        <span>Beranda</span>
+                      </Button>
+                    </CommandItem>
                     <CommandItem>
                       <Button variant="ghost" className="w-full flex justify-start" onClick={() => navigateTo("/admin/layanan/promo")}>
                         <Percent size={18} />
@@ -147,7 +153,7 @@ export default function Hamburger({ userDetail }: { userDetail: UserDetailInterf
                     <CommandItem>
                       <Button variant="ghost" className="w-full flex justify-start" onClick={() => navigateTo("/admin/pelanggan/kritik-saran")}>
                         <MessageSquare size={18} />
-                        <span>Daftar Kritik dan Saran</span>
+                        <span>Daftar Kesan dan Pesan</span>
                       </Button>
                     </CommandItem>
                   </CommandGroup>
@@ -213,7 +219,7 @@ export default function Hamburger({ userDetail }: { userDetail: UserDetailInterf
                     <CommandItem>
                       <Button variant="ghost" className="w-full flex justify-start" onClick={() => navigateTo("/kritik-saran")}>
                         <MessageSquare size={18} />
-                        <span>Kritik & Saran</span>
+                        <span>Kesan & Pesan</span>
                       </Button>
                     </CommandItem>
                     <CommandItem>

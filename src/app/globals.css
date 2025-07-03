@@ -123,6 +123,14 @@
   width: max-content; /* Memastikan lebar konten cukup untuk scroll */
 }
 
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 /* Membungkus label sumbu X */
 .recharts-cartesian-axis-tick-value {
   white-space: normal !important; /* Membolehkan teks untuk membungkus */

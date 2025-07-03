@@ -1,6 +1,9 @@
 "use client";
 
 import LoadingComponent from "@/components/LoadingComponent/LoadingComponent";
+import { Textarea } from "@/components/ui/textarea";
+import { Star } from "lucide-react";
+import { useCreateFeedback } from "@/lib/api/feedback.api";
 import NumberButtonsResponsive from "@/components/NomorQuiz/NomorQuiz";
 import { Button } from "@/components/ui/button";
 import { useSearchParams, useRouter } from "next/navigation";
@@ -22,6 +25,9 @@ export default function PremiumQuizSection() {
   const router = useRouter();
   const [isSubmitDialogOpen, setIsSubmitDialogOpen] = useState(false);
   const [localSelectedChoiceId, setLocalSelectedChoiceId] = useState<number | null>(null);
+  const [rating, setRating] = useState<number>(0);
+  const [message, setMessage] = useState("");
+  const createFeedback = useCreateFeedback();
 
   const s = searchParams?.get("sess");
   const p = searchParams?.get("ptid");
@@ -125,13 +131,23 @@ export default function PremiumQuizSection() {
   // Optimistic answer handlin
 
   const handleConfirmSubmit = async () => {
+    if (rating < 1) {
+      toast.warning("Pilih minimal 1 bintang ya!");
+      return;
+    }
+
     try {
+      await createFeedback.mutateAsync({
+        rating,
+        message: message.trim() || "Tidak ada deskripsi",
+      });
+
       await submitQuizMutation.mutateAsync();
       toast.success("Mengakhiri try out, tunggu sebentar...");
       router.push("/history-nilai");
       setIsSubmitDialogOpen(false);
     } catch {
-      toast.error("Gagal submit try out, Coba lagi...");
+      toast.error("Gagal submit try out. Coba lagi...");
     }
   };
 
@@ -184,19 +200,39 @@ export default function PremiumQuizSection() {
         </div>
       </div>
       <Dialog open={isSubmitDialogOpen} onOpenChange={setIsSubmitDialogOpen}>
-        <DialogContent aria-describedby={undefined} className="sm:max-w-[425px]">
+        <DialogContent className="sm:max-w-[450px]">
           <DialogHeader>
-            <DialogTitle>Yakin Ingin Menyelesaikan Try Out?</DialogTitle>
+            <DialogTitle>Yakin ingin menyelesaikan Try Out?</DialogTitle>
+            <p className="text-sm text-muted-foreground mt-1">Sebelum menyelesaikan, beri kami sedikit masukan ya!</p>
           </DialogHeader>
-          <DialogFooter>
+
+          {/* Rating */}
+          <div className="flex items-center gap-2 mt-4">
+            {[1, 2, 3, 4, 5].map((star) => (
+              <Star
+                key={star}
+                onClick={() => setRating(star)}
+                className={`
+        w-7 h-7 md:w-8 md:h-8 transition-all duration-200 cursor-pointer
+        ${star <= rating ? "fill-yellow-400 stroke-yellow-500 scale-110 drop-shadow-md" : "stroke-gray-300 hover:stroke-yellow-300"}
+        hover:scale-105
+      `}
+              />
+            ))}
+          </div>
+
+          {/* Textarea */}
+          <Textarea placeholder="Tulis kesan atau pesan kamu di sini (opsional)..." value={message} onChange={(e) => setMessage(e.target.value)} className="min-h-[100px]" />
+
+          <DialogFooter className="mt-6">
             <DialogClose asChild>
               <Button variant="outline" onClick={() => setIsSubmitDialogOpen(false)}>
-                Tutup
+                Batal
               </Button>
             </DialogClose>
 
-            <Button disabled={submitQuizMutation.isPending} variant="default" className="w-auto bg-[#ad0a1f] hover:bg-[#d7263d] text-white" onClick={handleConfirmSubmit}>
-              {submitQuizMutation.isPending ? <span className="animate-spin inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full" /> : "Selesaikan Try Out"}
+            <Button onClick={handleConfirmSubmit} disabled={submitQuizMutation.isPending || createFeedback.isPending} className="bg-[#ad0a1f] hover:bg-[#d7263d] text-white">
+              {submitQuizMutation.isPending || createFeedback.isPending ? <span className="animate-spin inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full" /> : "Selesaikan Try Out"}
             </Button>
           </DialogFooter>
         </DialogContent>
