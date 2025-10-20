@@ -5,7 +5,7 @@ import LayoutBackgroundWhite from "@/layout/LayoutBackgroundWhite";
 import { ArrowLeft } from "lucide-react";
 import { use } from "react";
 import UpdateProductTryOutModal from "../Dialog/UpdateProductTryOut";
-import DetailTO from "@/pages/PilihanPaket/DetailTO";
+import DetailTO from "@/halaman/PilihanPaket/DetailTO";
 import { useUser } from "@/lib/api/user.api";
 import { useCheckAvailableFreeTryOut } from "@/lib/api/quisSession.api";
 import { useGetTryOutProductByIdForAdminExcludeFree } from "@/lib/api/productTryOut.api";

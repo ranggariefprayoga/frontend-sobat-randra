@@ -10,7 +10,7 @@ interface AccessProductTryOutCardProps {
   access: ProductAccessTryOutResponse;
 }
 
-export const AccessProductTryOutCard: React.FC<AccessProductTryOutCardProps> = ({ access }) => {
+const AccessProductTryOutCard: React.FC<AccessProductTryOutCardProps> = ({ access }) => {
   const { data, isLoading } = useGetTryOutProductsNameById(access.product_try_out_id);
   const router = useRouter();
 
@@ -34,3 +34,5 @@ export const AccessProductTryOutCard: React.FC<AccessProductTryOutCardProps> = (
     </div>
   );
 };
+
+export default AccessProductTryOutCard;

@@ -6,7 +6,7 @@ import { ArrowLeft } from "lucide-react";
 import { use } from "react";
 import { useGetSmartbookProductByIdForAdmin } from "@/lib/api/productSmartbook.api";
 import UpdateProductSmartbookModal from "../Dialog/UpdateSmartbookModal";
-import DetailSmartbook from "@/pages/PilihanPaket/DetailSmartbook";
+import DetailSmartbook from "@/halaman/PilihanPaket/DetailSmartbook";
 
 export default function DetailPilihanPaketSmartbookForAdmin({ params }: { params: Promise<{ product_smartbook_id: string }> }) {
   const { product_smartbook_id: id } = use(params);

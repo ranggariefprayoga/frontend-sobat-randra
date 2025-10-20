@@ -7,7 +7,7 @@ import { use } from "react";
 import { useUser } from "@/lib/api/user.api";
 import { useCheckAvailableBimbelBareng, useGetCountBimbelBarengAccess } from "@/lib/api/productBimbelBarengAccess.api";
 import { useGetBimbelBarengProductByIdForAdmin } from "@/lib/api/productBimbelBareng.api";
-import DetailBimbel from "@/pages/PilihanPaket/DetailBimbel";
+import DetailBimbel from "@/halaman/PilihanPaket/DetailBimbel";
 import UpdateProductBimbelBarengModal from "../Dialog/UpdateBimbelModal";
 
 export default function DetailPilihanPaketBimbelForAdmin({ params }: { params: Promise<{ product_bimbel_bareng_id: string }> }) {

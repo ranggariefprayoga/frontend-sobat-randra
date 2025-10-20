@@ -6,7 +6,7 @@ import { ArrowLeft } from "lucide-react";
 import { use } from "react";
 import { useGetProductPromoByIdForAdmin } from "@/lib/api/productPromo.api";
 import UpdateProductPromoModal from "../Dialog/UpdatePromoModal";
-import DetailPromo from "@/pages/PilihanPaket/DetailPromo";
+import DetailPromo from "@/halaman/PilihanPaket/DetailPromo";
 
 export default function DetailPilihanPaketPromoForAdmin({ params }: { params: Promise<{ product_promo_id: string }> }) {
   const { product_promo_id: id } = use(params);

@@ -13,7 +13,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import LayoutBackgroundWhite from "@/layout/LayoutBackgroundWhite";
 import { useGetTryOutProductByIdForAdminExcludeFree } from "@/lib/api/productTryOut.api";
 import { useCountTryOutAccess, useGetTryOutAccesses } from "@/lib/api/tryOutAccess.api";
-import { Pagination } from "@/pages/Admin/PelangganComponent";
+import { Pagination } from "@/halaman/Admin/PelangganComponent";
 import debounce from "lodash.debounce";
 import { ArrowLeft } from "lucide-react";
 import { use, useMemo, useState } from "react";

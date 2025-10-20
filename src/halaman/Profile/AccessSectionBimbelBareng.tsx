@@ -1,14 +1,14 @@
 "use client";
 
-import { ProductAccessTryOutResponse } from "@/model/productAccess.model";
-import { AccessProductTryOutCard } from "./AccessProductTryOutCard";
+import { BimbelBarengAccessResponse } from "@/model/productBimbelBarengAccess";
+import AccessProductBimbelBarengCard from "./AccessBimbelBarengCard";
 
-interface AccessSectionCardViewProps {
+interface AccessSectionCardBimbelBarengViewProps {
   title: string;
-  items: ProductAccessTryOutResponse[];
+  items: BimbelBarengAccessResponse[];
 }
 
-export const AccessSectionCardView: React.FC<AccessSectionCardViewProps> = ({ title, items }) => {
+const AccessSectionCardBimbelBarengView: React.FC<AccessSectionCardBimbelBarengViewProps> = ({ title, items }) => {
   return (
     <div className="mb-6">
       <div className="flex items-center justify-start mb-4 border-b border-gray-300 pb-2">
@@ -20,10 +20,12 @@ export const AccessSectionCardView: React.FC<AccessSectionCardViewProps> = ({ ti
       ) : (
         <div className="space-y-3">
           {items.map((item) => (
-            <AccessProductTryOutCard key={item.id} access={item} />
+            <AccessProductBimbelBarengCard key={item.id} access={item} />
           ))}
         </div>
       )}
     </div>
   );
 };
+
+export default AccessSectionCardBimbelBarengView;

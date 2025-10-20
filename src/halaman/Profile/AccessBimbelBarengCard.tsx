@@ -10,7 +10,7 @@ interface AccessProductBimbelBarengCardProps {
   access: BimbelBarengAccessResponse;
 }
 
-export const AccessProductBimbelBarengCard: React.FC<AccessProductBimbelBarengCardProps> = ({ access }) => {
+const AccessProductBimbelBarengCard: React.FC<AccessProductBimbelBarengCardProps> = ({ access }) => {
   const { data, isLoading } = useGetBimbelBarengNameById(access.product_bimbel_bareng_id);
   const router = useRouter();
 
@@ -35,3 +35,5 @@ export const AccessProductBimbelBarengCard: React.FC<AccessProductBimbelBarengCa
     </div>
   );
 };
+
+export default AccessProductBimbelBarengCard;

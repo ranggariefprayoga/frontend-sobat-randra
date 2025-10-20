@@ -9,10 +9,10 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Input } from "@/components/ui/input";
 import { useUpdateName, useUpdatePassword } from "@/lib/api/user.api";
 import { toast } from "sonner";
-import { AccessSectionCardView } from "./AccessSection";
+import AccessSectionCardView from "./AccessSection";
 import { BimbelBarengAccessResponse } from "@/model/productBimbelBarengAccess";
 import { ProductAccessTryOutResponse } from "@/model/productAccess.model";
-import { AccessSectionCardBimbelBarengView } from "./AccessSectionBimbelBareng";
+import AccessSectionCardBimbelBarengView from "./AccessSectionBimbelBareng";
 
 type ProfileProps = {
   userDetail: {

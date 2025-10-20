@@ -7,7 +7,7 @@ import { ArrowLeft } from "lucide-react";
 import { use } from "react";
 import { useUser } from "@/lib/api/user.api";
 import UpdateFreeProductTryOutModal from "../Dialog/UpdateFreeTryOut";
-import DetailTOFree from "@/pages/PilihanPaket/DetailTOFree";
+import DetailTOFree from "@/halaman/PilihanPaket/DetailTOFree";
 
 export default function DetailPilihanPaketTOFreeForAdmin({ params }: { params: Promise<{ product_try_out_id: string }> }) {
   const { product_try_out_id: id } = use(params);

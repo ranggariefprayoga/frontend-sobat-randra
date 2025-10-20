@@ -5,7 +5,7 @@ import LayoutBackgroundWhite from "@/layout/LayoutBackgroundWhite";
 import { ArrowLeft } from "lucide-react";
 import { use } from "react";
 
-import DetailPromo from "@/pages/PilihanPaket/DetailPromo";
+import DetailPromo from "@/halaman/PilihanPaket/DetailPromo";
 import { useGetProductPromoById } from "@/lib/api/productPromo.api";
 
 export default function DetailPilihanPaketPromoForUser({ params }: { params: Promise<{ product_promo_id: string }> }) {

@@ -1,4 +1,4 @@
-import DetailPilihanPaketBimbel from "@/pages/PilihanPaket/DetailPilihanPaketBimbel";
+import DetailPilihanPaketBimbel from "@/halaman/PilihanPaket/DetailPilihanPaketBimbel";
 
 export default function BimbelBarengDetailForUserPage({ params }: { params: Promise<{ product_bimbel_bareng_id: string }> }) {
   return (

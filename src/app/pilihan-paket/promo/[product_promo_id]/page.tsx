@@ -1,4 +1,4 @@
-import DetailPilihanPaketPromoForUser from "@/pages/PilihanPaket/DetailPilihanPaketPromo";
+import DetailPilihanPaketPromoForUser from "@/halaman/PilihanPaket/DetailPilihanPaketPromo";
 
 export default function PromoDetailForUser({ params }: { params: Promise<{ product_promo_id: string }> }) {
   return (

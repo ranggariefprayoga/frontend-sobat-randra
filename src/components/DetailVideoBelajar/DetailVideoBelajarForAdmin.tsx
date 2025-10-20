@@ -6,7 +6,7 @@ import { ArrowLeft } from "lucide-react";
 import { use } from "react";
 import { useGetVideoBelajarProductByIdForAdmin } from "@/lib/api/productVideoBelajar.api";
 import UpdateProductVideoBelajarModal from "../Dialog/UpdateVideoBelajarModal";
-import DetailVideoBelajar from "@/pages/PilihanPaket/DetailVideoBelajar";
+import DetailVideoBelajar from "@/halaman/PilihanPaket/DetailVideoBelajar";
 
 export default function DetailVideoBelajarForAdmin({ params }: { params: Promise<{ product_video_belajar_id: string }> }) {
   const { product_video_belajar_id: id } = use(params);

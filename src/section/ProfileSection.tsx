@@ -3,7 +3,7 @@
 import LayoutBackgroundWhite from "@/layout/LayoutBackgroundWhite";
 import TitleComponent from "@/components/TitleComponent/TitleComponent";
 import ButtonWithIcon from "@/components/TombolBack/TombolBack";
-import ProfileComponentPages from "@/pages/Profile/ProfileComponent";
+import ProfileComponentPages from "@/halaman/Profile/ProfileComponent";
 import { ArrowLeft } from "lucide-react";
 
 export default function ProfileSection() {
