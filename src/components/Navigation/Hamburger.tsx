@@ -24,7 +24,7 @@ export default function Hamburger({ userDetail }: { userDetail: UserDetailInterf
         await logoutMutation.mutateAsync(String(idUser));
       }
       toast.success("Logout berhasil! Dadahh 👋");
-      router.push("/auth/login");
+      window.location.assign("/auth/login");
     } catch (err) {
       toast.error("Logout gagal! Coba lagi.");
     }

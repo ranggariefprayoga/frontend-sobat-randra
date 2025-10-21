@@ -31,7 +31,7 @@ export default function LoginComponent() {
       await login.mutateAsync({ email, password });
 
       toast.success("Login berhasil! Selamat datang 👋");
-      router.push("/");
+      window.location.assign("/");
       setEmail("");
       setPassword("");
     } catch (err) {

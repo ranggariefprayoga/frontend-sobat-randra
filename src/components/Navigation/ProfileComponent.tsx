@@ -24,7 +24,7 @@ export default function ProfileComponent({ userDetail }: { userDetail: UserDetai
         await logoutMutation.mutateAsync(String(idUser));
       }
       toast.success("Logout berhasil! Dadahh 👋");
-      router.push("/auth/login");
+      window.location.assign("/auth/login");
     } catch (err) {
       toast.error("Logout gagal! Coba lagi.");
     }
