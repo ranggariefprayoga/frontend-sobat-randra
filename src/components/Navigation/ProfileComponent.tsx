@@ -22,9 +22,9 @@ export default function ProfileComponent({ userDetail }: { userDetail: UserDetai
     try {
       if (idUser) {
         await logoutMutation.mutateAsync(String(idUser));
+        toast.success("Logout berhasil! Dadahh 👋");
+        window.location.assign("/auth/login");
       }
-      toast.success("Logout berhasil! Dadahh 👋");
-      window.location.assign("/auth/login");
     } catch (err) {
       toast.error("Logout gagal! Coba lagi.");
     }
