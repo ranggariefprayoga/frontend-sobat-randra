@@ -14,6 +14,8 @@ const decodeJWT = (token: string) => {
 
 export function middleware(req: NextRequest) {
   const accessToken = req.cookies.get("user_token")?.value;
+  console.log({accessToken});
+  
   const quizToken = req.cookies.get("quiz_token")?.value;
   const url = req.nextUrl;
 
@@ -77,5 +79,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/mulai-belajar", "/history-nilai", "/uji-coba", "/rangking-nasional", "/profile", "/kritik-saran", "/pilihan-paket/:path*", "/download-pembahasan", "/auth/:path*", "/admin/:path*", "/quiz(.*)", "/free-quiz(.*)"],
+  matcher: ["/mulai-belajar", "/history-nilai", "/uji-coba", "/rangking-nasional", "/profile", "/kritik-saran", "/download-pembahasan", "/auth/:path*", "/admin/:path*", "/quiz(.*)", "/free-quiz(.*)"],
 };

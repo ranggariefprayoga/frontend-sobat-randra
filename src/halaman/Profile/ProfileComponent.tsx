@@ -10,12 +10,15 @@ export default function ProfileComponentPages() {
   const userId = data?.data?.id ?? "";
   const { data: detailUser, isLoading: detailLoading } = useGetUserDetail(userId);
 
+  
   if (isLoading || detailLoading)
     return (
       <div className="px-4 md:px-24 flex justify-center w-full">
         <LoadingComponent color="#ad0a1f" />
       </div>
     );
+
+  console.log(detailUser);
 
   return <Profile userDetail={detailUser?.data ?? null} />;
 }
