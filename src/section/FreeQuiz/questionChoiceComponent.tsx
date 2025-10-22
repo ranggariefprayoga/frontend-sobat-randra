@@ -2,7 +2,6 @@ import React from "react";
 import LatexRenderer from "@/components/LatexRendered/LatexRendered";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
 
 export interface QuestionChoiceQuizResponse {
   id: number;
@@ -78,7 +77,7 @@ const QuestionChoiceComponent = React.memo(({ choices, isSelected, onSelect }: C
                   {choice.question_choice_images && choice.question_choice_images.length > 0 && (
                     <div className="flex flex-wrap gap-4">
                       {choice.question_choice_images.map((src, idx) => (
-                        <Image key={idx} src={src} alt={`Gambar soal ${idx + 1}`} className="w-full lg:w-[60%] rounded border" width={800} height={450} style={{ objectFit: "contain" }} />
+                        <img key={idx} src={src} alt={`Gambar soal ${idx + 1}`} className="w-full lg:w-[60%] rounded border object-contain max-h-[450px]" />
                       ))}
                     </div>
                   )}

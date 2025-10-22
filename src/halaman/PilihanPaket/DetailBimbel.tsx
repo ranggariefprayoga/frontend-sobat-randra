@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -49,7 +48,7 @@ export default function DetailBimbel({ product, isUserAvailable, aksesSaatIni }:
         {/* Banner */}
         <div className="relative w-full md:w-[50%] aspect-[16/9] rounded-xl overflow-hidden flex-shrink-0">
           {product.jadwal_bimbel_image ? (
-            <Image src={product.jadwal_bimbel_image} alt={product.name} fill className="object-cover" sizes="(max-width: 768px) 100vw, 45vw" priority />
+            <img src={product.jadwal_bimbel_image} alt={product.name} className="w-full object-cover" />
           ) : (
             <div className="flex items-center justify-center w-full h-full bg-gray-200 text-gray-500 text-sm">Gambar tidak tersedia</div>
           )}

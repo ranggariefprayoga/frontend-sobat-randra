@@ -3,7 +3,6 @@
 
 import React from "react";
 import LatexRenderer from "../LatexRendered/LatexRendered";
-import Image from "next/image";
 import { QuestionChoiceResponse } from "@/model/questionChoice.model";
 import { Badge } from "../ui/badge";
 import UpdateQuestionChoiceModal from "../Dialog/ModalUpdatePilihanJawaban";
@@ -71,7 +70,7 @@ export default function QuestionChoicePreview({ isLoading, error, data, question
           {choice.question_choice_images.length > 0 && (
             <div className="flex flex-wrap gap-4">
               {choice.question_choice_images.map((src, idx) => (
-                <Image key={idx} src={src} alt={`Gambar soal ${idx + 1}`} className="w-full rounded border" width={800} height={450} style={{ objectFit: "contain" }} />
+                <img key={idx} src={src} alt={`Gambar soal ${idx + 1}`} className="w-full rounded object-contain max-h-[450px]" />
               ))}
             </div>
           )}

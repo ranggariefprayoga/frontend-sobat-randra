@@ -2,7 +2,6 @@
 import React, { useRef } from "react";
 import LatexRenderer from "../LatexRendered/LatexRendered";
 import { QuestionResponse } from "@/model/question.model";
-import Image from "next/image";
 
 type QuestionPreviewProps = {
   isLoading: boolean;
@@ -39,7 +38,7 @@ export default function QuestionPreview({ isLoading, error, data }: QuestionPrev
               <div>
                 <div className="flex flex-wrap gap-4">
                   {data.question_images.map((src: string, idx: number) => (
-                    <Image key={idx} src={src} alt={`Gambar soal ${idx + 1}`} className="w-full rounded" width={800} height={450} style={{ objectFit: "contain" }} />
+                    <img key={idx} src={src} alt={`Gambar soal ${idx + 1}`} className="w-full rounded object-contain max-h-[450px]" />
                   ))}
                 </div>
               </div>

@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -39,7 +38,7 @@ export default function DetailBimbelForAdmin({ product, isUserAvailable, aksesSa
         {/* Banner */}
         <div className="relative w-full md:w-[45%] aspect-[16/9] rounded-xl overflow-hidden flex-shrink-0">
           {product.banner_image ? (
-            <Image src={product.banner_image} alt={product.name} fill className="object-cover" sizes="(max-width: 768px) 100vw, 45vw" priority />
+            <img src={product.banner_image} alt={product.name} className="w-full object-cover" />
           ) : (
             <div className="flex items-center justify-center w-full h-full bg-gray-200 text-gray-500 text-sm">Gambar tidak tersedia</div>
           )}
@@ -107,7 +106,7 @@ export default function DetailBimbelForAdmin({ product, isUserAvailable, aksesSa
       <div className="flex flex-col md:flex-row gap-6 items-start">
         {product.jadwal_bimbel_image && (
           <div className="relative w-full md:w-[45%] aspect-[16/9] rounded-xl overflow-hidden flex-shrink-0">
-            <Image src={product.jadwal_bimbel_image} alt="Jadwal Bimbel" fill className="object-cover" sizes="(max-width: 768px) 100vw, 45vw" priority />
+            <img src={product.jadwal_bimbel_image} alt="Jadwal Bimbel" className="w-full object-cover" />
           </div>
         )}
         {product.marketing_text && product.marketing_text !== "" && (

@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import LatexRenderer from "../LatexRendered/LatexRendered";
-import Image from "next/image";
 import { AnswerExplanationResponse } from "@/model/answerExplanation.model";
 import DeleteAnswerExplanationModal from "../Dialog/ModalHapusPenjelasanJawaban";
 import UpdateAnswerExplanationModal from "../Dialog/ModalUpdatePenjelasanPertanyaan";
@@ -64,7 +63,7 @@ const AnswerExplanationPreview: React.FC<AnswerExplanationPreviewProps> = ({ isL
               {Array.isArray(item.answer_explanation_images) && item.answer_explanation_images.length > 0 && (
                 <div className="flex flex-wrap gap-4">
                   {item.answer_explanation_images.map((src, i) => (
-                    <Image key={i} src={src} alt={`Gambar penjelasan ${i + 1}`} className="w-full rounded" width={800} height={450} style={{ objectFit: "contain" }} />
+                    <img key={i} src={src} alt={`Gambar penjelasan ${i + 1}`} className="w-full rounded object-contain max-h-[450px]" />
                   ))}
                 </div>
               )}

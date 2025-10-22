@@ -2,7 +2,6 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from "next/image";
 import { createTryOutResponse } from "@/model/product.model";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -92,7 +91,7 @@ export default function DetailTOFree({ product, user }: Props) {
         {/* Banner */}
         <div className="relative w-full md:w-[50%] aspect-[16/9] rounded-xl overflow-hidden flex-shrink-0">
           {product.banner_image ? (
-            <Image src={product.banner_image} alt={product.name} fill className="object-cover" sizes="(max-width: 768px) 100vw, 45vw" priority />
+            <img src={product.banner_image} alt={product.name} className="w-full object-cover" />
           ) : (
             <div className="flex items-center justify-center w-full h-full bg-gray-200 text-gray-500 text-sm">Gambar tidak tersedia</div>
           )}
