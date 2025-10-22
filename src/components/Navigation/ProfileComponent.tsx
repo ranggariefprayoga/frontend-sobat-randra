@@ -23,7 +23,9 @@ export default function ProfileComponent({ userDetail }: { userDetail: UserDetai
       if (idUser) {
         await logoutMutation.mutateAsync(String(idUser));
         toast.success("Logout berhasil! Dadahh 👋");
-        setTimeout(() => {window.location.assign("/auth/login")}, 1000)
+        setTimeout(() => {
+          window.location.assign("/auth/login");
+        }, 1000);
       }
     } catch (err) {
       toast.error("Logout gagal! Coba lagi.");
