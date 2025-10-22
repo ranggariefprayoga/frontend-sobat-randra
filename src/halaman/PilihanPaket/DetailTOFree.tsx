@@ -91,7 +91,7 @@ export default function DetailTOFree({ product, user }: Props) {
         {/* Banner */}
         <div className="relative w-full md:w-[50%] aspect-[16/9] rounded-xl overflow-hidden flex-shrink-0">
           {product.banner_image ? (
-            <img src={product.banner_image} alt={product.name} className="w-full h-56 object-cover" />
+            <img src={product.banner_image} alt={product.name} className="w-full h-full object-contain" />
           ) : (
             <div className="flex items-center justify-center w-full h-full bg-gray-200 text-gray-500 text-sm">Gambar tidak tersedia</div>
           )}
