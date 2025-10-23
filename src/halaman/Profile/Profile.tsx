@@ -12,7 +12,7 @@ import { toast } from "sonner";
 import AccessSectionCardView from "./AccessSection";
 import { BimbelBarengAccessResponse } from "@/model/productBimbelBarengAccess";
 import { ProductAccessTryOutResponse } from "@/model/productAccess.model";
-import AccessSectionCardBimbelBarengView from "./AccessSectionBimbelBareng";
+// import AccessSectionCardBimbelBarengView from "./AccessSectionBimbelBareng";
 
 type ProfileProps = {
   userDetail: {
@@ -136,7 +136,7 @@ export default function Profile({ userDetail }: ProfileProps) {
       <Card>
         <CardContent>
           <AccessSectionCardView title="Akses TryOut Premium Kamu" items={userDetail.try_out_access} />
-          <AccessSectionCardBimbelBarengView title="Akses Bimbel Bareng Kamu" items={userDetail.bimbel_bareng_access} />
+          {/* <AccessSectionCardBimbelBarengView title="Akses Bimbel Bareng Kamu" items={userDetail.bimbel_bareng_access} /> */}
         </CardContent>
       </Card>
     </motion.div>

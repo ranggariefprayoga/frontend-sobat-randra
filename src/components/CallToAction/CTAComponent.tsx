@@ -11,7 +11,7 @@ export default function BannerCPNS() {
   };
 
   const handleTanyaAdmin = () => {
-    window.open("https://wa.me/6287747867857?text=Halo%20min%20aku%20mau%20konsultasi%20mengenai%20layanan%20di%20Sobat%20Randra%20dong", "_blank");
+    window.open("https://wa.me/6285124631275?text=Halo%20min%20aku%20mau%20konsultasi%20mengenai%20layanan%20di%20Sobat%20Randra%20dong", "_blank");
   };
 
   return (

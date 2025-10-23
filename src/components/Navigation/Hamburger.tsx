@@ -225,7 +225,11 @@ export default function Hamburger({ userDetail }: { userDetail: UserDetailInterf
                       </Button>
                     </CommandItem>
                     <CommandItem>
-                      <Button variant="ghost" className="w-full flex justify-start" onClick={() => (window.location.href = "https://wa.me/6287747867857")}>
+                      <Button
+                        variant="ghost"
+                        className="w-full flex justify-start"
+                        onClick={() => (window.location.href = "https://wa.me/6285124631275?text=Halo%20min%20aku%20mau%20konsultasi%20mengenai%20layanan%20di%20Sobat%20Randra%20dong")}
+                      >
                         <HelpCircle size={18} />
                         <span>Bantuan</span>
                       </Button>

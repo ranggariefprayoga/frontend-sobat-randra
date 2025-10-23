@@ -15,7 +15,7 @@ const PenjelasanProdukComponent = ({ icon, title, description }: AlertBoxProps) 
 
       {/* Text content */}
       <div className="space-y-1">
-        <AlertTitle className="text-base md:text-lg font-semibold text-black">{title}</AlertTitle>
+        <AlertTitle className="text-base md:text-lg font-semibold text-black whitespace-normal">{title}</AlertTitle>
         <AlertDescription className="text-sm md:text-base text-gray-700">{description}</AlertDescription>
       </div>
     </Alert>

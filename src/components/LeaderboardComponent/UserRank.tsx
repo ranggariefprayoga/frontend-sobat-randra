@@ -23,7 +23,7 @@ export const RankUser = ({ rank, name, email, score, category_score, status }: r
           </div>
 
           <div>
-            <AlertTitle className="font-semibold">{name}</AlertTitle>
+            <AlertTitle className="font-semibold whitespace-normal">{name}</AlertTitle>
             <AlertDescription className="text-sm">{email}</AlertDescription>
             <div className={`mt-2 px-3 py-1 rounded-md text-center font-bold ${isLulus ? "bg-green-200 text-green-700" : "bg-red-100 text-red-700"}`}>Nilai Kamu: {score}</div>
             <div className={`mt-1 text-xs font-semibold ${status === "Lulus" ? "text-green-600" : "text-red-600"}`}>Status: {status}</div>
