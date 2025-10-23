@@ -135,7 +135,7 @@ export function BuatBimbelBarengModal() {
 
           <div className="mb-4 space-y-1.5">
             <Label>
-              Deskripsi Try Out <span className="text-red-600">*</span>
+              Deskripsi TryOut <span className="text-red-600">*</span>
             </Label>
             <Textarea placeholder="Tulis deskripsi produk..." value={description} onChange={(e) => setDescription(e.target.value)} />
           </div>

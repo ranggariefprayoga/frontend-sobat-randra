@@ -25,7 +25,7 @@ export default function ProductTryOutSection() {
   return (
     <LayoutBackgroundWhite>
       <ButtonWithIcon icon={ArrowLeft} label="Kembali" />
-      <TitleComponent title="Paket Try Out" subTitle="Pilihan Try Out Yang Bisa Kamu Beli!" textAlign="start" />
+      <TitleComponent title="Paket TryOut" subTitle="Pilihan TryOut Yang Bisa Kamu Beli!" textAlign="start" />
       <div className="px-4 md:px-24 mt-8 flex flex-wrap gap-2">
         <FreeTryOutModalSection />
         {caraAksesTryOut.map((item) => (
@@ -34,7 +34,7 @@ export default function ProductTryOutSection() {
       </div>
 
       {!activeProduct || activeProduct.length === 0 ? (
-        <NullComponent message="Belum ada Try Out Tersedia" />
+        <NullComponent message="Belum ada TryOut Tersedia" />
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 gap-2 px-4 md:px-24 mt-8">
           {activeProduct.map((product: TryOutProductModel) => (

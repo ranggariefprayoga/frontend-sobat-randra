@@ -18,7 +18,7 @@ export default function CardSmartbook({ product, customLink, buttonText = "Lihat
 
       <div className="px-2 py-4">
         <div className="flex items-center gap-2 text-sm mb-2">
-          <span className={`bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs flex items-center font-medium`}>📝 Cheat Sheet</span>
+          <span className={`bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs flex items-center font-medium`}>📝 CheatSheet</span>
         </div>
 
         <h2 className="text-sm md:text-base font-bold">{product.name}</h2>

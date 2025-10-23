@@ -15,7 +15,7 @@ export default function TambahkanAksesTryOutSection() {
   return (
     <LayoutBackgroundWhite>
       <ButtonWithIcon icon={ArrowLeft} label="Kembali" />
-      <TitleComponent title="Tambahkan Akses Try Out" />
+      <TitleComponent title="Tambahkan Akses TryOut" />
 
       {isLoading ? (
         <div className="px-4 md:px-24 flex justify-center w-full">
@@ -28,7 +28,7 @@ export default function TambahkanAksesTryOutSection() {
           ))}
         </div>
       ) : (
-        <NullComponent message="Belum ada Try Out Tersedia" />
+        <NullComponent message="Belum ada TryOut Tersedia" />
       )}
     </LayoutBackgroundWhite>
   );

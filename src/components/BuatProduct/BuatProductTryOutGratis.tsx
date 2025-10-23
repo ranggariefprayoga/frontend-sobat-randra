@@ -55,11 +55,11 @@ export function CreateTryOutFreeModal({ checkFreeProduct }: checkFreeProductProp
       {
         onSuccess: () => {
           setOpen(false);
-          toast.success("Try Out Gratis berhasil dibuat.");
+          toast.success("TryOut Gratis berhasil dibuat.");
           resetForm();
         },
         onError: () => {
-          toast.error("Gagal membuat Try Out Gratis.");
+          toast.error("Gagal membuat TryOut Gratis.");
         },
       }
     );
@@ -79,12 +79,12 @@ export function CreateTryOutFreeModal({ checkFreeProduct }: checkFreeProductProp
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button disabled={checkFreeProduct}>Buat Try Out Gratis</Button>
+        <Button disabled={checkFreeProduct}>Buat TryOut Gratis</Button>
       </DialogTrigger>
       <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[600px]">
         <DialogHeader>
-          <DialogTitle>Buat Try Out Gratis</DialogTitle>
-          <DialogDescription>Isi form dibawah ini untuk membuat Try Out.</DialogDescription>
+          <DialogTitle>Buat TryOut Gratis</DialogTitle>
+          <DialogDescription>Isi form dibawah ini untuk membuat TryOut.</DialogDescription>
           <div className="border-b border-gray-300 mb-2" />
         </DialogHeader>
 
@@ -106,7 +106,7 @@ export function CreateTryOutFreeModal({ checkFreeProduct }: checkFreeProductProp
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center space-x-2">
               <Switch checked={isFree} />
-              <span className="text-sm">{isFree ? "Ada Try Out Gratis" : "Gak ada Try Out Gratis"}</span>
+              <span className="text-sm">{isFree ? "Ada TryOut Gratis" : "Gak ada TryOut Gratis"}</span>
             </div>
           </div>
 
@@ -128,7 +128,7 @@ export function CreateTryOutFreeModal({ checkFreeProduct }: checkFreeProductProp
 
           <div className="mb-4 space-y-1.5">
             <Label>
-              Deskripsi Try Out <span className="text-red-600">*</span>
+              Deskripsi TryOut <span className="text-red-600">*</span>
             </Label>
             <Textarea placeholder="Tulis deskripsi produk..." value={description} onChange={(e) => setDescription(e.target.value)} />
           </div>

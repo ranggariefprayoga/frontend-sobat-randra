@@ -25,11 +25,11 @@ export default function CardSmartbookForAdmin({ product, customLink, buttonText 
   const handleDelete = () => {
     deleteMutation.mutate(product.id, {
       onSuccess: () => {
-        toast.success("Cheat Sheet berhasil dihapus.");
+        toast.success("CheatSheet berhasil dihapus.");
         setOpen(false);
       },
       onError: () => {
-        toast.error("Gagal menghapus Cheat Sheet.");
+        toast.error("Gagal menghapus CheatSheet.");
       },
     });
   };

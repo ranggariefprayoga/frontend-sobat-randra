@@ -39,7 +39,7 @@ export default function CreateTryOutAccessModal({ product_try_out_id, onSuccess 
         user_email: userEmail.trim(),
         phone_number: phoneNumber.trim(),
       });
-      toast.success("Akses try out berhasil ditambahkan");
+      toast.success("Akses TryOut berhasil ditambahkan");
       setOpen(false);
       setUserEmail("");
       setPhoneNumber("");
@@ -82,7 +82,7 @@ export default function CreateTryOutAccessModal({ product_try_out_id, onSuccess 
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Tambah Akses Try Out</DialogTitle>
+          <DialogTitle>Tambah Akses TryOut</DialogTitle>
           <DialogDescription>Masukkan email user untuk diberikan akses.</DialogDescription>
         </DialogHeader>
         <div className="space-y-4">

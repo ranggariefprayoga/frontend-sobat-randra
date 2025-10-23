@@ -25,7 +25,7 @@ export default function BuatDanUpdateTryOutGratisSection() {
   return (
     <LayoutBackgroundWhite>
       <ButtonWithIcon icon={ArrowLeft} label="Kembali" />
-      <TitleComponent title="Buat dan Update Try Out Gratis" />
+      <TitleComponent title="Buat dan Update TryOut Gratis" />
       <div className="w-full px-4 md:px-24 mt-4 md:mt-8">
         <CreateTryOutFreeModal checkFreeProduct={checkFreeProduct()} />
       </div>
@@ -41,7 +41,7 @@ export default function BuatDanUpdateTryOutGratisSection() {
           ))}
         </div>
       ) : (
-        <NullComponent message="Belum ada Try Out Gratis Tersedia" />
+        <NullComponent message="Belum ada TryOut Gratis Tersedia" />
       )}
     </LayoutBackgroundWhite>
   );

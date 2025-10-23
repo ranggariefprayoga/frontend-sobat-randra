@@ -55,7 +55,7 @@ export default function MulaiBelajarSection() {
           size="lg"
           onClick={() => handleCategoryClick("try-out")}
         >
-          Try Out
+          TryOut
         </Button>
 
         <Button
@@ -106,7 +106,7 @@ export default function MulaiBelajarSection() {
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M18 10A8 8 0 11.999 10 8 8 0 0118 10zM9 5a1 1 0 112 0v4a1 1 0 11-2 0V5zm1 8a1.5 1.5 0 100 3 1.5 1.5 0 000-3z" clipRule="evenodd" />
                   </svg>
-                  <AlertTitle className="text-sm font-semibold">Cek Email Kamu Jika Sudah Membeli Cheat Sheet</AlertTitle>
+                  <AlertTitle className="text-sm font-semibold">Cek Email Kamu Jika Sudah Membeli CheatSheet</AlertTitle>
                 </div>
                 <AlertDescription className="text-sm text-gray-700 md:ml-2">Hubungi Admin jika produk belum masuk ke email kamu!.</AlertDescription>
               </Alert>

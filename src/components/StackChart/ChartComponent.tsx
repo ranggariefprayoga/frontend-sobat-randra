@@ -30,7 +30,7 @@ interface Session {
 const ChartComponent = ({ data }: { data: Session[] | undefined }) => {
   // Jika sessions kosong, tampilkan NullComponent
   if (!data || data.length === 0) {
-    return <NullComponent message="Kerjakan Try Out Premium untuk melihat grafik pengerjaan kamu" />;
+    return <NullComponent message="Kerjakan TryOut Premium untuk melihat grafik pengerjaan kamu" />;
   }
 
   // Menyiapkan data untuk StackedBarChart tanpa mengelompokkan berdasarkan product_name

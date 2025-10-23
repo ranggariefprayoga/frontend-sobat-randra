@@ -72,7 +72,7 @@ export default function DetailTOFree({ product, user }: Props) {
           setIsGratisDialogOpen(false);
           refetchAvailableTryOut();
           router.push(`/free-quiz?sess=${res?.data?.id}&ptid=${res?.data?.product_try_out_id}&qid=${res?.data?.first_question_id}`);
-          toast.success(res?.data?.message || "Try Out dimulai gratis, tunggu sebentar...");
+          toast.success(res?.data?.message || "TryOut dimulai gratis, tunggu sebentar...");
         },
         onError: () => {
           setPassword("");
@@ -114,7 +114,7 @@ export default function DetailTOFree({ product, user }: Props) {
               onClick={openGratisDialog}
               disabled={!haveAccessGratis}
             >
-              {haveAccessGratis ? "Coba Try Out Gratis" : "Try Out Gratis Tidak Ada Lagi"}
+              {haveAccessGratis ? "Coba TryOut Gratis" : "TryOut Gratis Tidak Ada Lagi"}
             </Button>
           )}
         </div>
@@ -123,7 +123,7 @@ export default function DetailTOFree({ product, user }: Props) {
       {/* Marketing Text - bawah */}
       {product.marketing_text && product.marketing_text !== "" && (
         <div className="mt-10 bg-gray-50 border border-gray-200 p-4 rounded-lg text-sm text-gray-700 whitespace-pre-line leading-relaxed">
-          <h1 className="text-2xl md:text-3xl font-bold text-[#ad0a1f] uppercase mb-2">🆓 Tentang Try Out Gratis</h1>
+          <h1 className="text-2xl md:text-3xl font-bold text-[#ad0a1f] uppercase mb-2">🆓 Tentang TryOut Gratis</h1>
           {product.marketing_text}
         </div>
       )}

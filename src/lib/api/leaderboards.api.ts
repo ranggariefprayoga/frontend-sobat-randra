@@ -4,7 +4,7 @@ import { API_BASE_URL } from "../apiBaseUrl";
 import { WebResponse } from "@/model/web-reponse.model";
 import { productLeaderboardAvailable, rankResponse, WebPaginatedResponseForLeaderboards } from "@/model/leaderboards.model";
 
-// Get product try outs for leaderboard
+// Get product TryOuts for leaderboard
 export const useGetProductTryOutsForLeaderboard = () => {
   return useQuery<WebResponse<productLeaderboardAvailable[]>, Error>({
     queryKey: ["product-try-outs-leaderboard"],

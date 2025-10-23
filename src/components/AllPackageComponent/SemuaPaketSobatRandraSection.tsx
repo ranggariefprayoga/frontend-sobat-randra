@@ -22,20 +22,20 @@ export default function SemuaPaketSobatRandraSection() {
 
       {/* === LIST PRODUK === */}
       <div className="w-full px-4 md:px-24 mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-2">
-        {/* Try Out */}
+        {/* TryOut */}
         <div
           onClick={() => router.push("/pilihan-paket/tryout")}
           className="cursor-pointer flex items-center justify-between bg-gradient-to-r from-[#D94B6B] to-[#FFAC6C] text-white px-6 py-4 rounded-xl shadow-md hover:scale-[1.01] transition"
         >
           <div className="flex flex-col flex-1 min-w-0 pr-4">
-            <h3 className="text-base md:text-lg font-bold mb-1 truncate">Try Out</h3>
-            <p className="text-sm">Latihan soal premium & gratis. Nilai Try Out langsung keluar!</p>
+            <h3 className="text-base md:text-lg font-bold mb-1 truncate">TryOut</h3>
+            <p className="text-sm">Latihan soal gratis & premium. Nilai TryOut langsung keluar!</p>
           </div>
-          <img src="/layanan/tryout.svg" alt="Try Out" className="w-14 md:w-16 h-auto flex-shrink-0" />
+          <img src="/layanan/tryout.svg" alt="TryOut" className="w-14 md:w-16 h-auto flex-shrink-0" />
         </div>
 
         {/* Bimbel */}
-        <div
+        {/* <div
           onClick={() => router.push("/pilihan-paket/bimbel")}
           className="cursor-pointer flex items-center justify-between bg-gradient-to-r from-[#F97316] to-[#FFAC6C] text-white px-6 py-4 rounded-xl shadow-md hover:scale-[1.01] transition"
         >
@@ -44,7 +44,7 @@ export default function SemuaPaketSobatRandraSection() {
             <p className="text-sm">Belajar bareng tutor via Zoom. Fokus ke materi yang sesuai kisi-kisi!</p>
           </div>
           <img src="/layanan/bimbel.svg" alt="Bimbel" className="w-14 md:w-16 h-auto flex-shrink-0" />
-        </div>
+        </div> */}
 
         {/* Smart Book */}
         <div
@@ -52,14 +52,14 @@ export default function SemuaPaketSobatRandraSection() {
           className="cursor-pointer flex items-center justify-between bg-gradient-to-r from-[#6F86FF] to-[#A094F7] text-white px-6 py-4 rounded-xl shadow-md hover:scale-[1.01] transition"
         >
           <div className="flex flex-col flex-1 min-w-0 pr-4">
-            <h3 className="text-base md:text-lg font-bold mb-1 truncate">Cheat Sheet</h3>
-            <p className="text-sm">Cheat Sheet colorful, membantu memperbaiki mood belajar kamu.</p>
+            <h3 className="text-base md:text-lg font-bold mb-1 truncate">CheatSheet</h3>
+            <p className="text-sm">CheatSheet ringkas dan colorful, meningkatkan semangat belajar kamu.</p>
           </div>
-          <img src="/layanan/cheatsheet.svg" alt="Cheat Sheet" className="w-14 md:w-16 h-auto flex-shrink-0" />
+          <img src="/layanan/cheatsheet.svg" alt="CheatSheet" className="w-14 md:w-16 h-auto flex-shrink-0" />
         </div>
 
         {/* Video Belajar */}
-        <div
+        {/* <div
           onClick={() => router.push("/pilihan-paket/video-belajar")}
           className="cursor-pointer flex items-center justify-between bg-gradient-to-r from-[#47CACC] to-[#91EAE4] text-white px-6 py-4 rounded-xl shadow-md hover:scale-[1.01] transition"
         >
@@ -68,7 +68,7 @@ export default function SemuaPaketSobatRandraSection() {
             <p className="text-sm">Akses materi CPNS lewat video kapan aja, dimana saja.</p>
           </div>
           <img src="/layanan/video-belajar.svg" alt="Video Belajar" className="w-14 md:w-16 h-auto flex-shrink-0" />
-        </div>
+        </div> */}
       </div>
     </>
   );

@@ -36,7 +36,7 @@ export default function AccessButtonWithModal({ isPremiumAvailable, productTryOu
           setIsPremiumDialogOpen(false);
           refetchAvailableTryOut();
           router.push(`/quiz?sess=${res?.data?.id}&ptid=${res?.data?.product_try_out_id}&qid=${res?.data?.first_question_id}`);
-          toast.success(res?.data?.message || `Try Out dimulai, tunggu sebentar...`);
+          toast.success(res?.data?.message || `TryOut dimulai, tunggu sebentar...`);
         },
         onError: () => {
           toast.error("Gagal memulai sesi. Coba refresh.");
@@ -54,15 +54,15 @@ export default function AccessButtonWithModal({ isPremiumAvailable, productTryOu
         onClick={openPremiumDialog}
         disabled={!haveAccessPremium}
       >
-        {haveAccessPremium ? "Mulai Try Out Premium" : "Anda Belum Memiliki Akses Premium"}
+        {haveAccessPremium ? "Mulai TryOut Premium" : "Anda Belum Memiliki Akses Premium"}
       </button>
 
       {/* Dialog Akses Premium */}
       <Dialog open={isPremiumDialogOpen} onOpenChange={setIsPremiumDialogOpen}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Yakin Ingin Memulai Try Out?</DialogTitle>
-            <DialogDescription>Tekan &quot;Mulai Kerjakan!&quot; untuk memulai try out!.</DialogDescription>
+            <DialogTitle>Yakin Ingin Memulai TryOut?</DialogTitle>
+            <DialogDescription>Tekan &quot;Mulai Kerjakan!&quot; untuk memulai TryOut!.</DialogDescription>
           </DialogHeader>
           <DialogFooter>
             <DialogClose asChild>

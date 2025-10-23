@@ -1,4 +1,4 @@
-import { Smartphone, BookCheck, Users2, Timer, BarChart3, Award } from "lucide-react";
+import { Smartphone, BookCheck, Timer, BarChart3, Award } from "lucide-react";
 import { ReactNode } from "react";
 
 export interface KeunggulanItem {
@@ -11,31 +11,31 @@ export const keunggulanKamiData: KeunggulanItem[] = [
   {
     icon: <Smartphone className="h-6 w-6 text-[#D94B6B]" />,
     title: "Akses Mudah",
-    description: "Bisa akses try out, cheat sheet, dan video lewat HP atau laptop.",
+    description: "Bisa akses TryOut dan CheatSheet lewat HP, tablet, atau laptop dimana saja, kapan saja.",
   },
   {
     icon: <BookCheck className="h-6 w-6 text-[#D94B6B]" />,
-    title: "Kisi-kisi Terbaru",
-    description: "Selalu up-to-date dengan kisi-kisi terbaru setiap tahun.",
+    title: "Kisi-kisi berdasarkan KemenPAN-RB",
+    description: "Selalu up-to-date dengan kisi-kisi dari KemenPAN-RB.",
   },
-  {
-    icon: <Users2 className="h-6 w-6 text-[#D94B6B]" />,
-    title: "Pengajar Kompeten",
-    description: "Mengajar dengan hati, siap mendampingi perjalanan belajarmu.",
-  },
+  // {
+  //   icon: <Users2 className="h-6 w-6 text-[#D94B6B]" />,
+  //   title: "Pengajar Kompeten",
+  //   description: "Mengajar dengan hati, siap mendampingi perjalanan belajarmu.",
+  // },
   {
     icon: <Timer className="h-6 w-6 text-[#D94B6B]" />,
     title: "History & Grafik Nilai",
-    description: "Lihat history dan grafik nilai kamu setelah mengerjakan try out.",
+    description: "Untuk mengukur seberapa jauh kesiapan kamu dalam mengerjakan soal.",
   },
   {
     icon: <Award className="h-6 w-6 text-[#D94B6B]" />,
     title: "Rangking Nasional",
-    description: "Ukur kemampuanmu dan berkompetisi se-Indonesia.",
+    description: "Lihat posisimu diantara pesaing lainnya.",
   },
   {
     icon: <BarChart3 className="h-6 w-6 text-[#D94B6B]" />,
-    title: "Evaluasi Detail",
-    description: "Dapatkan evaluasi & pembahasan hasil try out secara detail.",
+    title: "Detail Evaluasi",
+    description: "Dapatkan evaluasi & pembahasan hasil TryOut secara detail.",
   },
 ];

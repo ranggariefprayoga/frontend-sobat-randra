@@ -43,7 +43,7 @@ export default function HistoryNilaiSection() {
   if (!allQuizSesion || allQuizSesion?.data?.length === 0) {
     return (
       <LayoutBackgroundWhite>
-        <NullComponent message="Kamu Belum Memiliki Riwayat Pengerjaan Try Out!" />
+        <NullComponent message="Kamu Belum Memiliki Riwayat Pengerjaan TryOut!" />
       </LayoutBackgroundWhite>
     );
   }
@@ -83,7 +83,7 @@ export default function HistoryNilaiSection() {
 
   return (
     <LayoutBackgroundWhite>
-      <TitleComponent title="History Nilai Kamu" subTitle="History Pengerjaan Try Out kamu!" />
+      <TitleComponent title="History Nilai Kamu" subTitle="History Pengerjaan TryOut kamu!" />
 
       <>
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 px-4 md:px-24 mt-8 md:mt-16">
@@ -180,7 +180,7 @@ export default function HistoryNilaiSection() {
         </div>
       </>
       <div className="mt-8 md:mt-16">
-        <TitleComponent title="Grafik Pengerjaan Try Out Premium Kamu" subTitle="Menampilkan Grafik 10 Try Out Premium yang Kamu Kerjakan!" />
+        <TitleComponent title="Grafik Pengerjaan TryOut Premium Kamu" subTitle="Menampilkan Grafik 10 TryOut Premium yang Kamu Kerjakan!" />
       </div>
       <div className="pe-4 md:px-16 mt-8">
         <ChartComponent data={dataForChart} />

@@ -45,7 +45,7 @@ export default function UjiCobaTryOutSection() {
   if (!freeSessionQuiz || freeSessionQuiz?.length === 0) {
     return (
       <LayoutBackgroundWhite>
-        <NullComponent message="Kamu Belum Memiliki Riwayat Pengerjaan Uji Coba Try Out!" />
+        <NullComponent message="Kamu Belum Memiliki Riwayat Pengerjaan Uji Coba TryOut!" />
         <div className="px-4 md:px-24 flex justify-center w-full -mt-12">
           <Button variant="outline" className="bg-[#ad0a1f] text-white" onClick={() => router.push("/pilihan-paket/tryout")}>
             Cobain Sekarang!
@@ -61,7 +61,7 @@ export default function UjiCobaTryOutSection() {
 
   return (
     <LayoutBackgroundWhite>
-      <TitleComponent title="Nilai Uji Coba Try Out Kamu" subTitle="Kamu hanya memiliki 1x kesempatan pengerjaan!" />
+      <TitleComponent title="Nilai Uji Coba TryOut Kamu" subTitle="Kamu hanya memiliki 1x kesempatan pengerjaan!" />
 
       <>
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 px-4 md:px-24 mt-8 md:mt-16">
@@ -153,7 +153,7 @@ export default function UjiCobaTryOutSection() {
         </div>
       </>
       <div className="mt-8 md:mt-16">
-        <TitleComponent title="Grafik Pengerjaan Try Out Premium Kamu" subTitle="Menampilkan Grafik 10 Try Out Premium yang Kamu Kerjakan!" />
+        <TitleComponent title="Grafik Pengerjaan TryOut Premium Kamu" subTitle="Menampilkan Grafik 10 TryOut Premium yang Kamu Kerjakan!" />
       </div>
       <div className="my-8 px-4 md:px-24">
         <Alert variant="destructive" className="w-full md:w-1/2 mx-auto flex flex-col items-start md:items-center gap-3 bg-red-50 border-l-4 border-red-500 shadow-sm">
@@ -163,7 +163,7 @@ export default function UjiCobaTryOutSection() {
             </svg>
             <AlertTitle className="text-sm font-semibold">Akses Tidak Tersedia</AlertTitle>
           </div>
-          <AlertDescription className="text-sm text-gray-700 md:ml-2">Grafik Pengerjaan Try Out Hanya Tersedia Untuk Try Out Premium.</AlertDescription>
+          <AlertDescription className="text-sm text-gray-700 md:ml-2">Grafik Pengerjaan TryOut Hanya Tersedia Untuk TryOut Premium.</AlertDescription>
         </Alert>
       </div>
     </LayoutBackgroundWhite>

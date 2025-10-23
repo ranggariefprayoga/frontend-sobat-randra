@@ -143,11 +143,11 @@ export default function PremiumQuizSection() {
       });
 
       await submitQuizMutation.mutateAsync();
-      toast.success("Mengakhiri try out, tunggu sebentar...");
+      toast.success("Mengakhiri TryOut, tunggu sebentar...");
       router.push("/history-nilai");
       setIsSubmitDialogOpen(false);
     } catch {
-      toast.error("Gagal submit try out. Coba lagi...");
+      toast.error("Gagal submit TryOut. Coba lagi...");
     }
   };
 
@@ -202,7 +202,7 @@ export default function PremiumQuizSection() {
       <Dialog open={isSubmitDialogOpen} onOpenChange={setIsSubmitDialogOpen}>
         <DialogContent className="sm:max-w-[450px]">
           <DialogHeader>
-            <DialogTitle>Yakin ingin menyelesaikan Try Out?</DialogTitle>
+            <DialogTitle>Yakin ingin menyelesaikan TryOut?</DialogTitle>
             <p className="text-sm text-muted-foreground mt-1">Sebelum menyelesaikan, beri kami sedikit masukan ya!</p>
           </DialogHeader>
 
@@ -232,7 +232,7 @@ export default function PremiumQuizSection() {
             </DialogClose>
 
             <Button onClick={handleConfirmSubmit} disabled={submitQuizMutation.isPending || createFeedback.isPending} className="bg-[#ad0a1f] hover:bg-[#d7263d] text-white">
-              {submitQuizMutation.isPending || createFeedback.isPending ? <span className="animate-spin inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full" /> : "Selesaikan Try Out"}
+              {submitQuizMutation.isPending || createFeedback.isPending ? <span className="animate-spin inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full" /> : "Selesaikan TryOut"}
             </Button>
           </DialogFooter>
         </DialogContent>

@@ -47,11 +47,11 @@ export function BuatSmartbookModal() {
       {
         onSuccess: () => {
           setOpen(false);
-          toast.success("Cheat Sheet berhasil dibuat.");
+          toast.success("CheatSheet berhasil dibuat.");
           resetForm();
         },
         onError: () => {
-          toast.error("Gagal membuat Cheat Sheet.");
+          toast.error("Gagal membuat CheatSheet.");
         },
       }
     );

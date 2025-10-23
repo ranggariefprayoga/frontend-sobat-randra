@@ -135,7 +135,7 @@ export default function Profile({ userDetail }: ProfileProps) {
       </Card>
       <Card>
         <CardContent>
-          <AccessSectionCardView title="Akses Try Out Premium Kamu" items={userDetail.try_out_access} />
+          <AccessSectionCardView title="Akses TryOut Premium Kamu" items={userDetail.try_out_access} />
           <AccessSectionCardBimbelBarengView title="Akses Bimbel Bareng Kamu" items={userDetail.bimbel_bareng_access} />
         </CardContent>
       </Card>

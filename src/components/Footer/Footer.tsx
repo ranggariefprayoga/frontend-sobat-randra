@@ -11,7 +11,7 @@ export default function Footer() {
   if (pathname?.startsWith("/auth")) {
     return null;
   }
-  const products = ["Try Out", "Bimbel Bareng", "Smart Book & Cheat Sheet", "Video Belajar"];
+  const products = ["TryOut", "CheatSheet"];
 
   const fadeInUp = {
     hidden: { opacity: 0, y: 20 },
@@ -31,7 +31,7 @@ export default function Footer() {
               <Image src="/logo/logo-bg.jpg" alt="Logo Sobat Randra" width={100} height={100} className="object-contain rounded-full" />
             </motion.div>
             <motion.p variants={fadeInUp} initial="hidden" animate="visible" custom={1} className="text-sm md:text-base text-black/80">
-              Satu platform lengkap buat kamu yang siap taklukin CPNS. Akses Try Out, Bimbel, Smart Book, dan Video Belajar kapan aja, di mana aja.
+              Satu platform lengkap buat kamu yang siap taklukin CPNS. Akses TryOut dan CheatSheet kapan saja, di mana saja.
             </motion.p>
           </div>
 
@@ -52,8 +52,8 @@ export default function Footer() {
                       />
                     </svg>
                   ),
-                  text: "+62 877-4786-7857",
-                  href: "https://wa.me/6287747867857",
+                  text: "+62 851-2463-1275",
+                  href: "https://wa.me/6285124631275?text=Halo%20min%20aku%20mau%20konsultasi%20mengenai%20layanan%20di%20Sobat%20Randra%20dong",
                 },
                 {
                   icon: (
@@ -79,6 +79,18 @@ export default function Footer() {
                   ),
                   text: "sobatrandra",
                   href: "https://www.tiktok.com/@sobatrandra",
+                },
+                {
+                  icon: (
+                    <svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" width="24px" height="24px">
+                      <path
+                        fill="#000000"
+                        d="M549.655 124.083c-6.28-23.734-24.78-42.22-48.52-48.5C440.16 64 288 64 288 64S135.84 64 74.86 75.58c-23.73 6.27-42.22 24.77-48.5 48.5C16 176.06 16 256 16 256s0 79.94 10.38 131.917c6.28 23.73 24.78 42.22 48.52 48.5C135.84 448 288 448 288 448s152.16 0 213.14-11.583c23.74-6.27 42.23-24.77 48.52-48.5C560 335.94 560 256 560 256s0-79.94-10.38-131.917zm-308.623 214.32L388.5 256l-147.47-82.413v164.826z"
+                      />
+                    </svg>
+                  ),
+                  text: "Sobat Randra",
+                  href: "https://www.youtube.com/@SobatRandra",
                 },
               ].map((item, i) => (
                 <motion.li key={i} variants={fadeInUp} initial="hidden" animate="visible" custom={3 + i} className="flex items-start gap-3">

@@ -26,11 +26,11 @@ export default function CardTryOutForAdmin({ product, customLink, buttonText = "
   const handleDelete = () => {
     deleteMutation.mutate(product.id, {
       onSuccess: () => {
-        toast.success("Try Out berhasil dihapus.");
+        toast.success("TryOut berhasil dihapus.");
         setOpen(false);
       },
       onError: () => {
-        toast.error("Gagal menghapus Try Out.");
+        toast.error("Gagal menghapus TryOut.");
       },
     });
   };
@@ -49,7 +49,7 @@ export default function CardTryOutForAdmin({ product, customLink, buttonText = "
             <DialogHeader>
               <DialogTitle>Yakin ingin menghapus?</DialogTitle>
             </DialogHeader>
-            <p className="text-sm text-gray-600">Produk Try Out ini akan dihapus secara permanen.</p>
+            <p className="text-sm text-gray-600">Produk TryOut ini akan dihapus secara permanen.</p>
             <DialogFooter className="gap-2  sm:justify-end">
               <Button variant="ghost" onClick={() => setOpen(false)}>
                 Tutup

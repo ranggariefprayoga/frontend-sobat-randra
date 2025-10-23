@@ -86,7 +86,7 @@ export default function AksesTODetail({ params }: { params: Promise<{ product_tr
             <LoadingComponent color="#ad0a1f" />
           </div>
         ) : filteredAccesses.length === 0 ? (
-          <p className="text-center mt-8 text-gray-600">Akses try out gak ada.</p>
+          <p className="text-center mt-8 text-gray-600">Akses TryOut gak ada.</p>
         ) : (
           <>
             <Table>

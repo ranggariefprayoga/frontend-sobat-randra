@@ -34,7 +34,7 @@ export default function BuatSoalTryOutSection() {
     <LayoutBackgroundWhite>
       <ButtonWithIcon icon={ArrowLeft} label="Kembali" />
 
-      <TitleComponent title="Buat Soal Try Out" />
+      <TitleComponent title="Buat Soal TryOut" />
 
       <div className="flex gap-4 px-4 md:px-24 mt-4">
         <Button
@@ -66,7 +66,7 @@ export default function BuatSoalTryOutSection() {
           ))}
         </div>
       ) : (
-        <NullComponent message="Belum ada Try Out Tersedia" />
+        <NullComponent message="Belum ada TryOut Tersedia" />
       )}
     </LayoutBackgroundWhite>
   );

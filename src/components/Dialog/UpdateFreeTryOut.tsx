@@ -56,10 +56,10 @@ export function UpdateFreeProductTryOutModal({ initialData }: { initialData?: up
         {
           onSuccess: () => {
             setOpen(false);
-            toast.success("Try Out berhasil diperbarui.");
+            toast.success("TryOut berhasil diperbarui.");
           },
           onError: () => {
-            toast.error("Gagal memperbarui Try Out.");
+            toast.error("Gagal memperbarui TryOut.");
           },
         }
       );
@@ -69,12 +69,12 @@ export function UpdateFreeProductTryOutModal({ initialData }: { initialData?: up
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>Edit Try Out Gratis</Button>
+        <Button>Edit TryOut Gratis</Button>
       </DialogTrigger>
       <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[600px]">
         <DialogHeader>
-          <DialogTitle>Edit Try Out Gratis</DialogTitle>
-          <DialogDescription>Perbarui informasi Try Out di bawah ini.</DialogDescription>
+          <DialogTitle>Edit TryOut Gratis</DialogTitle>
+          <DialogDescription>Perbarui informasi TryOut di bawah ini.</DialogDescription>
           <div className="border-b border-gray-300 mb-2" />
         </DialogHeader>
 
@@ -105,7 +105,7 @@ export function UpdateFreeProductTryOutModal({ initialData }: { initialData?: up
 
           <div className="mb-4 space-y-1.5">
             <Label>
-              Deskripsi Try Out<span className="text-red-600">*</span>
+              Deskripsi TryOut<span className="text-red-600">*</span>
             </Label>
             <Textarea placeholder="Tulis deskripsi produk..." value={description} onChange={(e) => setDescription(e.target.value)} />
           </div>

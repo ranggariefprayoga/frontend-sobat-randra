@@ -45,11 +45,11 @@ export function CreateTryOutModal() {
       {
         onSuccess: () => {
           setOpen(false);
-          toast.success("Try Out berhasil dibuat.");
+          toast.success("TryOut berhasil dibuat.");
           resetForm();
         },
         onError: () => {
-          toast.error("Gagal membuat Try Out.");
+          toast.error("Gagal membuat TryOut.");
         },
       }
     );
@@ -68,12 +68,12 @@ export function CreateTryOutModal() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>Buat Try Out Premium</Button>
+        <Button>Buat TryOut Premium</Button>
       </DialogTrigger>
       <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[600px]">
         <DialogHeader>
-          <DialogTitle>Buat Try Out Premium</DialogTitle>
-          <DialogDescription>Isi form dibawah ini untuk membuat Try Out.</DialogDescription>
+          <DialogTitle>Buat TryOut Premium</DialogTitle>
+          <DialogDescription>Isi form dibawah ini untuk membuat TryOut.</DialogDescription>
           <div className="border-b border-gray-300 mb-2" />
         </DialogHeader>
 
@@ -100,7 +100,7 @@ export function CreateTryOutModal() {
 
           <div className="mb-4 space-y-1.5">
             <Label>
-              Deskripsi Try Out <span className="text-red-600">*</span>
+              Deskripsi TryOut <span className="text-red-600">*</span>
             </Label>
             <Textarea placeholder="Tulis deskripsi produk..." value={description} onChange={(e) => setDescription(e.target.value)} />
           </div>

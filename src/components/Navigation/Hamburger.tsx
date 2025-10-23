@@ -23,7 +23,9 @@ export default function Hamburger({ userDetail }: { userDetail: UserDetailInterf
       if (idUser) {
         await logoutMutation.mutateAsync(String(idUser));
         toast.success("Logout berhasil! Dadahh 👋");
-        setTimeout(() => {window.location.assign("/auth/login")}, 1000)
+        setTimeout(() => {
+          window.location.assign("/auth/login");
+        }, 1000);
       }
     } catch (err) {
       toast.error("Logout gagal! Coba lagi.");
@@ -73,13 +75,13 @@ export default function Hamburger({ userDetail }: { userDetail: UserDetailInterf
                     <CommandItem>
                       <Button variant="ghost" className="w-full flex justify-start" onClick={() => navigateTo("/admin/layanan/tryout")}>
                         <BookOpen size={18} />
-                        <span>Buat & Update Try Out Premium</span>
+                        <span>Buat & Update TryOut Premium</span>
                       </Button>
                     </CommandItem>
                     <CommandItem>
                       <Button variant="ghost" className="w-full flex justify-start" onClick={() => navigateTo("/admin/layanan/tryout-gratis")}>
                         <BookOpen size={18} />
-                        <span>Buat & Update Try Out Gratis</span>
+                        <span>Buat & Update TryOut Gratis</span>
                       </Button>
                     </CommandItem>
                     <CommandItem>
@@ -104,17 +106,17 @@ export default function Hamburger({ userDetail }: { userDetail: UserDetailInterf
 
                   <CommandSeparator />
 
-                  <CommandGroup heading="Try Out">
+                  <CommandGroup heading="TryOut">
                     <CommandItem>
                       <Button variant="ghost" className="w-full flex justify-start" onClick={() => navigateTo("/admin/tryout/buat-soal")}>
                         <Edit size={18} />
-                        <span>Buat Soal Try Out</span>
+                        <span>Buat Soal TryOut</span>
                       </Button>
                     </CommandItem>
                     <CommandItem>
                       <Button variant="ghost" className="w-full flex justify-start" onClick={() => navigateTo("/admin/tryout/akses")}>
                         <Key size={18} />
-                        <span>Tambahkan Akses Try Out</span>
+                        <span>Tambahkan Akses TryOut</span>
                       </Button>
                     </CommandItem>
                   </CommandGroup>
@@ -191,7 +193,7 @@ export default function Hamburger({ userDetail }: { userDetail: UserDetailInterf
                     <CommandItem>
                       <Button variant="ghost" className="w-full flex justify-start" onClick={() => navigateTo("/uji-coba")}>
                         <Clipboard size={18} />
-                        <span>Nilai Uji Coba Try Out</span>
+                        <span>Nilai Uji Coba TryOut</span>
                       </Button>
                     </CommandItem>
                     <CommandItem>

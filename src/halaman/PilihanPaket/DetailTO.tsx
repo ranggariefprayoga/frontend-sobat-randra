@@ -54,7 +54,7 @@ export default function DetailTO({ product, user }: Props) {
           setIsPremiumDialogOpen(false);
           refetch();
           router.push(`/quiz?sess=${res?.data?.id}&ptid=${res?.data?.product_try_out_id}&qid=${res?.data?.first_question_id}`);
-          toast.success(res?.data?.message || `Try Out dimulai, tunggu sebentar...`);
+          toast.success(res?.data?.message || `TryOut dimulai, tunggu sebentar...`);
         },
         onError: () => {
           toast.error("Gagal memulai sesi. Coba refresh.");
@@ -111,7 +111,7 @@ export default function DetailTO({ product, user }: Props) {
               onClick={openPremiumDialog}
               disabled={!haveAccessPremium}
             >
-              {haveAccessPremium ? "Mulai Try Out Premium" : "Anda Belum Memiliki Akses Premium"}
+              {haveAccessPremium ? "Mulai TryOut Premium" : "Anda Belum Memiliki Akses Premium"}
             </Button>
           ) : (
             <>
@@ -126,7 +126,7 @@ export default function DetailTO({ product, user }: Props) {
 
               {/* CTA WhatsApp */}
               <a href={whatsappMessage} target="_blank" rel="noopener noreferrer" className="block w-full md:max-w-xs">
-                <Button className="w-full md:w-auto bg-green-600 hover:bg-green-700 text-white">Beli Try Out</Button>
+                <Button className="w-full md:w-auto bg-green-600 hover:bg-green-700 text-white">Beli TryOut</Button>
               </a>
             </>
           )}
@@ -136,7 +136,7 @@ export default function DetailTO({ product, user }: Props) {
       {/* Marketing Text - bawah */}
       {product.marketing_text && product.marketing_text !== "" && (
         <div className="mt-10 bg-gray-50 border border-gray-200 p-4 rounded-lg text-sm text-gray-700 whitespace-pre-line leading-relaxed">
-          <h1 className="text-2xl md:text-3xl font-bold text-[#ad0a1f] uppercase mb-2">⭐ Tentang Try Out Premium</h1>
+          <h1 className="text-2xl md:text-3xl font-bold text-[#ad0a1f] uppercase mb-2">⭐ Tentang TryOut Premium</h1>
           {product.marketing_text}
         </div>
       )}
@@ -145,8 +145,8 @@ export default function DetailTO({ product, user }: Props) {
       <Dialog open={isPremiumDialogOpen} onOpenChange={setIsPremiumDialogOpen}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Yakin Ingin Memulai Try Out?</DialogTitle>
-            <DialogDescription>Tekan &quot;Mulai Kerjakan!&quot; untuk memulai try out!.</DialogDescription>
+            <DialogTitle>Yakin Ingin Memulai TryOut?</DialogTitle>
+            <DialogDescription>Tekan &quot;Mulai Kerjakan!&quot; untuk memulai TryOut!.</DialogDescription>
           </DialogHeader>
           <DialogFooter>
             <DialogClose asChild>

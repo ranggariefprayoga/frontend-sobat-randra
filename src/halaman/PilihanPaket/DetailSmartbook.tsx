@@ -79,7 +79,7 @@ export default function DetailSmartbook({ product }: Props) {
 
       {product.marketing_text && product.marketing_text !== "" && (
         <div className="mt-10 bg-gray-50 border border-gray-200 p-4 rounded-lg text-sm text-gray-700 whitespace-pre-line leading-relaxed">
-          <h1 className="text-2xl md:text-3xl font-bold text-[#ad0a1f] uppercase mb-2">📝 Tentang Cheat Sheet</h1>
+          <h1 className="text-2xl md:text-3xl font-bold text-[#ad0a1f] uppercase mb-2">📝 Tentang CheatSheet</h1>
           {product.marketing_text}
         </div>
       )}

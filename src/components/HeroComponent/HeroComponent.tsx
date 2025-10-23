@@ -36,7 +36,7 @@ export default function HeroSection() {
           </motion.div>
 
           <motion.p className="text-sm sm:text-base md:text-lg lg:text-xl max-w-2xl mb-8" variants={fadeUp} initial="hidden" animate={hasAnimated ? "visible" : "hidden"} transition={{ duration: 0.6, delay: 0.4 }}>
-            Try Out, Bimbel, Cheatsheet, dan Video Belajar — semua yang kamu butuhin buat lolos CPNS.
+            TryOut, Bimbel, Cheatsheet, dan Video Belajar — semua yang kamu butuhin buat lolos CPNS.
           </motion.p>
 
           <motion.div className="px-4 md:px-24" variants={fadeUp} initial="hidden" animate={hasAnimated ? "visible" : "hidden"} transition={{ duration: 0.6, delay: 0.6 }}>

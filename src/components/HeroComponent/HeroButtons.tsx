@@ -12,7 +12,7 @@ export default function HeroButtons() {
 
   const handleWhatsAppClick = () => {
     const number = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER;
-    const message = encodeURIComponent("Halo min, aku mau nanya-nanya dong tentang Try Out Premium Sobat Randra.");
+    const message = encodeURIComponent("Halo min, aku mau nanya-nanya tentang layanan di Sobat Randra.");
     const url = `https://wa.me/${number}?text=${message}`;
     window.open(url, "_blank");
   };

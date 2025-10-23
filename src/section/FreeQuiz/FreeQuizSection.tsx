@@ -119,10 +119,10 @@ export default function FreeQuizSection() {
   const handleConfirmSubmit = async () => {
     try {
       await submitQuizMutation.mutateAsync();
-      toast.success("Mengakhiri try out, tunggu sebentar...");
+      toast.success("Mengakhiri TryOut, tunggu sebentar...");
       router.push("/uji-coba");
     } catch {
-      toast.error("Gagal submit try out, Coba lagi...");
+      toast.error("Gagal submit TryOut, Coba lagi...");
     }
   };
 
@@ -164,12 +164,12 @@ export default function FreeQuizSection() {
             ) : (
               <div className="text-center p-6 bg-gray-100 border border-gray-300 rounded-md shadow-md">
                 <div className="max-w-md mx-auto">
-                  <h2 className="text-xl font-semibold text-gray-700 mb-4">Uji Coba Try Out Gratis hanya menyediakan {validQuestions?.data?.length} soal saja.</h2>
+                  <h2 className="text-xl font-semibold text-gray-700 mb-4">Uji Coba TryOut Gratis hanya menyediakan {validQuestions?.data?.length} soal saja.</h2>
                   <p className="text-sm text-gray-600 mb-4">
-                    Untuk mendapatkan fitur lengkap, soal terbaru, dan rangking nasional Try Out, beli paket <strong>Try Out Premium</strong> kami
+                    Untuk mendapatkan fitur lengkap, soal terbaru, dan rangking nasional TryOut, beli paket <strong>TryOut Premium</strong> kami
                   </p>
                   <Button disabled={submitQuizMutation.isPending} variant="default" className="w-auto bg-[#ad0a1f] hover:bg-[#d7263d] text-white" onClick={handleConfirmSubmit}>
-                    {submitQuizMutation.isPending ? <span className="animate-spin inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full" /> : "Lihat Nilai Kamu di Try Out ini"}
+                    {submitQuizMutation.isPending ? <span className="animate-spin inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full" /> : "Lihat Nilai Kamu di TryOut ini"}
                   </Button>
                 </div>
               </div>

@@ -39,7 +39,7 @@ export const PaginationTryOut = ({
         onClick={() => handleNextSoal(nextQuestionId)} // fallback to 0 if null or undefined
         className={`rounded-full px-6 py-3 text-sm sm:text-base font-medium transition bg-blue-200 text-blue-900 border-blue-500 hover:bg-blue-500 hover:text-white`}
       >
-        <span className="hidden sm:inline">{isLast ? "Selesaikan Try Out" : "Selanjutnya"}</span>
+        <span className="hidden sm:inline">{isLast ? "Selesaikan TryOut" : "Selanjutnya"}</span>
         <ChevronRight size={18} className="ml-2" />
       </Button>
     </div>

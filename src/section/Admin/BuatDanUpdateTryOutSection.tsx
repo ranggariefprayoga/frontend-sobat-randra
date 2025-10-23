@@ -17,7 +17,7 @@ export default function BuatDanUpdateTryOutSection() {
   return (
     <LayoutBackgroundWhite>
       <ButtonWithIcon icon={ArrowLeft} label="Kembali" />
-      <TitleComponent title="Buat dan Update Try Out Premium" />
+      <TitleComponent title="Buat dan Update TryOut Premium" />
       <div className="w-full px-4 md:px-24 mt-4 md:mt-8">
         <CreateTryOutModal />
       </div>
@@ -33,7 +33,7 @@ export default function BuatDanUpdateTryOutSection() {
           ))}
         </div>
       ) : (
-        <NullComponent message="Belum ada Try Out Tersedia" />
+        <NullComponent message="Belum ada TryOut Tersedia" />
       )}
     </LayoutBackgroundWhite>
   );

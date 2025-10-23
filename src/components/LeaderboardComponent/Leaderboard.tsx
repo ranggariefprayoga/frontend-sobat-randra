@@ -165,7 +165,7 @@ const Leaderboard = () => {
                   </svg>
                   <AlertTitle className="text-sm font-semibold">Tidak Ada Yang Mengerjakan</AlertTitle>
                 </div>
-                <AlertDescription className="text-sm text-gray-700 md:ml-2">Peserta belum ada yang mengerjakan try out ini. Silakan tunggu hingga peserta mulai mengerjakan.</AlertDescription>
+                <AlertDescription className="text-sm text-gray-700 md:ml-2">Peserta belum ada yang mengerjakan TryOut ini. Silakan tunggu hingga peserta mulai mengerjakan.</AlertDescription>
               </Alert>
             </div>
           )
@@ -177,9 +177,9 @@ const Leaderboard = () => {
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M18 10A8 8 0 11.999 10 8 8 0 0118 10zM9 5a1 1 0 112 0v4a1 1 0 11-2 0V5zm1 8a1.5 1.5 0 100 3 1.5 1.5 0 000-3z" clipRule="evenodd" />
               </svg>
-              <AlertTitle className="text-sm font-semibold">Silakan Pilih Try Out</AlertTitle>
+              <AlertTitle className="text-sm font-semibold">Silakan Pilih TryOut</AlertTitle>
             </div>
-            <AlertDescription className="text-sm text-gray-700 md:ml-2">Silakan pilih try out terlebih dahulu untuk melihat rangking nasional.</AlertDescription>
+            <AlertDescription className="text-sm text-gray-700 md:ml-2">Silakan pilih TryOut terlebih dahulu untuk melihat rangking nasional.</AlertDescription>
           </Alert>
         </div>
       )}
@@ -194,7 +194,7 @@ const Leaderboard = () => {
               </svg>
               <AlertTitle className="text-sm font-semibold">Akses Ditolak</AlertTitle>
             </div>
-            <AlertDescription className="text-sm text-gray-700 md:ml-2">Kamu tidak punya akses ke rangking nasional try out ini.</AlertDescription>
+            <AlertDescription className="text-sm text-gray-700 md:ml-2">Kamu tidak punya akses ke rangking nasional TryOut ini.</AlertDescription>
           </Alert>
         </div>
       )}
