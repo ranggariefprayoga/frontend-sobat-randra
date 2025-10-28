@@ -26,7 +26,7 @@ export default function ProductVideoBelajarSection() {
       {!activeProduct || activeProduct.length === 0 ? (
         <NullComponent message="Belum ada Video Belajar Tersedia" />
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 gap-2 px-4 md:px-24 mt-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 gap-2 px-4 md:px-24 mt-8">
           {activeProduct.map((product: ProductVideoBelajarResponse) => (
             <CardVideoBelajar key={product.id} product={product} customLink={`/pilihan-paket/video-belajar/${product.id}`} />
           ))}
