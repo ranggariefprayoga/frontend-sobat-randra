@@ -14,8 +14,8 @@ const decodeJWT = (token: string) => {
 
 export function middleware(req: NextRequest) {
   const accessToken = req.cookies.get("user_token")?.value;
-  console.log({accessToken});
-  
+  console.log({ accessToken });
+
   const quizToken = req.cookies.get("quiz_token")?.value;
   const url = req.nextUrl;
 
@@ -79,5 +79,23 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/mulai-belajar", "/history-nilai", "/uji-coba", "/rangking-nasional", "/profile", "/kritik-saran", "/download-pembahasan", "/auth/:path*", "/admin/:path*", "/quiz(.*)", "/free-quiz(.*)"],
+  matcher: [
+    "/mulai-belajar",
+    "/history-nilai",
+    "/uji-coba",
+    "/rangking-nasional",
+    "/profile",
+    "/kritik-saran",
+    "/pilihan-paket/smartbook/:product_smartbook_id",
+    "/pilihan-paket/bimbel/:product_bimbel_bareng_id",
+    "/pilihan-paket/promo/:product_promo_id",
+    "/pilihan-paket/tryout/:product_try_out_id",
+    "/pilihan-paket/tryout-gratis/:product_try_out_id",
+    "/pilihan-paket/video-belajar/:product_video_belajar_id",
+    "/download-pembahasan",
+    "/auth/:path*",
+    "/admin/:path*",
+    "/quiz(.*)",
+    "/free-quiz(.*)",
+  ],
 };

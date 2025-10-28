@@ -4,7 +4,7 @@ import { Award } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { rankResponse } from "@/model/leaderboards.model";
 
-export const RankUser = ({ rank, name, email, score, category_score, status }: rankResponse) => {
+export const RankUser = ({ rank, name, score, category_score, status }: rankResponse) => {
   const getScore = (cat: string) => category_score.find((c) => c.category === cat)?.score ?? 0;
   const twk = getScore("TWK");
   const tiu = getScore("TIU");
@@ -24,9 +24,8 @@ export const RankUser = ({ rank, name, email, score, category_score, status }: r
 
           <div>
             <AlertTitle className="font-semibold whitespace-normal">{name}</AlertTitle>
-            <AlertDescription className="text-sm">{email}</AlertDescription>
+            <AlertDescription className={`mt-1 text-sm font-semibold ${status === "Lulus" ? "text-green-600" : "text-red-600"}`}>Status: {status}</AlertDescription>
             <div className={`mt-2 px-3 py-1 rounded-md text-center font-bold ${isLulus ? "bg-green-200 text-green-700" : "bg-red-100 text-red-700"}`}>Nilai Kamu: {score}</div>
-            <div className={`mt-1 text-xs font-semibold ${status === "Lulus" ? "text-green-600" : "text-red-600"}`}>Status: {status}</div>
           </div>
         </div>
         <div className="flex gap-2 mt-2 md:mt-0 md:ml-auto">

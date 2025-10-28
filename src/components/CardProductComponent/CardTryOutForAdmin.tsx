@@ -63,7 +63,7 @@ export default function CardTryOutForAdmin({ product, customLink, buttonText = "
       </div>
 
       {/* Gambar Produk */}
-      <img src={product.banner_image || "/no-image.png"} alt={product.name} className="w-full h-48 object-cover" />
+      <img src={product.banner_image || "/no-image.png"} alt={product.name} className="w-full h-56 object-cover" />
 
       <div className="px-2 py-4">
         {/* Badge */}

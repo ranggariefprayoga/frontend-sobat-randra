@@ -62,7 +62,7 @@ export default function CardSmartbookForAdmin({ product, customLink, buttonText 
       </div>
 
       {/* Gambar Produk */}
-      <img src={product.banner_image || "/no-image.png"} alt={product.name} className="w-full h-48 object-cover" />
+      <img src={product.banner_image || "/no-image.png"} alt={product.name} className="w-full h-56 object-cover" />
 
       <div className="px-2 py-4">
         {/* Badge */}
@@ -79,10 +79,14 @@ export default function CardSmartbookForAdmin({ product, customLink, buttonText 
         {/* Harga */}
         {
           <div className="flex items-center justify-between mt-3">
-            <div className="flex items-center gap-2">
-              {discountPercentage !== null && <span className="bg-green-600 text-white text-[10px] font-bold px-2 py-1 rounded-md">{discountPercentage}%</span>}
-              {hasDiscount && <p className="text-xs line-through text-gray-500">Rp {product.old_price?.toLocaleString("id-ID")}</p>}
-            </div>
+            {product.old_price !== 0 && (
+              <>
+                <div className="flex items-center gap-2">
+                  {discountPercentage !== null && <span className="bg-green-600 text-white text-[10px] font-bold px-2 py-1 rounded-md">{discountPercentage}%</span>}
+                  {hasDiscount && <p className="text-xs line-through text-gray-500">Rp {product.old_price?.toLocaleString("id-ID")}</p>}
+                </div>
+              </>
+            )}
             <p className="text-lg font-bold text-[#ad0a1f]">Rp {product.price.toLocaleString("id-ID")}</p>
           </div>
         }

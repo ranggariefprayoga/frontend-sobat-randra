@@ -23,7 +23,7 @@ export default function CardMulaiBimbel({ product, userEmail }: ProductCardProps
 
   return (
     <div className={`relative shadow-lg rounded-xl overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 ${!product.is_active ? "bg-gray-100 text-gray-500" : "bg-white text-gray-900"}`}>
-      <img src={product.jadwal_bimbel_image || "/no-image.png"} alt={product.name} className="w-full h-48 object-cover" />
+      <img src={product.jadwal_bimbel_image || "/no-image.png"} alt={product.name} className="w-full h-56 object-cover" />
 
       <div className="px-2 py-4">
         <div className="flex items-center gap-2 text-sm mb-2">

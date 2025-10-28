@@ -123,7 +123,7 @@ export default function DetailTOFree({ product, user }: Props) {
       {/* Marketing Text - bawah */}
       {product.marketing_text && product.marketing_text !== "" && (
         <div className="mt-10 bg-gray-50 border border-gray-200 p-4 rounded-lg text-sm text-gray-700 whitespace-pre-line leading-relaxed">
-          <h1 className="text-2xl md:text-3xl font-bold text-[#ad0a1f] uppercase mb-2">🆓 Tentang TryOut Gratis</h1>
+          <h1 className="text-xl md:text-2xl  font-bold text-[#ad0a1f] uppercase mb-2">🆓 Tentang TryOut Gratis</h1>
           {product.marketing_text}
         </div>
       )}

@@ -82,11 +82,20 @@ export default function Footer() {
                 },
                 {
                   icon: (
-                    <svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" width="24px" height="24px">
-                      <path
-                        fill="#FF0000"
-                        d="M549.655 124.083c-6.28-23.734-24.78-42.22-48.52-48.5C440.16 64 288 64 288 64S135.84 64 74.86 75.58c-23.73 6.27-42.22 24.77-48.5 48.5C16 176.06 16 256 16 256s0 79.94 10.38 131.917c6.28 23.73 24.78 42.22 48.52 48.5C135.84 448 288 448 288 448s152.16 0 213.14-11.583c23.74-6.27 42.23-24.77 48.52-48.5C560 335.94 560 256 560 256s0-79.94-10.38-131.917zm-308.623 214.32L388.5 256l-147.47-82.413v164.826z"
-                      />
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="lucide lucide-youtube-icon lucide-youtube"
+                    >
+                      <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17" />
+                      <path d="m10 15 5-3-5-3z" />
                     </svg>
                   ),
                   text: "Sobat Randra",

@@ -70,15 +70,6 @@ export default function DetailTO({ product, user }: Props) {
 
   const whatsappMessage = `https://wa.me/628774867857?text=Halo%20min%2C%20aku%20mau%20pesen%20${encodeURIComponent(product.name)}`;
 
-  const formatCurrency = (value: number | undefined) => {
-    return (
-      value?.toLocaleString("id-ID", {
-        style: "currency",
-        currency: "IDR",
-      }) ?? "Harga tidak tersedia"
-    );
-  };
-
   return (
     <div className="w-full mx-auto px-4 md:px-24 mt-8">
       <div className="flex flex-col md:flex-row gap-6 items-start">
@@ -119,9 +110,9 @@ export default function DetailTO({ product, user }: Props) {
               <div className="font-semibold space-y-1 mb-6">
                 <div className="flex items-center gap-2">
                   {discount !== null && <div className="inline-block bg-green-600 text-white text-xs px-2 py-1 rounded-md mb-1">{discount}%</div>}
-                  {product.old_price !== undefined && product.old_price > 0 && <span className="text-sm line-through text-muted-foreground">{formatCurrency(product.old_price)}</span>}
+                  {product.old_price !== undefined && product.old_price > 0 && <span className="text-sm line-through text-muted-foreground">Rp {product.old_price.toLocaleString("id-ID")}</span>}
                 </div>
-                <p className="text-xl font-bold text-[#ad0a1f]">{formatCurrency(product.price)}</p>
+                <p className="text-xl font-bold text-[#ad0a1f]">Rp {product.price.toLocaleString("id-ID")}</p>
               </div>
 
               {/* CTA WhatsApp */}
@@ -136,7 +127,7 @@ export default function DetailTO({ product, user }: Props) {
       {/* Marketing Text - bawah */}
       {product.marketing_text && product.marketing_text !== "" && (
         <div className="mt-10 bg-gray-50 border border-gray-200 p-4 rounded-lg text-sm text-gray-700 whitespace-pre-line leading-relaxed">
-          <h1 className="text-2xl md:text-3xl font-bold text-[#ad0a1f] uppercase mb-2">⭐ Tentang TryOut Premium</h1>
+          <h1 className="text-xl md:text-2xl font-bold text-[#ad0a1f] uppercase mb-2">⭐ Tentang TryOut Premium</h1>
           {product.marketing_text}
         </div>
       )}

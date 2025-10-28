@@ -12,6 +12,10 @@ interface ProductCardVideoBelajarProps {
 export default function CardVideoBelajar({ product, customLink, buttonText = "Lihat Detail" }: ProductCardVideoBelajarProps) {
   const router = useRouter();
 
+  const oldPrice = product.old_price ?? 0;
+  const hasDiscount = oldPrice > product.price && oldPrice > 0;
+  const discountPercentage = hasDiscount ? Math.round(((oldPrice - product.price) / oldPrice) * 100) : null;
+
   return (
     <div className={`relative shadow-lg rounded-xl overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 ${!product.is_active ? "bg-gray-100 text-gray-500" : "bg-white text-gray-900"}`}>
       {/* Overlay jika produk tidak aktif */}
@@ -22,7 +26,7 @@ export default function CardVideoBelajar({ product, customLink, buttonText = "Li
       )}
 
       {/* Gambar Produk */}
-      <img src={product.banner_image || "/no-image.png"} alt={product.name} className="w-full h-48 object-cover" />
+      <img src={product.banner_image || "/no-image.png"} alt={product.name} className="w-full h-56 object-cover" />
 
       <div className="px-2 py-4">
         {/* Badge Kategori */}
@@ -41,8 +45,15 @@ export default function CardVideoBelajar({ product, customLink, buttonText = "Li
 
         {/* Harga Produk & Diskon */}
         <div className="flex items-center justify-between mt-3">
-          {product.old_price && product.price !== product.old_price && <p className="text-xs line-through text-gray-500">Rp {product.old_price?.toLocaleString("id-ID")}</p>}
-          <p className="text-lg font-bold text-[#ad0a1f]">{product.price === 0 ? "GRATIS" : `Rp ${product.price.toLocaleString("id-ID")}`}</p>
+          {product.old_price !== 0 && (
+            <>
+              <div className="flex items-center gap-2">
+                {discountPercentage !== null && <span className="bg-green-600 text-white text-[10px] font-bold px-2 py-1 rounded-md">{discountPercentage}%</span>}
+                {hasDiscount && <p className="text-xs line-through text-gray-500">Rp {product.old_price?.toLocaleString("id-ID")}</p>}
+              </div>
+            </>
+          )}
+          <p className="text-lg font-bold text-[#ad0a1f]">Rp {product.price.toLocaleString("id-ID")}</p>
         </div>
 
         {/* Tombol Navigasi */}

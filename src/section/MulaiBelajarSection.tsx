@@ -37,6 +37,11 @@ export default function MulaiBelajarSection() {
     setSelectedCategory(category);
   };
 
+  const handleMayarPortalClick = () => {
+    const url = `https://sobat-randra.myr.id/portal`;
+    window.open(url, "_blank");
+  };
+
   let filteredProducts: any = [];
   if (selectedCategory === "try-out") {
     filteredProducts = allProductTryOut?.data?.filter((product: TryOutProductModel) => product.is_active) || [];
@@ -48,7 +53,7 @@ export default function MulaiBelajarSection() {
     <LayoutBackgroundWhite>
       <ButtonWithIcon icon={ArrowLeft} label="Kembali" />
       <TitleComponent title="Produk yang bisa kamu akses" subTitle="Yuk belajar sekarang!" />
-      <div className="w-full px-4 md:px-24 mt-8 grid grid-cols-2 lg:grid-cols-4 gap-2">
+      <div className="w-full px-4 md:px-24 mt-8 grid grid-cols-2 gap-2">
         <Button
           variant="outline"
           className={`transition duration-200 ${selectedCategory === "try-out" ? "bg-[#ad0a1f] text-white hover:bg-[#ad0a1f] hover:text-white" : "bg-transparent border hover:bg-[#f5f5f5] hover:text-black"}`}
@@ -88,7 +93,7 @@ export default function MulaiBelajarSection() {
       {selectedCategory === "try-out" || selectedCategory === "bimbel" ? (
         filteredProducts && filteredProducts.length > 0 ? (
           <>
-            <div className="grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 gap-2 px-4 md:px-24 mt-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 gap-2 px-4 md:px-24 mt-8">
               {selectedCategory === "try-out" && filteredProducts.map((product: TryOutProductModel) => <CardMulaiTryOut userEmail={detailUser?.data?.email} key={product.id} product={product} />)}
               {/* {selectedCategory === "bimbel" && filteredProducts.map((product: bimbelBarengResponse) => <CardMulaiBimbel key={product.id} product={product} userEmail={detailUser?.data?.email} />)} */}
             </div>
@@ -108,7 +113,12 @@ export default function MulaiBelajarSection() {
                   </svg>
                   <AlertTitle className="text-sm font-semibold whitespace-normal">Cek Email Kamu Jika Sudah Membeli CheatSheet</AlertTitle>
                 </div>
-                <AlertDescription className="text-sm text-gray-700 md:ml-2">Hubungi Admin jika produk belum masuk ke email kamu!.</AlertDescription>
+                <AlertDescription className="text-sm text-gray-700 md:ml-2">Hubungi Admin jika produk belum masuk ke email kamu atau login dari tombol dibawah ini.</AlertDescription>
+                <div className="flex justify-center">
+                  <Button size="lg" variant="outline" onClick={handleMayarPortalClick} className="rounded-full text-orange-700 bg-orange-100">
+                    Login ke Mayar
+                  </Button>
+                </div>
               </Alert>
             </div>
           )}
@@ -121,7 +131,12 @@ export default function MulaiBelajarSection() {
                   </svg>
                   <AlertTitle className="text-sm font-semibold whitespace-normal">Cek Email Kamu Jika Sudah Membeli Video Belajar</AlertTitle>
                 </div>
-                <AlertDescription className="text-sm text-gray-700 md:ml-2">Hubungi Admin jika produk belum masuk ke email kamu!.</AlertDescription>
+                <AlertDescription className="text-sm text-gray-700 md:ml-2">Hubungi Admin jika produk belum masuk ke email kamu atau login dari tombol dibawah ini.</AlertDescription>
+                <div className="flex justify-center">
+                  <Button size="lg" variant="outline" onClick={handleMayarPortalClick} className="rounded-full text-orange-700 bg-orange-100">
+                    Login ke Mayar
+                  </Button>
+                </div>
               </Alert>
             </div>
           )} */}

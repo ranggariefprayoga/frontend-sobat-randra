@@ -19,7 +19,7 @@ export interface CategoryScore {
 export interface rankResponse {
   rank: number;
   name: string;
-  email: string;
+  email?: string;
   score: number;
   status: string;
   session_id: number;
