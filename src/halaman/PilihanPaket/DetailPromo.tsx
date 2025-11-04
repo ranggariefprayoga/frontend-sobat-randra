@@ -19,7 +19,7 @@ export default function DetailPromo({ product }: Props) {
 
   const discount = product.old_price && product.old_price > product.price && product.old_price > 0 ? Math.round(((product.old_price - product.price) / product.old_price) * 100) : null;
 
-  const whatsappMessage = `https://wa.me/628774867857?text=Halo%20min%2C%20aku%20mau%20pesen%20${encodeURIComponent(product.name)}`;
+  const whatsappMessage = `https://wa.me/6285124631275?text=Halo%20min%2C%20aku%20mau%20pesen%20${encodeURIComponent(product.name)}`;
 
   return (
     <div className="w-full mx-auto px-4 md:px-24 mt-8">
