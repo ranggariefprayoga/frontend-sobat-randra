@@ -3,7 +3,7 @@
 import LoadingComponent from "@/components/LoadingComponent/LoadingComponent";
 import TitleComponent from "@/components/TitleComponent/TitleComponent";
 import LayoutBackgroundWhite from "@/layout/LayoutBackgroundWhite";
-import { useGetQuizSessionsForUser } from "@/lib/api/quizHistory.api";
+import { useGetQuizSessionsFreeForUser } from "@/lib/api/quizHistory.api";
 import { Flag, ClockIcon } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent, CardFooter, CardDescription } from "@/components/ui/card"; // Import komponen Card dari ShadCN
 import { Button } from "@/components/ui/button";
@@ -29,7 +29,7 @@ type Category = keyof typeof categoryThresholds;
 
 export default function UjiCobaTryOutSection() {
   const router = useRouter();
-  const { data: allQuizSesion, isLoading: isLoadingQuizSession } = useGetQuizSessionsForUser();
+  const { data: allQuizSesion, isLoading: isLoadingQuizSession } = useGetQuizSessionsFreeForUser();
 
   if (isLoadingQuizSession) {
     return (

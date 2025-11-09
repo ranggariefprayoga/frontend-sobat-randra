@@ -15,6 +15,16 @@ export const useGetQuizSessionsForUser = () => {
     retry: false,
   });
 };
+export const useGetQuizSessionsFreeForUser = () => {
+  return useQuery<WebResponse<getAllQuizSessionByUser[]>, Error>({
+    queryKey: ["quiz-sessions"],
+    queryFn: async () => {
+      const res = await axios.get(`${API_BASE_URL}/api/quiz-history/sessions/free`, { withCredentials: true });
+      return res.data;
+    },
+    retry: false,
+  });
+};
 
 // Hook untuk mengambil detail soal dari sesi yang telah dikerjakan user
 export const useGetQuizSessionQuestionDetailForUser = (try_out_session_id: number, product_try_out_id: number, question_id: number) => {
