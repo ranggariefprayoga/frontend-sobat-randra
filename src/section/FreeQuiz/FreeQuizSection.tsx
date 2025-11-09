@@ -164,7 +164,7 @@ export default function FreeQuizSection() {
             ) : (
               <div className="text-center p-6 bg-gray-100 border border-gray-300 rounded-md shadow-md">
                 <div className="max-w-md mx-auto">
-                  <h2 className="text-xl font-semibold text-gray-700 mb-4">Uji Coba TryOut Gratis hanya menyediakan {validQuestions?.data?.length} soal saja.</h2>
+                  <h2 className="text-xl font-semibold text-gray-700 mb-4">Uji Coba TryOut Gratis hanya menyediakan 10 soal saja.</h2>
                   <p className="text-sm text-gray-600 mb-4">
                     Untuk mendapatkan fitur lengkap, soal terbaru, dan rangking nasional TryOut, beli paket <strong>TryOut Premium</strong> kami
                   </p>

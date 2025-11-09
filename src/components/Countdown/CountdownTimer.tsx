@@ -19,26 +19,32 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ expiredAt, sessionId, p
   const { mutate: updateQuizSession } = useUpdateTryOutSession();
 
   useEffect(() => {
-    if (timeLeft <= 0) return;
-
     const timer = setInterval(() => {
       const now = Date.now();
       const remaining = expiredTime - now;
-      setTimeLeft(remaining);
+
+      // 1. UPDATE state untuk display:
+      setTimeLeft(remaining); // Panggil setTimeLeft untuk update UI
 
       if (remaining <= 0) {
         clearInterval(timer);
+        // 2. TRIGGER UPDATE KE SERVER:
         updateQuizSession({
           try_out_session_id: sessionId,
           product_try_out_id: productId,
           user_email: userEmail,
+          is_finished: true,
+          try_out_token: null,
         });
         router.push("/history-nilai");
       }
     }, 1000);
 
-    return () => clearInterval(timer);
-  }, [expiredTime, timeLeft, router, sessionId, productId, userEmail, updateQuizSession]);
+    return () => clearInterval(timer); // Dependency Array SANGAT PENTING: Jangan masukkan 'timeLeft' di sini!
+  }, [expiredTime, router, sessionId, productId, userEmail, updateQuizSession]);
+
+  // ...
+  // ...
 
   if (timeLeft <= 0) return null;
 

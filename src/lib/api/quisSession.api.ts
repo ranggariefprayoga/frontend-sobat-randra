@@ -75,8 +75,20 @@ export const useUpdateTryOutSession = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ try_out_session_id, product_try_out_id, user_email }: { try_out_session_id: number; product_try_out_id: number; user_email: string }) => {
-      const res = await axios.patch(`${API_BASE_URL}/api/quiz/session/update`, { try_out_session_id, product_try_out_id, user_email }, { withCredentials: true });
+    mutationFn: async ({
+      try_out_session_id,
+      product_try_out_id,
+      user_email,
+      is_finished,
+      try_out_token,
+    }: {
+      try_out_session_id: number;
+      product_try_out_id: number;
+      user_email: string;
+      is_finished: boolean;
+      try_out_token: string | null;
+    }) => {
+      const res = await axios.patch(`${API_BASE_URL}/api/quiz/session/update`, { try_out_session_id, product_try_out_id, user_email, is_finished, try_out_token }, { withCredentials: true });
       return res.data;
     },
     onSuccess: () => {

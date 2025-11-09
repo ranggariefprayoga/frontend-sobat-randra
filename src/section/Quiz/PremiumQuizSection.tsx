@@ -124,7 +124,7 @@ export default function PremiumQuizSection() {
     } catch (error) {
       setLocalSelectedChoiceId(null);
       toast.error("Gagal memilih jawaban, coba lagi...");
-      throw error; // Rethrow the error to allow catch in handleSelectChoice
+      throw error;
     }
   };
 
@@ -138,7 +138,7 @@ export default function PremiumQuizSection() {
 
     try {
       await createFeedback.mutateAsync({
-        rating,
+        rating: rating || 5,
         message: message.trim() || "Tidak ada deskripsi",
       });
 
