@@ -56,7 +56,7 @@ export default function UjiCobaTryOutSection() {
   }
 
   const handleToPembahasanQuiz = (sessionId: number, productTryOutId: number, questionId: number) => {
-    router.push(`/pembahasan-quiz?sess=${sessionId}&ptid=${productTryOutId}&qid=${questionId}`);
+    router.push(`/pembahasan-quiz-free?sess=${sessionId}&ptid=${productTryOutId}&qid=${questionId}`);
   };
 
   return (
