@@ -67,7 +67,7 @@ export default function PembahasanFreeQuizSection() {
   const answerExplanations = detailQuizSession?.data?.details?.answer_explanation;
 
   const handleSelectNumber = (newQuestionId: number) => {
-    router.push(`/pembahasan-quiz-free-free?sess=${sessionId}&ptid=${productTryOutId}&qid=${newQuestionId}`);
+    router.push(`/pembahasan-quiz-free?sess=${sessionId}&ptid=${productTryOutId}&qid=${newQuestionId}`);
   };
 
   const handlePreviousSoal = (previousQuestionId: number | null | undefined) => {
