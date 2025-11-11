@@ -119,6 +119,18 @@ export default function Hamburger({ userDetail }: { userDetail: UserDetailInterf
                         <span>Tambahkan Akses TryOut</span>
                       </Button>
                     </CommandItem>
+                    <CommandItem>
+                      <Button variant="ghost" className="w-full flex justify-start" onClick={() => navigateTo("/admin/tryout/history-tryout")}>
+                        <ClipboardList size={18} />
+                        <span>Pengerjaan Try Out Oleh Pelanggan</span>
+                      </Button>
+                    </CommandItem>
+                    <CommandItem>
+                      <Button variant="ghost" className="w-full flex justify-start" onClick={() => navigateTo("/admin/tryout/rangking-to")}>
+                        <TrendingUp size={18} />
+                        <span>Rangking Nasional Try Out</span>
+                      </Button>
+                    </CommandItem>
                   </CommandGroup>
 
                   <CommandSeparator />

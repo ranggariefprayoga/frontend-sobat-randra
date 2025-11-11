@@ -27,6 +27,17 @@ export const useGetSessionsByProductIdAndSessionId = (product_try_out_id: number
   });
 };
 
+export const useGetSessionsByProductId = (product_try_out_id: number, page = 1, limit = 10) => {
+  return useQuery({
+    queryKey: ["quiz_session", product_try_out_id, page, limit],
+    queryFn: async () => {
+      const response = await axios.get(`${API_BASE_URL}/api/quiz/${product_try_out_id}`, { params: { page, limit }, withCredentials: true });
+      return response.data;
+    },
+    retry: false,
+  });
+};
+
 // Check available free tryout session
 export const useCheckAvailableFreeTryOut = (product_try_out_id?: number, user_id?: number) => {
   return useQuery<WebResponse<boolean>, Error>({
@@ -89,6 +100,19 @@ export const useUpdateTryOutSession = () => {
       try_out_token: string | null;
     }) => {
       const res = await axios.patch(`${API_BASE_URL}/api/quiz/session/update`, { try_out_session_id, product_try_out_id, user_email, is_finished, try_out_token }, { withCredentials: true });
+      return res.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["quiz-sessions"] });
+    },
+  });
+};
+
+export const useUpdateTryOutSessionByAdmin = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ try_out_session_id }: { try_out_session_id: number }) => {
+      const res = await axios.patch(`${API_BASE_URL}/api/quiz/session/finished/${try_out_session_id}`, { try_out_session_id }, { withCredentials: true });
       return res.data;
     },
     onSuccess: () => {
