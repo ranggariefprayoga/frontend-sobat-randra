@@ -5,7 +5,7 @@ import { Button } from "../ui/button";
 interface QuestionButtonProps {
   numberOfQuestions: number | undefined;
   questionId: number | undefined;
-  isCorrect: boolean;
+  isCorrect: boolean | undefined;
   isCurrent: boolean;
   onClick: () => void;
 }

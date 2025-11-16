@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useGetValidQuestionsUser } from "@/lib/api/question.api";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useGetQuizSessionQuestionDetailForUser } from "@/lib/api/quizHistory.api";
+import { useGetQuizSessionQuestionDetailForUser, useGetUserAnswerCorrectionForPembahasan } from "@/lib/api/quizHistory.api";
 import QuestionComponentForPembahasan from "./QuestionComponentForPembahasan";
 import QuestionChoiceComponentForPembahasan from "./QuestionChoiceComponentForPembahasan";
 import { Badge } from "@/components/ui/badge";
@@ -29,9 +29,10 @@ export default function PembahasanQuizSection() {
   };
 
   const { data: detailQuizSession, isLoading: isLoadingSession, error } = useGetQuizSessionQuestionDetailForUser(sessionId, productTryOutId, questionId);
+  const { data: userAnswersInThisSession, isLoading: isLoadinguserAnswersInThisSession, error: errorUserAnswer } = useGetUserAnswerCorrectionForPembahasan(sessionId, productTryOutId);
   const { data: validQuestions, isLoading: dataUserQuestionLoading } = useGetValidQuestionsUser(productTryOutId);
 
-  if (isLoadingSession || dataUserQuestionLoading) {
+  if (isLoadingSession || dataUserQuestionLoading || isLoadinguserAnswersInThisSession) {
     return (
       <div className="flex justify-center items-center min-h-screen">
         <LoadingComponent color="#ad0a1f" />
@@ -39,7 +40,7 @@ export default function PembahasanQuizSection() {
     );
   }
 
-  if (error) {
+  if (error || errorUserAnswer) {
     return (
       <div className="min-h-screen flex flex-col justify-center items-center bg-white px-6 text-center">
         <h2 className="text-2xl font-semibold text-gray-700 mb-2">Soal Tidak Ditemukan!</h2>
@@ -101,7 +102,7 @@ export default function PembahasanQuizSection() {
                 </Button>
               </div>
               <div className="lg:hidden flex w-full justify-center items-center">
-                <NomorQuizPembahasan currentQuestionId={questionId} questions={validQuestions?.data} isCorrect={isCorrect} onSelectNumber={handleSelectNumber} />
+                <NomorQuizPembahasan currentQuestionId={questionId} questions={validQuestions?.data} userAnswerInThisSession={userAnswersInThisSession} onSelectNumber={handleSelectNumber} />
               </div>
             </div>
             <div className="flex flex-row gap-2 items-start lg:items-center w-full lg:w-auto">
@@ -155,7 +156,7 @@ export default function PembahasanQuizSection() {
           </div>
 
           <div className="hidden lg:block lg:w-[20%]">
-            <NomorQuizPembahasan currentQuestionId={questionId} questions={validQuestions?.data} isCorrect={isCorrect} onSelectNumber={handleSelectNumber} />
+            <NomorQuizPembahasan currentQuestionId={questionId} questions={validQuestions?.data} userAnswerInThisSession={userAnswersInThisSession} onSelectNumber={handleSelectNumber} />
           </div>
         </div>
       </div>

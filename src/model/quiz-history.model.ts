@@ -58,6 +58,12 @@ export interface getHistorySessionDetailByUser {
   message: string | null;
 }
 
+export interface getHistorySessionDetailByUserForPembahasan {
+  question_id: number;
+  number_of_question: number;
+  isCorrect: boolean;
+}
+
 export interface WebResponseDetailHistorySession<T> {
   data: {
     try_out_session_id: number;
