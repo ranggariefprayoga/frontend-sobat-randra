@@ -10,7 +10,6 @@ import QuestionComponentForPembahasan from "./QuestionComponentForPembahasan";
 import QuestionChoiceComponentForPembahasan from "./QuestionChoiceComponentForPembahasan";
 import { Badge } from "@/components/ui/badge";
 import NomorQuizPembahasan from "@/components/NomorQuiz/NomorQuizPembahasan";
-import { useAnsweredUserInASessionThatsTrue } from "@/lib/api/quizAnswer.api";
 import AnswerExplanationForPembahasan from "./AnswerExplanationForPembahasan";
 
 export default function PembahasanQuizSection() {
@@ -31,9 +30,8 @@ export default function PembahasanQuizSection() {
 
   const { data: detailQuizSession, isLoading: isLoadingSession, error } = useGetQuizSessionQuestionDetailForUser(sessionId, productTryOutId, questionId);
   const { data: validQuestions, isLoading: dataUserQuestionLoading } = useGetValidQuestionsUser(productTryOutId);
-  const { data: checkTrueUserAnswerByQuestionId, isLoading: isLoadingCheckUserHasAnswered } = useAnsweredUserInASessionThatsTrue(productTryOutId, sessionId);
 
-  if (isLoadingSession || dataUserQuestionLoading || isLoadingCheckUserHasAnswered) {
+  if (isLoadingSession || dataUserQuestionLoading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
         <LoadingComponent color="#ad0a1f" />
@@ -61,9 +59,7 @@ export default function PembahasanQuizSection() {
   const questionChoices = detailQuizSession?.data?.details?.question_choices;
   const correctAnswer = detailQuizSession?.data?.details?.correct_answer;
   const userAnswer = detailQuizSession?.data?.details?.user_answer;
-  // const totalUserAnswer = detailQuizSession?.data?.total_user_answers;
   const isCorrect = detailQuizSession?.data?.details?.correct_answer_title === detailQuizSession?.data?.details?.user_answer?.question_choice_title;
-  const questionIdWasCorrect = checkTrueUserAnswerByQuestionId?.data;
   const answerExplanations = detailQuizSession?.data?.details?.answer_explanation;
 
   const handleSelectNumber = (newQuestionId: number) => {
@@ -105,7 +101,7 @@ export default function PembahasanQuizSection() {
                 </Button>
               </div>
               <div className="lg:hidden flex w-full justify-center items-center">
-                <NomorQuizPembahasan currentQuestionId={questionId} questions={validQuestions?.data} isCorrect={questionIdWasCorrect} onSelectNumber={handleSelectNumber} />
+                <NomorQuizPembahasan currentQuestionId={questionId} questions={validQuestions?.data} isCorrect={isCorrect} onSelectNumber={handleSelectNumber} />
               </div>
             </div>
             <div className="flex flex-row gap-2 items-start lg:items-center w-full lg:w-auto">
@@ -159,7 +155,7 @@ export default function PembahasanQuizSection() {
           </div>
 
           <div className="hidden lg:block lg:w-[20%]">
-            <NomorQuizPembahasan currentQuestionId={questionId} questions={validQuestions?.data} isCorrect={questionIdWasCorrect} onSelectNumber={handleSelectNumber} />
+            <NomorQuizPembahasan currentQuestionId={questionId} questions={validQuestions?.data} isCorrect={isCorrect} onSelectNumber={handleSelectNumber} />
           </div>
         </div>
       </div>

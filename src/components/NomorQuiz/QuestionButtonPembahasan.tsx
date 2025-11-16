@@ -5,7 +5,7 @@ import { Button } from "../ui/button";
 interface QuestionButtonProps {
   numberOfQuestions: number | undefined;
   questionId: number | undefined;
-  isCorrect: boolean | undefined; // Replaced isAnswered with isCorrect
+  isCorrect: boolean;
   isCurrent: boolean;
   onClick: () => void;
 }
@@ -29,7 +29,7 @@ const QuestionButtonPembahasan: React.FC<QuestionButtonProps> = ({ questionId, i
   }
 
   return (
-    <Button variant={"ghost"} onClick={onClick} className={baseClass}>
+    <Button variant={"ghost"} onClick={onClick} className={baseClass} disabled={!questionId || questionId === 0}>
       {questionId === 0 || !questionId ? (
         <LockKeyholeIcon className="text-black" size={20} /> // Display Lock icon when questionId is 0
       ) : (

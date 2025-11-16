@@ -14,7 +14,7 @@ interface NumberButtonsResponsiveProps {
   onSelectNumber: (question_id: number) => void;
   questions: QuestionInterface[] | undefined | null; // `questions` can be undefined
   currentQuestionId: number; // Current active question id
-  isCorrect: number[] | undefined; // Make sure isCorrect is typed as an array of numbers or undefined
+  isCorrect: boolean; // Make sure isCorrect is typed as an array of numbers or undefined
 }
 
 export default function NumberButtonsResponsive({ onSelectNumber, questions, currentQuestionId, isCorrect }: NumberButtonsResponsiveProps) {
@@ -52,8 +52,8 @@ export default function NumberButtonsResponsive({ onSelectNumber, questions, cur
                     <QuestionButtonPembahasan
                       key={num}
                       numberOfQuestions={question?.number_of_question}
-                      questionId={questionId} // Pass question_id for navigation
-                      isCorrect={Array.isArray(isCorrect) && isCorrect.includes(questionId)}
+                      questionId={questionId}
+                      isCorrect={isCorrect}
                       isCurrent={questionId === currentQuestionId}
                       onClick={() => {
                         onSelectNumber(questionId); // Use question_id for navigation
@@ -87,7 +87,7 @@ export default function NumberButtonsResponsive({ onSelectNumber, questions, cur
                 key={num}
                 numberOfQuestions={question?.number_of_question}
                 questionId={questionId}
-                isCorrect={Array.isArray(isCorrect) && isCorrect.includes(questionId)}
+                isCorrect={isCorrect}
                 isCurrent={questionId === currentQuestionId}
                 onClick={() => {
                   onSelectNumber(questionId); // Use question_id for navigation
