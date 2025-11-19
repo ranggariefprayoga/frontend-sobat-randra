@@ -34,13 +34,15 @@ const ChartComponent = ({ data }: { data: Session[] | undefined }) => {
   }
 
   // Menyiapkan data untuk StackedBarChart tanpa mengelompokkan berdasarkan product_name
-  const chartData = data.map((session) => ({
-    name: session.product_name, // Gunakan product_name untuk label X
-    score: session.total_score,
-    TWK: session.category_scores.find((c) => c.category === "TWK")?.score || 0,
-    TIU: session.category_scores.find((c) => c.category === "TIU")?.score || 0,
-    TKP: session.category_scores.find((c) => c.category === "TKP")?.score || 0,
-  }));
+  const chartData = data
+    .map((session) => ({
+      name: session.product_name, // Gunakan product_name untuk label X
+      score: session.total_score,
+      TWK: session.category_scores.find((c) => c.category === "TWK")?.score || 0,
+      TIU: session.category_scores.find((c) => c.category === "TIU")?.score || 0,
+      TKP: session.category_scores.find((c) => c.category === "TKP")?.score || 0,
+    }))
+    .reverse();
 
   return (
     <div className="chart-wrapper">

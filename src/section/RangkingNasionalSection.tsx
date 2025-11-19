@@ -10,7 +10,7 @@ export default function RangkingNasionalSection() {
   return (
     <LayoutBackgroundWhite>
       <ButtonWithIcon icon={ArrowLeft} label="Kembali" />
-      <TitleComponent title="Rangking Nasional" subTitle="Lihat Peringkat kamu" />
+      <TitleComponent title="Rangking Nasional" subTitle="Diurutkan berdasarkan pengerjaan TryOut Pertama Kali!" />
       <Leaderboard />
     </LayoutBackgroundWhite>
   );

@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 const categoryThresholds = {
-  TWK: 60,
+  TWK: 65,
   TIU: 80,
   TKP: 166,
 } as const;

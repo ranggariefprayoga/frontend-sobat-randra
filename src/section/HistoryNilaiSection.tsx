@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 import ChartComponent from "@/components/StackChart/ChartComponent";
 
 const categoryThresholds = {
-  TWK: 60,
+  TWK: 65,
   TIU: 80,
   TKP: 166,
 } as const;
